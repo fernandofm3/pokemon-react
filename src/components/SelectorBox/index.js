@@ -5,7 +5,7 @@ const SelectorItem = ({setLimit, limit}) => {
     return (
         <S.SelectorBox>
             <div className="div-selector-box">
-                <label for='selector-box'>Exibir:</label>
+                <label htmlFor='selector-box'>Exibir:</label>
                 <select
                     id='selector-box' 
                     value={limit} 

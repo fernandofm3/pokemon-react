@@ -56,7 +56,7 @@ const Pagination = ({setOffset, maxButtonPagination, limit, firstPagePagination,
                 {Array.from({length: Math.min(maxButtonPagination, totalPages) }) 
                     .map((_, index) => index + firstPagePagination)
                     .map((page) => (
-                        <li>
+                        <li key={page}>
                             <button
                                 className={
                                     page === currentPagePagination 
