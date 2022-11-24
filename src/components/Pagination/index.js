@@ -11,37 +11,109 @@ const Pagination = ({setOffset, maxButtonPagination, limit, firstPagePagination,
 
     return (
         <S.Pagination>
-            <button
-                onClick= {()=> onPagechange(currentPagePagination - 1)}  
-                disabled= {currentPagePagination === 1}  
-            >
-                Anterior
-            </button>
-
-            {Array.from({length: Math.min(maxButtonPagination, totalPages) }) 
-                .map((_, index) => index + firstPagePagination)
-                .map((page) => (
+            <ul>
+                <li
+                    className={
+                        currentPagePagination === 1
+                        ? 'item-display-none' 
+                        : null                            
+                    }
+                >
                     <button
-                        className={
-                            page === currentPagePagination 
-                            ? 'pagination__item--active' 
-                            : null 
-                        }
-                        value={page}
-                        onClick={(e)=> onPagechange(page)}
-                        key={page}
+                        onClick= {()=> onPagechange(currentPagePagination - 1)}  
+                        disabled= {currentPagePagination === 1}  
                     >
-                        {page}
+                        &lt;&lt;
                     </button>
-                ))
-            }
+                </li>
 
-            <button
-                onClick={()=> onPagechange(currentPagePagination + 1)} 
-                disabled= {currentPagePagination === totalPages}   
-            >
-                Próximo
-            </button>
+                <li 
+                     className={
+                        currentPagePagination >= 6
+                        ? null 
+                        : 'item-display-none'
+                    }
+                >
+                    <button                       
+                        onClick={()=> onPagechange(1)}                           
+                    >
+                        1
+                    </button>
+                </li>
+
+                <li
+                    className={
+                        currentPagePagination >= 6
+                        ? null 
+                        : 'item-display-none'
+                    }
+                >
+                    <button disabled >
+                        ...
+                    </button>
+                </li>
+
+                {Array.from({length: Math.min(maxButtonPagination, totalPages) }) 
+                    .map((_, index) => index + firstPagePagination)
+                    .map((page) => (
+                        <li>
+                            <button
+                                className={
+                                    page === currentPagePagination 
+                                    ? 'pagination__item--active' 
+                                    : null 
+                                }
+                                value={page}
+                                onClick={(e)=> onPagechange(page)}
+                                key={page}
+                            >
+                                {page}
+                            </button>
+                        </li>
+                    ))
+                }
+
+                <li 
+                    className={
+                        currentPagePagination >= (totalPages - 4)
+                        ? 'item-display-none' 
+                        : null                            
+                    }
+                >
+                    <button disabled >
+                        ...
+                    </button>
+                </li>
+
+                <li
+                     className={
+                        currentPagePagination >= (totalPages - 4)
+                        ? 'item-display-none' 
+                        : null                            
+                    }
+                >
+                    <button                       
+                        onClick={()=> onPagechange(totalPages)}                           
+                    >
+                        {totalPages}
+                    </button>
+                </li>
+
+                <li
+                    className={
+                        currentPagePagination === totalPages
+                        ? 'item-display-none' 
+                        : null                            
+                    }
+                >
+                    <button
+                        onClick={()=> onPagechange(currentPagePagination + 1)} 
+                        disabled= {currentPagePagination === totalPages}   
+                    >
+                        &gt;&gt;
+                    </button>
+                </li>
+            </ul>
         </S.Pagination>
     )
 }

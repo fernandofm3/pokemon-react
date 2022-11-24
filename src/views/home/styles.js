@@ -2,17 +2,17 @@ import styled from 'styled-components';
 
 export const DivPokeCard = styled.div`
     
-    h1 {
-        font-size: 2.5rem;
-        color: #777;
-    } 
+    // h1 {
+    //     font-size: 2.5rem;
+    //     color: #777;
+    // } 
     
-    .poke-search {
-        width: 100%;
-        padding: 10px;        
-        border: 1px solid #000;
-        border-radius: 7px;
-    }
+    // .poke-search {
+    //     width: 100%;
+    //     padding: 10px;        
+    //     border: 1px solid #000;
+    //     border-radius: 7px;
+    // }
     
 `
 
