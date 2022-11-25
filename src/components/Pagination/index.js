@@ -71,6 +71,7 @@ const Pagination = ({Search, setOffset, maxButtonPagination, limit, firstPagePag
                                 }
                                 value={page}
                                 onClick={(e)=> onPagechange(page)}
+                                disabled= {page === currentPagePagination}
                                 key={page}
                             >
                                 {page}

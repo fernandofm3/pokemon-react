@@ -10,6 +10,7 @@ const Headder = ()=> {
                 <ul>
                     <li><img src={logo} alt="Imagem do logo." /></li>
                     <li>Pokedex</li>                    
+                    <li>Sobre</li>                    
                 </ul>
             </nav>
         </S.Headder>

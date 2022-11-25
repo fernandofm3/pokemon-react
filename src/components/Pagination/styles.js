@@ -16,14 +16,18 @@ export const Pagination = styled.div`
         background-color: #fff;
         font-weight: bold;
         color: #333;
-    }  
+    }
+    
+    button:hover {
+        background-color: #eee;
+    }
 
     li + li {
         margin-left: 10px;
         margin-bottom: 5px;       
     }
     
-    .pagination__item--active {
+    .pagination__item--active, .pagination__item--active:hover {
         border: none;
         border: 1px solid #333;
         background-color: #3b64a5;
