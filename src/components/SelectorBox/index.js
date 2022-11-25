@@ -1,9 +1,15 @@
 import React from "react";
 import * as S from './styles';
 
-const SelectorItem = ({setLimit, limit}) => {
+const SelectorItem = ({setLimit, limit, Search}) => {
     return (
-        <S.SelectorBox>
+        <S.SelectorBox
+            className={
+                Search !== ""
+                ? 'item-display-none' 
+                : null                            
+            }
+        >
             <div className="div-selector-box">
                 <label htmlFor='selector-box'>Exibir:</label>
                 <select

@@ -77,7 +77,7 @@ function Home() {
             <S.Container> 
                 <S.DivSearch>
                     <SearchPokemon className='search-Bar' setSearch={setSearch} search={Search} />            
-                    <SelectorBox className='selector-item' setLimit={setLimit} limit={Limit} />
+                    <SelectorBox className='selector-item' setLimit={setLimit} limit={Limit} Search={Search} />
                 </S.DivSearch>
             </S.Container> 
             
@@ -95,7 +95,8 @@ function Home() {
             </S.Container> 
 
             <S.Container>                
-                <Pagination 
+                <Pagination
+                    Search={Search}
                     setOffset={setOffset}
                     maxButtonPagination={maxButtonPagination}
                     limit={Limit}

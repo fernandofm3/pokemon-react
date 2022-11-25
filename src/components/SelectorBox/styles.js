@@ -17,6 +17,10 @@ export const SelectorBox = styled.div`
     select {        
         padding: 11px; 
         border-radius: 7px;       
-    }  
+    }
+    
+    .item-display-none {
+        display: none;
+    }
     
 `
