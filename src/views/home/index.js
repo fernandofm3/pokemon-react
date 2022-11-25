@@ -4,6 +4,7 @@ import PokeCard from '../../components/PokeCard';
 import Pagination from '../../components/Pagination';
 import SelectorBox from '../../components/SelectorBox';
 import SearchPokemon from '../../components/Search';
+import Headder from '../../components/Headder';
 
 //Import Styles
 import * as S from './styles';
@@ -71,7 +72,8 @@ function Home() {
     
     return (
         <div>            
-        
+            <Headder />
+
             <S.Container> 
                 <S.DivSearch>
                     <SearchPokemon className='search-Bar' setSearch={setSearch} search={Search} />            
