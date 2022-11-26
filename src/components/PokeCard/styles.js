@@ -54,8 +54,8 @@ export const PokeCard = styled.div`
         font-size: 0.75rem;
         margin-right: 5px;        
         border-radius: 4px;
-        background-color: #999;
-        color: #fff;
+        /*background-color: #999;
+        color: #fff;*/
         text-transform: capitalize;
         font-weight: bold;
     }

@@ -93,7 +93,7 @@ const Pagination = ({Search, setOffset, maxButtonPagination, limit, firstPagePag
                 </li>
 
                 <li
-                     className={
+                    className={
                         currentPagePagination >= (totalPages - 4)
                         ? 'item-display-none' 
                         : null                            
