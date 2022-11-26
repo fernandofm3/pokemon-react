@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import PokeCard from '../../components/PokeCard';
 import Pagination from '../../components/Pagination';
-import SelectorBox from '../../components/SelectorBox';
+import SelectorItemPerPage from '../../components/SelectorItemPerPage';
+import SelectorPokemonType from '../../components/SelectorPokemonType';
 import SearchPokemon from '../../components/Search';
 import Headder from '../../components/Headder';
 
@@ -13,6 +14,11 @@ function Home() {
 
     const [Data, setData] = useState([]);
     const [Search, setSearch] = useState("");
+
+    const [ListNameType, setListNameType] = useState([]);
+    const [SelectorType, setSelectorType] = useState("");
+
+
     const [Offset, setOffset] = useState(0);
     const [Limit, setLimit] = useState(12);    
     const [TotalItens, setTotalItens] = useState(0);
@@ -32,6 +38,12 @@ function Home() {
         
     //Conexão com API - Recuperando os Dados
     useEffect( ()=>{
+
+        //Buscando a lista com os nomes do TIPOS de Pokemons
+        api.get(`/type`).then((response)=>{
+            setListNameType(response.data.results);        
+        })
+
         let filter;
         const newPokeList = [];
         
@@ -41,6 +53,29 @@ function Home() {
             api.get(`/pokemon${filter}`).then((response)=>{
                 newPokeList.push(response.data);
                 setData(newPokeList);
+            })
+
+        } else if(SelectorType !== "") {
+            filter = "/" + SelectorType;
+
+            api.get(`/type${filter}`).then((response)=>{
+
+                async function getInfoPokemonPerType() {
+            
+                    let dataResults = response.data.pokemon;
+                    
+                    //Realizando um laço para buscar a informação de cada Pokemon para salvar em novo array
+                    for (let i = 0; i < dataResults.length; i++) {
+                        let resultPokeInfo = await api.get(`/pokemon/${dataResults[i].pokemon.name}`); 
+                        resultPokeInfo = resultPokeInfo.data;               
+                        newPokeList.push(resultPokeInfo);                        
+                    }
+                    
+                    setData(newPokeList);                                     
+                }
+
+                getInfoPokemonPerType();
+
             })
 
         } else {
@@ -67,7 +102,7 @@ function Home() {
                 getInfoPokemon();
             })
         }        
-    }, [Search, Offset, Limit])    
+    }, [Search, Offset, Limit, SelectorType])    
 
     
     return (
@@ -76,8 +111,9 @@ function Home() {
 
             <S.Container> 
                 <S.DivSearch>
-                    <SearchPokemon className='search-Bar' setSearch={setSearch} search={Search} />            
-                    <SelectorBox className='selector-item' setLimit={setLimit} limit={Limit} Search={Search} />
+                    <SearchPokemon className='search-Bar' setSearch={setSearch} search={Search} />
+                    <SelectorPokemonType  SelectorType={SelectorType} setSelectorType={setSelectorType} Search={Search} ListNameType={ListNameType} />            
+                    <SelectorItemPerPage className='selector-item' setLimit={setLimit} limit={Limit} Search={Search} SelectorType={SelectorType} />
                 </S.DivSearch>
             </S.Container> 
             
@@ -97,6 +133,7 @@ function Home() {
             <S.Container>                
                 <Pagination
                     Search={Search}
+                    SelectorType={SelectorType}
                     setOffset={setOffset}
                     maxButtonPagination={maxButtonPagination}
                     limit={Limit}

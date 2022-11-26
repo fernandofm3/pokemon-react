@@ -1,17 +1,20 @@
 import React from "react";
 import * as S from './styles';
 
-const SelectorItem = ({setLimit, limit, Search}) => {
+const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType}) => {
     return (
-        <S.SelectorBox
+        <S.SelectorItemPerPage
             className={
                 Search !== ""
                 ? 'item-display-none' 
-                : null                            
+                : 
+                SelectorType !== ""
+                ? 'item-display-none' 
+                : null
             }
         >
             <div className="div-selector-box">
-                <label htmlFor='selector-box'>Exibir:</label>
+                <label htmlFor='selector-box'>Display:</label>
                 <select
                     id='selector-box' 
                     value={limit} 
@@ -24,8 +27,8 @@ const SelectorItem = ({setLimit, limit, Search}) => {
                     <option value={60}>60 Pokemons </option>                    
                 </select>
             </div>
-        </S.SelectorBox>
+        </S.SelectorItemPerPage>
     )
 }
 
-export default SelectorItem;
+export default SelectorItemPerPage;

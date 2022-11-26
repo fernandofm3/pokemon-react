@@ -4,7 +4,7 @@ import * as S from './styles';
 const SearchPokemon = ({setSearch, search}) => {
     return (
         <S.SearchBar>            
-            <input type="search" placeholder="Digte o nome ou número do Pokemon"
+            <input type="search" placeholder="Enter pokemon name or id"
                 value={search}
                 onChange={(event) => {                                
                     setSearch(event.target.value.toLowerCase());

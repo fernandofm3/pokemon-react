@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const SelectorBox = styled.div`
+export const SelectorPokemonType = styled.div`
+    margin-left: 30px;
+
     .div-selector-box {
         display: flex;
         flex-direction: row;
@@ -16,7 +18,8 @@ export const SelectorBox = styled.div`
 
     select {        
         padding: 11px; 
-        border-radius: 7px;       
+        border-radius: 7px; 
+        text-transform: capitalize;      
     }
     
     .item-display-none {

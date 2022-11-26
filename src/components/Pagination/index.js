@@ -3,7 +3,14 @@ import * as S from './styles';
 
 
 
-const Pagination = ({Search, setOffset, maxButtonPagination, limit, firstPagePagination, currentPagePagination, totalPages}) => {
+const Pagination = ({Search,
+                    setOffset,
+                    maxButtonPagination,
+                    limit,
+                    firstPagePagination,
+                    currentPagePagination,
+                    totalPages,
+                    SelectorType}) => {
 
     function onPagechange(page) {
         setOffset(Number((page - 1) * limit));
@@ -13,6 +20,9 @@ const Pagination = ({Search, setOffset, maxButtonPagination, limit, firstPagePag
         <S.Pagination 
             className={
                 Search !== ""
+                ? 'item-display-none' 
+                : 
+                SelectorType !== ""
                 ? 'item-display-none' 
                 : null                            
             }
@@ -34,7 +44,7 @@ const Pagination = ({Search, setOffset, maxButtonPagination, limit, firstPagePag
                 </li>
 
                 <li 
-                     className={
+                    className={
                         currentPagePagination >= 6
                         ? null 
                         : 'item-display-none'
