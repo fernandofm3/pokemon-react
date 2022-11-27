@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from './styles';
 
-const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType}) => {
+const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType, SelectorColor}) => {
     return (
         <S.SelectorItemPerPage
             className={
@@ -9,6 +9,9 @@ const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType}) => {
                 ? 'item-display-none' 
                 : 
                 SelectorType !== ""
+                ? 'item-display-none' 
+                : 
+                SelectorColor !== ""
                 ? 'item-display-none' 
                 : null
             }

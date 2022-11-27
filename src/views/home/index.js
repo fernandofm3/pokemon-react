@@ -4,6 +4,7 @@ import PokeCard from '../../components/PokeCard';
 import Pagination from '../../components/Pagination';
 import SelectorItemPerPage from '../../components/SelectorItemPerPage';
 import SelectorPokemonType from '../../components/SelectorPokemonType';
+import SelectorPokemonColor from '../../components/SelectorPokemonColor';
 import SearchPokemon from '../../components/Search';
 import Headder from '../../components/Headder';
 
@@ -18,6 +19,8 @@ function Home() {
     const [ListNameType, setListNameType] = useState([]);
     const [SelectorType, setSelectorType] = useState("");
 
+    const [ListNameColor, setListNameColor] = useState([]);
+    const [SelectorColor, setSelectorColor] = useState("");
 
     const [Offset, setOffset] = useState(0);
     const [Limit, setLimit] = useState(12);    
@@ -42,6 +45,11 @@ function Home() {
         //Buscando a lista com os nomes do TIPOS de Pokemons
         api.get(`/type`).then((response)=>{
             setListNameType(response.data.results);        
+        })
+
+        //Buscando a lista com os nomes das COLORS dos Pokemons
+        api.get(`/pokemon-color`).then((response)=>{
+            setListNameColor(response.data.results);        
         })
 
         let filter;
@@ -78,6 +86,33 @@ function Home() {
 
             })
 
+        } else if(SelectorColor !== "") {
+            filter = "/" + SelectorColor;
+
+            api.get(`/pokemon-color${filter}`).then((response)=>{
+                
+                async function getInfoPokemonPerColor() {
+                                
+                    let dataResults = response.data.pokemon_species;
+                    
+                    //Realizando um laço para buscar a informação de cada Pokemon para salvar em novo array
+                    for (let i = 0; i < dataResults.length; i++) {
+
+                        //Dividindo a URL para pegar o ID do Pokemon
+                        const splitedUrl = dataResults[i].url.split("/");
+                        
+                        let resultPokeInfo = await api.get(`/pokemon/${splitedUrl[6]}`); 
+                        resultPokeInfo = resultPokeInfo.data;               
+                        newPokeList.push(resultPokeInfo);                        
+                    }
+                                        
+                    setData(newPokeList);                                     
+                }
+
+                getInfoPokemonPerColor();
+
+            })
+
         } else {
             filter =  `?offset=${Offset}&limit=${Limit}`;
 
@@ -102,7 +137,7 @@ function Home() {
                 getInfoPokemon();
             })
         }        
-    }, [Search, Offset, Limit, SelectorType])    
+    }, [Search, Offset, Limit, SelectorType, SelectorColor])    
 
     
     return (
@@ -113,7 +148,8 @@ function Home() {
                 <S.DivSearch>
                     <SearchPokemon className='search-Bar' setSearch={setSearch} search={Search} />
                     <SelectorPokemonType  SelectorType={SelectorType} setSelectorType={setSelectorType} Search={Search} ListNameType={ListNameType} />            
-                    <SelectorItemPerPage className='selector-item' setLimit={setLimit} limit={Limit} Search={Search} SelectorType={SelectorType} />
+                    <SelectorPokemonColor  SelectorColor={SelectorColor} setSelectorColor={setSelectorColor} Search={Search} ListNameColor={ListNameColor} />            
+                    <SelectorItemPerPage className='selector-item' setLimit={setLimit} limit={Limit} Search={Search} SelectorType={SelectorType} SelectorColor={SelectorColor} />
                 </S.DivSearch>
             </S.Container> 
             
@@ -134,6 +170,7 @@ function Home() {
                 <Pagination
                     Search={Search}
                     SelectorType={SelectorType}
+                    SelectorColor={SelectorColor}
                     setOffset={setOffset}
                     maxButtonPagination={maxButtonPagination}
                     limit={Limit}

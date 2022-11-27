@@ -10,7 +10,9 @@ const Pagination = ({Search,
                     firstPagePagination,
                     currentPagePagination,
                     totalPages,
-                    SelectorType}) => {
+                    SelectorType,
+                    SelectorColor    
+                    }) => {
 
     function onPagechange(page) {
         setOffset(Number((page - 1) * limit));
@@ -23,6 +25,9 @@ const Pagination = ({Search,
                 ? 'item-display-none' 
                 : 
                 SelectorType !== ""
+                ? 'item-display-none' 
+                : 
+                SelectorColor !== ""
                 ? 'item-display-none' 
                 : null                            
             }
