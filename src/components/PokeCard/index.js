@@ -1,16 +1,30 @@
 import React from 'react';
 import * as S from './styles';
-import imgPokeDefault from '../../assets/pokeball.png';
+//import imgPokeDefault from '../../assets/pokeball.png';
+import _get from "lodash/get";
 
 function PokeCard (props) {
+
+    //Pegando a URL da imagem oficial do Pokemon
+    function spriteAdapterOfficial (spriteOfficial) {
+        return _get(spriteOfficial, "other.official-artwork.front_default", "");
+    };
+    //Pegando a URL da imagem com alta definição
+    function spriteAdapterDream (sprite) {
+        return _get(sprite, "other.dream_world.front_default", "");
+    };
+
+    const spriteOfficial = spriteAdapterOfficial (props.img);
+    const spriteDream = spriteAdapterDream(props.img);
+
     return (        
         <S.PokeCard> 
             <img 
                 src={
-                    props.img !== null
-                    ? props.img
-                    : imgPokeDefault
-                } 
+                    spriteDream !== null
+                    ? spriteDream
+                    : spriteOfficial
+                }
                 alt="Imagem do Pokemon."
             />                    
             <p className='pokeNum'>N° {props.id}</p>

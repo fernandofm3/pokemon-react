@@ -116,7 +116,7 @@ function Home() {
         } else {
             filter =  `?offset=${Offset}&limit=${Limit}`;
 
-            api.get(`/pokemon${filter}`).then((response)=>{
+            api.get(`/pokemon-species${filter}`).then((response)=>{
 
                 setTotalItens(response.data.count);
 
@@ -126,7 +126,11 @@ function Home() {
                     
                     //Realizando um laço para buscar a informação de cada Pokemon para salvar em novo array
                     for (let i = 0; i < dataResults.length; i++) {
-                        let resultPokeInfo = await api.get(`/pokemon/${dataResults[i].name}`); 
+
+                        //Dividindo a URL para pegar o ID do Pokemon
+                        const splitedUrl = dataResults[i].url.split("/");
+
+                        let resultPokeInfo = await api.get(`/pokemon/${splitedUrl[6]}`); 
                         resultPokeInfo = resultPokeInfo.data;               
                         newPokeList.push(resultPokeInfo);                        
                     }
@@ -159,7 +163,7 @@ function Home() {
                     Data.map(p => <PokeCard 
                         name={p.name} 
                         id={p.id} 
-                        img={p.sprites.other.dream_world.front_default} 
+                        img={p.sprites} 
                         types={p.types}                            
                         key={p.id}
                     />)
