@@ -1,12 +1,15 @@
 import React from "react";
 import * as S from './styles';
 
-const SelectorPokemonType = ({SelectorType, setSelectorType, Search, ListNameType}) => {    
+const SelectorPokemonType = ({SelectorType, setSelectorType, Search, ListNameType, SelectorColor, setRemoveLoading}) => {    
     return (
         <S.SelectorPokemonType
             className={
                 Search !== ""
                 ? 'item-display-none' 
+                :
+                SelectorColor !== ""
+                ? 'item-display-none'
                 : null                            
             }
         >
@@ -15,7 +18,10 @@ const SelectorPokemonType = ({SelectorType, setSelectorType, Search, ListNameTyp
                 <select
                     id='selector-box' 
                     value={SelectorType} 
-                    onChange={(e)=>{setSelectorType(e.target.value)}}
+                    onChange={(e)=>{
+                        setSelectorType(e.target.value);
+                        setRemoveLoading(false);
+                    }}
                 >                    
                     <option value={''}> All </option>
 

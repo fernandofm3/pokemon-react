@@ -11,11 +11,13 @@ const Pagination = ({Search,
                     currentPagePagination,
                     totalPages,
                     SelectorType,
-                    SelectorColor    
+                    SelectorColor,
+                    setRemoveLoading    
                     }) => {
 
     function onPagechange(page) {
         setOffset(Number((page - 1) * limit));
+        setRemoveLoading(false);
     }
 
     return (

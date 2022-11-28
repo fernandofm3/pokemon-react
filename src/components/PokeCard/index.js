@@ -1,6 +1,5 @@
 import React from 'react';
 import * as S from './styles';
-//import imgPokeDefault from '../../assets/pokeball.png';
 import _get from "lodash/get";
 
 function PokeCard (props) {

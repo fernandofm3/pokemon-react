@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from './styles';
 
-const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType, SelectorColor}) => {
+const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType, SelectorColor, setRemoveLoading}) => {
     return (
         <S.SelectorItemPerPage
             className={
@@ -21,7 +21,10 @@ const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType, SelectorCol
                 <select
                     id='selector-box' 
                     value={limit} 
-                    onChange={(e)=>{setLimit(Number(e.target.value))}}
+                    onChange={(e)=>{
+                        setLimit(Number(e.target.value));
+                        setRemoveLoading(false);
+                    }}
                 >
                     <option value={12}>12 Pokemons </option>
                     <option value={24}>24 Pokemons </option>
