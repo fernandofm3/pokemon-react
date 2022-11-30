@@ -1,25 +1,27 @@
 import styled from 'styled-components';
 
 export const PokeCard = styled.div`
-    background-color: #fff;    
-    box-shadow: 3px 2px 10px 4px #888;
-    border-radius: 7px;    
-    transition: 0.3s;          
-    :hover {
+    .card {
+        background-color: #fff;    
+        box-shadow: 3px 2px 10px 4px #888;
+        border-radius: 7px;    
+        transition: 0.3s;
+    }
+
+    .card:hover {
         box-shadow: 4px 4px 12px 6px #888;  
     }
-    @media screen and (min-width: 450px) {
-        {
-            max-width: 200px;
+
+    @media screen and (min-width: 440px) {
+        .card {
+            max-width: 300px;
         }
     }
 
-    img {
-        /*background-color: #3c5da8;*/
+    img {        
         background-color: #eee;
         padding: 10px;
         width: 100%;
-        height: 150px;
         border-top-left-radius: 7px;
         border-top-right-radius: 7px;
     }

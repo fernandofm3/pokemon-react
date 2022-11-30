@@ -7,6 +7,7 @@ export const SearchBar = styled.div`
         width: 100%;
         padding: 10px 15px 10px 15px; 
         border-radius: 7px;
-        border: 1px solid #000;        
+        border: 1px solid #000; 
+        margin-bottom: 15px;       
     }    
 `

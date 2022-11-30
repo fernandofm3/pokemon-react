@@ -6,7 +6,7 @@ export const Headder = styled.div`
     background-color: #3b64a5;
 
     nav {
-        width: 1280px;
+        max-width: 1280px;
         margin: auto;
     }
     
@@ -15,7 +15,7 @@ export const Headder = styled.div`
         flex-direction: row;
         align-items: center;
         list-style: none;
-        padding: 10px 30px 10px 30px;  
+        padding: 10px 20px 10px 20px;  
     }
 
     li {
@@ -29,8 +29,15 @@ export const Headder = styled.div`
     }
 
     li img {
-        width: 150px;
+        width: 100px;
         
+    }
+
+    @media screen and (min-width: 1024px){                
+        li img {
+            width: 150px;
+            
+        }
     }
 
 `

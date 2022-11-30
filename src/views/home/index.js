@@ -173,54 +173,53 @@ function Home() {
             <Headder />
                         
             <S.Container> 
-                <S.DivSearch>
-                    <SearchPokemon className='search-Bar' setSearch={setSearch} search={Search} />
-                    <SelectorPokemonType  
-                        SelectorType={SelectorType}
-                        setSelectorType={setSelectorType}
-                        Search={Search}
-                        ListNameType={ListNameType}
-                        SelectorColor={SelectorColor}
-                        setRemoveLoading={setRemoveLoading}
-                    />            
-                    <SelectorPokemonColor  
-                        SelectorColor={SelectorColor}
-                        setSelectorColor={setSelectorColor}
-                        Search={Search}
-                        ListNameColor={ListNameColor}
-                        SelectorType={SelectorType}
-                        setRemoveLoading={setRemoveLoading}
-                    />            
-                    <SelectorItemPerPage 
-                        className='selector-item'
-                        setLimit={setLimit}
-                        limit={Limit}
-                        Search={Search}
-                        SelectorType={SelectorType}
-                        SelectorColor={SelectorColor}
-                        setRemoveLoading={setRemoveLoading}
-                    />
-                </S.DivSearch>
-            </S.Container>
+                <div className='div-search'>
+                    <SearchPokemon setSearch={setSearch} search={Search} />
 
-            <S.Container>
+                    <div className='div-seletors'>
+                        <SelectorPokemonType  
+                            SelectorType={SelectorType}
+                            setSelectorType={setSelectorType}
+                            Search={Search}
+                            ListNameType={ListNameType}
+                            SelectorColor={SelectorColor}
+                            setRemoveLoading={setRemoveLoading}
+                        />            
+                        <SelectorPokemonColor  
+                            SelectorColor={SelectorColor}
+                            setSelectorColor={setSelectorColor}
+                            Search={Search}
+                            ListNameColor={ListNameColor}
+                            SelectorType={SelectorType}
+                            setRemoveLoading={setRemoveLoading}
+                        />            
+                        <SelectorItemPerPage 
+                            className='selector-item'
+                            setLimit={setLimit}
+                            limit={Limit}
+                            Search={Search}
+                            SelectorType={SelectorType}
+                            SelectorColor={SelectorColor}
+                            setRemoveLoading={setRemoveLoading}
+                        />
+                    </div>
+                </div>
+
                 {!RemoveLoading && <Loading />}
-            </S.Container>
 
-            <S.Container>
-                {
-                    Data.length > 0 &&
-                    Data.map(p => <PokeCard 
-                        name={p.name} 
-                        id={p.id} 
-                        img={p.sprites} 
-                        types={p.types}                            
-                        key={p.id}
-                    />)
-                }                
-            </S.Container> 
-
-            <S.Container>  
+                <div className='div-pokecard'>
+                    {
+                        Data.length > 0 &&
+                        Data.map(p => <PokeCard 
+                            name={p.name} 
+                            id={p.id} 
+                            img={p.sprites} 
+                            types={p.types}                            
+                            key={p.id}
+                        />)
+                    } 
+                </div>
+        
                 {
                     Data.length > 0 &&              
                     <Pagination

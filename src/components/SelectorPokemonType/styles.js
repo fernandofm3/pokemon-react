@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SelectorPokemonType = styled.div`
-    margin-left: 30px;
+    margin-bottom: 15px;
 
     .div-selector-box {
         display: flex;
@@ -16,7 +16,7 @@ export const SelectorPokemonType = styled.div`
         color: #777;
     }
 
-    select {        
+    select {
         padding: 11px; 
         border-radius: 7px; 
         text-transform: capitalize;      

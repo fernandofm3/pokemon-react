@@ -3,16 +3,7 @@ import * as S from './styles';
 
 const SelectorPokemonColor = ({SelectorColor, setSelectorColor, Search, ListNameColor, SelectorType, setRemoveLoading}) => {    
     return (
-        <S.SelectorPokemonColor
-            className={
-                Search !== ""
-                ? 'item-display-none' 
-                :
-                SelectorType !== ""
-                ? 'item-display-none'
-                : null                            
-            }
-        >
+        <S.SelectorPokemonColor>
             <div className="div-selector-box">
                 <label htmlFor='selector-box'>Colors:</label>
                 <select
@@ -22,6 +13,14 @@ const SelectorPokemonColor = ({SelectorColor, setSelectorColor, Search, ListName
                         setSelectorColor(e.target.value);
                         setRemoveLoading(false);
                     }}
+                    disabled={
+                        Search !== ""
+                        ? true 
+                        :
+                        SelectorType !== ""
+                        ? true
+                        : false 
+                    }
                 >                    
                     <option value={''}> All </option>
 

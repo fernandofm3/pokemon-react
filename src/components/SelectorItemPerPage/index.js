@@ -3,19 +3,7 @@ import * as S from './styles';
 
 const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType, SelectorColor, setRemoveLoading}) => {
     return (
-        <S.SelectorItemPerPage
-            className={
-                Search !== ""
-                ? 'item-display-none' 
-                : 
-                SelectorType !== ""
-                ? 'item-display-none' 
-                : 
-                SelectorColor !== ""
-                ? 'item-display-none' 
-                : null
-            }
-        >
+        <S.SelectorItemPerPage>
             <div className="div-selector-box">
                 <label htmlFor='selector-box'>Display:</label>
                 <select
@@ -25,6 +13,17 @@ const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType, SelectorCol
                         setLimit(Number(e.target.value));
                         setRemoveLoading(false);
                     }}
+                    disabled={
+                        Search !== ""
+                        ? true 
+                        : 
+                        SelectorType !== ""
+                        ? true
+                        : 
+                        SelectorColor !== ""
+                        ? true 
+                        : false
+                    }
                 >
                     <option value={12}>12 Pokemons </option>
                     <option value={24}>24 Pokemons </option>

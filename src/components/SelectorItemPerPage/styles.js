@@ -1,22 +1,20 @@
 import styled from 'styled-components';
 
 export const SelectorItemPerPage = styled.div`
-    margin-left: 30px;
-
     .div-selector-box {
         display: flex;
         flex-direction: row;
         align-items: center;
     }
 
-    label {
+    label {        
         margin-right: 8px;
         font-size: 1.1rem;
         font-weight: bold;
         color: #777;
     }
 
-    select {        
+    select {                
         padding: 11px; 
         border-radius: 7px;       
     }
