@@ -8,6 +8,7 @@ import SelectorPokemonColor from '../../components/SelectorPokemonColor';
 import SearchPokemon from '../../components/Search';
 import Headder from '../../components/Headder';
 import Loading from '../../components/Loading';
+import BackToTop from '../../components/BackTotop';
 
 
 //Import Styles
@@ -120,29 +121,6 @@ function Home() {
 
                 setTotalItens(response.data.count);
 
-                // setTimeout(()=>{
-                //     async function getInfoPokemon() {
-            
-                //         let dataResults = response.data.results;
-                        
-                //         //Realizando um laço para buscar a informação de cada Pokemon para salvar em novo array
-                //         for (let i = 0; i < dataResults.length; i++) {
-    
-                //             //Dividindo a URL para pegar o ID do Pokemon
-                //             const splitedUrl = dataResults[i].url.split("/");
-    
-                //             let resultPokeInfo = await api.get(`/pokemon/${splitedUrl[6]}`); 
-                //             resultPokeInfo = resultPokeInfo.data;               
-                //             newPokeList.push(resultPokeInfo);                        
-                //         }
-                        
-                //         setData(newPokeList); 
-                //         setRemoveLoading(true);                                    
-                //     }
-
-                //     getInfoPokemon();
-                // },1000)
-
                 async function getInfoPokemon() {
             
                     let dataResults = response.data.results;
@@ -235,6 +213,8 @@ function Home() {
                         setRemoveLoading={setRemoveLoading}
                     />
                 }
+
+                <BackToTop/>
             </S.Container>
         </div>
     )
