@@ -199,7 +199,7 @@ function Home() {
                 <div className='div-pokecard'>
                     {
                         Data.length > 0 &&
-                        Data.map(p => <PokeCard 
+                        Data.map(p => <PokeCard                            
                             name={p.name} 
                             id={p.id} 
                             img={p.sprites} 

@@ -21,6 +21,13 @@ export const SelectorPokemonType = styled.div`
         border-radius: 7px; 
         text-transform: capitalize;      
     }
+
+    .span-color{
+        width: 15px;
+        padding: 10px; 
+        border-radius: 50%; 
+        background-color: red;      
+    }
     
     .item-display-none {
         display: none;

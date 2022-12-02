@@ -32,7 +32,7 @@ function PokeCard (props) {
         <S.PokeCard>
             {
                 props.id <= 905 &&
-                <div className='card'>
+                <div className='card animate__animated animate__fadeInLeft animate__slow'>
                     <img 
                         src={                        
                             spriteOfficial
