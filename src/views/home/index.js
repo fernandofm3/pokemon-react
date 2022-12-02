@@ -36,6 +36,13 @@ function Home() {
         Math.max(currentPagePagination - maxLeftPagination, 1),
         maxfirstPagePagination
     );
+
+    function scrollUp () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    }
         
     //Conexão com API - Recuperando os Dados
     useEffect( ()=>{
@@ -79,7 +86,8 @@ function Home() {
                     }
                     
                     setData(newPokeList);
-                    setRemoveLoading(true);                                     
+                    setRemoveLoading(true);
+                    scrollUp();                                                         
                 }
 
                 getInfoPokemonPerType();
@@ -107,7 +115,8 @@ function Home() {
                     }
                                         
                     setData(newPokeList); 
-                    setRemoveLoading(true);                                    
+                    setRemoveLoading(true);
+                    scrollUp();                                    
                 }
 
                 getInfoPokemonPerColor();
@@ -137,7 +146,8 @@ function Home() {
                     }
                     
                     setData(newPokeList); 
-                    setRemoveLoading(true);                                    
+                    setRemoveLoading(true); 
+                    scrollUp();                                   
                 }
         
                 getInfoPokemon();
@@ -148,6 +158,9 @@ function Home() {
     
     return (
         <div>
+
+            {!RemoveLoading && <Loading />}
+            
             <Headder />
                         
             <S.Container> 
@@ -181,9 +194,7 @@ function Home() {
                             setRemoveLoading={setRemoveLoading}
                         />
                     </div>
-                </div>
-
-                {!RemoveLoading && <Loading />}
+                </div>                
 
                 <div className='div-pokecard'>
                     {
@@ -210,7 +221,7 @@ function Home() {
                         firstPagePagination={firstPagePagination}
                         currentPagePagination={currentPagePagination}
                         totalPages={totalPages}
-                        setRemoveLoading={setRemoveLoading}
+                        setRemoveLoading={setRemoveLoading}                                                
                     />
                 }
 

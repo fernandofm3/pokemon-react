@@ -28,7 +28,7 @@ function BackToTop () {
                 <button
                     onClick={scrollUp}
                 >
-                    <i class="bi bi-chevron-double-up"></i>
+                    <i className="bi bi-chevron-double-up"></i>
                 </button>
             )}
         </S.BackToTopButton>

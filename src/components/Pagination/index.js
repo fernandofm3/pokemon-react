@@ -12,12 +12,12 @@ const Pagination = ({Search,
                     totalPages,
                     SelectorType,
                     SelectorColor,
-                    setRemoveLoading    
+                    setRemoveLoading
                     }) => {
 
     function onPagechange(page) {
         setOffset(Number((page - 1) * limit));
-        setRemoveLoading(false);
+        setRemoveLoading(false);        
     }
 
     return (
@@ -87,7 +87,7 @@ const Pagination = ({Search,
                                     : null 
                                 }
                                 value={page}
-                                onClick={(e)=> onPagechange(page)}
+                                onClick={()=> onPagechange(page)}
                                 disabled= {page === currentPagePagination}
                                 key={page}
                             >
