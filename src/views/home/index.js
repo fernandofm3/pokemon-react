@@ -10,7 +10,6 @@ import Headder from '../../components/Headder';
 import Loading from '../../components/Loading';
 import BackToTop from '../../components/BackTotop';
 
-
 //Import Styles
 import * as S from './styles';
 

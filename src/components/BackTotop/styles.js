@@ -7,7 +7,7 @@ export const BackToTopButton = styled.div`
         bottom: 0px;
         right: 0px;
         border-top: 3px solid #000;
-        padding: 10px;
+        padding: 0px;
         border-top-left-radius: 100px;
         border-top-right-radius: 100px;
         background-color: rgba(222,43,30, 0.9);

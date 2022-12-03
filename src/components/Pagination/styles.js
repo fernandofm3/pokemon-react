@@ -15,6 +15,7 @@ export const Pagination = styled.div`
         background-color: #fff;
         font-weight: bold;
         color: #333;
+        transition: 0.3s;
     }
     
     button:hover {

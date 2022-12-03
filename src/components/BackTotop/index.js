@@ -26,6 +26,7 @@ function BackToTop () {
         <S.BackToTopButton>
             {BackToTopButton && (
                 <button
+                    className='animate__animated animate__fadeInUp'
                     onClick={scrollUp}
                 >
                     <i className="bi bi-chevron-double-up"></i>

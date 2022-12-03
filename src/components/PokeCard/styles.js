@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 export const PokeCard = styled.div`
+    a {
+        text-decoration: none;
+    }
+
     .card {
         background-color: #fff;    
         box-shadow: 3px 2px 10px 4px #888;

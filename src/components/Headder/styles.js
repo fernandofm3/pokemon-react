@@ -19,13 +19,20 @@ export const Headder = styled.div`
     }
 
     li {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #fff;
+        font-size: 1.1rem;
+        font-weight: bold;        
     }
     
-    li + li {
+    a + a {
         margin-left: 20px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: 0.3s;
+        color: #fff;
+    }
+
+    a:hover {
+        color: #eee;
     }
 
     li img {
