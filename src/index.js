@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
-import Home from './views/home/index';
-import About from './views/about';
+import Pokedex from './views/pokedex';
+import Pokeinfo from './views/pokeinfo';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,8 +14,8 @@ root.render(
   <BrowserRouter>
     <main>     
         <Routes>
-          <Route path='/' element={<Home />}/>
-          <Route path='/pokeinfo' element={<About />}/>
+          <Route path='/' element={<Pokedex />}/>
+          <Route path='/pokeinfo/:id' element={<Pokeinfo />}/>
         </Routes>         
     </main>
     

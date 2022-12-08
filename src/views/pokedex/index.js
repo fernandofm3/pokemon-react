@@ -13,7 +13,7 @@ import BackToTop from '../../components/BackTotop';
 //Import Styles
 import * as S from './styles';
 
-function Home() {
+function Pokedex() {
 
     const [Data, setData] = useState([]);
     const [Search, setSearch] = useState("");
@@ -230,4 +230,4 @@ function Home() {
     )
 }
 
-export default Home;
+export default Pokedex;

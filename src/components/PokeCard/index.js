@@ -18,8 +18,8 @@ function PokeCard (props) {
     function splitName(name) {        
         let newName = "";
         if(name.length > 15) {
-           let splitedName = name.split('-');
-           newName = splitedName[0]; 
+            let splitedName = name.split('-');
+            newName = splitedName[0]; 
         } else {
             newName = name;
         }
@@ -33,7 +33,7 @@ function PokeCard (props) {
         <S.PokeCard>
             {
                 props.id <= 905 &&
-                <Link to='/pokeinfo'>   
+                <Link to={'/pokeinfo/'+ props.id} >   
                     <div className='card animate__animated animate__fadeInLeft animate__slow'>
                         <img 
                             src={                        
