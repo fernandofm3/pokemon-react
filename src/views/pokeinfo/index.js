@@ -62,7 +62,9 @@ function PokeInfo () {
             abilities: PokeData.abilities === null ? 'Undefined' : PokeData.abilities.map(item => ' ' + item.ability.name).toString(),
             xp: PokeData.base_experience === null ? 'Undefined' : PokeData.base_experience,
             habitat: PokeDataSpecies.habitat === null ? 'Undefined' : PokeDataSpecies.habitat.name,
-            description: PokeDataSpecies.flavor_text_entries[0].flavor_text
+            description: PokeDataSpecies.flavor_text_entries[0].flavor_text,
+            species: PokeDataSpecies.genera[7].genus,
+            gender: PokeDataSpecies.gender_rate
         }
     }   
     
@@ -95,7 +97,7 @@ function PokeInfo () {
                     <div className='div-poke-info'>
                         <div className='div-images-description'>
                             <PokeImages id={infoPokemon.id} name={infoPokemon.name} img={infoPokemon.img}/>
-                            <PokeDescription description={infoPokemon.description} /> 
+                            <PokeDescription description={infoPokemon.description} gender={infoPokemon.gender}/> 
                         </div>
 
                         <div className='div-type-stats-informations'>
@@ -116,6 +118,7 @@ function PokeInfo () {
                                 weight={infoPokemon.weight}
                                 habitat={infoPokemon.habitat}
                                 abilities={infoPokemon.abilities}
+                                species={infoPokemon.species}
                             />                                                      
                         </div>
                     </div>

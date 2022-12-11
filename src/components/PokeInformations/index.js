@@ -10,6 +10,13 @@ function PokeInformations (props) {
                 <tbody>
                     <tr>
                         <td className="td-title">
+                            <i className="bi bi-circle-square"></i>
+                            &nbsp; Species
+                        </td>
+                        <td>{props.species}</td>                        
+                    </tr>                               
+                    <tr>
+                        <td className="td-title">
                             <i className="bi bi-hourglass-split"></i>
                             &nbsp; Base Exp
                         </td>
