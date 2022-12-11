@@ -36,6 +36,7 @@ function Pokedex() {
         maxfirstPagePagination
     );
 
+    //Ir ao topo da tela
     function scrollUp () {
         window.scrollTo({
             top: 0,

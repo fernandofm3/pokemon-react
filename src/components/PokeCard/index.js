@@ -5,6 +5,14 @@ import { Link } from 'react-router-dom';
 
 function PokeCard (props) {
 
+     //Ir ao topo da tela
+     function scrollUp () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    }   
+
     //Pegando a URL da imagem oficial do Pokemon
     function spriteAdapterOfficial (spriteOfficial) {
         return _get(spriteOfficial, "other.official-artwork.front_default", "");
@@ -33,7 +41,7 @@ function PokeCard (props) {
         <S.PokeCard>
             {
                 props.id <= 905 &&
-                <Link to={'/pokeinfo/'+ props.id} >   
+                <Link to={'/pokeinfo/'+ props.id} onClick={()=> scrollUp()}>   
                     <div className='card animate__animated animate__fadeInLeft animate__slow'>
                         <img 
                             src={                        

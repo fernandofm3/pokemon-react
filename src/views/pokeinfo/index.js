@@ -3,12 +3,24 @@ import {useParams} from 'react-router-dom';
 import Headder from '../../components/Headder';
 import api from '../../services/api';
 import _get from "lodash/get";
-import { Link } from 'react-router-dom';
+import PokeDescription from '../../components/PokeDescription';
+import PokeTypes from '../../components/PokeTypes';
+import PokeInformations from '../../components/PokeInformations';
+import PokeStats from '../../components/PokeStats';
+import PokeImages from '../../components/PokeImages';
 
 //Import Styles
 import * as S from './styles';
 
 function PokeInfo () {
+
+    //Ir ao topo da tela
+    // function scrollUp () {
+    //     window.scrollTo({
+    //         top: 0,
+    //         behavior: "smooth"
+    //     })
+    // }    
     
     //Pega apenas o primeiro nome do pokemon.
     function splitName(name) {        
@@ -22,28 +34,21 @@ function PokeInfo () {
         return newName;
     }
 
+    //Pegando a URL da imagem oficial do Pokemon
+    function spriteAdapterOfficial (spriteOfficial) {
+        return _get(spriteOfficial, "other.official-artwork.front_default", "");
+    };  
+
     const { id } = useParams();
     const [PokeData, setPokeData] = useState([]);
-    const [PokeDataSpecies, setPokeDataSpecies] = useState([]);
-    const [PokeImg, setPokeImg] = useState([]);
-    let infoPokemon = "";
+    const [PokeDataSpecies, setPokeDataSpecies] = useState([]);   
     
-    //ID do próximo pokemon.
-    let nextPokemon = Number(id) + 1;
-    if (nextPokemon === 906) {
-        nextPokemon = 1;
-    }
-    //ID do pokemon anterior.
-    let previewsPokemon = Number(id) - 1;
-    if (previewsPokemon === 0) {
-        previewsPokemon = 905;
-    }
-
     // Responsavel por guardar os dados recebidos do Pokemon.
+    let infoPokemon = "";
     if(PokeData != "" && PokeDataSpecies != ""){
         infoPokemon = {
             id: PokeData.id,
-            img: PokeImg,
+            img: spriteAdapterOfficial (PokeData.sprites),
             name: splitName(PokeData.name),
             types: PokeData.types,
             height: PokeData.height  / 10,
@@ -59,151 +64,64 @@ function PokeInfo () {
             habitat: PokeDataSpecies.habitat === null ? 'Undefined' : PokeDataSpecies.habitat.name,
             description: PokeDataSpecies.flavor_text_entries[0].flavor_text
         }
-    }
-
+    }   
     
-    //Pegando a URL da imagem oficial do Pokemon
-    function spriteAdapterOfficial (spriteOfficial) {
-        return _get(spriteOfficial, "other.official-artwork.front_default", "");
-    };     
+    useEffect( ()=>{
 
-    //Buscando Informações do Pokemon
-    api.get(`/pokemon/${id}`).then((response)=>{       
-        async function getInfoPokemon() {    
-            let dataResults = response.data;            
-            setPokeData(dataResults);
-            setPokeImg(spriteAdapterOfficial (dataResults.sprites));            
-        }
-        
-        getInfoPokemon();        
-    })
+        //Buscando Informações do Pokemon
+        api.get(`/pokemon/${id}`).then((response)=>{       
+            async function getInfoPokemon() {    
+                let dataResults = response.data;            
+                setPokeData(dataResults);            
+            }            
+            getInfoPokemon();                   
+        })
 
-    //Buscando informações mais detalhadas
-    api.get(`/pokemon-species/${id}`).then((response)=>{
-        async function getInfoPokemonSpecies() {
-            let dataResults = response.data;            
-            setPokeDataSpecies(dataResults);
-        }
-        
-        getInfoPokemonSpecies();
-    })
+        //Buscando informações Pokemon Species
+        api.get(`/pokemon-species/${id}`).then((response)=>{
+            async function getInfoPokemonSpecies() {
+                let dataResults = response.data;            
+                setPokeDataSpecies(dataResults);
+            }            
+            getInfoPokemonSpecies();
+        })
+    })   
 
     return (
         <div>
             <Headder/>
             <S.Container>
-                <div className='div-poke-info-main'>
-                    <div className='div-poke-img'>
-                        <h1><span className="poke-number">Nº {infoPokemon.id}</span> - <span className='poke-name'>{infoPokemon.name}</span></h1>
-                        <img src={PokeImg} alt="Imagem do Pokemon." />
+                <div className='div-poke-info-main'>                    
+                    <div className='div-poke-info'>
+                        <div className='div-images-description'>
+                            <PokeImages id={infoPokemon.id} name={infoPokemon.name} img={infoPokemon.img}/>
+                            <PokeDescription description={infoPokemon.description} /> 
+                        </div>
 
-                        <div className='div-btn'>
-                            <Link to={'/pokeinfo/'+ previewsPokemon} >
-                                <i className="bi bi-chevron-double-left"></i>
-                            </Link>
+                        <div className='div-type-stats-informations'>
+                            <PokeTypes types={infoPokemon.types} />
                             
-                            <Link to={'/pokeinfo/'+ nextPokemon} >
-                                <i className="bi bi-chevron-double-right"></i>
-                            </Link>
+                            <PokeStats 
+                                    hp={infoPokemon.hp}
+                                    attack={infoPokemon.attack}
+                                    attackSpecial={infoPokemon.attackSpecial}
+                                    defense={infoPokemon.defense}
+                                    defenseSpecial={infoPokemon.defenseSpecial}
+                                    speed={infoPokemon.speed}
+                            /> 
+
+                            <PokeInformations 
+                                xp={infoPokemon.xp}
+                                height={infoPokemon.height} 
+                                weight={infoPokemon.weight}
+                                habitat={infoPokemon.habitat}
+                                abilities={infoPokemon.abilities}
+                            />                                                      
                         </div>
                     </div>
-                    
-                    <div className='div-poke-info'>
-                        <div className='div-information'>
-                            <div className='div-description'>
-                                <h6>Description</h6>
-                                <p>{infoPokemon.description}</p>
-                            </div>
-                            
-                            <div className='div-type'>
-                                <h6>Type</h6>
-                                <div className='div-types'>
-                                    {
-                                        infoPokemon.types?.map(t =>                                                
-                                            <span
-                                                style={
-                                                    t.type.name === "normal"
-                                                    ? {backgroundColor:"#ccc", color: "#333"}
-                                                    :
-                                                    t.type.name === "fighting"
-                                                    ? {background:"#d56723", color: "#fff"}
-                                                    :
-                                                    t.type.name === "flying"
-                                                    ? {background:"linear-gradient(180deg, #3dc7ef 50%, #bdb9b8 50%)", color: "#000"}
-                                                    :
-                                                    t.type.name === "poison"
-                                                    ? {backgroundColor:"#b97fc9", color: "#fff"}
-                                                    :
-                                                    t.type.name === "ground"
-                                                    ? {background:"linear-gradient(180deg, #f7de3f 50%, #ab9842 50%)", color: "#000"}
-                                                    :
-                                                    t.type.name === "rock"
-                                                    ? {backgroundColor:"#a38c21", color: "#fff"}
-                                                    :
-                                                    t.type.name === "bug"
-                                                    ? {backgroundColor:"#729f3f", color: "#fff"}
-                                                    :
-                                                    t.type.name === "ghost"
-                                                    ? {backgroundColor:"#7b62a3", color: "#fff"}
-                                                    :
-                                                    t.type.name === "steel"
-                                                    ? {backgroundColor:"#9eb7b8", color: "#333"}
-                                                    :
-                                                    t.type.name === "fire"
-                                                    ? {backgroundColor:"#fd7d24", color: "#fff"}
-                                                    : 
-                                                    t.type.name === "water"
-                                                    ? {backgroundColor:"#3498db", color: "#fff"}
-                                                    : 
-                                                    t.type.name === "grass"
-                                                    ? {backgroundColor:"#9bcc50", color: "#333"}
-                                                    :
-                                                    t.type.name === "electric"
-                                                    ? {backgroundColor:"#eed535", color: "#333"}
-                                                    :
-                                                    t.type.name === "psychic"
-                                                    ? {backgroundColor:"#f366b9", color: "#fff"}
-                                                    :
-                                                    t.type.name === "ice"
-                                                    ? {backgroundColor:"#51c4e7", color: "#000"}
-                                                    :
-                                                    t.type.name === "dark"
-                                                    ? {backgroundColor:"#707070", color: "#fff"}
-                                                    :
-                                                    t.type.name === "fairy"
-                                                    ? {backgroundColor:"#fdb9e9", color: "#333"}
-                                                    :
-                                                    t.type.name === "dragon"
-                                                    ? {background:"linear-gradient(180deg, #53a4cf 50%, #f16e57 50%)", color: "#fff"}
-                                                    : {background:"#fff", color: "#333"}
-                                                }                            
-                                                key={t.type.name}
-                                            >
-                                                {t.type.name}
-                                            </span>
-                                        )
-                                    }
-                                </div>
-                            </div>
-                            
 
-                            <div className='div-infos'>
-                                <h6>Information</h6>
-                                <p>Height - <span>{infoPokemon.height}m</span></p>
-                                <p>Weight - <span>{infoPokemon.weight}kg</span></p>
-                                <p>Habitat - <span>{infoPokemon.habitat}</span></p>                           
-                                <p>Abilities - <span>{infoPokemon.abilities}</span></p>         
-                            </div>                                               
-                        </div>
+                    <div className='div-poke-evolutions'>
 
-                        <div className='div-stats'>  
-                            <h6>Stats</h6>                          
-                            <p>EXPERIÊNCIA {infoPokemon.xp}xp</p>
-                            <p>ATAQUE {infoPokemon.attack}k</p>
-                            <p>ATAQUE ESPECIAL {infoPokemon.attackSpecial}k</p>
-                            <p>DEFESA {infoPokemon.defense}k</p>
-                            <p>DEFESA ESPECIAL {infoPokemon.defenseSpecial}k</p>
-                        </div>
                     </div>
                 </div>
             
