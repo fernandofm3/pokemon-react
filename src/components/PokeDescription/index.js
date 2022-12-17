@@ -27,11 +27,11 @@ function PokeDescription (props) {
                 : <div className="div-gender">               
                         <div className="div-gender-percentage">                    
                             <div>
-                                <i class="bi bi-gender-female"></i>
+                                <i className="bi bi-gender-female"></i>
                                 <p>Female {findValueGenderInPercentage (props.gender)}%</p>
                             </div>
                             <div>
-                                <i class="bi bi-gender-male"></i>
+                                <i className="bi bi-gender-male"></i>
                                 <p>Male {findValueGenderInPercentage (8 - props.gender)}%</p>
                             </div>                   
                         </div>                    

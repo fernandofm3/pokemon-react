@@ -51,4 +51,26 @@ export const Container = styled.div`
             width: 60%;
         }
     }
+
+    .div-evolutions {
+        display: flex;
+        flex-direction: column;
+        margin-top: 50px;        
+    }
+
+    .div-evolutions h2{
+        text-align: center;
+        margin-bottom: 50px;       
+    }
+
+    .div-evolutions .div-pokemon-evolutions {
+        display: flex;
+        flex-direction: column;
+    }
+
+    @media screen and (min-width: 1024px) {
+        .div-evolutions .div-pokemon-evolutions {            
+            flex-direction: row;
+        }
+    }
 `

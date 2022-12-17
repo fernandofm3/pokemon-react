@@ -8,20 +8,13 @@ import PokeTypes from '../../components/PokeTypes';
 import PokeInformations from '../../components/PokeInformations';
 import PokeStats from '../../components/PokeStats';
 import PokeImages from '../../components/PokeImages';
+import PokeEvolutions from '../../components/PokeEvolutions';
 
 //Import Styles
 import * as S from './styles';
 
 function PokeInfo () {
 
-    //Ir ao topo da tela
-    // function scrollUp () {
-    //     window.scrollTo({
-    //         top: 0,
-    //         behavior: "smooth"
-    //     })
-    // }    
-    
     //Pega apenas o primeiro nome do pokemon.
     function splitName(name) {        
         let newName = "";
@@ -42,6 +35,7 @@ function PokeInfo () {
     const { id } = useParams();
     const [PokeData, setPokeData] = useState([]);
     const [PokeDataSpecies, setPokeDataSpecies] = useState([]);   
+    const [EvolutionsPokemon, setEvolutionsPokemon] = useState([]);   
     
     // Responsavel por guardar os dados recebidos do Pokemon.
     let infoPokemon = "";
@@ -63,13 +57,13 @@ function PokeInfo () {
             xp: PokeData.base_experience === null ? 'Undefined' : PokeData.base_experience,
             habitat: PokeDataSpecies.habitat === null ? 'Undefined' : PokeDataSpecies.habitat.name,
             description: PokeDataSpecies.flavor_text_entries[0].flavor_text,
-            species: PokeDataSpecies.genera[7].genus,
-            gender: PokeDataSpecies.gender_rate
+            species: PokeDataSpecies.genera[0].genus,
+            gender: PokeDataSpecies.gender_rate,
+            evolutions: EvolutionsPokemon
         }
-    }   
+    }  
     
     useEffect( ()=>{
-
         //Buscando Informações do Pokemon
         api.get(`/pokemon/${id}`).then((response)=>{       
             async function getInfoPokemon() {    
@@ -79,13 +73,92 @@ function PokeInfo () {
             getInfoPokemon();                   
         })
 
-        //Buscando informações Pokemon Species
-        api.get(`/pokemon-species/${id}`).then((response)=>{
+        //Buscando informações Pokemon Species na API
+        api.get(`/pokemon-species/${id}`).then((response)=>{            
             async function getInfoPokemonSpecies() {
-                let dataResults = response.data;            
-                setPokeDataSpecies(dataResults);
-            }            
+                let resultPokeDataSpecies = response.data;   
+                let resultPokeEvolutions = "";
+                                
+                //Pegando ID da especie
+                if(resultPokeDataSpecies.evolution_chain != null){
+                    const splitedUrl = resultPokeDataSpecies.evolution_chain.url.split("/");
+                    resultPokeEvolutions = await api.get(`/evolution-chain/${splitedUrl[6]}`);
+
+                    /*****************************************************************************/                    
+                    
+                    let evoChain = [];                    
+                    let evolutions = resultPokeEvolutions.data.chain;
+
+                    async function getEvo(evo, pokeOrigin) {                        
+
+                        for (let i = 0; i < evo.evolves_to.length; i++) {                                
+                                
+                            if(evoChain.indexOf(evo.evolves_to[i].species.name === -1)) {
+                                evoChain.push({
+                                                "name": evo.evolves_to[i].species.name,
+                                                "evoFrom": pokeOrigin
+                                            });                                
+                            }
+                                                        
+                            getEvo(evo.evolves_to[i], evo.evolves_to[i].species.name);
+                        
+                        }
+                        
+                        //Pegando as informações dos pokemons que estão na lita de evoluções
+                        let newEvoChain = evoChain;
+                        for (let i = 0; i < newEvoChain.length; i++) {                            
+                            await api.get(`/pokemon/${evoChain[i].name}`).then((response)=>{
+                                newEvoChain[i].id = response.data.id;                                
+                                newEvoChain[i].types = response.data.types;                                
+                                newEvoChain[i].img = spriteAdapterOfficial (response.data.sprites);
+                            })                            
+                        }
+                        setEvolutionsPokemon(newEvoChain);
+                    }
+
+                    if(evolutions.evolves_to.length > 0) {
+                        evoChain.push({
+                                        "name": resultPokeEvolutions.data.chain.species.name,                                        
+                                    });
+                        getEvo(evolutions, evolutions.species.name);
+                    } else {                       
+                        //Ação quando não possui evolução
+                        let newEvoChain = evoChain;    
+                        await api.get(`/pokemon/${resultPokeEvolutions.data.chain.species.name}`).then((response)=>{
+                            newEvoChain = [{}];
+                            newEvoChain[0].name = infoPokemon.name;                                
+                            newEvoChain[0].id = response.data.id;                                
+                            newEvoChain[0].types = response.data.types;                                
+                            newEvoChain[0].img = spriteAdapterOfficial (response.data.sprites);
+                            newEvoChain[0].evoFrom = "";
+                        })
+                        
+                        setEvolutionsPokemon(newEvoChain);
+
+
+                    }
+                    /*****************************************************************************/
+                } else {
+                    
+                    //Ação quando não possui evolução
+                    let newEvoChainNotEvolution = [{}];    
+                    await api.get(`/pokemon/${id}`).then((response)=>{                        
+                        newEvoChainNotEvolution[0].name = infoPokemon.name;                                
+                        newEvoChainNotEvolution[0].id = response.data.id;                                
+                        newEvoChainNotEvolution[0].types = response.data.types;                                
+                        newEvoChainNotEvolution[0].img = spriteAdapterOfficial (response.data.sprites);
+                        newEvoChainNotEvolution[0].evoFrom = "";
+                    })
+                    
+                    setEvolutionsPokemon(newEvoChainNotEvolution);                    
+                }
+
+                setPokeDataSpecies(resultPokeDataSpecies); 
+
+            }  
+            
             getInfoPokemonSpecies();
+
         })
     })   
 
@@ -123,8 +196,21 @@ function PokeInfo () {
                         </div>
                     </div>
 
-                    <div className='div-poke-evolutions'>
+                    <div className='div-evolutions'>
+                        <h2>Evolutions</h2>
 
+                        <div className='div-pokemon-evolutions'>
+                            { 
+                                EvolutionsPokemon.length > 0 &&                           
+                                EvolutionsPokemon.map(p => <PokeEvolutions                          
+                                    name={p.name} 
+                                    id={p.id} 
+                                    img={p.img} 
+                                    types={p.types}                            
+                                    key={p.id}
+                                />)
+                            } 
+                        </div>                       
                     </div>
                 </div>
             

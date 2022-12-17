@@ -13,7 +13,9 @@ export const PokeInformations = styled.div`
         width: 100%;
         padding: 10px;
         border-collapse: separate;
-        background-color: #eee;
+        border: 1px solid #333;
+        border-radius: 7px;
+        // background-color: #eee;
         border-radius: 7px;
     }
 
