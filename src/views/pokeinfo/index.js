@@ -34,12 +34,14 @@ function PokeInfo () {
 
     const { id } = useParams();
     const [PokeData, setPokeData] = useState([]);
-    const [PokeDataSpecies, setPokeDataSpecies] = useState([]);   
-    const [EvolutionsPokemon, setEvolutionsPokemon] = useState([]);   
+    const [PokeDataSpecies, setPokeDataSpecies] = useState([]);
+    const [FirstEvolution, setFirstEvolution] = useState([]);   
+    const [MiddleEvolution, setMiddleEvolution] = useState([]);   
+    const [LastEvolution, setLastEvolution] = useState([]);   
     
     // Responsavel por guardar os dados recebidos do Pokemon.
     let infoPokemon = "";
-    if(PokeData != "" && PokeDataSpecies != ""){
+    if(PokeData !== "" && PokeDataSpecies != ""){
         infoPokemon = {
             id: PokeData.id,
             img: spriteAdapterOfficial (PokeData.sprites),
@@ -58,8 +60,7 @@ function PokeInfo () {
             habitat: PokeDataSpecies.habitat === null ? 'Undefined' : PokeDataSpecies.habitat.name,
             description: PokeDataSpecies.flavor_text_entries[0].flavor_text,
             species: PokeDataSpecies.genera[0].genus,
-            gender: PokeDataSpecies.gender_rate,
-            evolutions: EvolutionsPokemon
+            gender: PokeDataSpecies.gender_rate
         }
     }  
     
@@ -87,33 +88,69 @@ function PokeInfo () {
                     /*****************************************************************************/                    
                     
                     let evoChain = [];                    
-                    let evolutions = resultPokeEvolutions.data.chain;
+                    let evolutions = resultPokeEvolutions.data.chain;                     
 
                     async function getEvo(evo, pokeOrigin) {                        
 
-                        for (let i = 0; i < evo.evolves_to.length; i++) {                                
-                                
-                            if(evoChain.indexOf(evo.evolves_to[i].species.name === -1)) {
-                                evoChain.push({
-                                                "name": evo.evolves_to[i].species.name,
-                                                "evoFrom": pokeOrigin
-                                            });                                
-                            }
+                        for (let i = 0; i < evo.evolves_to.length; i++) { 
+
+                            //if(evo.evolves_to > 0){
+                                if(evoChain.indexOf(evo.evolves_to[i].species.name === -1)) {
+                                    evoChain.push({
+                                                    "name": evo.evolves_to[i].species.name,
+                                                    "url": evo.evolves_to[i].species.url,
+                                                    "evoFrom": pokeOrigin
+                                                });                                
+                                }
+                                                            
+                                getEvo(evo.evolves_to[i], evo.evolves_to[i].species.name);
+                            //}
+                                                                                    
+                            // if(evoChain.indexOf(evo.evolves_to[i].species.name === -1)) {
+                            //     evoChain.push({
+                            //                     "name": evo.evolves_to[i].species.name,
+                            //                     "url": evo.evolves_to[i].species.url,
+                            //                     "evoFrom": pokeOrigin
+                            //                 });                                
+                            // }
                                                         
-                            getEvo(evo.evolves_to[i], evo.evolves_to[i].species.name);
+                            // getEvo(evo.evolves_to[i], evo.evolves_to[i].species.name);
                         
                         }
                         
-                        //Pegando as informações dos pokemons que estão na lita de evoluções
+
+                        //Pegando as informações dos pokemons que estão na lita de evoluções                        
                         let newEvoChain = evoChain;
-                        for (let i = 0; i < newEvoChain.length; i++) {                            
+                        for (let i = 0; i < newEvoChain.length; i++) {
+                            
                             await api.get(`/pokemon/${evoChain[i].name}`).then((response)=>{
                                 newEvoChain[i].id = response.data.id;                                
                                 newEvoChain[i].types = response.data.types;                                
                                 newEvoChain[i].img = spriteAdapterOfficial (response.data.sprites);
-                            })                            
+                            })                           
+                            
                         }
-                        setEvolutionsPokemon(newEvoChain);
+                        
+                        //Pegando primenra Evolução do Pokemon
+                        setFirstEvolution([newEvoChain[0]]);
+
+                        //Pegando a segunda e a terceira evolução do Pokemon
+                        let pokeMiddleEvolitions = [];
+                        let pokeLastEvolutions = [];
+                        for (let i = 0; i < newEvoChain.length; i++) {
+                            
+                            if(newEvoChain[i].evoFrom === newEvoChain[0].name) {                                
+                                pokeMiddleEvolitions.push(newEvoChain[i]);
+                            } else {
+                                if (newEvoChain[i].name !== newEvoChain[0].name)  {
+                                    pokeLastEvolutions.push(newEvoChain[i]);
+                                }
+                            }                            
+                        }
+
+                        setMiddleEvolution(pokeMiddleEvolitions);
+                        setLastEvolution(pokeLastEvolutions);
+
                     }
 
                     if(evolutions.evolves_to.length > 0) {
@@ -133,9 +170,7 @@ function PokeInfo () {
                             newEvoChain[0].evoFrom = "";
                         })
                         
-                        setEvolutionsPokemon(newEvoChain);
-
-
+                        setFirstEvolution([newEvoChain[0]]);
                     }
                     /*****************************************************************************/
                 } else {
@@ -148,9 +183,9 @@ function PokeInfo () {
                         newEvoChainNotEvolution[0].types = response.data.types;                                
                         newEvoChainNotEvolution[0].img = spriteAdapterOfficial (response.data.sprites);
                         newEvoChainNotEvolution[0].evoFrom = "";
-                    })
+                    })  
                     
-                    setEvolutionsPokemon(newEvoChainNotEvolution);                    
+                    setFirstEvolution([newEvoChainNotEvolution[0]]);                   
                 }
 
                 setPokeDataSpecies(resultPokeDataSpecies); 
@@ -160,7 +195,10 @@ function PokeInfo () {
             getInfoPokemonSpecies();
 
         })
-    })   
+
+        console.log(LastEvolution);
+
+    }, [])   
 
     return (
         <div>
@@ -199,18 +237,123 @@ function PokeInfo () {
                     <div className='div-evolutions'>
                         <h2>Evolutions</h2>
 
-                        <div className='div-pokemon-evolutions'>
-                            { 
-                                EvolutionsPokemon.length > 0 &&                           
-                                EvolutionsPokemon.map(p => <PokeEvolutions                          
-                                    name={p.name} 
-                                    id={p.id} 
-                                    img={p.img} 
-                                    types={p.types}                            
-                                    key={p.id}
-                                />)
-                            } 
-                        </div>                       
+                        <ul className='div-pokemon-evolutions'>
+                            <li className='first-evolution'>
+                                { 
+                                    FirstEvolution.length > 0 &&                           
+                                    FirstEvolution.map((p) => 
+
+                                        <PokeEvolutions                          
+                                        name={p.name} 
+                                        id={p.id} 
+                                        img={p.img} 
+                                        types={p.types}                            
+                                        key={p.id}
+                                        />
+                                    )
+                                } 
+                            </li>
+
+
+                            {
+                                MiddleEvolution.length > 0 &&
+                                <li className='li-evo-arrow'>
+                                    {
+                                        MiddleEvolution.length > 0 &&  MiddleEvolution.length < 3 &&                                  
+                                        MiddleEvolution.map((p) =>
+                                            <p key={p.id}>
+                                                <i className="bi bi-caret-right-fill arrow-right"></i>
+                                                <i className="bi bi-caret-down-fill arrow-bottom"></i>
+                                            </p>                           
+                                        )
+                                    }
+
+                                    {
+                                        MiddleEvolution.length > 0 &&  MiddleEvolution.length > 2 &&                                  
+                                        <p>
+                                            <i className="bi bi-caret-right-fill arrow-right"></i>
+                                            <i className="bi bi-caret-down-fill arrow-bottom"></i>
+                                        </p>
+                                    }
+                                </li>
+                            }
+
+                            {MiddleEvolution.length > 0 && 
+                                <li 
+                                    className='middle-evolution' 
+                                
+                                >
+                                    { 
+                                        MiddleEvolution.length > 0 && MiddleEvolution.length < 3 &&                                    
+                                        MiddleEvolution.map((p) => 
+
+                                            <PokeEvolutions                          
+                                                name={p.name} 
+                                                id={p.id} 
+                                                img={p.img} 
+                                                types={p.types}                            
+                                                key={p.id}
+                                            />
+                                        )
+                                    } 
+                                </li>                            
+                            }
+
+                            {MiddleEvolution.length > 2 && LastEvolution.length <= 0 &&
+                                <li 
+                                    className='middle-evolution middle-evolution-wrap' 
+                                
+                                >
+                                    { 
+                                        MiddleEvolution.length > 0 &&                                     
+                                        MiddleEvolution.map((p) => 
+
+                                            <PokeEvolutions                          
+                                                name={p.name} 
+                                                id={p.id} 
+                                                img={p.img} 
+                                                types={p.types}                            
+                                                key={p.id}
+                                            />
+                                        )
+                                    } 
+                                </li>                            
+                            }
+
+                            
+                            {LastEvolution.length > 0 && 
+                                <li className='li-evo-arrow'>
+                                    {
+                                        LastEvolution.length > 0 &&                                     
+                                        LastEvolution.map((p) =>                                        
+                                            <p key={p.id}>
+                                                <i className="bi bi-caret-right-fill arrow-right"></i>
+                                                <i className="bi bi-caret-down-fill arrow-bottom"></i>
+                                            </p>
+                                        )
+                                    }
+                                </li>                            
+                            }
+                            
+                            {LastEvolution.length > 0 &&
+                                <li className='last-evolution'>
+                                    { 
+                                        LastEvolution.length > 0 &&                           
+                                        LastEvolution.map((p) => 
+
+                                            <PokeEvolutions                          
+                                            name={p.name} 
+                                            id={p.id} 
+                                            img={p.img} 
+                                            types={p.types}                            
+                                            key={p.id}
+                                            />
+                                        )
+                                    } 
+                                </li>
+                            }                           
+                            
+                        </ul>                       
                     </div>
                 </div>
             
