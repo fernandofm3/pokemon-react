@@ -30,7 +30,29 @@ function PokeInfo () {
     //Pegando a URL da imagem oficial do Pokemon.
     function spriteAdapterOfficial (spriteOfficial) {
         return _get(spriteOfficial, "other.official-artwork.front_default", "");
-    };  
+    }; 
+    
+    //Busca pelo idioma "en" e pega o nome do Genres.
+    function getGenresNameInEn(genres) {
+        let genresName = "";        
+        for (let i = 0; i < genres.length; i++) {
+            if(genres[i].language.name === 'en') {
+                genresName = genres[i].genus;
+            }            
+        }
+        return genresName;
+    }
+
+    //Busca pelo idioma "en" e pega a descrição.
+    function getDescriptionInEn(description) {
+        let descriptionText = "";        
+        for (let i = 0; i < description.length; i++) {
+            if(description[i].language.name === 'en') {
+                descriptionText = description[i].flavor_text;
+            }            
+        }
+        return descriptionText;
+    }
 
     const { id } = useParams();
     const [PokeData, setPokeData] = useState({});
@@ -59,8 +81,8 @@ function PokeInfo () {
             abilities: PokeData.abilities === null ? 'Undefined' : PokeData.abilities.map(item => ' ' + item.ability.name).toString(),
             xp: PokeData.base_experience === null ? 'Undefined' : PokeData.base_experience,
             habitat: PokeDataSpecies.habitat === null ? 'Undefined' : PokeDataSpecies.habitat.name,
-            description: PokeDataSpecies.flavor_text_entries[0].flavor_text,
-            species: PokeDataSpecies.genera[0].genus,
+            description: getDescriptionInEn(PokeDataSpecies.flavor_text_entries),
+            genres: getGenresNameInEn(PokeDataSpecies.genera),
             gender: PokeDataSpecies.gender_rate
         }
     }  
@@ -258,7 +280,7 @@ function PokeInfo () {
                                 weight={infoPokemon.weight}
                                 habitat={infoPokemon.habitat}
                                 abilities={infoPokemon.abilities}
-                                species={infoPokemon.species}
+                                genres={infoPokemon.genres}
                             />                                                      
                         </div>
                     </div>

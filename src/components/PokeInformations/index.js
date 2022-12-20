@@ -11,9 +11,9 @@ function PokeInformations (props) {
                     <tr>
                         <td className="td-title">
                             <i className="bi bi-circle-square"></i>
-                            &nbsp; Species
+                            &nbsp; Genres
                         </td>
-                        <td>{props.species}</td>                        
+                        <td>{props.genres}</td>                        
                     </tr>                               
                     <tr>
                         <td className="td-title">
