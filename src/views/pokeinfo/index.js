@@ -27,21 +27,22 @@ function PokeInfo () {
         return newName;
     }
 
-    //Pegando a URL da imagem oficial do Pokemon
+    //Pegando a URL da imagem oficial do Pokemon.
     function spriteAdapterOfficial (spriteOfficial) {
         return _get(spriteOfficial, "other.official-artwork.front_default", "");
     };  
 
     const { id } = useParams();
-    const [PokeData, setPokeData] = useState([]);
+    const [PokeData, setPokeData] = useState({});
     const [PokeDataSpecies, setPokeDataSpecies] = useState([]);
     const [FirstEvolution, setFirstEvolution] = useState([]);   
     const [MiddleEvolution, setMiddleEvolution] = useState([]);   
     const [LastEvolution, setLastEvolution] = useState([]);   
     
-    // Responsavel por guardar os dados recebidos do Pokemon.
+    // Variável responsável por guardar os dados recebidos do Pokemon.
     let infoPokemon = "";
-    if(PokeData !== "" && PokeDataSpecies != ""){
+
+    if((PokeData != "" ) && (PokeDataSpecies != "")){
         infoPokemon = {
             id: PokeData.id,
             img: spriteAdapterOfficial (PokeData.sprites),
@@ -65,103 +66,130 @@ function PokeInfo () {
     }  
     
     useEffect( ()=>{
-        //Buscando Informações do Pokemon
-        api.get(`/pokemon/${id}`).then((response)=>{       
-            async function getInfoPokemon() {    
-                let dataResults = response.data;            
-                setPokeData(dataResults);            
-            }            
-            getInfoPokemon();                   
+
+        //Buscando Informações do Pokemon com o ID recuperado do useParams.
+        api.get(`/pokemon/${id}`).then((response)=>{ 
+            
+            //Informações recuperadas do pokemon.
+            let dataResults = response.data;
+
+            //Enviando o objeto (infoPokemon).            
+            setPokeData(dataResults);            
         })
 
-        //Buscando informações Pokemon Species na API
-        api.get(`/pokemon-species/${id}`).then((response)=>{            
-            async function getInfoPokemonSpecies() {
-                let resultPokeDataSpecies = response.data;   
+        //Buscando informações Pokemon(Species) com o ID recuperado do useParams.
+        api.get(`/pokemon-species/${id}`).then((response)=>{ 
+
+            //Função responsável por tratar as Evoluções dos Pokemons. 
+            async function getEvolutions() {
+
+                //Informações recuperadas do pokemon-species.
+                let resultPokeDataSpecies = response.data; 
+
+                //Enviando o objeto (infoPokemon).
+                setPokeDataSpecies(resultPokeDataSpecies);
+                
                 let resultPokeEvolutions = "";
                                 
-                //Pegando ID da especie
+                //Verificando se possui evolução.
                 if(resultPokeDataSpecies.evolution_chain != null){
+                    //Pegando ID da evolução.
                     const splitedUrl = resultPokeDataSpecies.evolution_chain.url.split("/");
-                    resultPokeEvolutions = await api.get(`/evolution-chain/${splitedUrl[6]}`);
-
-                    /*****************************************************************************/                    
+                    resultPokeEvolutions = await api.get(`/evolution-chain/${splitedUrl[6]}`);                                        
                     
-                    let evoChain = [];                    
-                    let evolutions = resultPokeEvolutions.data.chain;                     
+                    //Array onde ficará todos Pokemons evoluídos.
+                    const evoChain = []; 
+                    
+                    //Árvore de evoluções recuperada da API
+                    const evolutions = resultPokeEvolutions.data.chain; 
 
+                    //Função resposável por acessar a árvore de evoluções recursivamente e guarda os Pokemons no Array (evoChain).
                     async function getEvo(evo, pokeOrigin) {                        
 
-                        for (let i = 0; i < evo.evolves_to.length; i++) { 
+                        //Laço recursivo que recupera os pokemons evoluídos de dentro da árvore de evoluções. 
+                        for (let i = 0; i < evo.evolves_to.length; i++) {
 
-                            //if(evo.evolves_to > 0){
-                                if(evoChain.indexOf(evo.evolves_to[i].species.name === -1)) {
+                            if(evoChain.indexOf(evo.evolves_to[i].species.name === -1)) {
+
+                                let idSplitedUrl = evo.evolves_to[i].species.url.split("/");
+
+                                await api.get(`/pokemon/${idSplitedUrl[6]}`).then((response)=>{
                                     evoChain.push({
-                                                    "name": evo.evolves_to[i].species.name,
-                                                    "url": evo.evolves_to[i].species.url,
-                                                    "evoFrom": pokeOrigin
-                                                });                                
-                                }
-                                                            
-                                getEvo(evo.evolves_to[i], evo.evolves_to[i].species.name);
-                            //}
-                                                                                    
-                            // if(evoChain.indexOf(evo.evolves_to[i].species.name === -1)) {
-                            //     evoChain.push({
-                            //                     "name": evo.evolves_to[i].species.name,
-                            //                     "url": evo.evolves_to[i].species.url,
-                            //                     "evoFrom": pokeOrigin
-                            //                 });                                
-                            // }
+                                        "id" : response.data.id,
+                                        "name": response.data.name,
+                                        "evoFrom": pokeOrigin,
+                                        "types" : response.data.types,
+                                        "img" : spriteAdapterOfficial (response.data.sprites) 
+                                    });
+
+                                })                                                                            
+                            }
                                                         
-                            // getEvo(evo.evolves_to[i], evo.evolves_to[i].species.name);
-                        
-                        }
-                        
+                            getEvo(evo.evolves_to[i], evo.evolves_to[i].species.name);
 
-                        //Pegando as informações dos pokemons que estão na lita de evoluções                        
-                        let newEvoChain = evoChain;
+                        }
+
+                        //Salvando os Pokemons evoluídos em uma nova variável para corrigir um alerta do React.
+                        const newEvoChain = evoChain;
+
+                        //Separando e salvando as evoluções em arrays separados (esse procedimento facilitou na renderição).
+                        const pokeMiddleEvolitions = [];
+                        const pokeLastEvolutions = [];
+
+                        //Laço para percorrer os Pokemons evoluídos.
                         for (let i = 0; i < newEvoChain.length; i++) {
                             
-                            await api.get(`/pokemon/${evoChain[i].name}`).then((response)=>{
-                                newEvoChain[i].id = response.data.id;                                
-                                newEvoChain[i].types = response.data.types;                                
-                                newEvoChain[i].img = spriteAdapterOfficial (response.data.sprites);
-                            })                           
-                            
-                        }
-                        
-                        //Pegando primenra Evolução do Pokemon
-                        setFirstEvolution([newEvoChain[0]]);
-
-                        //Pegando a segunda e a terceira evolução do Pokemon
-                        let pokeMiddleEvolitions = [];
-                        let pokeLastEvolutions = [];
-                        for (let i = 0; i < newEvoChain.length; i++) {
-                            
+                            //Verificando se o Pokemon evoluiu do Pokemon origem.
                             if(newEvoChain[i].evoFrom === newEvoChain[0].name) {                                
                                 pokeMiddleEvolitions.push(newEvoChain[i]);
                             } else {
+                                //Verificando se o Pokemon evoluiu de outro Pokemon já evoluído.
                                 if (newEvoChain[i].name !== newEvoChain[0].name)  {
                                     pokeLastEvolutions.push(newEvoChain[i]);
                                 }
                             }                            
-                        }
+                        }                       
 
+                        //Mandando as evoluções prontas para renderização.
                         setMiddleEvolution(pokeMiddleEvolitions);
                         setLastEvolution(pokeLastEvolutions);
 
                     }
 
+                    //Verificando se o Pokemon possui evoluções.
                     if(evolutions.evolves_to.length > 0) {
-                        evoChain.push({
-                                        "name": resultPokeEvolutions.data.chain.species.name,                                        
-                                    });
+
+                        //Extraindo o ID do Pokemon da url
+                        let idSplitedUrlPokeOrigin = resultPokeEvolutions.data.chain.species.url.split("/");
+                        //Buscando as informações do Pokemon origem (primeira evolução).
+                        await api.get(`/pokemon/${idSplitedUrlPokeOrigin[6]}`).then((response)=>{                                                        
+                            let firstEvolutionPokemon = [];
+                            firstEvolutionPokemon.push({
+                                "id" : response.data.id,
+                                "name": response.data.name,
+                                "evoFrom": "",
+                                "types" : response.data.types,
+                                "img" : spriteAdapterOfficial (response.data.sprites) 
+                            });
+                            setFirstEvolution(firstEvolutionPokemon);
+                        })
+
+                        //Colocando o nome do Pokemon orirem no array para fazer verificações posteriormente.
+                        evoChain.push({"name": resultPokeEvolutions.data.chain.species.name});
+                                    
+                        //Função resposável por acessar a árvore de evoluções recursivamente e guarda os Pokemons no Array (evoChain).
                         getEvo(evolutions, evolutions.species.name);
+
                     } else {                       
-                        //Ação quando não possui evolução
-                        let newEvoChain = evoChain;    
-                        await api.get(`/pokemon/${resultPokeEvolutions.data.chain.species.name}`).then((response)=>{
+                        //Ação quando não possui evoluções
+                        //Variável que receberá o Pokemon sem evolução.
+                        let newEvoChain = "";
+                        
+                        //Extraindo o ID do Pokemon da url.
+                        let idSplitedUrl = resultPokeEvolutions.data.chain.species.url.split("/");
+
+                        //Buscando na API as informações do Pokemon e adicionando no array (newEvoChain).
+                        await api.get(`/pokemon/${idSplitedUrl[6]}`).then((response)=>{
                             newEvoChain = [{}];
                             newEvoChain[0].name = infoPokemon.name;                                
                             newEvoChain[0].id = response.data.id;                                
@@ -170,13 +198,17 @@ function PokeInfo () {
                             newEvoChain[0].evoFrom = "";
                         })
                         
+                        //Enviando Pokemon para renderização.
                         setFirstEvolution([newEvoChain[0]]);
                     }
-                    /*****************************************************************************/
+                    
                 } else {
                     
-                    //Ação quando não possui evolução
-                    let newEvoChainNotEvolution = [{}];    
+                    //Ação quando não possui evoluções
+                    //Variável que receberá o Pokemon sem evolução.
+                    let newEvoChainNotEvolution = [{}]; 
+                    
+                    //Buscando na API as informações do Pokemon e adicionando no array (newEvoChainNotEvolution).
                     await api.get(`/pokemon/${id}`).then((response)=>{                        
                         newEvoChainNotEvolution[0].name = infoPokemon.name;                                
                         newEvoChainNotEvolution[0].id = response.data.id;                                
@@ -185,18 +217,15 @@ function PokeInfo () {
                         newEvoChainNotEvolution[0].evoFrom = "";
                     })  
                     
+                    //Enviando Pokemon para renderização.
                     setFirstEvolution([newEvoChainNotEvolution[0]]);                   
                 }
-
-                setPokeDataSpecies(resultPokeDataSpecies); 
-
             }  
             
-            getInfoPokemonSpecies();
+            //Função responsável por tratar as Evoluções dos Pokemons.
+            getEvolutions();
 
         })
-
-        console.log(LastEvolution);
 
     }, [])   
 
