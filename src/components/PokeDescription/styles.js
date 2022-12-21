@@ -25,7 +25,11 @@ export const PokeDescription = styled.div`
     }
 
     .div-gender-percentage div i {
-        font-size: 1.6rem;               
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        font-size: 1.6rem; 
+        margin-bottom: 5px;              
     }
 
     .div-gender-percentage .bi-gender-female {
@@ -36,9 +40,14 @@ export const PokeDescription = styled.div`
         color: blue;
     }   
 
-    .div-gender-percentage div p {
+    .div-gender-percentage div p {        
         font-size: 0.8rem;
         font-weight: bold;
-        color: #999;            
+        color: #999; 
+        margin-bottom: 0;           
+    }
+
+    @media screen and (min-width: 1024px) {
+        margin-bottom: 0;
     }
 `

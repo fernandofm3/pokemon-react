@@ -268,7 +268,8 @@ function PokeInfo () {
                 <div className='div-poke-info-main'>                    
                     <div className='div-poke-info'>
                         <div className='div-images-description'>
-                            <PokeImages id={infoPokemon.id} name={infoPokemon.name} img={infoPokemon.img}/>
+                            <PokeImages id={infoPokemon.id} name={infoPokemon.name} img={infoPokemon.img} setPokemonId={setPokemonId} />
+
                             <PokeDescription description={infoPokemon.description} gender={infoPokemon.gender}/> 
                         </div>
 

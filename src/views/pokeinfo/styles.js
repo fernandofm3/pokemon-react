@@ -37,8 +37,7 @@ export const Container = styled.div`
         display: flex;
         flex-direction: column;
         margin-top: 50px;
-        background-color: #fff;
-        border: 2px solid #000;
+        border: 1px solid #000;
         padding: 30px 5px;
         border-radius: 7px;        
     }

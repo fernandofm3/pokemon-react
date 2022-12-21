@@ -38,4 +38,9 @@ export const PokeStats = styled.div`
         color: #555;
         font-size: 0.8rem;
     }
+
+    .td-total {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
 `

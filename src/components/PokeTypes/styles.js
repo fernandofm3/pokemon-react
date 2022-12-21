@@ -21,5 +21,10 @@ export const PokeTypes = styled.div`
         border-radius: 7px;
         font-weight: bold;
         text-transform: capitalize;
+        text-shadow: 2px 2px 2px #aaa;
+    }
+
+    @media screen and (min-width: 768px) {
+        margin-top: 6px;
     }
 `

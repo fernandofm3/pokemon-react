@@ -1,19 +1,19 @@
 import React from "react";
 import * as S from "./styles";
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function PokeImages (props) {
 
     //Gera o ID do próximo pokemon.
-    // let nextPokemon = Number(props.id) + 1;
-    // if (nextPokemon === 906) {
-    //     nextPokemon = 1;
-    // }
+    let nextPokemon = Number(props.id) + 1;
+    if (nextPokemon === 906) {
+        nextPokemon = 1;
+    }
     //Gera o ID do pokemon anterior.
-    // let previewsPokemon = Number(props.id) - 1;
-    // if (previewsPokemon === 0) {
-    //     previewsPokemon = 905;
-    // }
+    let previewsPokemon = Number(props.id) - 1;
+    if (previewsPokemon === 0) {
+        previewsPokemon = 905;
+    }
 
     return (
         <S.PokeImages>
@@ -25,15 +25,27 @@ function PokeImages (props) {
                 <img src={props.img} alt="Imagem do Pokemon." />
             </div>
 
-            {/* <div className='div-btn'>
-                <Link to={'/pokeinfo/'+ previewsPokemon}>
+            <div className='div-btn'>
+                <Link 
+                    to={'/pokeinfo/'+ previewsPokemon}
+                    className='btn-previews'
+                    onClick={()=> {
+                        props.setPokemonId(previewsPokemon);
+                    }}                
+                >
                     <i className="bi bi-chevron-double-left"></i>
                 </Link>
                 
-                <Link to={'/pokeinfo/'+ nextPokemon}>
+                <Link 
+                    to={'/pokeinfo/'+ nextPokemon}
+                    className='btn-next'
+                    onClick={()=> {
+                        props.setPokemonId(nextPokemon);
+                    }}
+                >
                     <i className="bi bi-chevron-double-right"></i>
                 </Link>
-            </div> */}
+            </div>
         </S.PokeImages>
     )
 }

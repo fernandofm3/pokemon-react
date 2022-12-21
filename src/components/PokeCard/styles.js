@@ -64,5 +64,6 @@ export const PokeCard = styled.div`
         color: #fff;*/
         text-transform: capitalize;
         font-weight: bold;
+        text-shadow: 2px 2px 2px #aaa;
     }
 `

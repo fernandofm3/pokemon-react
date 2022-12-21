@@ -23,11 +23,13 @@ export const PokeEvolutions = styled.div`
     }
 
     .evo-num-pokemon {
-        color: #aaa;
+        color: #777;
+        font-weight: bold;
     }
 
     .evo-name-pokemon {
-        color: #000;
+        color: #333;
+        font-weight: bold;
         text-transform: capitalize;
     }
 

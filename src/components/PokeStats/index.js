@@ -15,6 +15,37 @@ function PokeStats (props) {
         
         return result; 
     }
+
+    //Verificando o valor da Stats para definir a cor da barra.
+    function getColorBar(value) {
+        let barColor = "";
+
+        if(value < 29){
+            barColor = "#e74c3c";
+        }
+
+        if(value > 29 && value < 60 ){
+            barColor = "#e67e22";
+        }
+
+        if(value > 59 && value < 90 ){
+            barColor = "#f1c40f";
+        }
+
+        if(value > 89 && value < 120){
+            barColor = "#3498db";
+        }
+
+        if(value > 119 && value < 150){
+            barColor = "#8e44ad";
+        }
+
+        if(value > 149){
+            barColor = "#16a085";
+        }
+
+        return barColor;
+    }
     
     return (
         <S.PokeStats>
@@ -31,7 +62,10 @@ function PokeStats (props) {
                                     className="progress-bar" 
                                     role="progressbar" 
                                     aria-label="Basic example" 
-                                    style={{width: `${findValueStatsInPercentage(props.hp)}%`}} 
+                                    style={{
+                                                width: `${findValueStatsInPercentage(props.hp)}%`,
+                                                backgroundColor: `${getColorBar(props.hp)}`                                        
+                                            }}        
                                     aria-valuenow={findValueStatsInPercentage(props.hp)} 
                                     aria-valuemin="0" 
                                     aria-valuemax="100"
@@ -49,7 +83,10 @@ function PokeStats (props) {
                                     className="progress-bar" 
                                     role="progressbar" 
                                     aria-label="Basic example" 
-                                    style={{width: `${findValueStatsInPercentage(props.attack)}%`}} 
+                                    style={{
+                                            width: `${findValueStatsInPercentage(props.attack)}%`,
+                                            backgroundColor: `${getColorBar(props.attack)}`
+                                        }} 
                                     aria-valuenow={findValueStatsInPercentage(props.attack)} 
                                     aria-valuemin="0" 
                                     aria-valuemax="100"
@@ -67,7 +104,10 @@ function PokeStats (props) {
                                     className="progress-bar" 
                                     role="progressbar" 
                                     aria-label="Basic example" 
-                                    style={{width: `${findValueStatsInPercentage(props.defense)}%`}}
+                                    style={{
+                                            width: `${findValueStatsInPercentage(props.defense)}%`,
+                                            backgroundColor: `${getColorBar(props.defense)}`
+                                        }}
                                     aria-valuenow={findValueStatsInPercentage(props.defense)} 
                                     aria-valuemin="0" 
                                     aria-valuemax="100"
@@ -85,7 +125,10 @@ function PokeStats (props) {
                                     className="progress-bar" 
                                     role="progressbar" 
                                     aria-label="Basic example" 
-                                    style={{width: `${findValueStatsInPercentage(props.attackSpecial)}%`}} 
+                                    style={{
+                                            width: `${findValueStatsInPercentage(props.attackSpecial)}%`,
+                                            backgroundColor: `${getColorBar(props.attackSpecial)}`
+                                    }} 
                                     aria-valuenow={findValueStatsInPercentage(props.attackSpecial)} 
                                     aria-valuemin="0" 
                                     aria-valuemax="100"
@@ -103,7 +146,10 @@ function PokeStats (props) {
                                     className="progress-bar" 
                                     role="progressbar" 
                                     aria-label="Basic example" 
-                                    style={{width: `${findValueStatsInPercentage(props.defenseSpecial)}%`}} 
+                                    style={{
+                                            width: `${findValueStatsInPercentage(props.defenseSpecial)}%`,
+                                            backgroundColor: `${getColorBar(props.defenseSpecial)}`
+                                    }} 
                                     aria-valuenow={findValueStatsInPercentage(props.defenseSpecial)} 
                                     aria-valuemin="0" 
                                     aria-valuemax="100"
@@ -121,7 +167,10 @@ function PokeStats (props) {
                                     className="progress-bar" 
                                     role="progressbar" 
                                     aria-label="Basic example" 
-                                    style={{width: `${findValueStatsInPercentage(props.speed)}%`}} 
+                                    style={{
+                                            width: `${findValueStatsInPercentage(props.speed)}%`,
+                                            backgroundColor: `${getColorBar(props.speed)}`
+                                    }} 
                                     aria-valuenow={findValueStatsInPercentage(props.speed)} 
                                     aria-valuemin="0" 
                                     aria-valuemax="100"
@@ -129,6 +178,20 @@ function PokeStats (props) {
                                 </div>
                             </div>
                         </td>  
+                    </tr>                                 
+                    <tr>
+                        <td className="td-title">Total</td>                        
+                        <td className="td-value td-total">
+                            {
+                                props.hp +
+                                props.attack +
+                                props.defense +
+                                props.attackSpecial +
+                                props.defenseSpecial +
+                                props.speed
+
+                            }
+                        </td>                       
                     </tr>                                 
                 </tbody>
             </table>

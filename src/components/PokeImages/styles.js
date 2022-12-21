@@ -1,56 +1,27 @@
 import styled from 'styled-components';
 
 export const PokeImages = styled.div` 
-    
+    margin-bottom: 40px;    
+
     .div-images {
         display: flex;
         flez-direction: row;
-        justify-content: left;
+        justify-content: center;
     }
 
     img {
         width: 100%;
         margin-bottom: 20px;        
-    }
-
-    @media screen and (min-width: 500px) {
-        img {
-            width: 400px;
-        }
-    }
-
-    @media screen and (min-width: 768px) {
-        img {
-            width: 100%;
-        }
-    }
+    }   
 
     h1 {
-        color: #aaa;
+        color: #555;
         font-weight: bold;
         font-size: 1.25rem;
-    }
-
-    @media screen and (min-width: 415px) {
-        h1 {
-            font-size: 1.8rem;
-        }
-    }
-
-    @media screen and (min-width: 768px) {
-        h1 {
-            font-size: 1.5rem;
-        }
-    }
-
-    @media screen and (min-width: 1024px) {
-        h1 {
-            font-size: 2rem;
-        }
-    }
+    }    
 
     h1 .poke-name {
-        color: #777;
+        color: #aaa;
     }
 
     .poke-name {
@@ -65,17 +36,79 @@ export const PokeImages = styled.div`
 
     .div-btn a{
         width: 48%;
+        height: 40px;
         border: none;
         background-color: #3f66a2;
         padding: 3px;
-        border-radius: 10Px;
         font-size: 1.25rem;
         color: #fff;
         text-align: center;
+        position: relative;
+        overflow: hidden;
         transition: 0.3s;
+    }
+
+    .div-btn .btn-previews::after {
+        content: "";
+        position: absolute;
+        z-index: 2;
+        top: -15px;
+        left: -15px;
+        width: 30px;
+        height: 30px;
+        transform: rotate(45deg);
+        background-color: #fff;
+    }
+
+    .div-btn .btn-next::after {
+        content: "";
+        position: absolute;
+        z-index: 2;
+        top: -15px;
+        right: -15px;
+        width: 30px;
+        height: 30px;
+        transform: rotate(45deg);
+        background-color: #fff;
     }
 
     .div-btn a:hover {
         background-color: #3f66a2e0;
+    }
+
+
+
+    @media screen and (min-width: 415px) {
+        h1 {
+            font-size: 1.8rem;
+        }
+    }
+
+    @media screen and (min-width: 500px) {
+        img {
+            width: 400px;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        img {
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+    }    
+
+    @media screen and (min-width: 1024px) {
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    @media screen and (min-width: 1024px) {
+        img {
+            width: 380px;
+        }
     }
 `
