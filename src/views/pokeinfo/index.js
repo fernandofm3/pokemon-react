@@ -9,11 +9,20 @@ import PokeInformations from '../../components/PokeInformations';
 import PokeStats from '../../components/PokeStats';
 import PokeImages from '../../components/PokeImages';
 import PokeEvolutions from '../../components/PokeEvolutions';
+import { Link } from 'react-router-dom';
 
 //Import Styles
 import * as S from './styles';
 
 function PokeInfo () {
+
+    //Ir ao topo da tela
+    function scrollUp () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    }   
 
     //Pega apenas o primeiro nome do pokemon.
     function splitName(name) {        
@@ -55,6 +64,7 @@ function PokeInfo () {
     }
 
     const { id } = useParams();
+    const [PokemonId, setPokemonId] = useState(id);
     const [PokeData, setPokeData] = useState({});
     const [PokeDataSpecies, setPokeDataSpecies] = useState([]);
     const [FirstEvolution, setFirstEvolution] = useState([]);   
@@ -90,7 +100,7 @@ function PokeInfo () {
     useEffect( ()=>{
 
         //Buscando Informações do Pokemon com o ID recuperado do useParams.
-        api.get(`/pokemon/${id}`).then((response)=>{ 
+        api.get(`/pokemon/${PokemonId}`).then((response)=>{ 
             
             //Informações recuperadas do pokemon.
             let dataResults = response.data;
@@ -100,7 +110,7 @@ function PokeInfo () {
         })
 
         //Buscando informações Pokemon(Species) com o ID recuperado do useParams.
-        api.get(`/pokemon-species/${id}`).then((response)=>{ 
+        api.get(`/pokemon-species/${PokemonId}`).then((response)=>{ 
 
             //Função responsável por tratar as Evoluções dos Pokemons. 
             async function getEvolutions() {
@@ -213,7 +223,7 @@ function PokeInfo () {
                         //Buscando na API as informações do Pokemon e adicionando no array (newEvoChain).
                         await api.get(`/pokemon/${idSplitedUrl[6]}`).then((response)=>{
                             newEvoChain = [{}];
-                            newEvoChain[0].name = infoPokemon.name;                                
+                            newEvoChain[0].name = response.data.name;                                
                             newEvoChain[0].id = response.data.id;                                
                             newEvoChain[0].types = response.data.types;                                
                             newEvoChain[0].img = spriteAdapterOfficial (response.data.sprites);
@@ -231,8 +241,8 @@ function PokeInfo () {
                     let newEvoChainNotEvolution = [{}]; 
                     
                     //Buscando na API as informações do Pokemon e adicionando no array (newEvoChainNotEvolution).
-                    await api.get(`/pokemon/${id}`).then((response)=>{                        
-                        newEvoChainNotEvolution[0].name = infoPokemon.name;                                
+                    await api.get(`/pokemon/${PokemonId}`).then((response)=>{                        
+                        newEvoChainNotEvolution[0].name = response.data.name;                                
                         newEvoChainNotEvolution[0].id = response.data.id;                                
                         newEvoChainNotEvolution[0].types = response.data.types;                                
                         newEvoChainNotEvolution[0].img = spriteAdapterOfficial (response.data.sprites);
@@ -249,7 +259,7 @@ function PokeInfo () {
 
         })
 
-    }, [])   
+    }, [PokemonId])   
 
     return (
         <div>
@@ -286,21 +296,28 @@ function PokeInfo () {
                     </div>
 
                     <div className='div-evolutions'>
-                        <h2>Evolutions</h2>
+                        
+                        <h1>Evolutions</h1>
 
                         <ul className='div-pokemon-evolutions'>
                             <li className='first-evolution'>
                                 { 
                                     FirstEvolution.length > 0 &&                           
                                     FirstEvolution.map((p) => 
-
-                                        <PokeEvolutions                          
-                                        name={p.name} 
-                                        id={p.id} 
-                                        img={p.img} 
-                                        types={p.types}                            
-                                        key={p.id}
-                                        />
+                                        <Link to={'/pokeinfo/'+ p.id} 
+                                            onClick={()=> {
+                                                setPokemonId(p.id)
+                                                scrollUp();
+                                            }}
+                                        >
+                                            <PokeEvolutions                          
+                                                name={p.name} 
+                                                id={p.id} 
+                                                img={p.img} 
+                                                types={p.types}                            
+                                                key={p.id}
+                                            />
+                                        </Link>
                                     )
                                 } 
                             </li>
@@ -330,42 +347,51 @@ function PokeInfo () {
                             }
 
                             {MiddleEvolution.length > 0 && 
-                                <li 
-                                    className='middle-evolution' 
-                                
-                                >
+                                <li>
                                     { 
                                         MiddleEvolution.length > 0 && MiddleEvolution.length < 3 &&                                    
                                         MiddleEvolution.map((p) => 
 
-                                            <PokeEvolutions                          
-                                                name={p.name} 
-                                                id={p.id} 
-                                                img={p.img} 
-                                                types={p.types}                            
-                                                key={p.id}
-                                            />
+                                            <Link to={'/pokeinfo/'+ p.id} 
+                                                onClick={()=> {
+                                                    setPokemonId(p.id)
+                                                    scrollUp();
+                                                }}
+                                            >
+                                                <PokeEvolutions                          
+                                                    name={p.name} 
+                                                    id={p.id} 
+                                                    img={p.img} 
+                                                    types={p.types}                            
+                                                    key={p.id}
+                                                />
+                                            </Link>
                                         )
                                     } 
                                 </li>                            
                             }
 
                             {MiddleEvolution.length > 2 && LastEvolution.length <= 0 &&
-                                <li 
-                                    className='middle-evolution middle-evolution-wrap' 
-                                
-                                >
+                                <li className='middle-evolution'>
                                     { 
                                         MiddleEvolution.length > 0 &&                                     
                                         MiddleEvolution.map((p) => 
 
-                                            <PokeEvolutions                          
-                                                name={p.name} 
-                                                id={p.id} 
-                                                img={p.img} 
-                                                types={p.types}                            
-                                                key={p.id}
-                                            />
+                                            <Link to={'/pokeinfo/'+ p.id}
+                                                className='test'
+                                                onClick={()=> {
+                                                    setPokemonId(p.id)
+                                                    scrollUp();
+                                                }}
+                                            >
+                                                <PokeEvolutions                          
+                                                    name={p.name} 
+                                                    id={p.id} 
+                                                    img={p.img} 
+                                                    types={p.types}                            
+                                                    key={p.id}
+                                                />
+                                            </Link>
                                         )
                                     } 
                                 </li>                            
@@ -391,14 +417,20 @@ function PokeInfo () {
                                     { 
                                         LastEvolution.length > 0 &&                           
                                         LastEvolution.map((p) => 
-
-                                            <PokeEvolutions                          
-                                            name={p.name} 
-                                            id={p.id} 
-                                            img={p.img} 
-                                            types={p.types}                            
-                                            key={p.id}
-                                            />
+                                            <Link to={'/pokeinfo/'+ p.id} 
+                                                onClick={()=> {
+                                                    setPokemonId(p.id)
+                                                    scrollUp();
+                                                }}
+                                            >
+                                                <PokeEvolutions                                             
+                                                    name={p.name} 
+                                                    id={p.id} 
+                                                    img={p.img} 
+                                                    types={p.types}                            
+                                                    key={p.id}
+                                                />
+                                            </Link>    
                                         )
                                     } 
                                 </li>

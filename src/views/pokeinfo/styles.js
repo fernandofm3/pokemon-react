@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+//import wallpaperEvolution from "../../assets/wallpaper-evolution.png";
 
 export const Container = styled.div`    
     max-width: 1280px;        
@@ -36,14 +37,18 @@ export const Container = styled.div`
         display: flex;
         flex-direction: column;
         margin-top: 50px;
-        background-color: #eee;
+        background-color: #fff;
+        border: 2px solid #000;
         padding: 30px 5px;
         border-radius: 7px;        
     }
 
-    .div-evolutions h2{
-        text-align: center;
-        margin-bottom: 50px;       
+    .div-evolutions h1{
+        margin-bottom: 50px;
+        font-weight: bold;
+        border-left: 10px solid #c0392b; 
+        padding-left: 10px;
+        margin-left: 20px;      
     }
 
     .div-evolutions .div-pokemon-evolutions {
@@ -57,8 +62,25 @@ export const Container = styled.div`
     .div-evolutions .div-pokemon-evolutions li{
         display: flex;
         flex-direction: row;
+        justify-content: center;
         list-style: none;
         width: 100%;
+    }
+
+    .div-evolutions .div-pokemon-evolutions .middle-evolution {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .div-evolutions .div-pokemon-evolutions li a{
+        text-decoration: none;
+        width: 100%;
+    }
+
+    .div-evolutions .div-pokemon-evolutions .test {
+        width: auto;
     }
     
     .li-evo-arrow p{
@@ -70,20 +92,12 @@ export const Container = styled.div`
 
     .li-evo-arrow p i{
         font-size: 3rem;
-        color: #777;
+        color: #000;
     }
 
     .arrow-right {            
         display: none;
     }
-
-    .middle-evolution {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-
 
     @media screen and (min-width: 768px) {
         .div-poke-info {            
@@ -102,9 +116,10 @@ export const Container = styled.div`
 
     @media screen and (min-width: 1024px) {
 
-        .div-evolutions h2{
+        .div-evolutions h1{
             text-align: left;
-            margin-left: 40px;      
+            margin-left: 40px;
+            margin-bottom: 15px;      
         }
 
         .div-evolutions .div-pokemon-evolutions {            

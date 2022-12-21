@@ -4,7 +4,7 @@ import * as S from "./styles";
 function PokeEvolutions (props) {
     return (
         <S.PokeEvolutions>
-                        
+        
             <img className='evo-img-pokemon' src={props.img} alt="Imagem do Pokemon."/>
 
             <div className='evo-type-pokemon'> 
