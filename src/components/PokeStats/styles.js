@@ -6,7 +6,7 @@ export const PokeStats = styled.div`
     h6 {
         text-transform: uppercase;
         margin-bottom: 20px;
-        color: #333;
+        color: #212529;
         font-weight: bold;
     }
 

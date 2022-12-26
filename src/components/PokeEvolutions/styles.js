@@ -7,13 +7,11 @@ export const PokeEvolutions = styled.div`
     width: 48%;
     margin: auto;
     margin-bottom: 30px;
-
-    @media screen and (min-width: 1024px) {
-        {
-            width: 22%;
-        }
+    transition: 0.3s;
+    
+    :hover .evo-img-pokemon{
+        opacity: 0.8;
     }
-
 
     .div-evo-name-num {
         display: flex;
@@ -31,22 +29,13 @@ export const PokeEvolutions = styled.div`
         color: #333;
         font-weight: bold;
         text-transform: capitalize;
+        width: 100px;
+        text-align: center;
     }
 
     .evo-img-pokemon {
         width: 90px;
-    }
-
-    @media screen and (min-width: 500px) {
-        .evo-img-pokemon {            
-            width: 150px;
-        }
-    }
-
-    @media screen and (min-width: 768px) {
-        .evo-img-pokemon {            
-            width: 180px;
-        }
+        transition: 0.3s;
     }
 
     .evo-type-pokemon {
@@ -62,17 +51,33 @@ export const PokeEvolutions = styled.div`
         border-radius: 4px;
         margin-right: 7px;
         text-transform: capitalize;
+        text-shadow: 2px 2px 2px #aaa;
     }
 
+
     @media screen and (min-width: 500px) {
+        .evo-img-pokemon {            
+            width: 150px;
+        }
+
         .evo-type-pokemon p {            
             font-size: 0.875rem;
         }
     }
 
     @media screen and (min-width: 768px) {
+        .evo-img-pokemon {            
+            width: 180px;
+        }
+
         .evo-type-pokemon p {            
             font-size: 1rem;
         }
     }
+
+    @media screen and (min-width: 1024px) {
+        {
+            width: 22%;
+        }
+    }  
 `

@@ -47,7 +47,8 @@ export const Container = styled.div`
         font-weight: bold;
         border-left: 10px solid #c0392b; 
         padding-left: 10px;
-        margin-left: 20px;      
+        margin-left: 20px;  
+        color: #212529;    
     }
 
     .div-evolutions .div-pokemon-evolutions {
@@ -90,8 +91,8 @@ export const Container = styled.div`
     }
 
     .li-evo-arrow p i{
-        font-size: 3rem;
-        color: #000;
+        font-size: 4rem;
+        color: #212529;
     }
 
     .arrow-right {            

@@ -15,7 +15,7 @@ export const PokeImages = styled.div`
     }   
 
     h1 {
-        color: #555;
+        color: #212529;
         font-weight: bold;
         font-size: 1.25rem;
     }    

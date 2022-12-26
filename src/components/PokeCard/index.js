@@ -17,10 +17,23 @@ function PokeCard (props) {
     function spriteAdapterOfficial (spriteOfficial) {
         return _get(spriteOfficial, "other.official-artwork.front_default", "");
     };
-    //Pegando a URL da imagem com alta definição
-    // function spriteAdapterDream (sprite) {
-    //     return _get(sprite, "other.dream_world.front_default", "");
-    // };
+
+    //Adicionando zero a esqueda no númeoro do Pokemon.
+    function zeroLeft(pokeId) {
+        let newPokeID;        
+
+        if(pokeId < 10) {
+            return newPokeID = '00'+pokeId;
+        }
+
+        if(pokeId >= 10 && pokeId < 100) {
+            return newPokeID = '0'+pokeId;
+        }
+
+        if(pokeId >= 100) {
+            return newPokeID = pokeId;
+        }        
+    }
 
     //Verrificando o tamanho do NOME do Pokemon, se preciso o nome será dividio e mostrado só o primeiro nome.
     function splitName(name) {        
@@ -49,7 +62,7 @@ function PokeCard (props) {
                             }
                             alt="Imagem do Pokemon."
                         />                    
-                        <p className='pokeNum'>N° {props.id}</p>
+                        <p className='pokeNum'>N° {zeroLeft(props.id)}</p>
                         <p className='pokeName'>{
                             splitName(props.name)                    
                         }</p>

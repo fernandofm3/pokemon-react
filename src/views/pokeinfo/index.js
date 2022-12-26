@@ -10,6 +10,7 @@ import PokeStats from '../../components/PokeStats';
 import PokeImages from '../../components/PokeImages';
 import PokeEvolutions from '../../components/PokeEvolutions';
 import { Link } from 'react-router-dom';
+import Loading from '../../components/Loading';
 
 //Import Styles
 import * as S from './styles';
@@ -66,15 +67,16 @@ function PokeInfo () {
     const { id } = useParams();
     const [PokemonId, setPokemonId] = useState(id);
     const [PokeData, setPokeData] = useState({});
-    const [PokeDataSpecies, setPokeDataSpecies] = useState([]);
+    const [PokeDataSpecies, setPokeDataSpecies] = useState({});
     const [FirstEvolution, setFirstEvolution] = useState([]);   
     const [MiddleEvolution, setMiddleEvolution] = useState([]);   
     const [LastEvolution, setLastEvolution] = useState([]);   
-    
+    const [RemoveLoading, setRemoveLoading] = useState(false);
+
     // Variável responsável por guardar os dados recebidos do Pokemon.
     let infoPokemon = "";
-
-    if((PokeData != "" ) && (PokeDataSpecies != "")){
+    
+    if((JSON.stringify(PokeData) !== "{}") && (JSON.stringify(PokeDataSpecies) !== "{}")){
         infoPokemon = {
             id: PokeData.id,
             img: spriteAdapterOfficial (PokeData.sprites),
@@ -88,9 +90,15 @@ function PokeInfo () {
             defense: PokeData.stats[2].base_stat,
             defenseSpecial: PokeData.stats[4].base_stat,
             speed: PokeData.stats[5].base_stat,
+            totalStats: PokeData.stats[0].base_stat + 
+                        PokeData.stats[1].base_stat + 
+                        PokeData.stats[3].base_stat + 
+                        PokeData.stats[2].base_stat + 
+                        PokeData.stats[4].base_stat + 
+                        PokeData.stats[5].base_stat,                        
             abilities: PokeData.abilities === null ? 'Undefined' : PokeData.abilities.map(item => ' ' + item.ability.name).toString(),
             xp: PokeData.base_experience === null ? 'Undefined' : PokeData.base_experience,
-            habitat: PokeDataSpecies.habitat === null ? 'Undefined' : PokeDataSpecies.habitat.name,
+            habitat: PokeDataSpecies.habitat === null ? "Unfefined" : PokeDataSpecies.habitat.name,
             description: getDescriptionInEn(PokeDataSpecies.flavor_text_entries),
             genres: getGenresNameInEn(PokeDataSpecies.genera),
             gender: PokeDataSpecies.gender_rate
@@ -186,6 +194,8 @@ function PokeInfo () {
                         setMiddleEvolution(pokeMiddleEvolitions);
                         setLastEvolution(pokeLastEvolutions);
 
+                        setRemoveLoading(true);
+
                     }
 
                     //Verificando se o Pokemon possui evoluções.
@@ -232,6 +242,10 @@ function PokeInfo () {
                         
                         //Enviando Pokemon para renderização.
                         setFirstEvolution([newEvoChain[0]]);
+                        setMiddleEvolution([]);
+                        setLastEvolution([]);
+
+                        setRemoveLoading(true);
                     }
                     
                 } else {
@@ -250,7 +264,11 @@ function PokeInfo () {
                     })  
                     
                     //Enviando Pokemon para renderização.
-                    setFirstEvolution([newEvoChainNotEvolution[0]]);                   
+                    setFirstEvolution([newEvoChainNotEvolution[0]]); 
+                    setMiddleEvolution([]);
+                    setLastEvolution([]);   
+                    
+                    setRemoveLoading(true);
                 }
             }  
             
@@ -263,19 +281,25 @@ function PokeInfo () {
 
     return (
         <div>
+            {!RemoveLoading && <Loading />}
             <Headder/>
             <S.Container>
-                <div className='div-poke-info-main'>                    
-                    <div className='div-poke-info'>
+                <div className='div-poke-info-main'>
+
+                {JSON.stringify(infoPokemon) !== "{}" &&                    
+                    <div className='div-poke-info'>                        
                         <div className='div-images-description'>
-                            <PokeImages id={infoPokemon.id} name={infoPokemon.name} img={infoPokemon.img} setPokemonId={setPokemonId} />
-
+                            <PokeImages 
+                                id={infoPokemon.id} 
+                                name={infoPokemon.name} 
+                                img={infoPokemon.img} 
+                                setPokemonId={setPokemonId} 
+                                setRemoveLoading={setRemoveLoading}
+                            />                            
                             <PokeDescription description={infoPokemon.description} gender={infoPokemon.gender}/> 
-                        </div>
-
+                        </div> 
                         <div className='div-type-stats-informations'>
-                            <PokeTypes types={infoPokemon.types} />
-                            
+                            <PokeTypes types={infoPokemon.types} />                            
                             <PokeStats 
                                     hp={infoPokemon.hp}
                                     attack={infoPokemon.attack}
@@ -283,8 +307,8 @@ function PokeInfo () {
                                     defense={infoPokemon.defense}
                                     defenseSpecial={infoPokemon.defenseSpecial}
                                     speed={infoPokemon.speed}
-                            /> 
-
+                                    totalStats={infoPokemon.totalStats}
+                            />
                             <PokeInformations 
                                 xp={infoPokemon.xp}
                                 height={infoPokemon.height} 
@@ -295,6 +319,7 @@ function PokeInfo () {
                             />                                                      
                         </div>
                     </div>
+                }
 
                     <div className='div-evolutions'>
                         
@@ -310,6 +335,7 @@ function PokeInfo () {
                                                 setPokemonId(p.id)
                                                 scrollUp();
                                             }}
+                                            key={p.id}
                                         >
                                             <PokeEvolutions                          
                                                 name={p.name} 
@@ -358,6 +384,7 @@ function PokeInfo () {
                                                     setPokemonId(p.id)
                                                     scrollUp();
                                                 }}
+                                                key={p.id}
                                             >
                                                 <PokeEvolutions                          
                                                     name={p.name} 
@@ -384,6 +411,7 @@ function PokeInfo () {
                                                     setPokemonId(p.id)
                                                     scrollUp();
                                                 }}
+                                                key={p.id}
                                             >
                                                 <PokeEvolutions                          
                                                     name={p.name} 
@@ -423,6 +451,7 @@ function PokeInfo () {
                                                     setPokemonId(p.id)
                                                     scrollUp();
                                                 }}
+                                                key={p.id}
                                             >
                                                 <PokeEvolutions                                             
                                                     name={p.name} 

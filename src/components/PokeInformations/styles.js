@@ -5,7 +5,7 @@ export const PokeInformations = styled.div`
     h6 {
         text-transform: uppercase;
         margin-bottom: 20px;
-        color: #333;
+        color: #212529;
         font-weight: bold;
     }
 
@@ -36,7 +36,7 @@ export const PokeInformations = styled.div`
     .td-title {
         width: 100px;
         font-weight: bold;
-        color: #888;
+        color: #999;
         font-size: 0.8rem;
     }
 
