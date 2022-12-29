@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from './styles';
 
-const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType, SelectorColor, setRemoveLoading}) => {
+const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType, SelectorColor, setRemoveLoading, setOffset}) => {
     return (
         <S.SelectorItemPerPage>
             <div className="div-selector-box">
@@ -11,6 +11,7 @@ const SelectorItemPerPage = ({setLimit, limit, Search, SelectorType, SelectorCol
                     value={limit} 
                     onChange={(e)=>{
                         setLimit(Number(e.target.value));
+                        setOffset(0);
                         setRemoveLoading(false);
                     }}
                     disabled={

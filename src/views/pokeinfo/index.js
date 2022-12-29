@@ -307,7 +307,7 @@ function PokeInfo () {
                                 } 
                                 onClick={()=> scrollUp()}
                         >
-                            <i className="bi bi-search"></i> keep exploring  
+                            <i className="bi bi-search"></i> keep Exploring  
                         </Link>
                     </div>                
 
@@ -530,7 +530,7 @@ function PokeInfo () {
                                 } 
                                 onClick={()=> scrollUp()}
                         >
-                            <i className="bi bi-search"></i> keep exploring  
+                            <i className="bi bi-search"></i> keep Exploring  
                         </Link>
                     </div> 
                 </div>

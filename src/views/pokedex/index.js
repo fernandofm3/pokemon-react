@@ -24,6 +24,22 @@ function Pokedex() {
         })
     }
 
+    //Ir para o último Pokemon selecionado.
+    function scrollToPokemon(id) {
+        setTimeout(() => {
+
+            if (document.querySelector('#p'+id)) {
+                let pId = document.querySelector('#p'+id);
+            
+                pId.scrollIntoView({
+                    behavior: 'smooth'
+                }, 500)
+            }
+
+        }, 500);
+    }
+    
+
     //Função para pegar o conteúdo que veio via query na URL.
     function useQuery() {
         const { search } = useLocation();
@@ -52,6 +68,9 @@ function Pokedex() {
         Math.max(currentPagePagination - maxLeftPagination, 1),
         maxfirstPagePagination
     );
+
+    //Ir para o último Pokemon selecionado.
+    scrollToPokemon(query.get("id"));
         
     //Conexão com API - Recuperando os Dados
     useEffect( ()=>{
@@ -77,6 +96,7 @@ function Pokedex() {
                 setData(newPokeList);
                 setRemoveLoading(true);
             })
+            
 
         } else if(SelectorType !== "") {
             filter = "/" + SelectorType;
@@ -156,21 +176,22 @@ function Pokedex() {
                     
                     setData(newPokeList); 
                     setRemoveLoading(true); 
-                    scrollUp();                                   
+                    scrollUp(); 
                 }
         
                 getInfoPokemon();
+
+                
             })
-        }        
+        } 
     }, [Search, Offset, Limit, SelectorType, SelectorColor])    
 
-    
     return (
         <div>
 
             {!RemoveLoading && <Loading />}
-            
-            <Headder />
+                        
+            <Headder setOffset={setOffset} />
                         
             <S.Container> 
                 <div className='div-search'>
@@ -196,6 +217,7 @@ function Pokedex() {
                         <SelectorItemPerPage 
                             className='selector-item'
                             setLimit={setLimit}
+                            setOffset={setOffset}
                             limit={Limit}
                             Search={Search}
                             SelectorType={SelectorType}
@@ -239,7 +261,7 @@ function Pokedex() {
                 }
 
                 <BackToTop/>
-            </S.Container>
+            </S.Container>            
         </div>
     )
 }
