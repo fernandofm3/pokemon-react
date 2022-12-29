@@ -34,7 +34,7 @@ export const PokeImages = styled.div`
         justify-content: space-between;
     }
 
-    .div-btn a{
+    .div-btn button{
         width: 48%;
         height: 40px;
         border: none;
@@ -72,7 +72,7 @@ export const PokeImages = styled.div`
         background-color: #fff;
     }
 
-    .div-btn a:hover {
+    .div-btn button:hover {
         background-color: #3f66a2e0;
     }
 

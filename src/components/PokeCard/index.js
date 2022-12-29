@@ -20,18 +20,14 @@ function PokeCard (props) {
 
     //Adicionando zero a esqueda no númeoro do Pokemon.
     function zeroLeft(pokeId) {
-        let newPokeID;        
-
         if(pokeId < 10) {
-            return newPokeID = '00'+pokeId;
+            return '00'+pokeId;
         }
-
         if(pokeId >= 10 && pokeId < 100) {
-            return newPokeID = '0'+pokeId;
+            return '0'+pokeId;
         }
-
         if(pokeId >= 100) {
-            return newPokeID = pokeId;
+            return pokeId;
         }        
     }
 
@@ -54,8 +50,14 @@ function PokeCard (props) {
         <S.PokeCard>
             {
                 props.id <= 905 &&
-                <Link to={'/pokeinfo/'+ props.id} onClick={()=> scrollUp()}>   
-                    <div className='card animate__animated animate__fadeInLeft animate__slow'>
+                // <Link to={'/pokeinfo/'+ props.id} onClick={()=> scrollUp()}>   
+                <Link to={'/pokeinfo?id='+ props.id +
+                            '&offset=' + props.Offset + 
+                            '&limit=' + props.Limit + 
+                            '&type=' + props.SelectorType + 
+                            '&color=' + props.SelectorColor
+                        } onClick={()=> scrollUp()}>   
+                    <div className='card animate__animated animate__fadeIn animate__slow'>
                         <img 
                             src={                        
                                 spriteOfficial

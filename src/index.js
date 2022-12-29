@@ -8,14 +8,11 @@ import Pokeinfo from './views/pokeinfo';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
-  //   <Home />
-  // </React.StrictMode>
   <BrowserRouter>
     <main>     
         <Routes>
           <Route path='/' element={<Pokedex />}/>
-          <Route path='/pokeinfo/:id' element={<Pokeinfo />}/>
+          <Route path='/pokeinfo' element={<Pokeinfo />}/>
         </Routes>         
     </main>
     

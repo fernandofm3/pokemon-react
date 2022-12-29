@@ -11,7 +11,7 @@ const Headder = ()=> {
                 <ul>                  
                     <Link to='/'><li><img src={logo} alt="Imagem do logo." /></li></Link>
                     <Link to='/'><li>Pokédex</li></Link>
-                    <Link to='/pokeinfo/1'><li>Pokeinfo</li></Link>                  
+                    <Link to='/pokeinfo?id=1&offset=0&limit=12&type=&color='><li>Pokeinfo</li></Link>                  
                 </ul>
             </nav>
         </S.Headder>

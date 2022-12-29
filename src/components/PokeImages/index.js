@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "./styles";
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 function PokeImages (props) {
 
@@ -41,8 +41,8 @@ function PokeImages (props) {
             </div>
 
             <div className='div-btn'>
-                <Link 
-                    to={'/pokeinfo/'+ previewsPokemon}
+                <button 
+                    //to={'/pokeinfo?id='+ previewsPokemon}
                     className='btn-previews'
                     onClick={()=> {
                         props.setRemoveLoading(false);
@@ -51,10 +51,10 @@ function PokeImages (props) {
                     }}                
                 >
                     <i className="bi bi-chevron-double-left"></i>
-                </Link>
+                </button>
                 
-                <Link 
-                    to={'/pokeinfo/'+ nextPokemon}
+                <button 
+                    //to={'/pokeinfo?id='+ nextPokemon}
                     className='btn-next'
                     onClick={()=> {
                         props.setRemoveLoading(false);
@@ -63,7 +63,7 @@ function PokeImages (props) {
                     }}
                 >
                     <i className="bi bi-chevron-double-right"></i>
-                </Link>
+                </button>
             </div>
         </S.PokeImages>
     )

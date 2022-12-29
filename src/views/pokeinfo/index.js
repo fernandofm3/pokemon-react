@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {useParams} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import Headder from '../../components/Headder';
 import api from '../../services/api';
 import _get from "lodash/get";
@@ -16,6 +16,14 @@ import Loading from '../../components/Loading';
 import * as S from './styles';
 
 function PokeInfo () {
+
+
+    //Função para pegar o conteúdo que veio via query na URL.
+    function useQuery() {
+        const { search } = useLocation();
+    
+        return React.useMemo(() => new URLSearchParams(search), [search]);
+    } 
 
     //Ir ao topo da tela
     function scrollUp () {
@@ -64,7 +72,8 @@ function PokeInfo () {
         return descriptionText;
     }
 
-    const { id } = useParams();
+    const query = useQuery();
+    const id = query.get("id");
     const [PokemonId, setPokemonId] = useState(id);
     const [PokeData, setPokeData] = useState({});
     const [PokeDataSpecies, setPokeDataSpecies] = useState({});
@@ -286,6 +295,22 @@ function PokeInfo () {
             <S.Container>
                 <div className='div-poke-info-main'>
 
+                    <div className='div-keep-exploring'>
+                        <Link 
+                            className='btn-keep-exploring'
+                            to={
+                                    '/?id='+  query.get("id") +
+                                    '&offset=' +  query.get("offset") + 
+                                    '&limit=' + query.get("limit") + 
+                                    '&type=' + query.get("type") + 
+                                    '&color=' + query.get("color")
+                                } 
+                                onClick={()=> scrollUp()}
+                        >
+                            <i className="bi bi-search"></i> keep exploring  
+                        </Link>
+                    </div>                
+
                 {JSON.stringify(infoPokemon) !== "{}" &&                    
                     <div className='div-poke-info'>                        
                         <div className='div-images-description'>
@@ -330,7 +355,13 @@ function PokeInfo () {
                                 { 
                                     FirstEvolution.length > 0 &&                           
                                     FirstEvolution.map((p) => 
-                                        <Link to={'/pokeinfo/'+ p.id} 
+                                        <Link to={
+                                            '/pokeinfo?id='+ query.get("id") +
+                                            '&offset=' +  query.get("offset") + 
+                                            '&limit=' + query.get("limit") + 
+                                            '&type=' + query.get("type") + 
+                                            '&color=' + query.get("color")                                    
+                                        } 
                                             onClick={()=> {
                                                 setPokemonId(p.id)
                                                 scrollUp();
@@ -379,7 +410,13 @@ function PokeInfo () {
                                         MiddleEvolution.length > 0 && MiddleEvolution.length < 3 &&                                    
                                         MiddleEvolution.map((p) => 
 
-                                            <Link to={'/pokeinfo/'+ p.id} 
+                                            <Link to={
+                                                        '/pokeinfo?id='+ query.get("id") +
+                                                        '&offset=' +  query.get("offset") + 
+                                                        '&limit=' + query.get("limit") + 
+                                                        '&type=' + query.get("type") + 
+                                                        '&color=' + query.get("color")     
+                                                    } 
                                                 onClick={()=> {
                                                     setPokemonId(p.id)
                                                     scrollUp();
@@ -405,7 +442,13 @@ function PokeInfo () {
                                         MiddleEvolution.length > 0 &&                                     
                                         MiddleEvolution.map((p) => 
 
-                                            <Link to={'/pokeinfo/'+ p.id}
+                                            <Link to={
+                                                        '/pokeinfo?id='+ query.get("id") +
+                                                        '&offset=' +  query.get("offset") + 
+                                                        '&limit=' + query.get("limit") + 
+                                                        '&type=' + query.get("type") + 
+                                                        '&color=' + query.get("color")  
+                                                    }
                                                 className='test'
                                                 onClick={()=> {
                                                     setPokemonId(p.id)
@@ -446,7 +489,13 @@ function PokeInfo () {
                                     { 
                                         LastEvolution.length > 0 &&                           
                                         LastEvolution.map((p) => 
-                                            <Link to={'/pokeinfo/'+ p.id} 
+                                            <Link to={
+                                                        '/pokeinfo?id='+ query.get("id") +
+                                                        '&offset=' +  query.get("offset") + 
+                                                        '&limit=' + query.get("limit") + 
+                                                        '&type=' + query.get("type") + 
+                                                        '&color=' + query.get("color")  
+                                                    } 
                                                 onClick={()=> {
                                                     setPokemonId(p.id)
                                                     scrollUp();
@@ -468,6 +517,22 @@ function PokeInfo () {
                             
                         </ul>                       
                     </div>
+
+                    <div className='div-keep-exploring'>
+                        <Link 
+                            className='btn-keep-exploring'
+                            to={
+                                    '/?id='+  query.get("id") +
+                                    '&offset=' +  query.get("offset") + 
+                                    '&limit=' + query.get("limit") + 
+                                    '&type=' + query.get("type") + 
+                                    '&color=' + query.get("color")
+                                } 
+                                onClick={()=> scrollUp()}
+                        >
+                            <i className="bi bi-search"></i> keep exploring  
+                        </Link>
+                    </div> 
                 </div>
             
             </S.Container>

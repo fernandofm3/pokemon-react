@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useLocation} from 'react-router-dom';
 import api from '../../services/api';
 import PokeCard from '../../components/PokeCard';
 import Pagination from '../../components/Pagination';
@@ -15,14 +16,30 @@ import * as S from './styles';
 
 function Pokedex() {
 
+    //Ir ao topo da tela
+    function scrollUp () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    }
+
+    //Função para pegar o conteúdo que veio via query na URL.
+    function useQuery() {
+        const { search } = useLocation();
+    
+        return React.useMemo(() => new URLSearchParams(search), [search]);
+    } 
+
+    const query = useQuery();    
     const [Data, setData] = useState([]);
     const [Search, setSearch] = useState("");
     const [ListNameType, setListNameType] = useState([]);
-    const [SelectorType, setSelectorType] = useState("");
+    const [SelectorType, setSelectorType] = useState(query.get("type") ? query.get("type") : "");
     const [ListNameColor, setListNameColor] = useState([]);
-    const [SelectorColor, setSelectorColor] = useState("");
-    const [Offset, setOffset] = useState(0);
-    const [Limit, setLimit] = useState(12);    
+    const [SelectorColor, setSelectorColor] = useState(query.get("color") ? query.get("color") : "");
+    const [Offset, setOffset] = useState(query.get("offset") ? query.get("offset") : 0);
+    const [Limit, setLimit] = useState(query.get("limit") ? query.get("limit") : 12);    
     const [TotalItens, setTotalItens] = useState(0);
     const [RemoveLoading, setRemoveLoading] = useState(false);
     
@@ -35,18 +52,10 @@ function Pokedex() {
         Math.max(currentPagePagination - maxLeftPagination, 1),
         maxfirstPagePagination
     );
-
-    //Ir ao topo da tela
-    function scrollUp () {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        })
-    }
         
     //Conexão com API - Recuperando os Dados
     useEffect( ()=>{
-
+        
         //Buscando a lista com os nomes do TIPOS de Pokemons
         api.get(`/type`).then((response)=>{
             setListNameType(response.data.results);        
@@ -203,7 +212,11 @@ function Pokedex() {
                             name={p.name} 
                             id={p.id} 
                             img={p.sprites} 
-                            types={p.types}                            
+                            types={p.types}
+                            Offset={Offset} 
+                            SelectorType={SelectorType}  
+                            SelectorColor={SelectorColor}
+                            Limit={Limit}                         
                             key={p.id}
                         />)
                     } 
