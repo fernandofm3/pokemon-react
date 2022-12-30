@@ -30,6 +30,26 @@ function PokeImages (props) {
         previewsPokemon = 905;
     }
 
+    //Remove classe CSS
+    function removeclassCss(item, classItem) {
+        let element = document.querySelector(item);        
+        element.classList.remove(classItem);
+    }
+
+    //Adiciona Classe CSS
+    function addClassCss() {
+        let img = document.querySelector('#imgPokeInfo'); 
+        let divImg = document.querySelector('.div-images');
+        
+        if (img) {
+            //Verificando e comparando a url da imagem atual com a que veio da props.
+            if (img.src !== props.img)  {
+                divImg.classList.add('animate__fadeIn');
+            }             
+        }        
+    }
+    addClassCss();  
+
     return (
         <S.PokeImages>
             <h1>
@@ -37,29 +57,27 @@ function PokeImages (props) {
             </h1>
 
             <div className="div-images animate__animated animate__fadeIn animate__slow">
-                <img src={props.img} alt="Imagem do Pokemon." />
+                <img id="imgPokeInfo" src={props.img} alt="Imagem do Pokemon." />
             </div>
 
             <div className='div-btn'>
                 <button 
-                    //to={'/pokeinfo?id='+ previewsPokemon}
                     className='btn-previews'
                     onClick={()=> {
-                        props.setRemoveLoading(false);
+                        //props.setRemoveLoading(false);
                         props.setPokemonId(previewsPokemon);
-                        
+                        removeclassCss('.div-images', 'animate__fadeIn')
                     }}                
                 >
                     <i className="bi bi-chevron-double-left"></i>
                 </button>
                 
                 <button 
-                    //to={'/pokeinfo?id='+ nextPokemon}
                     className='btn-next'
                     onClick={()=> {
-                        props.setRemoveLoading(false);
+                        //props.setRemoveLoading(false);
                         props.setPokemonId(nextPokemon);
-                        
+                        removeclassCss('.div-images', 'animate__fadeIn')
                     }}
                 >
                     <i className="bi bi-chevron-double-right"></i>

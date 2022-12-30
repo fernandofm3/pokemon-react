@@ -365,7 +365,7 @@ function PokeInfo () {
                                             onClick={()=> {
                                                 setPokemonId(p.id)
                                                 scrollUp();
-                                            }}
+                                            }}                                            
                                             key={p.id}
                                         >
                                             <PokeEvolutions                          
@@ -420,7 +420,7 @@ function PokeInfo () {
                                                 onClick={()=> {
                                                     setPokemonId(p.id)
                                                     scrollUp();
-                                                }}
+                                                }}                                                
                                                 key={p.id}
                                             >
                                                 <PokeEvolutions                          
@@ -449,11 +449,10 @@ function PokeInfo () {
                                                         '&type=' + query.get("type") + 
                                                         '&color=' + query.get("color")  
                                                     }
-                                                className='test'
                                                 onClick={()=> {
                                                     setPokemonId(p.id)
                                                     scrollUp();
-                                                }}
+                                                }}                                                
                                                 key={p.id}
                                             >
                                                 <PokeEvolutions                          
@@ -499,7 +498,7 @@ function PokeInfo () {
                                                 onClick={()=> {
                                                     setPokemonId(p.id)
                                                     scrollUp();
-                                                }}
+                                                }}                                                
                                                 key={p.id}
                                             >
                                                 <PokeEvolutions                                             
