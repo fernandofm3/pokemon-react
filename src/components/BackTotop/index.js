@@ -25,12 +25,21 @@ function BackToTop () {
     return (
         <S.BackToTopButton>
             {BackToTopButton && (
-                <button
-                    className='animate__animated animate__fadeInUp'
-                    onClick={scrollUp}
-                >
-                    <i className="bi bi-chevron-double-up"></i>
-                </button>
+                <div>
+                    <button
+                        className='back-to-top-mobile animate__animated animate__fadeInUp'
+                        onClick={scrollUp}
+                    >
+                        <i className="bi bi-chevron-double-up"></i>
+                    </button>
+
+                    <button
+                        className='back-to-top animate__animated animate__fadeInUp'
+                        onClick={scrollUp}
+                    >
+                        <i className="bi bi-chevron-double-up"></i>
+                    </button>
+                </div>
             )}
         </S.BackToTopButton>
     )

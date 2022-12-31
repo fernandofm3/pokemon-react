@@ -5,10 +5,12 @@ const SearchPokemon = ({setSearch, search}) => {
 
     //Ir ao topo da tela com uma diferença de 300PX para apresentar o Pokemon pesquisado.
     function scrollTop () {
-        window.scrollTo({
-            top: 300,
-            behavior: "smooth"
-        })
+        setTimeout(() => {
+            window.scrollTo({
+                top: 300,
+                behavior: "smooth"
+            })
+        }, 500);        
     }
 
     //Função que verifica se o usuário apertou o Enter.
@@ -30,7 +32,6 @@ const SearchPokemon = ({setSearch, search}) => {
 
             <input className="searchMobile" type="search" placeholder="Enter pokemon name or id"
                 onKeyDown={handleKeyDown}
-
                 onChange={(event) => {                    
                     if (event.target.value === '') {
                         setSearch("");

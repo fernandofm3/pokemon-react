@@ -350,6 +350,11 @@ function PokeInfo () {
                         
                         <h1>Evolutions</h1>
 
+                        {
+                            MiddleEvolution.length === 0 &&
+                            <p className='text-does-not-evolve'>This Pokémon does not evolve.</p>
+                        }
+
                         <ul className='div-pokemon-evolutions'>
                             <li className='first-evolution'>
                                 { 
@@ -452,7 +457,8 @@ function PokeInfo () {
                                                 onClick={()=> {
                                                     setPokemonId(p.id)
                                                     scrollUp();
-                                                }}                                                
+                                                }}  
+                                                className='middle-evolution-link'                                              
                                                 key={p.id}
                                             >
                                                 <PokeEvolutions                          

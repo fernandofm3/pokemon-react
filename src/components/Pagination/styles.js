@@ -21,7 +21,7 @@ export const Pagination = styled.div`
     button:hover {
         background-color: #eee;
     }
-
+    
     li {
         margin-left: 10px;
         margin-bottom: 5px;       

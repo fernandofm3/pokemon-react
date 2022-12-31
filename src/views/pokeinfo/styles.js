@@ -81,6 +81,11 @@ export const Container = styled.div`
         color: #212529;    
     }
 
+    .text-does-not-evolve {
+        margin-top: -35px;
+        margin-left: 20px; 
+    }
+
     .div-evolutions .div-pokemon-evolutions {
         display: flex;
         flex-direction: column;
@@ -109,7 +114,7 @@ export const Container = styled.div`
         width: 100%;
     }
 
-    .div-evolutions .div-pokemon-evolutions .test {
+    .div-evolutions .div-pokemon-evolutions .middle-evolution-link {
         width: auto;
     }
     
@@ -197,6 +202,11 @@ export const Container = styled.div`
             text-align: left;
             margin-left: 40px;
             margin-bottom: 15px;      
+        }
+
+        .text-does-not-evolve {
+            margin-top: 0px;
+            margin-left: 40px; 
         }
 
         .div-evolutions .div-pokemon-evolutions {            

@@ -46,7 +46,7 @@ const Pagination = ({Search,
                         onClick= {()=> onPagechange(currentPagePagination - 1)}  
                         disabled= {currentPagePagination === 1}  
                     >
-                        &lt;&lt;
+                        <i className="bi bi-chevron-double-left"></i>
                     </button>
                 </li>
 
@@ -134,7 +134,7 @@ const Pagination = ({Search,
                         onClick={()=> onPagechange(currentPagePagination + 1)} 
                         disabled= {currentPagePagination === totalPages}   
                     >
-                        &gt;&gt;
+                        <i className="bi bi-chevron-double-right"></i>
                     </button>
                 </li>
             </ul>
