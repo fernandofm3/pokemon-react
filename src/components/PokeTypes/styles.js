@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 
-export const PokeTypes = styled.div`    
-    margin-bottom: 40px;
-
-    h6 {
-        text-transform: uppercase;
-        margin-bottom: 20px;
-        color: #212529;
-        font-weight: bold;
-    }
-
+export const PokeTypes = styled.div`
     .div-types {
         display: flex;
         flex-direction: row; 
@@ -22,7 +13,7 @@ export const PokeTypes = styled.div`
         font-weight: bold;
         text-transform: capitalize;
         text-shadow: 2px 2px 2px #aaa;
-    }
+    }    
 
     @media screen and (min-width: 768px) {
         margin-top: 6px;

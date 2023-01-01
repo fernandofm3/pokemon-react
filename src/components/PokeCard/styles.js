@@ -56,14 +56,12 @@ export const PokeCard = styled.div`
     }
 
     .divPokeTypes span {
-        padding: 2px 10px;
-        font-size: 0.75rem;
-        margin-right: 5px;        
-        border-radius: 4px;
-        /*background-color: #999;
-        color: #fff;*/
-        text-transform: capitalize;
-        font-weight: bold;
-        text-shadow: 2px 2px 2px #aaa;
+        padding: 2px 10px !important;
+        font-size: 0.75rem !important;
+        margin-right: 5px !important;        
+        border-radius: 4px !important;
+        text-transform: capitalize !important;
+        font-weight: bold !important;
+        text-shadow: 2px 2px 2px #aaa !important;
     }
 `

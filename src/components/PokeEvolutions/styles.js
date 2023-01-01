@@ -45,13 +45,14 @@ export const PokeEvolutions = styled.div`
         width: 100%;
     }
 
-    .evo-type-pokemon p {        
-        padding: 4px 8px 3px 8px;
-        font-size: 0.6rem;
-        border-radius: 4px;
-        margin-right: 7px;
-        text-transform: capitalize;
-        text-shadow: 2px 2px 2px #aaa;
+    .evo-type-pokemon span {        
+        padding: 4px 8px 3px 8px !important;
+        font-size: 0.6rem !important;
+        border-radius: 4px !important;
+        margin-right: 7px !important;
+        margin-bottom: 5px !important;
+        text-transform: capitalize !important;
+        text-shadow: 2px 2px 2px #aaa !important;
     }
 
 
@@ -60,8 +61,8 @@ export const PokeEvolutions = styled.div`
             width: 150px;
         }
 
-        .evo-type-pokemon p {            
-            font-size: 0.875rem;
+        .evo-type-pokemon span {            
+            font-size: 0.875rem !important;
         }
     }
 

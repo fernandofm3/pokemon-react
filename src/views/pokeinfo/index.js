@@ -9,6 +9,7 @@ import PokeInformations from '../../components/PokeInformations';
 import PokeStats from '../../components/PokeStats';
 import PokeImages from '../../components/PokeImages';
 import PokeEvolutions from '../../components/PokeEvolutions';
+import TypesStats from '../../components/TypesStats';
 import { Link } from 'react-router-dom';
 import Loading from '../../components/Loading';
 
@@ -80,6 +81,7 @@ function PokeInfo () {
     const [FirstEvolution, setFirstEvolution] = useState([]);   
     const [MiddleEvolution, setMiddleEvolution] = useState([]);   
     const [LastEvolution, setLastEvolution] = useState([]);   
+    const [DataTypesStats, setDataTypesStats] = useState([]);   
     const [RemoveLoading, setRemoveLoading] = useState(false);
 
     // Variável responsável por guardar os dados recebidos do Pokemon.
@@ -112,8 +114,8 @@ function PokeInfo () {
             genres: getGenresNameInEn(PokeDataSpecies.genera),
             gender: PokeDataSpecies.gender_rate
         }
-    }  
-    
+    } 
+
     useEffect( ()=>{
 
         //Buscando Informações do Pokemon com o ID recuperado do useParams.
@@ -122,8 +124,28 @@ function PokeInfo () {
             //Informações recuperadas do pokemon.
             let dataResults = response.data;
 
-            //Enviando o objeto (infoPokemon).            
-            setPokeData(dataResults);            
+            //Enviando para objeto (infoPokemon).            
+            setPokeData(dataResults);           
+
+            //Buscando as Types Stats.
+            let arrayTypes = [];
+            async function getTypesStats() {                
+                let types = dataResults.types;
+                
+                //Laço para percorrer todos os tipos encontrados.
+                for (let i = 0; i < types.length; i++) {                    
+                    
+                    await api.get('/type/'+types[i].type.name).then((response)=>{
+
+                        //arrayTypes.push(response.data.damage_relations);
+                        arrayTypes.push(response.data.damage_relations);
+                        
+                    })                    
+                    
+                }
+            }
+            getTypesStats();
+            setDataTypesStats(arrayTypes);            
         })
 
         //Buscando informações Pokemon(Species) com o ID recuperado do useParams.
@@ -311,40 +333,54 @@ function PokeInfo () {
                         </Link>
                     </div>                
 
-                {JSON.stringify(infoPokemon) !== "{}" &&                    
-                    <div className='div-poke-info'>                        
-                        <div className='div-images-description'>
-                            <PokeImages 
-                                id={infoPokemon.id} 
-                                name={infoPokemon.name} 
-                                img={infoPokemon.img} 
-                                setPokemonId={setPokemonId} 
-                                setRemoveLoading={setRemoveLoading}
-                            />                            
-                            <PokeDescription description={infoPokemon.description} gender={infoPokemon.gender}/> 
-                        </div> 
-                        <div className='div-type-stats-informations'>
-                            <PokeTypes types={infoPokemon.types} />                            
-                            <PokeStats 
-                                    hp={infoPokemon.hp}
-                                    attack={infoPokemon.attack}
-                                    attackSpecial={infoPokemon.attackSpecial}
-                                    defense={infoPokemon.defense}
-                                    defenseSpecial={infoPokemon.defenseSpecial}
-                                    speed={infoPokemon.speed}
-                                    totalStats={infoPokemon.totalStats}
-                            />
-                            <PokeInformations 
-                                xp={infoPokemon.xp}
-                                height={infoPokemon.height} 
-                                weight={infoPokemon.weight}
-                                habitat={infoPokemon.habitat}
-                                abilities={infoPokemon.abilities}
-                                genres={infoPokemon.genres}
-                            />                                                      
+                    {JSON.stringify(infoPokemon) !== "{}" &&                    
+                        <div className='div-poke-info'>                        
+                            <div className='div-images-description'>
+                                <PokeImages 
+                                    id={infoPokemon.id} 
+                                    name={infoPokemon.name} 
+                                    img={infoPokemon.img} 
+                                    setPokemonId={setPokemonId} 
+                                    setRemoveLoading={setRemoveLoading}
+                                />                            
+                                <PokeDescription description={infoPokemon.description} gender={infoPokemon.gender}/> 
+                            </div> 
+                            <div className='div-type-stats-informations'>
+                                
+                                <div className='div-h6'>
+                                    <h6>Type</h6>
+
+                                    <PokeTypes types={infoPokemon.types} />
+                                </div>
+
+                                <PokeStats 
+                                        hp={infoPokemon.hp}
+                                        attack={infoPokemon.attack}
+                                        attackSpecial={infoPokemon.attackSpecial}
+                                        defense={infoPokemon.defense}
+                                        defenseSpecial={infoPokemon.defenseSpecial}
+                                        speed={infoPokemon.speed}
+                                        totalStats={infoPokemon.totalStats}
+                                />
+                                
+                                <PokeInformations 
+                                    xp={infoPokemon.xp}
+                                    height={infoPokemon.height} 
+                                    weight={infoPokemon.weight}
+                                    habitat={infoPokemon.habitat}
+                                    abilities={infoPokemon.abilities}
+                                    genres={infoPokemon.genres}
+                                />                                                      
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+
+                    {
+                        DataTypesStats.length !== 0 &&
+                        <TypesStats DataTypesStats={DataTypesStats}/>
+                    }
+
+                    
 
                     <div className='div-evolutions'>
                         

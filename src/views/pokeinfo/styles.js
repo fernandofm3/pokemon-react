@@ -59,7 +59,18 @@ export const Container = styled.div`
     }
 
     .div-poke-info .div-type-stats-informations {
-        width: 100%;        
+        width: 100%;                
+    }
+
+    .div-poke-info .div-type-stats-informations .div-h6 {
+        margin-bottom: 40px;
+    }
+
+    .div-poke-info .div-type-stats-informations .div-h6 h6 {
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        color: #212529;
+        font-weight: bold;
     }
 
     .div-evolutions {
