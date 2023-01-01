@@ -1,10 +1,10 @@
 import React from "react";
 import * as S from "./styles";
 
-function PokeTypes (props) {
+function PokeTypes (props) {    
+
     return (
         <S.PokeTypes>            
-            <h6>Type</h6>
             <div className='div-types'>
                 {
                     props.types?.map(t =>                                                
@@ -67,7 +67,29 @@ function PokeTypes (props) {
                             }                            
                             key={t.type.name}
                         >
-                            {t.type.name}
+                            {t.type.name} 
+                            {
+                                t.type.damage >= 0 && 
+                                <span 
+                                    className="damage"
+                                    style={
+                                        t.type.damage === 0
+                                        ? {backgroundColor: "#555"}
+                                        :
+                                        t.type.damage === 0.25
+                                        ? {backgroundColor: "#b71212"}
+                                        :
+                                        t.type.damage === 0.5
+                                        ? {backgroundColor: "#ff6060"}
+                                        :
+                                        t.type.damage === 2
+                                        ? {backgroundColor: "#4caf50"}
+                                        : {backgroundColor: "green"}
+                                    }
+                                >
+                                    {t.type.damage}x
+                                </span> 
+                            }
                         </span>
                     )
                 }
