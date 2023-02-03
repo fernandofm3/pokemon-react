@@ -23,6 +23,25 @@ __Página Pokeinfo__ - Na página Pokeinfo é apresentado as informação do Pok
 * Tabela de efetividade no ataque e defesa
 * Evoluções
 
+<br>
+
+## Tecnologias Utilizadas
+
+<div stayle="display: inline_block">
+  <img algin="center" alt="React" src="https://img.shields.io/badge/REACT-v18.2.0-blue">
+  <img algin="center" alt="React-Dom" src="https://img.shields.io/badge/REACT--DOM-v18.2.0-blue">
+  <img algin="center" alt="React-Router-Dom" src="https://img.shields.io/badge/REACT--ROUTER--DOM-v6.4.4-blue">
+  <br>
+  <img algin="center" alt="AXIOS" src="https://img.shields.io/badge/AXIOS-v1.1.3-blueviolet">
+  <img algin="center" alt="Styled-Components" src="https://img.shields.io/badge/STYLED--COMPONENTS-v5.3.6-%23e67e22">
+  <br>
+  <img algin="center" alt="HTML5" src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+  <img algin="center" alt="CCS3" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+  <img algin="center" alt="JAVASCRIPT" src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E">  
+</div>
+
+<br>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
