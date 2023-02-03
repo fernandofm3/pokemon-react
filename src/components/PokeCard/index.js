@@ -49,32 +49,29 @@ function PokeCard (props) {
 
     return (        
         <S.PokeCard>
-            {
-                props.id <= 905 &&   
-                <Link 
-                    to={'/pokeinfo?id='+ props.id +
-                        '&offset=' + props.Offset + 
-                        '&limit=' + props.Limit + 
-                        '&type=' + props.SelectorType + 
-                        '&color=' + props.SelectorColor
-                    }
-                    onClick={()=> scrollUp()}
-                    id={'p' + props.id}
-                >   
-                    <div className='card animate__animated animate__fadeIn animate__slow'>
-                        <img src={ spriteOfficial }
-                            alt="Imagem do Pokemon."
-                        />                    
-                        <p className='pokeNum'>N° {zeroLeft(props.id)}</p>
-                        <p className='pokeName'>{
-                            splitName(props.name)                    
-                        }</p>
-                        <div className='divPokeTypes'>
-                            <PokeTypes types={props.types} />
-                        </div>    
-                    </div>  
-                </Link>         
-            }
+            <Link 
+                to={'/pokeinfo?id='+ props.id +
+                    '&offset=' + props.Offset + 
+                    '&limit=' + props.Limit + 
+                    '&type=' + props.SelectorType + 
+                    '&color=' + props.SelectorColor
+                }
+                onClick={()=> scrollUp()}
+                id={'p' + props.id}
+            >   
+                <div className='card animate__animated animate__fadeIn animate__slow'>
+                    <img src={ spriteOfficial }
+                        alt="Imagem do Pokemon."
+                    />                    
+                    <p className='pokeNum'>N° {zeroLeft(props.id)}</p>
+                    <p className='pokeName'>{
+                        splitName(props.name)                    
+                    }</p>
+                    <div className='divPokeTypes'>
+                        <PokeTypes types={props.types} />
+                    </div>    
+                </div>  
+            </Link>           
         </S.PokeCard>            
     )
 }
