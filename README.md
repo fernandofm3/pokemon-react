@@ -1,5 +1,9 @@
-<img style="width: 150px;" src="https://raw.githubusercontent.com/fernandofm3/pokemon-react/main/src/assets/pokeball.png" alt="Logo TopSales6" />
+<img style="width: 70px;" src="https://raw.githubusercontent.com/fernandofm3/pokemon-react/main/src/assets/pokeball.png" alt="Logo TopSales6" />
+
 # PokeView
+
+O projeto PokeView atualmente é uma agenda com várias informações importantes e relevantes do mundo Pokemon. O objetivo do App é facilitar a busca de informações sobre um determinado Pokemon e assim poder estuda-lo.
+A iniciativa do projeto ocorreu durante estudos sobre React / API. 
 
 # Getting Started with Create React App
 
