@@ -1,3 +1,6 @@
+<img style="width: 150px;" src="https://raw.githubusercontent.com/fernandofm3/pokemon-react/main/src/assets/pokeball.png" alt="Logo TopSales6" />
+# PokeView
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
