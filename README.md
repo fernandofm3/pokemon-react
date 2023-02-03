@@ -4,8 +4,11 @@
 
 __Site__ - https://pokeview.netlify.app/
 
+__Base de dados (API) - Pokeapi https://pokeapi.co/__
+
 O projeto PokeView atualmente é uma agenda com várias informações importantes e relevantes sobre Pokemons. O objetivo do App é facilitar a busca de informações sobre um determinado Pokemon e assim poder estudá-lo.
 A iniciativa do projeto ocorreu durante estudos sobre React / API. 
+
 
 __Página Pokedéx__ - Na página Pokedéx é possível visualizar e pesquisar os Pokemons de seu interesse, seja por "nome", "id do pokemon", "tipo" e "cor". Também é possível aumentar a quantidade de Pokemons por página, assim diminuindo a paginação. 
 
@@ -67,5 +70,20 @@ Agora basta iniciar o projeto, ele abrirá automaticamento no navegador (caso n�
 __npm start__
 
 <br>
+
+## Colaboradores
+
+* Fernando Ferreira Mendonça - https://github.com/fernandofm3
+
+<br>
+
+## Status do Projeto
+
+Atualmente o Projeto Pokeview está __"Finalizado"__.  
+As incusão de novos Pokemons serão feitas de forma automatica (conforme a API for se atualizando).
+
+<br>
+
+Obrigado por visitar nossa página.
 
 
