@@ -2,8 +2,26 @@
 
 # PokeView
 
-O projeto PokeView atualmente é uma agenda com várias informações importantes e relevantes do mundo Pokemon. O objetivo do App é facilitar a busca de informações sobre um determinado Pokemon e assim poder estuda-lo.
+O projeto PokeView atualmente é uma agenda com várias informações importantes e relevantes do mundo Pokemon. O objetivo do App é facilitar a busca de informações sobre um determinado Pokemon e assim poder estudá-lo.
 A iniciativa do projeto ocorreu durante estudos sobre React / API. 
+
+__Página Pokedéx__ - Na página Pokedéx é possível visualizar e pesquisar os Pokemons de seu interesse, seja por "nome", "id do pokemon", "tipo" e "cor". Também é possível aumentar a quantidade de Pokemons por página, assim diminuindo a paginação. 
+
+__Página Pokeinfo__ - Na página Pokeinfo é apresentado as informação do Pokemon escolhido. Abaixo está listado as informações:
+
+* Nome
+* ID
+* Descrição
+* Gênero
+* Tipo
+* Estatisticas
+* Experiência
+* Altura
+* Peso
+* Habilidades 
+* Habitate
+* Tabela de efetividade no ataque e defesa
+* Evoluções
 
 # Getting Started with Create React App
 
