@@ -54,15 +54,15 @@ Para que o projeto possa funcionar localmente primeiro será necessário fazer a
 
 Após a instalação no Node.js você fará o download do projeto para seu computador (https://github.com/fernandofm3/pokemon-react.git).
 
-A IDE utilizada no projeto foi o Visual Studio Code (https://code.visualstudio.com/download), a instazlação é opcional, você pode usar uma de sua preferência.  
+A IDE utilizada no projeto foi o Visual Studio Code (https://code.visualstudio.com/download), a instazlação é opcional, você pode usar uma IDE de sua preferência.  
 
-Após os passos acima, abra o seu projeto e um terminal (vá até a pasta do projeto).
+Após os passos acima, abra o seu projeto e depois abra um terminal (vá até a pasta do projeto).
 
-antes de iniciar o projeto é preciso fazer a instalação das dependências:
+Antes de iniciar o projeto é preciso fazer a instalação das dependências. No terminal dentro da pasta do projeto execute o seguinte comando:
 
 __npn install__
 
-Agora basta iniciar o projeto, ele abrirá automaticamento no navegador (caso não abra acesse http://localhost:3000)
+Agora basta iniciar o projeto, ele abrirá automaticamento no navegador (caso não abra acesse http://localhost:3000). Execute o seguinte comento:
 
 __npm start__
 
