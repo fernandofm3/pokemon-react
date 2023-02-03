@@ -2,6 +2,8 @@
 
 # PokeView
 
+__Site__ - https://pokeview.netlify.app/
+
 O projeto PokeView atualmente é uma agenda com várias informações importantes e relevantes sobre Pokemons. O objetivo do App é facilitar a busca de informações sobre um determinado Pokemon e assim poder estudá-lo.
 A iniciativa do projeto ocorreu durante estudos sobre React / API. 
 
@@ -39,6 +41,30 @@ __Página Pokeinfo__ - Na página Pokeinfo é apresentado as informação do Pok
   <img algin="center" alt="CCS3" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img algin="center" alt="JAVASCRIPT" src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E">  
 </div>
+
+<br>
+
+## Inicialização
+
+__Repositório__ - https://github.com/fernandofm3/pokemon-react.git
+
+__Instalações:__ 
+
+Para que o projeto possa funcionar localmente primeiro será necessário fazer a instalação do Node.js (https://nodejs.org/en/).
+
+Após a instalação no Node.js você fará o download do projeto para seu computador (https://github.com/fernandofm3/pokemon-react.git).
+
+A IDE utilizada no projeto foi o Visual Studio Code (https://code.visualstudio.com/download), a instazlação é opcional, você pode usar uma de sua preferência.  
+
+Após os passos acima, abra o seu projeto e um terminal (vá até a pasta do projeto).
+
+antes de iniciar o projeto é preciso fazer a instalação das dependências:
+
+__npn install__
+
+Agora basta iniciar o projeto, ele abrirá automaticamento no navegador (caso não abra acesse http://localhost:3000)
+
+__npm start__
 
 <br>
 
