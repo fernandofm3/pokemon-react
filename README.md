@@ -12,19 +12,19 @@ A iniciativa do projeto ocorreu durante estudos sobre React / API.
 
 __Página Pokedéx__ - Na página Pokedéx é possível visualizar e pesquisar os Pokemons de seu interesse, seja por "nome", "id do pokemon", "tipo" e "cor". Também é possível aumentar a quantidade de Pokemons por página, assim diminuindo a paginação. 
 
-__Página Pokeinfo__ - Na página Pokeinfo é apresentado as informação do Pokemon escolhido. Abaixo está a lista das informações que podem ser visualizadas:
+__Página Pokeinfo__ - Na página Pokeinfo é apresentado as informaçõe do Pokemon escolhido. Abaixo está a lista das informações que podem ser visualizadas:
 
 * Nome
 * ID
 * Descrição
 * Gênero
 * Tipo
-* Estatisticas
+* Estatísticas
 * Experiência
 * Altura
 * Peso
 * Habilidades 
-* Habitate
+* Habitat
 * Tabela de efetividade no ataque e defesa
 * Evoluções
 
@@ -57,7 +57,7 @@ Para que o projeto possa funcionar localmente primeiro será necessário fazer a
 
 Após a instalação no Node.js você fará o download do projeto para seu computador (https://github.com/fernandofm3/pokemon-react.git).
 
-A IDE utilizada no projeto foi o Visual Studio Code (https://code.visualstudio.com/download), a instazlação é opcional, você pode usar uma IDE de sua preferência.  
+A IDE utilizada no projeto foi o Visual Studio Code (https://code.visualstudio.com/download), a instalação é opcional, você pode usar uma IDE de sua preferência.  
 
 Após os passos acima, abra o seu projeto e depois abra um terminal (vá até a pasta do projeto).
 
@@ -65,7 +65,7 @@ Antes de iniciar o projeto é preciso fazer a instalação das dependências. No
 
 __npn install__
 
-Agora basta iniciar o projeto, ele abrirá automaticamento no navegador (caso não abra acesse http://localhost:3000). Execute o seguinte comento:
+Agora basta iniciar o projeto, ele abrirá automaticamente no navegador (caso não abra acesse http://localhost:3000). Execute o seguinte comento:
 
 __npm start__
 
@@ -80,7 +80,7 @@ __npm start__
 ## Status do Projeto
 
 Atualmente o Projeto Pokeview está __"Finalizado"__.  
-As incusão de novos Pokemons serão feitas de forma automatica (conforme a API for se atualizando).
+A inclusão de novos Pokemons serão feitas de forma automática (conforme a API for se atualizando).
 
 <br>
 
