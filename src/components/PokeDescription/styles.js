@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-export const PokeDescription = styled.div` 
+export const PokeDescription = styled.div`
     margin-bottom: 40px;
 
     h6 {
@@ -12,7 +12,7 @@ export const PokeDescription = styled.div`
 
     .div-gender {
         display: flex;
-        flex-direction: column;              
+        flex-direction: column;
     }
 
     .div-gender-percentage {
@@ -21,15 +21,15 @@ export const PokeDescription = styled.div`
     }
 
     .div-gender-percentage div {
-        margin-right: 30px;       
+        margin-right: 30px;
     }
 
     .div-gender-percentage div i {
         display: flex;
         flex-direction: row;
         justify-content: center;
-        font-size: 1.6rem; 
-        margin-bottom: 5px;              
+        font-size: 1.6rem;
+        margin-bottom: 5px;
     }
 
     .div-gender-percentage .bi-gender-female {
@@ -38,16 +38,16 @@ export const PokeDescription = styled.div`
 
     .div-gender-percentage .bi-gender-male {
         color: blue;
-    }   
+    }
 
-    .div-gender-percentage div p {        
+    .div-gender-percentage div p {
         font-size: 0.8rem;
         font-weight: bold;
-        color: #999; 
-        margin-bottom: 0;           
+        color: #999;
+        margin-bottom: 0;
     }
 
     @media screen and (min-width: 1024px) {
         margin-bottom: 0;
     }
-`
+`;

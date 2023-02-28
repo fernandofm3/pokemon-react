@@ -1,22 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
-import Pokedex from './views/pokedex';
-import Pokeinfo from './views/pokeinfo';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Pokedex from "./views/pokedex";
+import Pokeinfo from "./views/pokeinfo";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <main>     
-        <Routes>
-          <Route path='/' element={<Pokedex />}/>
-          <Route path='/pokeinfo' element={<Pokeinfo />}/>
-        </Routes>         
-    </main>
-    
-  </BrowserRouter>
+    <BrowserRouter>
+        <main>
+            <Routes>
+                <Route path="/" element={<Pokedex />} />
+                <Route path="/pokeinfo" element={<Pokeinfo />} />
+            </Routes>
+        </main>
+    </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

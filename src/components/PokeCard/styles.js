@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const PokeCard = styled.div`
     a {
@@ -6,14 +6,14 @@ export const PokeCard = styled.div`
     }
 
     .card {
-        background-color: #fff;    
+        background-color: #fff;
         box-shadow: 3px 2px 10px 4px #888;
-        border-radius: 7px;    
+        border-radius: 7px;
         transition: 0.3s;
     }
 
     .card:hover {
-        box-shadow: 4px 4px 12px 6px #888;  
+        box-shadow: 4px 4px 12px 6px #888;
     }
 
     @media screen and (min-width: 440px) {
@@ -22,7 +22,7 @@ export const PokeCard = styled.div`
         }
     }
 
-    img {        
+    img {
         background-color: #eee;
         padding: 10px;
         width: 100%;
@@ -30,12 +30,13 @@ export const PokeCard = styled.div`
         border-top-right-radius: 7px;
     }
 
-    .pokeNum, .pokeName {
+    .pokeNum,
+    .pokeName {
         margin-left: 10px;
-        text-transform: capitalize;        
+        text-transform: capitalize;
     }
 
-    .pokeNum {       
+    .pokeNum {
         font-size: 0.875rem;
         margin-bottom: 10px;
         font-weight: bold;
@@ -50,18 +51,18 @@ export const PokeCard = styled.div`
     }
 
     .divPokeTypes {
-        display: flex;        
-        padding: 0 10px;   
-        padding-bottom: 20px;     
+        display: flex;
+        padding: 0 10px;
+        padding-bottom: 20px;
     }
 
     .divPokeTypes span {
         padding: 2px 10px !important;
         font-size: 0.75rem !important;
-        margin-right: 5px !important;        
+        margin-right: 5px !important;
         border-radius: 4px !important;
         text-transform: capitalize !important;
         font-weight: bold !important;
         text-shadow: 2px 2px 2px #aaa !important;
     }
-`
+`;

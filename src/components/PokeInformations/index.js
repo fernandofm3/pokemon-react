@@ -1,60 +1,59 @@
 import React from "react";
 import * as S from "./styles";
 
-function PokeInformations (props) {
+function PokeInformations(props) {
     return (
-        <S.PokeInformations>           
+        <S.PokeInformations>
             <h6>Informations</h6>
-            
-            <table>                
+
+            <table>
                 <tbody>
                     <tr>
                         <td className="td-title">
                             <i className="bi bi-circle-square"></i>
                             &nbsp; Genres
                         </td>
-                        <td>{props.genres}</td>                        
-                    </tr>                               
+                        <td>{props.genres}</td>
+                    </tr>
                     <tr>
                         <td className="td-title">
                             <i className="bi bi-hourglass-split"></i>
                             &nbsp; Base Exp
                         </td>
-                        <td>{props.xp}</td>                        
-                    </tr>                               
+                        <td>{props.xp}</td>
+                    </tr>
                     <tr>
                         <td className="td-title">
                             <i className="bi bi-arrow-up"></i>
                             &nbsp; Height
                         </td>
-                        <td>{props.height} m</td>                        
-                    </tr>                               
+                        <td>{props.height} m</td>
+                    </tr>
                     <tr>
                         <td className="td-title">
                             <i className="bi bi-boxes"></i>
                             &nbsp; Weight
-                        </td>                       
+                        </td>
                         <td>{props.weight} kg</td>
-                    </tr>                                      
-                    <tr>  
+                    </tr>
+                    <tr>
                         <td className="td-title">
                             <i className="bi bi-lightbulb-fill"></i>
                             &nbsp; Abilities
-                        </td>                      
+                        </td>
                         <td>{props.abilities}</td>
-                    </tr> 
+                    </tr>
                     <tr>
                         <td className="td-title">
                             <i className="bi bi-image-alt"></i>
                             &nbsp; Habitat
-                        </td>                        
+                        </td>
                         <td>{props.habitat}</td>
-                    </tr>                                 
+                    </tr>
                 </tbody>
             </table>
-                                
         </S.PokeInformations>
-    )
+    );
 }
 
 export default PokeInformations;

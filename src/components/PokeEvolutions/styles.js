@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-export const PokeEvolutions = styled.div` 
+export const PokeEvolutions = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,8 +8,8 @@ export const PokeEvolutions = styled.div`
     margin: auto;
     margin-bottom: 30px;
     transition: 0.3s;
-    
-    :hover .evo-img-pokemon{
+
+    :hover .evo-img-pokemon {
         opacity: 0.8;
     }
 
@@ -45,7 +45,7 @@ export const PokeEvolutions = styled.div`
         width: 100%;
     }
 
-    .evo-type-pokemon span {        
+    .evo-type-pokemon span {
         padding: 4px 8px 3px 8px !important;
         font-size: 0.6rem !important;
         border-radius: 4px !important;
@@ -55,30 +55,29 @@ export const PokeEvolutions = styled.div`
         text-shadow: 2px 2px 2px #aaa !important;
     }
 
-
     @media screen and (min-width: 500px) {
-        .evo-img-pokemon {            
+        .evo-img-pokemon {
             width: 150px;
         }
 
-        .evo-type-pokemon span {            
+        .evo-type-pokemon span {
             font-size: 0.875rem !important;
         }
     }
 
     @media screen and (min-width: 768px) {
-        .evo-img-pokemon {            
+        .evo-img-pokemon {
             width: 180px;
         }
 
-        .evo-type-pokemon p {            
+        .evo-type-pokemon p {
             font-size: 1rem;
         }
     }
 
     @media screen and (min-width: 1024px) {
-        {
+         {
             width: 22%;
         }
-    }  
-`
+    }
+`;
