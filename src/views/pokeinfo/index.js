@@ -83,6 +83,7 @@ function PokeInfo () {
     const [LastEvolution, setLastEvolution] = useState([]);   
     const [DataTypesStats, setDataTypesStats] = useState([]);   
     const [RemoveLoading, setRemoveLoading] = useState(false);
+    const [TotalPokemons, setTotalPokemons] = useState(0);
 
     // Variável responsável por guardar os dados recebidos do Pokemon.
     let infoPokemon = "";
@@ -308,6 +309,11 @@ function PokeInfo () {
 
         })
 
+        //Pegando o total de Pokemons existentes 
+        api.get(`/pokemon-species`).then((response)=>{
+            setTotalPokemons(response.data.count);            
+        })
+
     }, [PokemonId])   
 
     return (
@@ -342,6 +348,7 @@ function PokeInfo () {
                                     img={infoPokemon.img} 
                                     setPokemonId={setPokemonId} 
                                     setRemoveLoading={setRemoveLoading}
+                                    TotalPokemons={TotalPokemons}
                                 />                            
                                 <PokeDescription description={infoPokemon.description} gender={infoPokemon.gender}/> 
                             </div> 

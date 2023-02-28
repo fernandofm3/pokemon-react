@@ -229,18 +229,21 @@ function Pokedex() {
 
                 <div className='div-pokecard'>
                     {
-                        Data.length > 0 &&
-                        Data.map(p => <PokeCard                            
-                            name={p.name} 
-                            id={p.id} 
-                            img={p.sprites} 
-                            types={p.types}
-                            Offset={Offset} 
-                            SelectorType={SelectorType}  
-                            SelectorColor={SelectorColor}
-                            Limit={Limit}                         
-                            key={p.id}
-                        />)
+                        Data.length > 0 && 
+                        Data.map(p => {
+                            return p.id < 10000 &&
+                            <PokeCard                            
+                                name={p.name} 
+                                id={p.id} 
+                                img={p.sprites} 
+                                types={p.types}
+                                Offset={Offset} 
+                                SelectorType={SelectorType}  
+                                SelectorColor={SelectorColor}
+                                Limit={Limit}                         
+                                key={p.id}
+                            />
+                        })
                     } 
                 </div>
         

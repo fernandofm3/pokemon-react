@@ -21,13 +21,13 @@ function PokeImages (props) {
 
     //Gera o ID do próximo pokemon.
     let nextPokemon = Number(props.id) + 1;
-    if (nextPokemon === 906) {
+    if (nextPokemon > props.TotalPokemons) {
         nextPokemon = 1;
     }
     //Gera o ID do pokemon anterior.
     let previewsPokemon = Number(props.id) - 1;
     if (previewsPokemon === 0) {
-        previewsPokemon = 905;
+        previewsPokemon = props.TotalPokemons;
     }
 
     //Remove classe CSS
