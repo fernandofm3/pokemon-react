@@ -3,9 +3,13 @@ import styled from "styled-components";
 export const PokeImages = styled.div`
     margin-bottom: 40px;
 
+    .select-nome-id-pokemon {
+        text-transform: capitalize;
+    }
+
     .div-images {
         display: flex;
-        flez-direction: row;
+        flex-direction: row;
         justify-content: center;
     }
 

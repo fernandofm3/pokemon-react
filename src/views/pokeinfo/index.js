@@ -71,9 +71,12 @@ function PokeInfo() {
         return descriptionText;
     }
 
+    //Mostra as variações dos Pokemons (Mega e Gmax)
+
     const query = useQuery();
     const id = query.get("id");
     const [PokemonId, setPokemonId] = useState(id);
+    //const [PokemonIdVarieties, setPokemonIdVarieties] = useState(null);
     const [PokeData, setPokeData] = useState({});
     const [PokeDataSpecies, setPokeDataSpecies] = useState({});
     const [FirstEvolution, setFirstEvolution] = useState([]);
@@ -129,17 +132,16 @@ function PokeInfo() {
             ),
             genres: getGenresNameInEn(PokeDataSpecies.genera),
             gender: PokeDataSpecies.gender_rate,
+            varieties: PokeDataSpecies.varieties,
         };
     }
 
+    //Enpoind - /pokemon/id
     useEffect(() => {
         //Buscando Informações do Pokemon com o ID recuperado do useParams.
         api.get(`/pokemon/${PokemonId}`).then((response) => {
             //Informações recuperadas do pokemon.
             let dataResults = response.data;
-
-            //Enviando para objeto (infoPokemon).
-            setPokeData(dataResults);
 
             //Buscando as Types Stats.
             let arrayTypes = [];
@@ -157,9 +159,16 @@ function PokeInfo() {
                 }
             }
             getTypesStats();
+
+            //Enviando para objeto (infoPokemon).
+            setPokeData(dataResults);
+
             setDataTypesStats(arrayTypes);
         });
+    }, [PokemonId]);
 
+    //Endpoint - /pokemon-species/id
+    useEffect(() => {
         //Buscando informações Pokemon(Species) com o ID recuperado do useParams.
         api.get(`/pokemon-species/${PokemonId}`).then((response) => {
             //Função responsável por tratar as Evoluções dos Pokemons.
@@ -376,54 +385,66 @@ function PokeInfo() {
                         </Link>
                     </div>
 
-                    {JSON.stringify(infoPokemon) !== "{}" && (
-                        <div className="div-poke-info">
-                            <div className="div-images-description">
-                                <PokeImages
-                                    id={infoPokemon.id}
-                                    name={infoPokemon.name}
-                                    img={infoPokemon.img}
-                                    setPokemonId={setPokemonId}
-                                    setRemoveLoading={setRemoveLoading}
-                                    TotalPokemons={TotalPokemons}
-                                />
-                                <PokeDescription
-                                    description={infoPokemon.description}
-                                    gender={infoPokemon.gender}
-                                />
-                            </div>
-                            <div className="div-type-stats-informations">
-                                <div className="div-h6">
-                                    <h6>Type</h6>
-
-                                    <PokeTypes types={infoPokemon.types} />
+                    {JSON.stringify(infoPokemon) !== "{}" &&
+                        JSON.stringify(PokeData) !== "{}" &&
+                        JSON.stringify(PokeDataSpecies) !== "{}" && (
+                            <div className="div-poke-info">
+                                <div className="div-images-description">
+                                    <PokeImages
+                                        id={infoPokemon.id}
+                                        name={infoPokemon.name}
+                                        img={infoPokemon.img}
+                                        setPokemonId={setPokemonId}
+                                        // setPokemonIdVarieties={
+                                        //     setPokemonIdVarieties
+                                        // }
+                                        varieties={infoPokemon.varieties}
+                                        setRemoveLoading={setRemoveLoading}
+                                        TotalPokemons={TotalPokemons}
+                                    />
+                                    <PokeDescription
+                                        description={infoPokemon.description}
+                                        gender={infoPokemon.gender}
+                                    />
                                 </div>
+                                <div className="div-type-stats-informations">
+                                    <div className="div-h6">
+                                        <h6>Type</h6>
 
-                                <PokeStats
-                                    hp={infoPokemon.hp}
-                                    attack={infoPokemon.attack}
-                                    attackSpecial={infoPokemon.attackSpecial}
-                                    defense={infoPokemon.defense}
-                                    defenseSpecial={infoPokemon.defenseSpecial}
-                                    speed={infoPokemon.speed}
-                                    totalStats={infoPokemon.totalStats}
-                                />
+                                        <PokeTypes types={infoPokemon.types} />
+                                    </div>
 
-                                <PokeInformations
-                                    xp={infoPokemon.xp}
-                                    height={infoPokemon.height}
-                                    weight={infoPokemon.weight}
-                                    habitat={infoPokemon.habitat}
-                                    abilities={infoPokemon.abilities}
-                                    genres={infoPokemon.genres}
-                                />
+                                    <PokeStats
+                                        hp={infoPokemon.hp}
+                                        attack={infoPokemon.attack}
+                                        attackSpecial={
+                                            infoPokemon.attackSpecial
+                                        }
+                                        defense={infoPokemon.defense}
+                                        defenseSpecial={
+                                            infoPokemon.defenseSpecial
+                                        }
+                                        speed={infoPokemon.speed}
+                                        totalStats={infoPokemon.totalStats}
+                                    />
+
+                                    <PokeInformations
+                                        xp={infoPokemon.xp}
+                                        height={infoPokemon.height}
+                                        weight={infoPokemon.weight}
+                                        habitat={infoPokemon.habitat}
+                                        abilities={infoPokemon.abilities}
+                                        genres={infoPokemon.genres}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
 
-                    {DataTypesStats.length !== 0 && (
-                        <TypesStats DataTypesStats={DataTypesStats} />
-                    )}
+                    {DataTypesStats.length !== 0 &&
+                        JSON.stringify(PokeData) !== "{}" &&
+                        JSON.stringify(PokeDataSpecies) !== "{}" && (
+                            <TypesStats DataTypesStats={DataTypesStats} />
+                        )}
 
                     <div className="div-evolutions">
                         <h1>Evolutions</h1>
