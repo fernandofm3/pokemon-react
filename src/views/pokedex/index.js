@@ -63,7 +63,9 @@ function Pokedex() {
     const [Limit, setLimit] = useState(
         query.get("limit") ? query.get("limit") : 12
     );
-    const [TotalItens, setTotalItens] = useState(0);
+    const [TotalItens, setTotalItens] = useState(
+        query.get("qtPokemons") ? query.get("qtPokemons") : 0
+    );
     const [RemoveLoading, setRemoveLoading] = useState(false);
 
     const maxButtonPagination = 9;
@@ -120,7 +122,6 @@ function Pokedex() {
                         resultPokeInfo = resultPokeInfo.data;
                         newPokeList.push(resultPokeInfo);
                     }
-
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
@@ -189,7 +190,7 @@ function Pokedex() {
         <div>
             {!RemoveLoading && <Loading />}
 
-            <Headder setOffset={setOffset} />
+            <Headder setOffset={setOffset} TotalItens={TotalItens} />
 
             <S.Container>
                 <div className="div-search">
@@ -239,6 +240,7 @@ function Pokedex() {
                                         SelectorType={SelectorType}
                                         SelectorColor={SelectorColor}
                                         Limit={Limit}
+                                        TotalItens={TotalItens}
                                         key={p.id}
                                     />
                                 )

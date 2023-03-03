@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const SelectorPokemonType = styled.div`
     margin-bottom: 15px;
@@ -17,20 +17,19 @@ export const SelectorPokemonType = styled.div`
     }
 
     select {
-        padding: 11px; 
-        border-radius: 7px; 
-        text-transform: capitalize;      
+        padding: 11px;
+        border-radius: 7px;
+        text-transform: capitalize;
     }
 
-    .span-color{
+    .span-color {
         width: 15px;
-        padding: 10px; 
-        border-radius: 50%; 
-        background-color: red;      
+        padding: 10px;
+        border-radius: 50%;
+        background-color: red;
     }
-    
+
     .item-display-none {
         display: none;
     }
-    
-`
+`;

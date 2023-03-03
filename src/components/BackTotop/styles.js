@@ -10,7 +10,7 @@ export const BackToTopButton = styled.div`
         padding: 0px;
         border-top-left-radius: 100px;
         border-top-right-radius: 100px;
-        background-color: rgba(222,43,30, 0.9);
+        background-color: rgba(222, 43, 30, 0.9);
         color: #fff;
         font-weight: bold;
         font-size: 1.25rem;
@@ -25,13 +25,13 @@ export const BackToTopButton = styled.div`
         border: 2px solid #000;
         padding: 8px;
         border-radius: 50%;
-        background-color: rgba(222,43,30, 0.9);
+        background-color: rgba(222, 43, 30, 0.9);
         color: #fff;
         font-weight: bold;
         font-size: 1.25rem;
     }
-    
-    @media screen and (min-width: 768px){
+
+    @media screen and (min-width: 768px) {
         .back-to-top-mobile {
             display: none;
         }
@@ -41,28 +41,27 @@ export const BackToTopButton = styled.div`
         }
     }
 
-    @media screen and (min-width: 1280px){
+    @media screen and (min-width: 1280px) {
         .back-to-top {
             right: 1%;
         }
     }
-    
-    @media screen and (min-width: 1440px){
+
+    @media screen and (min-width: 1440px) {
         .back-to-top {
             right: 2%;
         }
     }
 
-    @media screen and (min-width: 1600px){
+    @media screen and (min-width: 1600px) {
         .back-to-top {
             right: 4%;
         }
     }
 
-    @media screen and (min-width: 1920px){
+    @media screen and (min-width: 1920px) {
         .back-to-top {
             right: 7%;
         }
     }
-
-`
+`;

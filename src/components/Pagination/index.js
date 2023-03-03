@@ -1,124 +1,105 @@
 import React from "react";
-import * as S from './styles';
+import * as S from "./styles";
 
-
-
-const Pagination = ({Search,
-                    setOffset,
-                    maxButtonPagination,
-                    limit,
-                    firstPagePagination,
-                    currentPagePagination,
-                    totalPages,
-                    SelectorType,
-                    SelectorColor,
-                    setRemoveLoading
-                    }) => {
-
+const Pagination = ({
+    Search,
+    setOffset,
+    maxButtonPagination,
+    limit,
+    firstPagePagination,
+    currentPagePagination,
+    totalPages,
+    SelectorType,
+    SelectorColor,
+    setRemoveLoading,
+}) => {
     function onPagechange(page) {
         setOffset(Number((page - 1) * limit));
-        setRemoveLoading(false);        
+        setRemoveLoading(false);
     }
 
     return (
-        <S.Pagination 
+        <S.Pagination
             className={
                 Search !== ""
-                ? 'item-display-none' 
-                : 
-                SelectorType !== ""
-                ? 'item-display-none' 
-                : 
-                SelectorColor !== ""
-                ? 'item-display-none' 
-                : null                            
+                    ? "item-display-none"
+                    : SelectorType !== ""
+                    ? "item-display-none"
+                    : SelectorColor !== ""
+                    ? "item-display-none"
+                    : null
             }
         >
             <ul>
                 <li
                     className={
-                        currentPagePagination === 1
-                        ? 'item-display-none' 
-                        : null                            
+                        currentPagePagination === 1 ? "item-display-none" : null
                     }
                 >
                     <button
-                        onClick= {()=> onPagechange(currentPagePagination - 1)}  
-                        disabled= {currentPagePagination === 1}  
+                        onClick={() => onPagechange(currentPagePagination - 1)}
+                        disabled={currentPagePagination === 1}
                     >
                         <i className="bi bi-chevron-double-left"></i>
                     </button>
                 </li>
 
-                <li 
+                <li
                     className={
-                        currentPagePagination >= 6
-                        ? null 
-                        : 'item-display-none'
+                        currentPagePagination >= 6 ? null : "item-display-none"
                     }
                 >
-                    <button                       
-                        onClick={()=> onPagechange(1)}                           
-                    >
-                        1
-                    </button>
+                    <button onClick={() => onPagechange(1)}>1</button>
                 </li>
 
                 <li
                     className={
-                        currentPagePagination >= 6
-                        ? null 
-                        : 'item-display-none'
+                        currentPagePagination >= 6 ? null : "item-display-none"
                     }
                 >
-                    <button disabled >
-                        ...
-                    </button>
+                    <button disabled>...</button>
                 </li>
 
-                {Array.from({length: Math.min(maxButtonPagination, totalPages) }) 
+                {Array.from({
+                    length: Math.min(maxButtonPagination, totalPages),
+                })
                     .map((_, index) => index + firstPagePagination)
                     .map((page) => (
                         <li key={page}>
                             <button
                                 className={
-                                    page === currentPagePagination 
-                                    ? 'pagination__item--active' 
-                                    : null 
+                                    page === currentPagePagination
+                                        ? "pagination__item--active"
+                                        : null
                                 }
                                 value={page}
-                                onClick={()=> onPagechange(page)}
-                                disabled= {page === currentPagePagination}
+                                onClick={() => onPagechange(page)}
+                                disabled={page === currentPagePagination}
                                 key={page}
                             >
                                 {page}
                             </button>
                         </li>
-                    ))
-                }
+                    ))}
 
-                <li 
+                <li
                     className={
-                        currentPagePagination >= (totalPages - 4)
-                        ? 'item-display-none' 
-                        : null                            
+                        currentPagePagination >= totalPages - 4
+                            ? "item-display-none"
+                            : null
                     }
                 >
-                    <button disabled >
-                        ...
-                    </button>
+                    <button disabled>...</button>
                 </li>
 
                 <li
                     className={
-                        currentPagePagination >= (totalPages - 4)
-                        ? 'item-display-none' 
-                        : null                            
+                        currentPagePagination >= totalPages - 4
+                            ? "item-display-none"
+                            : null
                     }
                 >
-                    <button                       
-                        onClick={()=> onPagechange(totalPages)}                           
-                    >
+                    <button onClick={() => onPagechange(totalPages)}>
                         {totalPages}
                     </button>
                 </li>
@@ -126,20 +107,20 @@ const Pagination = ({Search,
                 <li
                     className={
                         currentPagePagination === totalPages
-                        ? 'item-display-none' 
-                        : null                            
+                            ? "item-display-none"
+                            : null
                     }
                 >
                     <button
-                        onClick={()=> onPagechange(currentPagePagination + 1)} 
-                        disabled= {currentPagePagination === totalPages}   
+                        onClick={() => onPagechange(currentPagePagination + 1)}
+                        disabled={currentPagePagination === totalPages}
                     >
                         <i className="bi bi-chevron-double-right"></i>
                     </button>
                 </li>
             </ul>
         </S.Pagination>
-    )
-}
+    );
+};
 
 export default Pagination;

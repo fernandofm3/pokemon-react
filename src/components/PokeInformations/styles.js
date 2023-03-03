@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const PokeInformations = styled.div`
     margin-bottom: 40px;
@@ -47,4 +47,4 @@ export const PokeInformations = styled.div`
             font-size: 1rem;
         }
     }
-`
+`;
