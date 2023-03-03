@@ -21,12 +21,18 @@ function PokeCard(props) {
     //Adicionando zero a esqueda no númeoro do Pokemon.
     function zeroLeft(pokeId) {
         if (pokeId < 10) {
+            return "000" + pokeId;
+        }
+
+        if (pokeId >= 10 && pokeId < 100) {
             return "00" + pokeId;
         }
-        if (pokeId >= 10 && pokeId < 100) {
+
+        if (pokeId >= 100 && pokeId < 1000) {
             return "0" + pokeId;
         }
-        if (pokeId >= 100) {
+
+        if (pokeId >= 1000) {
             return pokeId;
         }
     }
@@ -59,7 +65,9 @@ function PokeCard(props) {
                     "&type=" +
                     props.SelectorType +
                     "&color=" +
-                    props.SelectorColor
+                    props.SelectorColor +
+                    "&qtPokemons=" +
+                    props.TotalItens
                 }
                 onClick={() => scrollUp()}
                 id={"p" + props.id}

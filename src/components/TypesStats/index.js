@@ -3,6 +3,8 @@ import * as S from "./styles";
 import PokeTypes from "../../components/PokeTypes";
 
 const TypesStats = (props) => {
+    //console.log(props.DataTypesStats);
+
     const dataTypes = props.DataTypesStats;
     let arrayDoubleDamageFrom = [];
     let arrayDoubleDamageTo = [];

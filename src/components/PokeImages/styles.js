@@ -4,7 +4,10 @@ export const PokeImages = styled.div`
     margin-bottom: 40px;
 
     .select-nome-id-pokemon {
+        width: 100%;
         text-transform: capitalize;
+        padding: 3px;
+        border-radius: 7px;
     }
 
     .div-images {

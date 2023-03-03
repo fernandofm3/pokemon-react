@@ -23,9 +23,18 @@ const Headder = (props) => {
                         <li>Pokédex</li>
                     </Link>
 
-                    <Link to="/pokeinfo?id=1&offset=0&limit=12&type=&color=">
+                    <Link
+                        to={
+                            "/pokeinfo?id=1&offset=0&limit=12&type=&color=&qtPokemons=" +
+                            props.TotalItens
+                        }
+                    >
                         <li>Pokeinfo</li>
                     </Link>
+                </ul>
+
+                <ul className="ulVersionApp">
+                    <li className="versionApp">V 2.0</li>
                 </ul>
             </nav>
         </S.Headder>

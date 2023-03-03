@@ -5,6 +5,9 @@ export const Headder = styled.div`
     background-color: #3b64a5;
 
     nav {
+        display: flex;
+        flez-direction: row;
+        justify-content: space-between;
         max-width: 1280px;
         margin: auto;
     }
@@ -15,6 +18,7 @@ export const Headder = styled.div`
         align-items: center;
         list-style: none;
         padding: 10px 20px 10px 20px;
+        margin: 0;
     }
 
     li {
@@ -38,9 +42,20 @@ export const Headder = styled.div`
         width: 100px;
     }
 
+    .versionApp {
+        color: #ddd;
+        font-size: 0.725rem;
+    }
+
     @media screen and (min-width: 1024px) {
         li img {
             width: 150px;
+        }
+    }
+
+    @media screen and (max-width: 390px) {
+        .ulVersionApp {
+            display: none;
         }
     }
 `;

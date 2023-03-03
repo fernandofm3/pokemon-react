@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./styles";
 
 function PokeImages(props) {
+    //controlando a exibição da imagem após ir ao próximo Pokemon ou voltar um Pokemon
+    const [ImgPokemon, setImgPokemon] = useState(props.img);
+    if (ImgPokemon !== props.img) {
+        setImgPokemon(props.img);
+    }
+
     //Verificando se o Pokemon atual é uma variação. Se for uma variação, o id do Pokemon principal será mantido.
     let idPokemonActual;
     if (props.id <= props.TotalPokemons) {
@@ -33,14 +39,18 @@ function PokeImages(props) {
     //Adicionando zero a esqueda no númeoro do Pokemon.
     function zeroLeft(pokeId) {
         if (pokeId < 10) {
-            return "00" + pokeId;
+            return "000" + pokeId;
         }
 
         if (pokeId >= 10 && pokeId < 100) {
+            return "00" + pokeId;
+        }
+
+        if (pokeId >= 100 && pokeId < 1000) {
             return "0" + pokeId;
         }
 
-        if (pokeId >= 100) {
+        if (pokeId >= 1000) {
             return pokeId;
         }
     }
@@ -60,21 +70,20 @@ function PokeImages(props) {
         }
     }
 
-    //Remove classe CSS
-    function removeclassCss(item, classItem) {
-        let element = document.querySelector(item);
-        element.classList.remove(classItem);
+    //Remove a classe de animação Animate CSS
+    function removeclassCss() {
+        let img = document.querySelector(".imgPokeInfo");
+        img.classList.remove("animate__backInLeft");
     }
 
-    //Adiciona Classe CSS
+    // //Adiciona classe  de animação Animate CSS
     function addClassCss() {
-        let img = document.querySelector("#imgPokeInfo");
-        let divImg = document.querySelector(".div-images");
-
+        let img = document.querySelector(".imgPokeInfo");
         if (img) {
             //Verificando e comparando a url da imagem atual com a que veio da props.
             if (img.src !== props.img) {
-                divImg.classList.add("animate__fadeIn");
+                img.classList.add("animate__backInLeft");
+                //img.classList.add("animate__delay-1s");
             }
         }
     }
@@ -95,11 +104,11 @@ function PokeImages(props) {
 
                 {props.varieties.length > 1 && (
                     <select
-                        className="form-select form-select-sm select-nome-id-pokemon"
-                        aria-label=".form-select-lg example"
+                        className="select-nome-id-pokemon"
+                        //aria-label=".form-select-lg example"
                         onChange={(e) => {
                             getIdVerietieOfUrl(e.target.value);
-                            removeclassCss(".div-images", "animate__fadeIn");
+                            removeclassCss();
                         }}
                     >
                         {props.varieties.map((v) => (
@@ -111,12 +120,15 @@ function PokeImages(props) {
                 )}
             </div>
 
-            <div className="div-images animate__animated animate__fadeIn animate__slow">
-                <img
-                    id="imgPokeInfo"
-                    src={props.img}
-                    alt="Imagem do Pokemon."
-                />
+            <div className="div-images animate__animated animate__fadeIn">
+                {ImgPokemon !== null && (
+                    <img
+                        id="imgPokeInfo"
+                        className="imgPokeInfo animate__animated animate__backInLeft"
+                        src={ImgPokemon}
+                        alt="Imagem do Pokemon."
+                    />
+                )}
             </div>
 
             <div className="div-btn">
@@ -124,8 +136,9 @@ function PokeImages(props) {
                     <button
                         className="btn-previews"
                         onClick={() => {
+                            setImgPokemon(null);
                             props.setPokemonId(previewsPokemon);
-                            removeclassCss(".div-images", "animate__fadeIn");
+                            removeclassCss();
                         }}
                     >
                         <i className="bi bi-chevron-double-left"></i>
@@ -144,8 +157,9 @@ function PokeImages(props) {
                     <button
                         className="btn-next"
                         onClick={() => {
+                            setImgPokemon(null);
                             props.setPokemonId(nextPokemon);
-                            removeclassCss(".div-images", "animate__fadeIn");
+                            removeclassCss();
                         }}
                     >
                         <i className="bi bi-chevron-double-right"></i>
