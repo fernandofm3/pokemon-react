@@ -27,11 +27,12 @@ function PokeImages(props) {
     //Verrificando o tamanho do NOME do Pokemon, se preciso o nome será dividio e mostrado só o primeiro nome.
     function splitNameVarieties(name) {
         let newName = "";
-        if (name.length > 10) {
+
+        if (name.length > 20) {
             let splitedName = name.split("-");
             newName = splitedName[0];
         } else {
-            newName = name;
+            newName = name.replace(/-/g, " ");
         }
         return newName;
     }

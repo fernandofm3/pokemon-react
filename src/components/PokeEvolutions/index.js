@@ -10,7 +10,7 @@ function PokeEvolutions(props) {
             let splitedName = name.split("-");
             newName = splitedName[0];
         } else {
-            newName = name;
+            newName = name.replace(/-/g, " ");
         }
         return newName;
     }
