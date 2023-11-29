@@ -78,7 +78,8 @@ function PokeInfo() {
     const id = query.get("id");
     const qtPokemons = query.get("qtPokemons");
     const [PokemonId, setPokemonId] = useState(id);
-    const [TotalPokemon, setTotalPokemon] = useState(qtPokemons);
+    //const [TotalPokemon, setTotalPokemon] = useState(qtPokemons);
+    const TotalPokemon = qtPokemons;
     const [PokeData, setPokeData] = useState({});
     const [PokeDataSpecies, setPokeDataSpecies] = useState({});
     const [FirstEvolution, setFirstEvolution] = useState([]);
