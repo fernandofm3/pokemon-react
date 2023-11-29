@@ -3,6 +3,7 @@ import * as S from "./styles";
 import PokeTypes from "../../components/PokeTypes";
 import _get from "lodash/get";
 import { Link } from "react-router-dom";
+import imgPokeball from "../../assets/pokeball.png";
 
 function PokeCard(props) {
     //Ir ao topo da tela
@@ -50,7 +51,6 @@ function PokeCard(props) {
     }
 
     const spriteOfficial = spriteAdapterOfficial(props.img);
-    //const spriteDream = spriteAdapterDream(props.img);
 
     return (
         <S.PokeCard>
@@ -73,7 +73,16 @@ function PokeCard(props) {
                 id={"p" + props.id}
             >
                 <div className="card animate__animated animate__fadeIn animate__slow">
-                    <img src={spriteOfficial} alt="Imagem do Pokemon." />
+                    {!spriteOfficial ? (
+                        <img
+                            className="opacity-25"
+                            src={imgPokeball}
+                            alt="Imagem do Pokemon."
+                        />
+                    ) : (
+                        <img src={spriteOfficial} alt="Imagem do Pokemon." />
+                    )}
+
                     <p className="pokeNum">N° {zeroLeft(props.id)}</p>
                     <p className="pokeName">{splitName(props.name)}</p>
                     <div className="divPokeTypes">

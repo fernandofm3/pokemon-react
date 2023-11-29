@@ -1,11 +1,25 @@
 import React, { useState } from "react";
 import * as S from "./styles";
+import imgPokeball from "../../assets/pokeball.png";
 
 function PokeImages(props) {
     //controlando a exibição da imagem após ir ao próximo Pokemon ou voltar um Pokemon
-    const [ImgPokemon, setImgPokemon] = useState(props.img);
-    if (ImgPokemon !== props.img) {
-        setImgPokemon(props.img);
+    const [ImgPokemon, setImgPokemon] = useState(() => {
+        if (props.img) {
+            return props.img;
+        } else {
+            return imgPokeball;
+        }
+    });
+
+    if (props.img) {
+        if (ImgPokemon !== props.img) {
+            setImgPokemon(props.img);
+        }
+    } else {
+        if (ImgPokemon !== imgPokeball) {
+            setImgPokemon(imgPokeball);
+        }
     }
 
     //Verificando se o Pokemon atual é uma variação. Se for uma variação, o id do Pokemon principal será mantido.
@@ -122,10 +136,17 @@ function PokeImages(props) {
             </div>
 
             <div className="div-images animate__animated animate__fadeIn">
-                {ImgPokemon !== null && (
+                {ImgPokemon !== null && props.img ? (
                     <img
                         id="imgPokeInfo"
                         className="imgPokeInfo animate__animated animate__backInLeft"
+                        src={ImgPokemon}
+                        alt="Imagem do Pokemon."
+                    />
+                ) : (
+                    <img
+                        id="imgPokeInfo"
+                        className="imgPokeInfo animate__animated animate__backInLeft opacity-25"
                         src={ImgPokemon}
                         alt="Imagem do Pokemon."
                     />

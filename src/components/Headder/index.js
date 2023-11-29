@@ -34,7 +34,7 @@ const Headder = (props) => {
                 </ul>
 
                 <ul className="ulVersionApp">
-                    <li className="versionApp">V 2.0.1</li>
+                    <li className="versionApp">V 2.1.0</li>
                 </ul>
             </nav>
         </S.Headder>
