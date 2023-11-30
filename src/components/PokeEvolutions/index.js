@@ -1,5 +1,6 @@
 import React from "react";
 import PokeTypes from "../../components/PokeTypes";
+import imgPokeball from "../../assets/pokeball.png";
 import * as S from "./styles";
 
 function PokeEvolutions(props) {
@@ -32,11 +33,19 @@ function PokeEvolutions(props) {
 
     return (
         <S.PokeEvolutions>
-            <img
-                className="evo-img-pokemon"
-                src={props.img}
-                alt="Imagem do Pokemon."
-            />
+            {props.img ? (
+                <img
+                    className="evo-img-pokemon"
+                    src={props.img}
+                    alt="Imagem do Pokemon."
+                />
+            ) : (
+                <img
+                    className="evo-img-pokemon opacity-25"
+                    src={imgPokeball}
+                    alt="Imagem do Pokemon."
+                />
+            )}
 
             <div className="evo-type-pokemon">
                 <PokeTypes types={props.types} />
