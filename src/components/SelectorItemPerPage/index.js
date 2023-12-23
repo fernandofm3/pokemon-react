@@ -32,11 +32,11 @@ const SelectorItemPerPage = ({
                             : false
                     }
                 >
-                    <option value={12}>12 Pokemons </option>
-                    <option value={24}>24 Pokemons </option>
-                    <option value={36}>36 Pokemons </option>
-                    <option value={48}>48 Pokemons </option>
+                    <option value={20}>20 Pokemons </option>
+                    <option value={40}>40 Pokemons </option>
                     <option value={60}>60 Pokemons </option>
+                    <option value={80}>80 Pokemons </option>
+                    <option value={100}>100 Pokemons </option>
                 </select>
             </div>
         </S.SelectorItemPerPage>

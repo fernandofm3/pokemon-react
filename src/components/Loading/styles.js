@@ -12,11 +12,13 @@ export const Loading = styled.div`
     z-index: 1001;
 
     img {
-        width: 100px;
-        height: 100px;
+        width: 300px;
+        height: 300px;
     }
 
     h1 {
-        color: #555;
+        font-size: 3rem;
+        color: #000;
+        text-shadow: 1px 2px 3px #999;
     }
 `;

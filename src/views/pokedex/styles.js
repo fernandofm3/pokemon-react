@@ -1,11 +1,19 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    max-width: 1280px;
+    max-width: 95%;
     margin: auto;
-    padding: 20px 30px 20px 30px;
+    padding: 30px 15px 30px 15px;
     .item-display-none {
         display: none;
+    }
+
+    .div-pokecard {
+        display: grid;
+        column-gap: 50px;
+        row-gap: 50px;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 210px));
+        margin-bottom: 40px;
     }
 
     .div-search {
@@ -63,13 +71,5 @@ export const Container = styled.div`
             width: 100%;
             margin-left: 20px;
         }
-    }
-
-    .div-pokecard {
-        display: grid;
-        column-gap: 25px;
-        row-gap: 25px;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        margin-bottom: 40px;
     }
 `;

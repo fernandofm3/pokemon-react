@@ -4,6 +4,7 @@ import PokeTypes from "../../components/PokeTypes";
 import _get from "lodash/get";
 import { Link } from "react-router-dom";
 import imgPokeball from "../../assets/pokeball.png";
+import { colorTypeGradients } from "../../utils/utils";
 
 function PokeCard(props) {
     //Ir ao topo da tela
@@ -16,7 +17,26 @@ function PokeCard(props) {
 
     //Pegando a URL da imagem oficial do Pokemon
     function spriteAdapterOfficial(spriteOfficial) {
-        return _get(spriteOfficial, "other.official-artwork.front_default", "");
+        let oficial_atwork = _get(
+            spriteOfficial,
+            "other.official-artwork.front_default",
+            ""
+        );
+        let dream_word = _get(
+            spriteOfficial,
+            "other.dream_world.front_default",
+            ""
+        );
+
+        if (dream_word) {
+            return dream_word;
+        }
+
+        if (oficial_atwork) {
+            return oficial_atwork;
+        }
+
+        return null;
     }
 
     //Adicionando zero a esqueda no númeoro do Pokemon.
@@ -52,6 +72,23 @@ function PokeCard(props) {
 
     const spriteOfficial = spriteAdapterOfficial(props.img);
 
+    //Definindo a cor do card com base na cor do tipo
+    let finalColor;
+
+    if (props.types.length === 2) {
+        finalColor = colorTypeGradients(
+            props.types[0].type.name,
+            props.types[1].type.name,
+            props.types.length
+        );
+    } else {
+        finalColor = colorTypeGradients(
+            props.types[0].type.name,
+            props.types[0].type.name,
+            props.types.length
+        );
+    }
+
     return (
         <S.PokeCard>
             <Link
@@ -72,21 +109,31 @@ function PokeCard(props) {
                 onClick={() => scrollUp()}
                 id={"p" + props.id}
             >
-                <div className="card animate__animated animate__fadeIn animate__slow">
-                    {!spriteOfficial ? (
-                        <img
-                            className="opacity-25"
-                            src={imgPokeball}
-                            alt="Imagem do Pokemon."
-                        />
-                    ) : (
-                        <img src={spriteOfficial} alt="Imagem do Pokemon." />
-                    )}
+                <div
+                    className="card animate__animated animate__fadeIn animate__slow"
+                    style={{
+                        background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
+                    }}
+                >
+                    <p className="pokeNum">#{zeroLeft(props.id)}</p>
+                    <div className="div-img">
+                        {!spriteOfficial ? (
+                            <img
+                                className="opacity-25"
+                                src={imgPokeball}
+                                alt="Imagem do Pokemon."
+                            />
+                        ) : (
+                            <img
+                                src={spriteOfficial}
+                                alt="Imagem do Pokemon."
+                            />
+                        )}
+                    </div>
 
-                    <p className="pokeNum">N° {zeroLeft(props.id)}</p>
                     <p className="pokeName">{splitName(props.name)}</p>
                     <div className="divPokeTypes">
-                        <PokeTypes types={props.types} />
+                        <PokeTypes types={props.types} pokeId={props.id} />
                     </div>
                 </div>
             </Link>

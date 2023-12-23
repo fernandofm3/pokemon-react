@@ -8,7 +8,7 @@ export const Headder = styled.div`
         display: flex;
         flez-direction: row;
         justify-content: space-between;
-        max-width: 1280px;
+        max-width: 95%;
         margin: auto;
     }
 

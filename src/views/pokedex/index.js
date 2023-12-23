@@ -84,7 +84,6 @@ function Pokedex() {
     //Ir para o último Pokemon selecionado.
     scrollToPokemon(query.get("id"));
 
-    //Conexão com API - Recuperando os Dados
     useEffect(() => {
         //Buscando a lista com os nomes do TIPOS de Pokemons
         api.get(`/type`).then((response) => {
@@ -95,7 +94,10 @@ function Pokedex() {
         api.get(`/pokemon-color`).then((response) => {
             setListNameColor(response.data.results);
         });
+    }, []);
 
+    //Conexão com API - Recuperando os Dados
+    useEffect(() => {
         let filter;
         const newPokeList = [];
 
@@ -112,16 +114,18 @@ function Pokedex() {
 
             api.get(`/type${filter}`).then((response) => {
                 async function getInfoPokemonPerType() {
-                    let dataResults = response.data.pokemon;
+                    await Promise.all(
+                        response.data.pokemon.map((pokemonItem) => {
+                            return api
+                                .get(
+                                    `https://pokeapi.co/api/v2/pokemon/${pokemonItem.pokemon.name}`
+                                )
+                                .then((result) => {
+                                    newPokeList.push(result.data);
+                                });
+                        })
+                    );
 
-                    //Realizando um laço para buscar a informação de cada Pokemon para salvar em novo array
-                    for (let i = 0; i < dataResults.length; i++) {
-                        let resultPokeInfo = await api.get(
-                            `/pokemon/${dataResults[i].pokemon.name}`
-                        );
-                        resultPokeInfo = resultPokeInfo.data;
-                        newPokeList.push(resultPokeInfo);
-                    }
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
@@ -134,19 +138,20 @@ function Pokedex() {
 
             api.get(`/pokemon-color${filter}`).then((response) => {
                 async function getInfoPokemonPerColor() {
-                    let dataResults = response.data.pokemon_species;
+                    await Promise.all(
+                        response.data.pokemon_species.map((pokemonItem) => {
+                            //Dividindo a URL para pegar o ID do Pokemon
+                            const splitedUrl = pokemonItem.url.split("/");
 
-                    //Realizando um laço para buscar a informação de cada Pokemon para salvar em novo array
-                    for (let i = 0; i < dataResults.length; i++) {
-                        //Dividindo a URL para pegar o ID do Pokemon
-                        const splitedUrl = dataResults[i].url.split("/");
-
-                        let resultPokeInfo = await api.get(
-                            `/pokemon/${splitedUrl[6]}`
-                        );
-                        resultPokeInfo = resultPokeInfo.data;
-                        newPokeList.push(resultPokeInfo);
-                    }
+                            return api
+                                .get(
+                                    `https://pokeapi.co/api/v2/pokemon/${splitedUrl[6]}`
+                                )
+                                .then((result) => {
+                                    newPokeList.push(result.data);
+                                });
+                        })
+                    );
 
                     setData(newPokeList);
                     setRemoveLoading(true);
@@ -162,19 +167,20 @@ function Pokedex() {
                 setTotalItens(response.data.count);
 
                 async function getInfoPokemon() {
-                    let dataResults = response.data.results;
+                    await Promise.all(
+                        response.data.results.map((pokemonItem) => {
+                            //Dividindo a URL para pegar o ID do Pokemon
+                            const splitedUrl = pokemonItem.url.split("/");
 
-                    //Realizando um laço para buscar a informação de cada Pokemon para salvar em novo array
-                    for (let i = 0; i < dataResults.length; i++) {
-                        //Dividindo a URL para pegar o ID do Pokemon
-                        const splitedUrl = dataResults[i].url.split("/");
-
-                        let resultPokeInfo = await api.get(
-                            `/pokemon/${splitedUrl[6]}`
-                        );
-                        resultPokeInfo = resultPokeInfo.data;
-                        newPokeList.push(resultPokeInfo);
-                    }
+                            return api
+                                .get(
+                                    `https://pokeapi.co/api/v2/pokemon/${splitedUrl[6]}`
+                                )
+                                .then((result) => {
+                                    newPokeList.push(result.data);
+                                });
+                        })
+                    );
 
                     setData(newPokeList);
                     setRemoveLoading(true);
@@ -227,25 +233,24 @@ function Pokedex() {
                 </div>
 
                 <div className="div-pokecard">
-                    {Data.length > 0 &&
-                        Data.map((p) => {
-                            return (
-                                p.id <= TotalItens && (
-                                    <PokeCard
-                                        name={p.name}
-                                        id={p.id}
-                                        img={p.sprites}
-                                        types={p.types}
-                                        Offset={Offset}
-                                        SelectorType={SelectorType}
-                                        SelectorColor={SelectorColor}
-                                        Limit={Limit}
-                                        TotalItens={TotalItens}
-                                        key={p.id}
-                                    />
-                                )
-                            );
-                        })}
+                    {Data.map((p) => {
+                        return (
+                            p.id <= TotalItens && (
+                                <PokeCard
+                                    name={p.name}
+                                    id={p.id}
+                                    img={p.sprites}
+                                    types={p.types}
+                                    Offset={Offset}
+                                    SelectorType={SelectorType}
+                                    SelectorColor={SelectorColor}
+                                    Limit={Limit}
+                                    TotalItens={TotalItens}
+                                    key={p.id}
+                                />
+                            )
+                        );
+                    })}
                 </div>
 
                 {Data.length > 0 && (

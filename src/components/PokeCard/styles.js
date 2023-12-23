@@ -7,27 +7,31 @@ export const PokeCard = styled.div`
 
     .card {
         background-color: #fff;
-        box-shadow: 3px 2px 10px 4px #888;
+        box-shadow: 1px 1px 16px 6px #ddd;
+        border: none;
         border-radius: 7px;
-        transition: 0.3s;
+        transition: all 0.3s ease-in-out;
     }
 
     .card:hover {
-        box-shadow: 4px 4px 12px 6px #888;
+        box-shadow: 1px 1px 14px 10px #ccc;
+        transform: scale(1.05);
     }
 
-    @media screen and (min-width: 440px) {
-        .card {
-            max-width: 300px;
-        }
-    }
-
-    img {
-        background-color: #eee;
-        padding: 10px;
+    .div-img {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
         width: 100%;
+    }
+
+    .div-img img {
+        padding: 10px;
+        width: 150px;
+        height: 150px;
         border-top-left-radius: 7px;
         border-top-right-radius: 7px;
+        transition: 0.3s;
     }
 
     .pokeNum,
@@ -37,17 +41,21 @@ export const PokeCard = styled.div`
     }
 
     .pokeNum {
-        font-size: 0.875rem;
+        font-size: 1.3rem;
+        margin-top: 20px;
         margin-bottom: 10px;
         font-weight: bold;
-        color: #777;
+        color: #eee;
+        text-shadow: 1px 2px 3px #000;
     }
 
     .pokeName {
         font-weight: bold;
-        font-size: 1.25rem;
+        font-size: 1.5rem;
+        margin-top: 20px;
         margin-bottom: 5px;
-        color: #333;
+        color: #fff;
+        text-shadow: 1px 2px 6px #000;
     }
 
     .divPokeTypes {

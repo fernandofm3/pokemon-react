@@ -6,7 +6,7 @@ function Loading() {
     return (
         <S.Loading>
             <img
-                className="animate__animated animate__headShake animate__infinite"
+                className="animate__animated animate__headShake animate__infinite mb-3"
                 src={imgLoading}
                 alt="Loading..."
             />
