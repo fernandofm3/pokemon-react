@@ -4,6 +4,7 @@ export const PokeTypes = styled.div`
     .div-types {
         display: flex;
         flex-direction: row;
+        text-transform: capitalize;
     }
 
     .poke__type__bg > img {

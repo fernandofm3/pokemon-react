@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import api from "../../services/api";
 import PokeCard from "../../components/PokeCard";
-import Pagination from "../../components/Pagination";
-import SelectorItemPerPage from "../../components/SelectorItemPerPage";
-import SelectorPokemonType from "../../components/SelectorPokemonType";
-import SelectorPokemonColor from "../../components/SelectorPokemonColor";
+import SelectorPokemonPerRigion from "../../components/SelectorPokemonPerRegion";
+import SelectorPokemonPerGeneration from "../../components/SelectorPokemonPerGeneration";
 import SearchPokemon from "../../components/Search";
 import Headder from "../../components/Headder";
 import Loading from "../../components/Loading";
 import BackToTop from "../../components/BackTotop";
+//import Pagination from "../../components/Pagination";
+//import SelectorPokemonType from "../../components/SelectorPokemonType";
+//import SelectorPokemonColor from "../../components/SelectorPokemonColor";
 
 //Import Styles
 import * as S from "./styles";
@@ -57,29 +58,31 @@ function Pokedex() {
     const [SelectorColor, setSelectorColor] = useState(
         query.get("color") ? query.get("color") : ""
     );
-    const [Offset, setOffset] = useState(
-        query.get("offset") ? query.get("offset") : 0
-    );
-    const [Limit, setLimit] = useState(
-        query.get("limit") ? query.get("limit") : 12
-    );
-    const [TotalItens, setTotalItens] = useState(
-        query.get("qtPokemons") ? query.get("qtPokemons") : 0
-    );
+    const [Generation, setGeneration] = useState("1");
+    const [RegionName, setRegionName] = useState("");
     const [RemoveLoading, setRemoveLoading] = useState(false);
 
-    const maxButtonPagination = 9;
-    const maxLeftPagination = (maxButtonPagination - 1) / 2;
-    const totalPages = Math.ceil(TotalItens / Limit);
-    const currentPagePagination = Offset ? Offset / Limit + 1 : 1;
-    const maxfirstPagePagination = Math.max(
-        totalPages - (maxButtonPagination - 1),
-        1
-    );
-    const firstPagePagination = Math.min(
-        Math.max(currentPagePagination - maxLeftPagination, 1),
-        maxfirstPagePagination
-    );
+    // const [Offset, setOffset] = useState(
+    //     query.get("offset") ? query.get("offset") : 0
+    // );
+    // const [Limit, setLimit] = useState(
+    //     query.get("limit") ? query.get("limit") : 12
+    // );
+    // const [TotalItens, setTotalItens] = useState(
+    //     query.get("qtPokemons") ? query.get("qtPokemons") : 0
+    // );
+    // const maxButtonPagination = 9;
+    // const maxLeftPagination = (maxButtonPagination - 1) / 2;
+    // const totalPages = Math.ceil(TotalItens / Limit);
+    // const currentPagePagination = Offset ? Offset / Limit + 1 : 1;
+    // const maxfirstPagePagination = Math.max(
+    //     totalPages - (maxButtonPagination - 1),
+    //     1
+    // );
+    // const firstPagePagination = Math.min(
+    //     Math.max(currentPagePagination - maxLeftPagination, 1),
+    //     maxfirstPagePagination
+    // );
 
     //Ir para o último Pokemon selecionado.
     scrollToPokemon(query.get("id"));
@@ -161,15 +164,18 @@ function Pokedex() {
                 getInfoPokemonPerColor();
             });
         } else {
-            filter = `?offset=${Offset}&limit=${Limit}`;
+            //filter = `?offset=${Offset}&limit=${Limit}`;
+            filter = Generation;
 
-            api.get(`/pokemon-species${filter}`).then((response) => {
-                setTotalItens(response.data.count);
-
+            //api.get(`/pokemon-species${filter}`).then((response) => {
+            api.get(`/generation/${filter}`).then((response) => {
+                //setTotalItens(response.data.count);
                 async function getInfoPokemon() {
                     await Promise.all(
-                        response.data.results.map((pokemonItem) => {
+                        //response.data.results.map((pokemonItem) => {
+                        response.data.pokemon_species.map((pokemonItem) => {
                             //Dividindo a URL para pegar o ID do Pokemon
+                            //const splitedUrl = pokemonItem.url.split("/");
                             const splitedUrl = pokemonItem.url.split("/");
 
                             return api
@@ -182,6 +188,11 @@ function Pokedex() {
                         })
                     );
 
+                    //Função para order os pokemons pelo ID de forma crescente
+                    newPokeList.sort((a, b) =>
+                        a.id > b.id ? 1 : b.id > a.id ? -1 : 0
+                    );
+
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
@@ -190,20 +201,54 @@ function Pokedex() {
                 getInfoPokemon();
             });
         }
-    }, [Search, Offset, Limit, SelectorType, SelectorColor]);
+    }, [Search, SelectorType, SelectorColor, RegionName, Generation]);
 
     return (
         <div>
             {!RemoveLoading && <Loading />}
 
-            <Headder setOffset={setOffset} TotalItens={TotalItens} />
+            {/* <Headder setOffset={setOffset} TotalItens={TotalItens} /> */}
+            <Headder />
 
             <S.Container>
                 <div className="div-search">
-                    <SearchPokemon setSearch={setSearch} search={Search} />
-
                     <div className="div-seletors">
-                        <SelectorPokemonType
+                        {/*Modal referente a gerações dos Pokemons */}
+                        <button
+                            type="button"
+                            className="btn btn-danger button-generation me-3"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalGeneration"
+                        >
+                            <i className="bi bi-boxes me-2"></i> Generation
+                        </button>
+
+                        <SelectorPokemonPerGeneration
+                            setRemoveLoading={setRemoveLoading}
+                            setGeneration={setGeneration}
+                        />
+                        {/*########################################*/}
+
+                        <button
+                            type="button"
+                            className="btn btn-primary me-3"
+                            placeholder="Filtros"
+                        >
+                            {/* <i className="bi bi-funnel-fill"></i> */}
+                            <i className="bi bi-filter"></i>
+                        </button>
+
+                        {/* <SelectorPokemonPerGeneration
+                            // setLimit={setLimit}
+                            // setOffset={setOffset}
+                            // limit={Limit}
+                            //Search={Search}
+                            //SelectorType={SelectorType}
+                            //SelectorColor={SelectorColor}
+                            setRemoveLoading={setRemoveLoading}
+                            setRegionName={setRegionName}
+                        /> */}
+                        {/* <SelectorPokemonType
                             SelectorType={SelectorType}
                             setSelectorType={setSelectorType}
                             Search={Search}
@@ -218,42 +263,32 @@ function Pokedex() {
                             ListNameColor={ListNameColor}
                             SelectorType={SelectorType}
                             setRemoveLoading={setRemoveLoading}
-                        />
-                        <SelectorItemPerPage
-                            className="selector-item"
-                            setLimit={setLimit}
-                            setOffset={setOffset}
-                            limit={Limit}
-                            Search={Search}
-                            SelectorType={SelectorType}
-                            SelectorColor={SelectorColor}
-                            setRemoveLoading={setRemoveLoading}
-                        />
+                        /> */}
                     </div>
+                    <SearchPokemon setSearch={setSearch} search={Search} />
                 </div>
 
                 <div className="div-pokecard">
                     {Data.map((p) => {
                         return (
-                            p.id <= TotalItens && (
-                                <PokeCard
-                                    name={p.name}
-                                    id={p.id}
-                                    img={p.sprites}
-                                    types={p.types}
-                                    Offset={Offset}
-                                    SelectorType={SelectorType}
-                                    SelectorColor={SelectorColor}
-                                    Limit={Limit}
-                                    TotalItens={TotalItens}
-                                    key={p.id}
-                                />
-                            )
+                            //p.id <= TotalItens &&
+                            <PokeCard
+                                name={p.name}
+                                id={p.id}
+                                img={p.sprites}
+                                types={p.types}
+                                //Offset={Offset}
+                                SelectorType={SelectorType}
+                                SelectorColor={SelectorColor}
+                                //Limit={Limit}
+                                //TotalItens={TotalItens}
+                                key={p.id}
+                            />
                         );
                     })}
                 </div>
 
-                {Data.length > 0 && (
+                {/* {Data.length > 0 && (
                     <Pagination
                         Search={Search}
                         SelectorType={SelectorType}
@@ -266,7 +301,7 @@ function Pokedex() {
                         totalPages={totalPages}
                         setRemoveLoading={setRemoveLoading}
                     />
-                )}
+                )} */}
 
                 <BackToTop />
             </S.Container>

@@ -19,16 +19,22 @@ export const BackToTopButton = styled.div`
     .back-to-top {
         display: none;
         position: fixed;
-        width: 50px;
+        width: 70px;
+        height: 70px;
         bottom: 38px;
-        right: 10px;
-        border: 2px solid #000;
+        right: 2%;
+        border: none;
         padding: 8px;
         border-radius: 50%;
-        background-color: rgba(222, 43, 30, 0.9);
+        background-color: rgba(222, 43, 30, 0.6);
         color: #fff;
         font-weight: bold;
         font-size: 1.25rem;
+        transition: all 0.3s;
+    }
+
+    .back-to-top:hover {
+        background-color: rgba(222, 43, 30, 0.9);
     }
 
     @media screen and (min-width: 768px) {
@@ -38,30 +44,6 @@ export const BackToTopButton = styled.div`
 
         .back-to-top {
             display: block;
-        }
-    }
-
-    @media screen and (min-width: 1280px) {
-        .back-to-top {
-            right: 1%;
-        }
-    }
-
-    @media screen and (min-width: 1440px) {
-        .back-to-top {
-            right: 2%;
-        }
-    }
-
-    @media screen and (min-width: 1600px) {
-        .back-to-top {
-            right: 4%;
-        }
-    }
-
-    @media screen and (min-width: 1920px) {
-        .back-to-top {
-            right: 7%;
         }
     }
 `;

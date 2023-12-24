@@ -11,6 +11,8 @@ export const PokeCard = styled.div`
         border: none;
         border-radius: 7px;
         transition: all 0.3s ease-in-out;
+        max-width: 220px;
+        max-height: 300px;
     }
 
     .card:hover {

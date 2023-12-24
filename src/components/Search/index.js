@@ -22,10 +22,27 @@ const SearchPokemon = ({ setSearch, search }) => {
 
     return (
         <S.SearchBar>
-            <input
-                className="search"
+            <div className="input-group">
+                <span className="input-group-text" id="basic-addon1">
+                    <i className="bi bi-search"></i>
+                </span>
+                <input
+                    className="search form-control"
+                    id="floatingInput"
+                    type="search"
+                    placeholder="Name or ID"
+                    value={search}
+                    onChange={(event) => {
+                        setSearch(event.target.value.toLowerCase());
+                    }}
+                />
+            </div>
+
+            {/* <input
+                className="search form-control"
+                id="floatingInput"
                 type="search"
-                placeholder="Enter pokemon name or id"
+                placeholder="Name or ID"
                 value={search}
                 onChange={(event) => {
                     setSearch(event.target.value.toLowerCase());
@@ -33,7 +50,7 @@ const SearchPokemon = ({ setSearch, search }) => {
             />
 
             <input
-                className="searchMobile"
+                className="searchMobile form-control form-control-lg"
                 type="search"
                 placeholder="Enter pokemon name or id"
                 onKeyDown={handleKeyDown}
@@ -42,7 +59,7 @@ const SearchPokemon = ({ setSearch, search }) => {
                         setSearch("");
                     }
                 }}
-            />
+            /> */}
         </S.SearchBar>
     );
 };

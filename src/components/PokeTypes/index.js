@@ -8,7 +8,7 @@ function PokeTypes(props) {
         <S.PokeTypes>
             <div className="div-types">
                 {props.types?.map((t) => (
-                    <>
+                    <div key={t.type.name + props.pokeId}>
                         <div
                             data-tooltip-id={t.type.name + props.pokeId}
                             className={`poke__type__bg ${t.type.name}`}
@@ -23,9 +23,10 @@ function PokeTypes(props) {
                             id={t.type.name + props.pokeId}
                             place="bottom"
                             content={t.type.name}
-                            variant="dark"
+                            //variant="dark"
+                            //opacity={0.7}
                         />
-                    </>
+                    </div>
                 ))}
             </div>
         </S.PokeTypes>
