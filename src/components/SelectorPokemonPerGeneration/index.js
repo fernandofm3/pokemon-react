@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
-import imgPokeball from "../../assets/pokeball.png";
+import imgGeneration from "../../assets/logo.png";
+import LoadingModal from "../../components/LoadingModal/index";
 import * as S from "./styles";
 
-const SelectorPokemonsPerGeneration = ({ setRemoveLoading, setGeneration }) => {
+const SelectorPokemonsPerGeneration = ({
+    setRemoveLoading,
+    setGeneration,
+    Region,
+    setRegion,
+    RemoveLoadingModal,
+    setRemoveLoadingModal,
+}) => {
     //Pokemons por regiões
     const [PokeGererations, setPokeGenerations] = useState([]);
 
@@ -14,6 +22,14 @@ const SelectorPokemonsPerGeneration = ({ setRemoveLoading, setGeneration }) => {
             setPokeGenerations(response.data.results);
         });
     }, []);
+
+    //Verifica se o usuário selecionou uma consulta por Regiao no modal de Regiões.
+    //Se o usuário selecionou, a Geração do modal Gerações que está ativa com a cor vervelha volta ao normal, mostrando que não tem Geração selecionada.
+    useEffect(() => {
+        if (Region !== "") {
+            setSelectedCard("");
+        }
+    }, [Region]);
 
     //Pegando o index do card clicado
     const handleCardClick = (index) => {
@@ -29,8 +45,9 @@ const SelectorPokemonsPerGeneration = ({ setRemoveLoading, setGeneration }) => {
                 aria-labelledby="staticBackdropLabel"
                 aria-hidden="true"
             >
-                <div className="modal-dialog modal-dialog-centered modal-lg">
+                <div className="modal-dialog modal-dialog-centered modal-xl">
                     <div className="modal-content">
+                        {!RemoveLoadingModal && <LoadingModal />}
                         <div className="modal-header">
                             <h1
                                 className="modal-title fs-5"
@@ -62,27 +79,29 @@ const SelectorPokemonsPerGeneration = ({ setRemoveLoading, setGeneration }) => {
                                             key={generation.name}
                                             onClick={() => {
                                                 if (SelectedCard !== index) {
+                                                    setRegion("");
                                                     setGeneration(
                                                         splitedUrl[6]
                                                     );
                                                     handleCardClick(index);
                                                     setRemoveLoading(false);
+                                                    setRemoveLoadingModal(
+                                                        false
+                                                    );
                                                 }
                                             }}
                                         >
                                             <div className="card-body text-center">
                                                 <img
                                                     className="mb-3"
-                                                    src={imgPokeball}
+                                                    src={imgGeneration}
                                                     alt="Pokemon Generation"
                                                 />
 
                                                 <h6 className="card-title">
-                                                    Generation
+                                                    Generation{" "}
+                                                    <span>{splitedUrl[6]}</span>
                                                 </h6>
-                                                <h3 className="card-title">
-                                                    {splitedUrl[6]}
-                                                </h3>
                                             </div>
                                         </div>
                                     );

@@ -53,7 +53,8 @@ export const PokeCard = styled.div`
 
     .pokeName {
         font-weight: bold;
-        font-size: 1.5rem;
+
+        font-size: 1.2rem;
         margin-top: 20px;
         margin-bottom: 5px;
         color: #fff;
@@ -74,5 +75,11 @@ export const PokeCard = styled.div`
         text-transform: capitalize !important;
         font-weight: bold !important;
         text-shadow: 2px 2px 2px #aaa !important;
+    }
+
+    @media screen and (min-width: 768px) {
+        .pokeName {
+            font-size: 1.5rem;
+        }
     }
 `;

@@ -1,67 +1,130 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
+import imgRegion from "../../assets/logo.png";
+import LoadingModal from "../../components/LoadingModal/index";
 import * as S from "./styles";
 
-const SelectorItemPerPage = ({
-    // setLimit,
-    // limit,
-    // setOffset,
-    //Search,
-    //SelectorType,
-    //SelectorColor,
+const SelectorPokemonsPerRegion = ({
     setRemoveLoading,
-    setRegionName,
+    setRegion,
+    Generation,
+    RemoveLoadingModal,
+    setRemoveLoadingModal,
 }) => {
     //Pokemons por regiões
-    const [pokeRegion, setPokeRegion] = useState([]);
+    const [PokeRegion, setPokeRegion] = useState([]);
+
+    const [SelectedCard, setSelectedCard] = useState("");
 
     useEffect(() => {
         api.get(`/pokedex`).then((response) => {
-            console.log(response.data.results);
             setPokeRegion(response.data.results);
         });
     }, []);
 
+    //Verifica se o usuário selecionou uma consulta por Geração no modal de Gerações.
+    //Se o usuário selecionou, a Raião do modal Regiões que está ativa com a cor verde volta ao normal, mostrando que não tem Região selecionada.
+    useEffect(() => {
+        if (Generation === "1" || Generation !== "1") {
+            setSelectedCard("");
+        }
+    }, [Generation]);
+
+    //Pegando o index do card clicado
+    const handleCardClick = (index) => {
+        setSelectedCard(index);
+    };
+
     return (
-        <S.SelectorItemPerPage className="me-3">
-            <div className="div-selector-box">
-                {/* <label htmlFor="selector-box">Generation:</label> */}
-                <div className="form-floating">
-                    <select
-                        className="form-select"
-                        aria-label="Floating label select example"
-                        id="floatingSelect"
-                        //value=""
-                        onChange={(e) => {
-                            console.log(e.target.value);
-                            setRegionName(e.target.value);
-                            setRemoveLoading(false);
-                        }}
-                        // disabled={
-                        //     Search !== ""
-                        //         ? true
-                        //         : SelectorType !== ""
-                        //         ? true
-                        //         : SelectorColor !== ""
-                        //         ? true
-                        //         : false
-                        // }
-                    >
-                        <option selected disabled>
-                            Open this select menu
-                        </option>
-                        {pokeRegion.map((region) => (
-                            <option value={region.name} key={region.name}>
-                                {" "}
-                                {region.name}{" "}
-                            </option>
-                        ))}
-                    </select>
-                    <label htmlFor="floatingSelect">Pokemon per Region</label>
+        <S.SelectorPokemonsPerRegion>
+            <div
+                className="modal fade"
+                id="modalRegion"
+                tabIndex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-centered modal-xl">
+                    <div className="modal-content">
+                        {!RemoveLoadingModal && <LoadingModal />}
+                        <div className="modal-header">
+                            <h1
+                                className="modal-title fs-5"
+                                id="staticBackdropLabel"
+                            >
+                                <i className="bi bi-geo-fill me-2"></i> Pokemon
+                                Region
+                            </h1>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="div-cards-region">
+                                {PokeRegion.map((region, index) => {
+                                    const splitedNme = region.name.split("-");
+
+                                    return (
+                                        <div
+                                            className={
+                                                SelectedCard === index
+                                                    ? "card color-selected-card"
+                                                    : "card"
+                                            }
+                                            key={region.name}
+                                            onClick={() => {
+                                                if (SelectedCard !== index) {
+                                                    setRegion(region.name);
+                                                    handleCardClick(index);
+                                                    setRemoveLoading(false);
+                                                    setRemoveLoadingModal(
+                                                        false
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            <div className="card-body text-center">
+                                                <img
+                                                    className="mb-3"
+                                                    src={imgRegion}
+                                                    alt="Pokemon Region"
+                                                />
+
+                                                <h5 className="card-title">
+                                                    Region
+                                                </h5>
+
+                                                <h6 className="card-title mt-3">
+                                                    {splitedNme[0] &&
+                                                    splitedNme[1]
+                                                        ? splitedNme[0] +
+                                                          " " +
+                                                          splitedNme[1]
+                                                        : splitedNme[0]}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </S.SelectorItemPerPage>
+        </S.SelectorPokemonsPerRegion>
     );
 };
 
-export default SelectorItemPerPage;
+export default SelectorPokemonsPerRegion;

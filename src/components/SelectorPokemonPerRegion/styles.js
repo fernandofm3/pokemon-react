@@ -1,23 +1,62 @@
 import styled from "styled-components";
 
-export const SelectorItemPerPage = styled.div`
-    .div-selector-box {
-        width: 250px;
+export const SelectorPokemonsPerRegion = styled.div`
+    .div-cards-region {
+        display: grid;
+        column-gap: 20px;
+        row-gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 
-    // label {
-    //     margin-right: 8px;
-    //     font-size: 1.1rem;
-    //     font-weight: bold;
-    //     color: #777;
-    // }
+    .div-cards-region .card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-    // select {
-    //     padding: 11px;
-    //     border-radius: 7px;
-    // }
+    .div-cards-region .card {
+        width: 100%;
+        cursor: pointer;
+        transition: 0.2s;
+        background-color: #887a63;
+    }
 
-    // .item-display-none {
-    //     display: none;
-    // }
+    .div-cards-region .card:hover {
+        background-color: #6d614f;
+    }
+
+    .div-cards-region img {
+        width: 150px;
+        border-radius: 7px;
+    }
+
+    .div-cards-region h5 {
+        width: 100px;
+        font-size: 1rem;
+        color: #fff;
+        padding: 6px 10px;
+        background-color: red;
+        border-radius: 15px;
+        box-shadow: 5px 5px #555;
+    }
+
+    .div-cards-region h6 {
+        font-size: 1.2rem;
+        color: #fff;
+        text-shadow: 1px 6px 8px #000;
+        text-transform: capitalize;
+    }
+
+    .div-cards-region .color-selected-card {
+        background-color: #157347;
+        color: #fff;
+    }
+
+    .div-cards-region .color-selected-card:hover {
+        background-color: #157347;
+    }
+
+    .div-cards-region h3 {
+        font-weight: bold;
+    }
 `;

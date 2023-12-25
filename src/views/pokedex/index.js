@@ -59,8 +59,10 @@ function Pokedex() {
         query.get("color") ? query.get("color") : ""
     );
     const [Generation, setGeneration] = useState("1");
-    const [RegionName, setRegionName] = useState("");
+
+    const [Region, setRegion] = useState("");
     const [RemoveLoading, setRemoveLoading] = useState(false);
+    const [RemoveLoadingModal, setRemoveLoadingModal] = useState(false);
 
     // const [Offset, setOffset] = useState(
     //     query.get("offset") ? query.get("offset") : 0
@@ -163,6 +165,41 @@ function Pokedex() {
 
                 getInfoPokemonPerColor();
             });
+        } else if (Region !== "") {
+            filter = Region;
+
+            api.get(`/pokedex/${filter}`).then((response) => {
+                async function getInfoPokemon() {
+                    await Promise.all(
+                        //response.data.results.map((pokemonItem) => {
+                        response.data.pokemon_entries.map((pokemonItem) => {
+                            //Dividindo a URL para pegar o ID do Pokemon
+                            const splitedUrl =
+                                pokemonItem.pokemon_species.url.split("/");
+
+                            return api
+                                .get(
+                                    `https://pokeapi.co/api/v2/pokemon/${splitedUrl[6]}`
+                                )
+                                .then((result) => {
+                                    newPokeList.push(result.data);
+                                });
+                        })
+                    );
+
+                    //Função para order os pokemons pelo ID de forma crescente
+                    newPokeList.sort((a, b) =>
+                        a.id > b.id ? 1 : b.id > a.id ? -1 : 0
+                    );
+
+                    setData(newPokeList);
+                    setRemoveLoading(true);
+                    setRemoveLoadingModal(true);
+                    scrollUp();
+                }
+
+                getInfoPokemon();
+            });
         } else {
             //filter = `?offset=${Offset}&limit=${Limit}`;
             filter = Generation;
@@ -195,13 +232,14 @@ function Pokedex() {
 
                     setData(newPokeList);
                     setRemoveLoading(true);
+                    setRemoveLoadingModal(true);
                     scrollUp();
                 }
 
                 getInfoPokemon();
             });
         }
-    }, [Search, SelectorType, SelectorColor, RegionName, Generation]);
+    }, [Search, SelectorType, SelectorColor, Region, Generation]);
 
     return (
         <div>
@@ -226,17 +264,34 @@ function Pokedex() {
                         <SelectorPokemonPerGeneration
                             setRemoveLoading={setRemoveLoading}
                             setGeneration={setGeneration}
+                            Generation={Generation}
+                            setRegion={setRegion}
+                            Region={Region}
+                            setRemoveLoadingModal={setRemoveLoadingModal}
+                            RemoveLoadingModal={RemoveLoadingModal}
                         />
                         {/*########################################*/}
 
                         <button
                             type="button"
-                            className="btn btn-primary me-3"
+                            className="btn btn-success btn-region me-3"
                             placeholder="Filtros"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalRegion"
                         >
-                            {/* <i className="bi bi-funnel-fill"></i> */}
-                            <i className="bi bi-filter"></i>
+                            <i className="bi bi-geo-fill me-2"></i> Region
                         </button>
+
+                        {/*Modal referente a gerações dos Pokemons */}
+                        <SelectorPokemonPerRigion
+                            setRemoveLoading={setRemoveLoading}
+                            setRegion={setRegion}
+                            setGeneration={setGeneration}
+                            Generation={Generation}
+                            setRemoveLoadingModal={setRemoveLoadingModal}
+                            RemoveLoadingModal={RemoveLoadingModal}
+                        />
+                        {/*########################################*/}
 
                         {/* <SelectorPokemonPerGeneration
                             // setLimit={setLimit}
@@ -266,6 +321,14 @@ function Pokedex() {
                         /> */}
                     </div>
                     <SearchPokemon setSearch={setSearch} search={Search} />
+
+                    <button
+                        type="button"
+                        className="btn ms-2 btn-filters"
+                        placeholder="Filtros"
+                    >
+                        <i className="bi bi-filter"></i>
+                    </button>
                 </div>
 
                 <div className="div-pokecard">

@@ -10,9 +10,9 @@ export const Container = styled.div`
 
     .div-pokecard {
         display: grid;
-        column-gap: 50px;
+        column-gap: 20px;
         row-gap: 90px;
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
         margin-bottom: 80px;
     }
 
@@ -27,54 +27,86 @@ export const Container = styled.div`
         flex-direction: column;
     }
 
-    .div-seletors .button-generation {
+    .div-seletors .button-generation,
+    .div-seletors .btn-region {
         display: flex;
         flex-direction: row;
     }
 
-    // .div-seletors label {
-    //     width: 90px;
-    // }
+    .div-search .btn-filters {
+        background-color: #3b64a5;
+        color: #fff;
+    }
 
-    // .div-seletors select {
-    //     width: 100%;
-    // }
+    .div-search .btn-filters:hover {
+        background-color: #345891;
+    }
+
+    @media screen and (min-width: 450px) {
+        .div-pokecard {
+            column-gap: 20px;
+            row-gap: 90px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+    }
+
+    @media screen and (min-width: 600px) {
+        .div-pokecard {
+            column-gap: 20px;
+            row-gap: 90px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        }
+    }
 
     @media screen and (min-width: 650px) {
         .div-seletors {
             flex-direction: row;
             justify-content: space-between;
         }
+    }
 
-        // .div-seletors label,
-        // .div-seletors select {
-        //     width: auto;
-        // }
+    @media screen and (min-width: 768px) {
+        .div-pokecard {
+            column-gap: 20px;
+            row-gap: 90px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        }
     }
 
     @media screen and (min-width: 900px) {
+        .div-pokecard {
+            column-gap: 20px;
+            row-gap: 90px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        }
+
         .div-search {
             flex-direction: row;
             justify-content: space-between;
         }
-
-        // .div-seletors {
-        //     width: 220%;
-        //     margin-left: 20px;
-        // }
     }
 
     @media screen and (min-width: 1024px) {
-        // .div-seletors {
-        //     width: 150%;
-        //     margin-left: 20px;
-        // }
+        .div-pokecard {
+            column-gap: 20px;
+            row-gap: 90px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
     }
 
     @media screen and (min-width: 1280px) {
-        // .div-seletors {
-        //     width: 100%;
-        //     margin-left: 20px;
-        // }
+        .div-pokecard {
+            column-gap: 50px;
+            row-gap: 90px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+    }
+
+    @media screen and (min-width: 1920px) {
+        .div-pokecard {
+            column-gap: 50px;
+            row-gap: 90px;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        }
     }
 `;
