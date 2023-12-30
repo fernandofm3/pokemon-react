@@ -19,6 +19,5 @@ export const LoadingModal = styled.div`
     h1 {
         font-size: 2.2rem;
         color: #000;
-        //text-shadow: 1px 2px 3px #fff;
     }
 `;

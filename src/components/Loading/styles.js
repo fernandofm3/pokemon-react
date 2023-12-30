@@ -9,7 +9,7 @@ export const Loading = styled.div`
     width: 100%;
     height: 100vh;
     background-color: rgba(255, 255, 255, 0.5);
-    z-index: 1001;
+    z-index: 1060;
 
     img {
         width: 300px;

@@ -4,12 +4,13 @@ import api from "../../services/api";
 import PokeCard from "../../components/PokeCard";
 import SelectorPokemonPerRigion from "../../components/SelectorPokemonPerRegion";
 import SelectorPokemonPerGeneration from "../../components/SelectorPokemonPerGeneration";
-import SearchPokemon from "../../components/Search";
+import FeaturedPokemon from "../../components/FeaturedPokemon";
+//import SearchPokemon from "../../components/Search";
 import Headder from "../../components/Headder";
 import Loading from "../../components/Loading";
 import BackToTop from "../../components/BackTotop";
 //import Pagination from "../../components/Pagination";
-//import SelectorPokemonType from "../../components/SelectorPokemonType";
+import SelectorPokemonType from "../../components/SelectorPokemonType";
 //import SelectorPokemonColor from "../../components/SelectorPokemonColor";
 
 //Import Styles
@@ -47,22 +48,34 @@ function Pokedex() {
         return React.useMemo(() => new URLSearchParams(search), [search]);
     }
 
+    //Gerando número aliatório
+    function randomNumber(limitNumber) {
+        // Gera um número decimal aleatório entre 0 (inclusivo) e 1 (exclusivo)
+        const decimalNumber = Math.random();
+
+        // Multiplica por 9 para obter um número entre 0 (inclusivo) e 9 (exclusivo)
+        // Adiciona 1 para ajustar o intervalo para 1 (inclusivo) a 9 (inclusive)
+        const multipliedNumber = decimalNumber * limitNumber + 1;
+
+        // Arredonda para baixo para o número inteiro mais próximo
+        const intNumber = Math.floor(multipliedNumber);
+
+        return intNumber;
+    }
+
     const query = useQuery();
     const [Data, setData] = useState([]);
     const [Search, setSearch] = useState("");
-    const [ListNameType, setListNameType] = useState([]);
-    const [SelectorType, setSelectorType] = useState(
-        query.get("type") ? query.get("type") : ""
-    );
-    const [ListNameColor, setListNameColor] = useState([]);
+    const [Types, setTypes] = useState("");
+
+    //const [ListNameColor, setListNameColor] = useState([]);
     const [SelectorColor, setSelectorColor] = useState(
         query.get("color") ? query.get("color") : ""
     );
-    const [Generation, setGeneration] = useState("1");
+    const [Generation, setGeneration] = useState(randomNumber(8));
 
     const [Region, setRegion] = useState("");
     const [RemoveLoading, setRemoveLoading] = useState(false);
-    const [RemoveLoadingModal, setRemoveLoadingModal] = useState(false);
 
     // const [Offset, setOffset] = useState(
     //     query.get("offset") ? query.get("offset") : 0
@@ -89,18 +102,6 @@ function Pokedex() {
     //Ir para o último Pokemon selecionado.
     scrollToPokemon(query.get("id"));
 
-    useEffect(() => {
-        //Buscando a lista com os nomes do TIPOS de Pokemons
-        api.get(`/type`).then((response) => {
-            setListNameType(response.data.results);
-        });
-
-        //Buscando a lista com os nomes das COLORS dos Pokemons
-        api.get(`/pokemon-color`).then((response) => {
-            setListNameColor(response.data.results);
-        });
-    }, []);
-
     //Conexão com API - Recuperando os Dados
     useEffect(() => {
         let filter;
@@ -114,8 +115,8 @@ function Pokedex() {
                 setData(newPokeList);
                 setRemoveLoading(true);
             });
-        } else if (SelectorType !== "") {
-            filter = "/" + SelectorType;
+        } else if (Types !== "") {
+            filter = "/" + Types;
 
             api.get(`/type${filter}`).then((response) => {
                 async function getInfoPokemonPerType() {
@@ -129,6 +130,11 @@ function Pokedex() {
                                     newPokeList.push(result.data);
                                 });
                         })
+                    );
+
+                    //Função para order os pokemons pelo ID de forma crescente
+                    newPokeList.sort((a, b) =>
+                        a.id > b.id ? 1 : b.id > a.id ? -1 : 0
                     );
 
                     setData(newPokeList);
@@ -156,6 +162,11 @@ function Pokedex() {
                                     newPokeList.push(result.data);
                                 });
                         })
+                    );
+
+                    //Função para order os pokemons pelo ID de forma crescente
+                    newPokeList.sort((a, b) =>
+                        a.id > b.id ? 1 : b.id > a.id ? -1 : 0
                     );
 
                     setData(newPokeList);
@@ -194,7 +205,6 @@ function Pokedex() {
 
                     setData(newPokeList);
                     setRemoveLoading(true);
-                    setRemoveLoadingModal(true);
                     scrollUp();
                 }
 
@@ -232,129 +242,87 @@ function Pokedex() {
 
                     setData(newPokeList);
                     setRemoveLoading(true);
-                    setRemoveLoadingModal(true);
                     scrollUp();
                 }
 
                 getInfoPokemon();
             });
         }
-    }, [Search, SelectorType, SelectorColor, Region, Generation]);
+    }, [Search, Types, SelectorColor, Region, Generation]);
 
     return (
         <div>
             {!RemoveLoading && <Loading />}
-
             {/* <Headder setOffset={setOffset} TotalItens={TotalItens} /> */}
-            <Headder />
+            <Headder setSearch={setSearch} search={Search} />
+            {/*Modais - Generation / Region / Types */}
+            <SelectorPokemonPerGeneration
+                Generation={Generation}
+                setGeneration={setGeneration}
+                Region={Region}
+                setRegion={setRegion}
+                Types={Types}
+                setTypes={setTypes}
+                setRemoveLoading={setRemoveLoading}
+            />
+            <SelectorPokemonPerRigion
+                setRegion={setRegion}
+                Generation={Generation}
+                setGeneration={setGeneration}
+                Types={Types}
+                setTypes={setTypes}
+                setRemoveLoading={setRemoveLoading}
+            />
+            <SelectorPokemonType
+                Types={Types}
+                setTypes={setTypes}
+                Region={Region}
+                setRegion={setRegion}
+                Generation={Generation}
+                setGeneration={setGeneration}
+                SelectorColor={SelectorColor}
+                setRemoveLoading={setRemoveLoading}
+            />
+            {/* <SelectorPokemonColor
+                SelectorColor={SelectorColor}
+                setSelectorColor={setSelectorColor}
+                Search={Search}
+                ListNameColor={ListNameColor}
+                Types={Types}
+                setRemoveLoading={setRemoveLoading}
+            /> */}
+            {/*########################################*/}
+
+            {Data.length !== 0 && (
+                <FeaturedPokemon pokemon={Data[randomNumber(Data.length)]} />
+            )}
 
             <S.Container>
-                <div className="div-search">
-                    <div className="div-seletors">
-                        {/*Modal referente a gerações dos Pokemons */}
-                        <button
-                            type="button"
-                            className="btn btn-danger button-generation me-3"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalGeneration"
-                        >
-                            <i className="bi bi-boxes me-2"></i> Generation
-                        </button>
-
-                        <SelectorPokemonPerGeneration
-                            setRemoveLoading={setRemoveLoading}
-                            setGeneration={setGeneration}
-                            Generation={Generation}
-                            setRegion={setRegion}
-                            Region={Region}
-                            setRemoveLoadingModal={setRemoveLoadingModal}
-                            RemoveLoadingModal={RemoveLoadingModal}
-                        />
-                        {/*########################################*/}
-
-                        <button
-                            type="button"
-                            className="btn btn-success btn-region me-3"
-                            placeholder="Filtros"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalRegion"
-                        >
-                            <i className="bi bi-geo-fill me-2"></i> Region
-                        </button>
-
-                        {/*Modal referente a gerações dos Pokemons */}
-                        <SelectorPokemonPerRigion
-                            setRemoveLoading={setRemoveLoading}
-                            setRegion={setRegion}
-                            setGeneration={setGeneration}
-                            Generation={Generation}
-                            setRemoveLoadingModal={setRemoveLoadingModal}
-                            RemoveLoadingModal={RemoveLoadingModal}
-                        />
-                        {/*########################################*/}
-
-                        {/* <SelectorPokemonPerGeneration
-                            // setLimit={setLimit}
-                            // setOffset={setOffset}
-                            // limit={Limit}
-                            //Search={Search}
-                            //SelectorType={SelectorType}
-                            //SelectorColor={SelectorColor}
-                            setRemoveLoading={setRemoveLoading}
-                            setRegionName={setRegionName}
-                        /> */}
-                        {/* <SelectorPokemonType
-                            SelectorType={SelectorType}
-                            setSelectorType={setSelectorType}
-                            Search={Search}
-                            ListNameType={ListNameType}
-                            SelectorColor={SelectorColor}
-                            setRemoveLoading={setRemoveLoading}
-                        />
-                        <SelectorPokemonColor
-                            SelectorColor={SelectorColor}
-                            setSelectorColor={setSelectorColor}
-                            Search={Search}
-                            ListNameColor={ListNameColor}
-                            SelectorType={SelectorType}
-                            setRemoveLoading={setRemoveLoading}
-                        /> */}
-                    </div>
-                    <SearchPokemon setSearch={setSearch} search={Search} />
-
-                    <button
-                        type="button"
-                        className="btn ms-2 btn-filters"
-                        placeholder="Filtros"
-                    >
-                        <i className="bi bi-filter"></i>
-                    </button>
-                </div>
-
                 <div className="div-pokecard">
-                    {Data.map((p) => {
-                        return (
-                            //p.id <= TotalItens &&
-                            <PokeCard
-                                name={p.name}
-                                id={p.id}
-                                img={p.sprites}
-                                types={p.types}
-                                //Offset={Offset}
-                                SelectorType={SelectorType}
-                                SelectorColor={SelectorColor}
-                                //Limit={Limit}
-                                //TotalItens={TotalItens}
-                                key={p.id}
-                            />
-                        );
-                    })}
+                    {Data.length !== 0 &&
+                        Data.map((p) => {
+                            return (
+                                //p.id <= TotalItens &&
+                                <PokeCard
+                                    name={p.name}
+                                    id={p.id}
+                                    img={p.sprites}
+                                    types={p.types}
+                                    //Offset={Offset}
+                                    //Types={Types}
+                                    SelectorColor={SelectorColor}
+                                    //Limit={Limit}
+                                    //TotalItens={TotalItens}
+                                    key={p.id}
+                                />
+                            );
+                        })}
                 </div>
 
                 {/* {Data.length > 0 && (
                     <Pagination
                         Search={Search}
-                        SelectorType={SelectorType}
+                        Types={Types}
                         SelectorColor={SelectorColor}
                         setOffset={setOffset}
                         maxButtonPagination={maxButtonPagination}

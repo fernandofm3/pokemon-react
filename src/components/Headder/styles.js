@@ -1,61 +1,40 @@
 import styled from "styled-components";
 
 export const Headder = styled.div`
-    width: 100%;
-    background-color: #3b64a5;
-
-    nav {
-        display: flex;
-        flez-direction: row;
-        justify-content: space-between;
-        max-width: 95%;
-        margin: auto;
-    }
-
-    ul {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        list-style: none;
-        padding: 10px 20px 10px 20px;
-        margin: 0;
-    }
-
-    li {
-        font-size: 1.1rem;
+    .div-nav nav ul li a {
+        color: #fff;
         font-weight: bold;
     }
 
-    a + a {
-        margin-left: 20px;
-        cursor: pointer;
-        text-decoration: none;
-        transition: 0.3s;
+    .div-nav nav ul li button {
         color: #fff;
+        font-weight: bold;
     }
 
-    a:hover {
-        color: #eee;
+    .div-nav nav ul li .dropdown-menu li button {
+        color: #000;
+        font-weight: bold;
     }
 
-    li img {
-        width: 100px;
+    .div-nav .navbar-toggler {
+        background-color: #ffcc03;
     }
 
-    .versionApp {
+    .div-nav .navbar-nav .nav-link.show {
         color: #ddd;
-        font-size: 0.725rem;
     }
 
-    @media screen and (min-width: 1024px) {
-        li img {
-            width: 150px;
-        }
+    .div-nav img {
+        width: 120px;
     }
 
-    @media screen and (max-width: 390px) {
-        .ulVersionApp {
-            display: none;
-        }
+    .div-nav .btn-generation span,
+    .div-nav .btn-region span,
+    .div-nav .btn-types span {
+        display: block;
+        padding: 5px 0;
+        width: 100%;
+        border-radius: 7px;
+        font-weight: 600;
     }
 `;

@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import imgGeneration from "../../assets/logo.png";
-import LoadingModal from "../../components/LoadingModal/index";
 import * as S from "./styles";
 
 const SelectorPokemonsPerGeneration = ({
-    setRemoveLoading,
+    Generation,
     setGeneration,
     Region,
     setRegion,
-    RemoveLoadingModal,
-    setRemoveLoadingModal,
+    Types,
+    setTypes,
+    setRemoveLoading,
 }) => {
     //Pokemons por regiões
     const [PokeGererations, setPokeGenerations] = useState([]);
 
-    const [SelectedCard, setSelectedCard] = useState(0);
+    const [SelectedCard, setSelectedCard] = useState(Number(Generation - 1));
 
     useEffect(() => {
         api.get(`/generation`).then((response) => {
@@ -23,13 +23,13 @@ const SelectorPokemonsPerGeneration = ({
         });
     }, []);
 
-    //Verifica se o usuário selecionou uma consulta por Regiao no modal de Regiões.
-    //Se o usuário selecionou, a Geração do modal Gerações que está ativa com a cor vervelha volta ao normal, mostrando que não tem Geração selecionada.
+    //Verifica se o usuário selecionou ourtras consultas.
+    //Se o usuário selecionou, a opção ativa com a cor de destaque volta ao normal, mostrando que não tem opção selecionada
     useEffect(() => {
-        if (Region !== "") {
+        if (Region !== "" || Types !== "") {
             setSelectedCard("");
         }
-    }, [Region]);
+    }, [Region, Types]);
 
     //Pegando o index do card clicado
     const handleCardClick = (index) => {
@@ -47,7 +47,6 @@ const SelectorPokemonsPerGeneration = ({
             >
                 <div className="modal-dialog modal-dialog-centered modal-xl">
                     <div className="modal-content">
-                        {!RemoveLoadingModal && <LoadingModal />}
                         <div className="modal-header">
                             <h1
                                 className="modal-title fs-5"
@@ -71,6 +70,7 @@ const SelectorPokemonsPerGeneration = ({
 
                                     return (
                                         <div
+                                            data-bs-dismiss="modal"
                                             className={
                                                 SelectedCard === index
                                                     ? "card color-selected-card"
@@ -80,14 +80,12 @@ const SelectorPokemonsPerGeneration = ({
                                             onClick={() => {
                                                 if (SelectedCard !== index) {
                                                     setRegion("");
+                                                    setTypes("");
                                                     setGeneration(
                                                         splitedUrl[6]
                                                     );
                                                     handleCardClick(index);
                                                     setRemoveLoading(false);
-                                                    setRemoveLoadingModal(
-                                                        false
-                                                    );
                                                 }
                                             }}
                                         >

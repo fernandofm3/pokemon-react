@@ -5,7 +5,7 @@ export const SelectorPokemonsPerGeneration = styled.div`
         display: grid;
         column-gap: 20px;
         row-gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     }
 
     .div-cards-generation .card {
@@ -13,6 +13,10 @@ export const SelectorPokemonsPerGeneration = styled.div`
         cursor: pointer;
         transition: 0.2s;
         background-color: #3c59a5;
+    }
+
+    .div-cards-generation .card .card-body {
+        padding: 5px;
     }
 
     .div-cards-generation .card:hover {
@@ -24,23 +28,18 @@ export const SelectorPokemonsPerGeneration = styled.div`
     }
 
     .div-cards-generation h6 {
-        font-size: 1.2rem;
+        font-size: 1rem;
         color: #fff;
-        padding: 6px 10px;
-        border: 3px solid #fff;
-        border-radius: 15px;
-        box-shadow: 5px 5px #999;
+        text-shadow: 1px 6px 8px #000;
     }
 
     .div-cards-generation .color-selected-card {
-        //background-color: #ff6b6b;
-        background-color: #dc3545;
+        background-color: #eb4d4b;
         color: #fff;
     }
 
     .div-cards-generation .color-selected-card:hover {
-        background-color: #ff6b6b;
-        background-color: #dc3545;
+        background-color: #eb4d4b;
     }
 
     .div-cards-generation h3 {

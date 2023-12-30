@@ -132,11 +132,11 @@ function PokeCard(props) {
                     </div>
 
                     <p className="pokeName">{splitName(props.name)}</p>
-                    <div className="divPokeTypes">
-                        <PokeTypes types={props.types} pokeId={props.id} />
-                    </div>
                 </div>
             </Link>
+            <div className="divPokeTypes animate__animated animate__fadeIn animate__slow">
+                <PokeTypes types={props.types} pokeId={props.id} />
+            </div>
         </S.PokeCard>
     );
 }

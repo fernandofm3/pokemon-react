@@ -12,7 +12,7 @@ export const PokeCard = styled.div`
         border-radius: 7px;
         transition: all 0.3s ease-in-out;
         max-width: 220px;
-        max-height: 300px;
+        height: 300px;
     }
 
     .card:hover {
@@ -28,12 +28,9 @@ export const PokeCard = styled.div`
     }
 
     .div-img img {
-        padding: 10px;
+        padding: 10px 10px 0 10px;
         width: 150px;
         height: 150px;
-        border-top-left-radius: 7px;
-        border-top-right-radius: 7px;
-        transition: 0.3s;
     }
 
     .pokeNum,
@@ -62,19 +59,10 @@ export const PokeCard = styled.div`
     }
 
     .divPokeTypes {
+        position: absolute;
         display: flex;
         padding: 0 10px;
-        padding-bottom: 20px;
-    }
-
-    .divPokeTypes span {
-        padding: 2px 10px !important;
-        font-size: 0.75rem !important;
-        margin-right: 5px !important;
-        border-radius: 4px !important;
-        text-transform: capitalize !important;
-        font-weight: bold !important;
-        text-shadow: 2px 2px 2px #aaa !important;
+        margin-top: -25px;
     }
 
     @media screen and (min-width: 768px) {

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 import imgRegion from "../../assets/logo.png";
-import LoadingModal from "../../components/LoadingModal/index";
 import * as S from "./styles";
 
 const SelectorPokemonsPerRegion = ({
-    setRemoveLoading,
     setRegion,
     Generation,
-    RemoveLoadingModal,
-    setRemoveLoadingModal,
+    setGeneration,
+    Types,
+    setTypes,
+    setRemoveLoading,
 }) => {
     //Pokemons por regiões
     const [PokeRegion, setPokeRegion] = useState([]);
@@ -22,13 +22,13 @@ const SelectorPokemonsPerRegion = ({
         });
     }, []);
 
-    //Verifica se o usuário selecionou uma consulta por Geração no modal de Gerações.
-    //Se o usuário selecionou, a Raião do modal Regiões que está ativa com a cor verde volta ao normal, mostrando que não tem Região selecionada.
+    //Verifica se o usuário selecionou ourtras consultas.
+    //Se o usuário selecionou, a opção ativa com a cor de destaque volta ao normal, mostrando que não tem opção selecionada.
     useEffect(() => {
-        if (Generation === "1" || Generation !== "1") {
+        if (Generation !== "" || Types !== "") {
             setSelectedCard("");
         }
-    }, [Generation]);
+    }, [Generation, Types]);
 
     //Pegando o index do card clicado
     const handleCardClick = (index) => {
@@ -46,7 +46,6 @@ const SelectorPokemonsPerRegion = ({
             >
                 <div className="modal-dialog modal-dialog-centered modal-xl">
                     <div className="modal-content">
-                        {!RemoveLoadingModal && <LoadingModal />}
                         <div className="modal-header">
                             <h1
                                 className="modal-title fs-5"
@@ -69,6 +68,7 @@ const SelectorPokemonsPerRegion = ({
 
                                     return (
                                         <div
+                                            data-bs-dismiss="modal"
                                             className={
                                                 SelectedCard === index
                                                     ? "card color-selected-card"
@@ -77,25 +77,19 @@ const SelectorPokemonsPerRegion = ({
                                             key={region.name}
                                             onClick={() => {
                                                 if (SelectedCard !== index) {
+                                                    setGeneration("");
+                                                    setTypes("");
                                                     setRegion(region.name);
                                                     handleCardClick(index);
                                                     setRemoveLoading(false);
-                                                    setRemoveLoadingModal(
-                                                        false
-                                                    );
                                                 }
                                             }}
                                         >
                                             <div className="card-body text-center">
                                                 <img
-                                                    className="mb-3"
                                                     src={imgRegion}
                                                     alt="Pokemon Region"
                                                 />
-
-                                                <h5 className="card-title">
-                                                    Region
-                                                </h5>
 
                                                 <h6 className="card-title mt-3">
                                                     {splitedNme[0] &&
