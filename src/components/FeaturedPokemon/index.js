@@ -2,11 +2,10 @@ import React from "react";
 import * as S from "./styles";
 import PokeTypes from "../../components/PokeTypes";
 import PokeStats from "../../components/PokeStats";
+import imgPokeball from "../../assets/pokeball.png";
 import _get from "lodash/get";
 
 function FeaturedPokemon(props) {
-    console.log(props);
-
     //Verrificando o tamanho do NOME do Pokemon, se preciso o nome será dividio e mostrado só o primeiro nome.
     function splitName(name) {
         let newName = "";
@@ -74,12 +73,25 @@ function FeaturedPokemon(props) {
                     </div>
 
                     <div className="div-img-pokemon mb-3">
-                        <div className="animate__animated animate__fadeInLeft animate__delay-1s animate__slow">
-                            <img
+                        <div className="animate__animated animate__fadeInLeft animate__slow">
+                            {/* <img
                                 className="img-pokemon-featured"
                                 src={spriteOfficial}
                                 alt="Imagem do Pokemon"
-                            />
+                            /> */}
+
+                            {!spriteOfficial ? (
+                                <img
+                                    className="opacity-25"
+                                    src={imgPokeball}
+                                    alt="Imagem do Pokemon."
+                                />
+                            ) : (
+                                <img
+                                    src={spriteOfficial}
+                                    alt="Imagem do Pokemon."
+                                />
+                            )}
                         </div>
                     </div>
 
@@ -113,7 +125,7 @@ function FeaturedPokemon(props) {
                 <div className="div-featured-pokemon-3">
                     <h1 className="mb-4">Description</h1>
 
-                    <div className="div-info-pokemon mb-4">
+                    <div className="div-info-pokemon">
                         <p>
                             <span>{props.pokemon.name}</span> is a Pokémon that
                             can reach a height of{" "}
@@ -137,12 +149,12 @@ function FeaturedPokemon(props) {
                             but as he gains experience he can acquire other
                             abilities.
                         </p>
-                    </div>
 
-                    <div className="div-more-details">
-                        <button className="btn btn-warning">
-                            more details
-                        </button>
+                        <div className="div-more-details">
+                            <button className="btn btn-sm btn-warning">
+                                more details
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

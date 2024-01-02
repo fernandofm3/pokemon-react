@@ -5,15 +5,11 @@ import PokeCard from "../../components/PokeCard";
 import SelectorPokemonPerRigion from "../../components/SelectorPokemonPerRegion";
 import SelectorPokemonPerGeneration from "../../components/SelectorPokemonPerGeneration";
 import FeaturedPokemon from "../../components/FeaturedPokemon";
-//import SearchPokemon from "../../components/Search";
+import SearchPokemon from "../../components/Search";
 import Headder from "../../components/Headder";
 import Loading from "../../components/Loading";
 import BackToTop from "../../components/BackTotop";
-//import Pagination from "../../components/Pagination";
 import SelectorPokemonType from "../../components/SelectorPokemonType";
-//import SelectorPokemonColor from "../../components/SelectorPokemonColor";
-
-//Import Styles
 import * as S from "./styles";
 
 function Pokedex() {
@@ -65,39 +61,12 @@ function Pokedex() {
 
     const query = useQuery();
     const [Data, setData] = useState([]);
-    const [Search, setSearch] = useState("");
+    //const [Search, setSearch] = useState("");
     const [Types, setTypes] = useState("");
-
-    //const [ListNameColor, setListNameColor] = useState([]);
-    const [SelectorColor, setSelectorColor] = useState(
-        query.get("color") ? query.get("color") : ""
-    );
     const [Generation, setGeneration] = useState(randomNumber(8));
-
     const [Region, setRegion] = useState("");
     const [RemoveLoading, setRemoveLoading] = useState(false);
-
-    // const [Offset, setOffset] = useState(
-    //     query.get("offset") ? query.get("offset") : 0
-    // );
-    // const [Limit, setLimit] = useState(
-    //     query.get("limit") ? query.get("limit") : 12
-    // );
-    // const [TotalItens, setTotalItens] = useState(
-    //     query.get("qtPokemons") ? query.get("qtPokemons") : 0
-    // );
-    // const maxButtonPagination = 9;
-    // const maxLeftPagination = (maxButtonPagination - 1) / 2;
-    // const totalPages = Math.ceil(TotalItens / Limit);
-    // const currentPagePagination = Offset ? Offset / Limit + 1 : 1;
-    // const maxfirstPagePagination = Math.max(
-    //     totalPages - (maxButtonPagination - 1),
-    //     1
-    // );
-    // const firstPagePagination = Math.min(
-    //     Math.max(currentPagePagination - maxLeftPagination, 1),
-    //     maxfirstPagePagination
-    // );
+    const [NumberFeaturedPokemon, setNumberFeaturedPokemon] = useState("");
 
     //Ir para o último Pokemon selecionado.
     scrollToPokemon(query.get("id"));
@@ -106,16 +75,19 @@ function Pokedex() {
     useEffect(() => {
         let filter;
         const newPokeList = [];
+        setData([]);
 
-        if (Search !== "") {
-            filter = "/" + Search;
+        // if (Search !== "") {
+        //     filter = "/" + Search;
 
-            api.get(`/pokemon${filter}`).then((response) => {
-                newPokeList.push(response.data);
-                setData(newPokeList);
-                setRemoveLoading(true);
-            });
-        } else if (Types !== "") {
+        //     api.get(`/pokemon${filter}`).then((response) => {
+        //         newPokeList.push(response.data);
+        //         setData(newPokeList);
+        //         setRemoveLoading(true);
+        //     });
+        // } else
+
+        if (Types !== "") {
             filter = "/" + Types;
 
             api.get(`/type${filter}`).then((response) => {
@@ -137,44 +109,16 @@ function Pokedex() {
                         a.id > b.id ? 1 : b.id > a.id ? -1 : 0
                     );
 
+                    setNumberFeaturedPokemon(
+                        randomNumber([newPokeList.length])
+                    );
+
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
                 }
 
                 getInfoPokemonPerType();
-            });
-        } else if (SelectorColor !== "") {
-            filter = "/" + SelectorColor;
-
-            api.get(`/pokemon-color${filter}`).then((response) => {
-                async function getInfoPokemonPerColor() {
-                    await Promise.all(
-                        response.data.pokemon_species.map((pokemonItem) => {
-                            //Dividindo a URL para pegar o ID do Pokemon
-                            const splitedUrl = pokemonItem.url.split("/");
-
-                            return api
-                                .get(
-                                    `https://pokeapi.co/api/v2/pokemon/${splitedUrl[6]}`
-                                )
-                                .then((result) => {
-                                    newPokeList.push(result.data);
-                                });
-                        })
-                    );
-
-                    //Função para order os pokemons pelo ID de forma crescente
-                    newPokeList.sort((a, b) =>
-                        a.id > b.id ? 1 : b.id > a.id ? -1 : 0
-                    );
-
-                    setData(newPokeList);
-                    setRemoveLoading(true);
-                    scrollUp();
-                }
-
-                getInfoPokemonPerColor();
             });
         } else if (Region !== "") {
             filter = Region;
@@ -203,6 +147,10 @@ function Pokedex() {
                         a.id > b.id ? 1 : b.id > a.id ? -1 : 0
                     );
 
+                    setNumberFeaturedPokemon(
+                        randomNumber([newPokeList.length])
+                    );
+
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
@@ -211,18 +159,13 @@ function Pokedex() {
                 getInfoPokemon();
             });
         } else {
-            //filter = `?offset=${Offset}&limit=${Limit}`;
             filter = Generation;
 
-            //api.get(`/pokemon-species${filter}`).then((response) => {
             api.get(`/generation/${filter}`).then((response) => {
-                //setTotalItens(response.data.count);
                 async function getInfoPokemon() {
                     await Promise.all(
-                        //response.data.results.map((pokemonItem) => {
                         response.data.pokemon_species.map((pokemonItem) => {
                             //Dividindo a URL para pegar o ID do Pokemon
-                            //const splitedUrl = pokemonItem.url.split("/");
                             const splitedUrl = pokemonItem.url.split("/");
 
                             return api
@@ -240,6 +183,10 @@ function Pokedex() {
                         a.id > b.id ? 1 : b.id > a.id ? -1 : 0
                     );
 
+                    setNumberFeaturedPokemon(
+                        randomNumber([newPokeList.length])
+                    );
+
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
@@ -248,14 +195,16 @@ function Pokedex() {
                 getInfoPokemon();
             });
         }
-    }, [Search, Types, SelectorColor, Region, Generation]);
+    }, [Types, Region, Generation]);
 
     return (
         <div>
             {!RemoveLoading && <Loading />}
-            {/* <Headder setOffset={setOffset} TotalItens={TotalItens} /> */}
-            <Headder setSearch={setSearch} search={Search} />
-            {/*Modais - Generation / Region / Types */}
+
+            <Headder />
+
+            {/*Modais - Search / Generation / Region / Types */}
+            <SearchPokemon />
             <SelectorPokemonPerGeneration
                 Generation={Generation}
                 setGeneration={setGeneration}
@@ -264,6 +213,7 @@ function Pokedex() {
                 Types={Types}
                 setTypes={setTypes}
                 setRemoveLoading={setRemoveLoading}
+                setData={setData}
             />
             <SelectorPokemonPerRigion
                 setRegion={setRegion}
@@ -272,6 +222,7 @@ function Pokedex() {
                 Types={Types}
                 setTypes={setTypes}
                 setRemoveLoading={setRemoveLoading}
+                setData={setData}
             />
             <SelectorPokemonType
                 Types={Types}
@@ -280,21 +231,14 @@ function Pokedex() {
                 setRegion={setRegion}
                 Generation={Generation}
                 setGeneration={setGeneration}
-                SelectorColor={SelectorColor}
                 setRemoveLoading={setRemoveLoading}
+                setData={setData}
             />
-            {/* <SelectorPokemonColor
-                SelectorColor={SelectorColor}
-                setSelectorColor={setSelectorColor}
-                Search={Search}
-                ListNameColor={ListNameColor}
-                Types={Types}
-                setRemoveLoading={setRemoveLoading}
-            /> */}
             {/*########################################*/}
 
             {Data.length !== 0 && (
-                <FeaturedPokemon pokemon={Data[randomNumber(Data.length)]} />
+                // <FeaturedPokemon pokemon={Data[randomNumber([Data.length])]} />
+                <FeaturedPokemon pokemon={Data[NumberFeaturedPokemon]} />
             )}
 
             <S.Container>
@@ -308,31 +252,11 @@ function Pokedex() {
                                     id={p.id}
                                     img={p.sprites}
                                     types={p.types}
-                                    //Offset={Offset}
-                                    //Types={Types}
-                                    SelectorColor={SelectorColor}
-                                    //Limit={Limit}
-                                    //TotalItens={TotalItens}
                                     key={p.id}
                                 />
                             );
                         })}
                 </div>
-
-                {/* {Data.length > 0 && (
-                    <Pagination
-                        Search={Search}
-                        Types={Types}
-                        SelectorColor={SelectorColor}
-                        setOffset={setOffset}
-                        maxButtonPagination={maxButtonPagination}
-                        limit={Limit}
-                        firstPagePagination={firstPagePagination}
-                        currentPagePagination={currentPagePagination}
-                        totalPages={totalPages}
-                        setRemoveLoading={setRemoveLoading}
-                    />
-                )} */}
 
                 <BackToTop />
             </S.Container>

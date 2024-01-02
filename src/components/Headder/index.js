@@ -104,29 +104,18 @@ const Headder = (props) => {
                                 </li>
                             </ul>
                             <div className="d-flex" role="search">
-                                <div className="input-group">
-                                    <span
-                                        className="input-group-text"
-                                        id="basic-addon1"
-                                    >
-                                        <i className="bi bi-search"></i>
-                                    </span>
-                                    <input
-                                        className="form-control me-2"
-                                        type="search"
-                                        placeholder="Name or Number"
-                                        aria-label="Search"
-                                        onChange={(event) => {
-                                            props.setSearch(
-                                                event.target.value.toLowerCase()
-                                            );
-                                        }}
-                                    />
-                                </div>
+                                <button
+                                    className="btn btn-light btn-search me-2 "
+                                    type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalSearch"
+                                >
+                                    <i className="bi bi-search me-2"></i> Name
+                                    or Number
+                                </button>
                                 <button
                                     className="btn btn-warning"
                                     type="button"
-                                    value={props.search}
                                 >
                                     <i className="bi bi-filter"></i>
                                 </button>

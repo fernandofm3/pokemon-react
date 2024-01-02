@@ -11,6 +11,7 @@ const SelectorPokemonsPerGeneration = ({
     Types,
     setTypes,
     setRemoveLoading,
+    setData,
 }) => {
     //Pokemons por regiões
     const [PokeGererations, setPokeGenerations] = useState([]);
@@ -79,6 +80,7 @@ const SelectorPokemonsPerGeneration = ({
                                             key={generation.name}
                                             onClick={() => {
                                                 if (SelectedCard !== index) {
+                                                    setData([]);
                                                     setRegion("");
                                                     setTypes("");
                                                     setGeneration(

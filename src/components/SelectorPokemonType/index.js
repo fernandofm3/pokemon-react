@@ -10,6 +10,7 @@ const SelectorPokemonType = ({
     Generation,
     setGeneration,
     setRemoveLoading,
+    setData,
 }) => {
     useEffect(() => {
         //Buscando a lista com os nomes do TIPOS de Pokemons
@@ -79,6 +80,7 @@ const SelectorPokemonType = ({
                                                     if (
                                                         SelectedType !== index
                                                     ) {
+                                                        setData([]);
                                                         setGeneration("");
                                                         setRegion("");
                                                         handleCardClick(index);

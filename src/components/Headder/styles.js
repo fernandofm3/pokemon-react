@@ -28,6 +28,22 @@ export const Headder = styled.div`
         width: 120px;
     }
 
+    .div-nav .btn-search {
+        display: flex;
+        width: 300px;
+        background-color: #0e5fd5;
+        color: #bbb;
+        font-wight: 600;
+        border-color: #bbb;
+        transition: 0.3s;
+    }
+
+    .div-nav .btn-search:hover {
+        background-color: #0d54bb;
+        color: #fff;
+        border-color: #fff;
+    }
+
     .div-nav .btn-generation span,
     .div-nav .btn-region span,
     .div-nav .btn-types span {

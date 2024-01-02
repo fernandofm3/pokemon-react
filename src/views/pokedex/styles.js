@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    max-width: 100%;
+    max-width: 1280px;
     margin: auto;
     padding: 0px 15px 30px 15px;
 
@@ -30,8 +30,6 @@ export const Container = styled.div`
     }
 
     @media screen and (min-width: 768px) {
-        max-width: 98%;
-
         .div-pokecard {
             column-gap: 20px;
             row-gap: 90px;
@@ -61,6 +59,10 @@ export const Container = styled.div`
             row-gap: 90px;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         }
+    }
+
+    @media screen and (min-width: 1600px) {
+        padding: 0 0 30px 0;
     }
 
     @media screen and (min-width: 1920px) {

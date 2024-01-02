@@ -5,7 +5,7 @@ export const FeaturedPokemon = styled.div`
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    padding: 30px 20px 40px 20px;
+    padding: 30px 20px 10px 20px;
     background: rgb(13, 110, 253);
     background: linear-gradient(
         180deg,
@@ -21,7 +21,7 @@ export const FeaturedPokemon = styled.div`
     .div-main-featured-pokemon {
         display: flex;
         flex-direction: column;
-        width: 100%;
+        width: 1280px;
     }
 
     /******************************************/
@@ -105,11 +105,20 @@ export const FeaturedPokemon = styled.div`
     }
 
     .div-featured-pokemon-2 table .td-title {
+        font-size: 0.9rem;
         color: #000;
     }
 
     .div-featured-pokemon-2 table .td-value {
         color: #000;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+
+    .div-featured-pokemon-2 table .td-total {
+        color: #000;
+        font-size: 1.1rem;
+        font-weight: bold;
     }
 
     /*********************************************************/
@@ -133,7 +142,7 @@ export const FeaturedPokemon = styled.div`
 
     .div-featured-pokemon-3 .div-info-pokemon p {
         color: #fff;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
         line-height: 1.6rem;
     }
@@ -145,8 +154,8 @@ export const FeaturedPokemon = styled.div`
 
     /******************************************/
 
-    .div-featured-pokemon-3 .div-more-details button {
-        width: 100%;
+    .div-featured-pokemon-3 .div-info-pokemon .div-more-details button {
+        width: 180px;
         text-transform: uppercase;
         font-weight: bold;
         color: #fff;
@@ -170,6 +179,10 @@ export const FeaturedPokemon = styled.div`
             width: 50%;
         }
 
+        .div-featured-pokemon-3 {
+            width: 100%;
+        }
+
         .div-featured-pokemon-1 .div-name-pokemon {
             align-items: start;
         }
@@ -184,24 +197,6 @@ export const FeaturedPokemon = styled.div`
         .div-featured-pokemon-1 .div-img-pokemon div img {
             width: 190px;
             height: 190px;
-        }
-    }
-
-    @media screen and (min-width: 1920px) {
-        .div-featured-pokemon-1 {
-            width: 20%;
-        }
-
-        .div-featured-pokemon-2 {
-            width: 30%;
-        }
-
-        .div-featured-pokemon-3 {
-            width: 30%;
-        }
-
-        .div-featured-pokemon-3 .div-more-details {
-            margin-top: 50px;
         }
     }
 `;
