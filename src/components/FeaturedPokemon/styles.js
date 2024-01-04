@@ -41,12 +41,12 @@ export const FeaturedPokemon = styled.div`
     }
 
     .div-featured-pokemon-1 .div-name-pokemon h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
         text-transform: uppercase;
     }
 
     .div-featured-pokemon-1 .div-name-pokemon h2 {
-        font-size: 1.1rem;
+        font-size: 1.5rem;
         margin-top: -5px;
     }
 
@@ -59,13 +59,18 @@ export const FeaturedPokemon = styled.div`
     }
 
     .div-featured-pokemon-1 .div-img-pokemon div {
-        width: 150px;
-        height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        height: 200px;
+        background-color: #aaa;
+        border-radius: 50%;
     }
 
     .div-featured-pokemon-1 .div-img-pokemon div img {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
     }
 
     /******************************************/
@@ -85,7 +90,7 @@ export const FeaturedPokemon = styled.div`
     }
 
     .div-featured-pokemon-2 h6 {
-        font-size: 2rem;
+        font-size: 1.5rem;
         text-transform: capitalize;
         color: #fff;
         text-shadow: 1px 2px 6px #000;
@@ -126,7 +131,7 @@ export const FeaturedPokemon = styled.div`
     /**** Div 3 **********************************************/
 
     .div-featured-pokemon-3 h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
         text-transform: uppercase;
         color: #fff;
         text-shadow: 1px 2px 6px #000;
@@ -155,11 +160,10 @@ export const FeaturedPokemon = styled.div`
     /******************************************/
 
     .div-featured-pokemon-3 .div-info-pokemon .div-more-details button {
-        width: 180px;
         text-transform: uppercase;
         font-weight: bold;
         color: #fff;
-        text-shadow: 1px 2px 6px #000;
+        text-shadow: 1px 1px 1px #000;
     }
 
     /**********************************************************/
@@ -189,14 +193,14 @@ export const FeaturedPokemon = styled.div`
     }
 
     @media screen and (min-width: 768px) {
-        .div-featured-pokemon-1 .div-img-pokemon div {
-            width: 190px;
-            height: 190px;
-        }
+        // .div-featured-pokemon-1 .div-img-pokemon div {
+        //     width: 190px;
+        //     height: 190px;
+        // }
 
-        .div-featured-pokemon-1 .div-img-pokemon div img {
-            width: 190px;
-            height: 190px;
-        }
+        // .div-featured-pokemon-1 .div-img-pokemon div img {
+        //     width: 190px;
+        //     height: 190px;
+        // }
     }
 `;

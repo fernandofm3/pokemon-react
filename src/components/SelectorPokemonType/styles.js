@@ -18,6 +18,11 @@ export const SelectorPokemonType = styled.div`
         padding: 8px;
     }
 
+    .div-cards-types .card {
+        background-color: transparent;
+        border: none;
+    }
+
     .div-cards-types .card:hover {
         background-color: #efefef;
     }
@@ -35,7 +40,6 @@ export const SelectorPokemonType = styled.div`
         color: #000;
         padding: 6px 10px;
         text-transform: capitalize;
-        text-shadow: 2px 2px 3px #aaa;
         margin: 0;
     }
 

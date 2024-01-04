@@ -4,6 +4,7 @@ import PokeTypes from "../../components/PokeTypes";
 import PokeStats from "../../components/PokeStats";
 import imgPokeball from "../../assets/pokeball.png";
 import _get from "lodash/get";
+import { colorTypeGradients } from "../../utils/utils";
 
 function FeaturedPokemon(props) {
     //Verrificando o tamanho do NOME do Pokemon, se preciso o nome será dividio e mostrado só o primeiro nome.
@@ -63,6 +64,23 @@ function FeaturedPokemon(props) {
 
     const spriteOfficial = spriteAdapterOfficial(props.pokemon.sprites);
 
+    //Definindo a cor do card com base na cor do tipo
+    let finalColor;
+
+    if (props.pokemon.types.length === 2) {
+        finalColor = colorTypeGradients(
+            props.pokemon.types[0].type.name,
+            props.pokemon.types[1].type.name,
+            props.pokemon.types.length
+        );
+    } else {
+        finalColor = colorTypeGradients(
+            props.pokemon.types[0].type.name,
+            props.pokemon.types[0].type.name,
+            props.pokemon.types.length
+        );
+    }
+
     return (
         <S.FeaturedPokemon>
             <div className="div-main-featured-pokemon animate__animated animate__fadeIn animate__slow">
@@ -73,13 +91,12 @@ function FeaturedPokemon(props) {
                     </div>
 
                     <div className="div-img-pokemon mb-3">
-                        <div className="animate__animated animate__fadeInLeft animate__slow">
-                            {/* <img
-                                className="img-pokemon-featured"
-                                src={spriteOfficial}
-                                alt="Imagem do Pokemon"
-                            /> */}
-
+                        <div
+                            style={{
+                                background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
+                            }}
+                            className="animate__animated animate__fadeInLeft animate__slow"
+                        >
                             {!spriteOfficial ? (
                                 <img
                                     className="opacity-25"
@@ -122,13 +139,13 @@ function FeaturedPokemon(props) {
                     />
                 </div>
 
-                <div className="div-featured-pokemon-3">
-                    <h1 className="mb-4">Description</h1>
+                <div className="div-featured-pokemon-3 mt-3">
+                    {/* <h1 className="mb-4">Description</h1> */}
 
                     <div className="div-info-pokemon">
                         <p>
-                            <span>{props.pokemon.name}</span> is a Pokémon that
-                            can reach a height of{" "}
+                            <span>{splitName(props.pokemon.name)}</span> is a
+                            Pokémon that can reach a height of{" "}
                             <span>{props.pokemon.height / 10} meters</span> and
                             weigh up to{" "}
                             <span>{props.pokemon.weight / 10} kg</span> in its
@@ -138,20 +155,22 @@ function FeaturedPokemon(props) {
                                 {props.pokemon.base_experience
                                     ? props.pokemon.base_experience
                                     : "undefined, "}
-                            </span>
-                            , reflecting directly on the challenges it faces in
-                            its daily life. His abilities are
+                            </span>{" "}
+                            points, reflecting directly on the challenges it
+                            faces in its daily life.
+                            {/* His abilities are
                             {props.pokemon.abilities.map((abilities, index) => (
                                 <span key={index}>
                                     {abilities.ability.name},{" "}
                                 </span>
                             ))}
                             but as he gains experience he can acquire other
-                            abilities.
+                            abilities. */}
                         </p>
 
                         <div className="div-more-details">
-                            <button className="btn btn-sm btn-warning">
+                            <button className="btn btn-warning">
+                                <i className="bi bi-info-circle-fill me-1"></i>{" "}
                                 more details
                             </button>
                         </div>

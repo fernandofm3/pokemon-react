@@ -6,6 +6,7 @@ import SelectorPokemonPerRigion from "../../components/SelectorPokemonPerRegion"
 import SelectorPokemonPerGeneration from "../../components/SelectorPokemonPerGeneration";
 import FeaturedPokemon from "../../components/FeaturedPokemon";
 import SearchPokemon from "../../components/Search";
+import FiltersPokemon from "../../components/FiltersPokemon";
 import Headder from "../../components/Headder";
 import Loading from "../../components/Loading";
 import BackToTop from "../../components/BackTotop";
@@ -61,7 +62,7 @@ function Pokedex() {
 
     const query = useQuery();
     const [Data, setData] = useState([]);
-    //const [Search, setSearch] = useState("");
+    const [OriginalData, setOriginalData] = useState([]);
     const [Types, setTypes] = useState("");
     const [Generation, setGeneration] = useState(randomNumber(8));
     const [Region, setRegion] = useState("");
@@ -76,17 +77,6 @@ function Pokedex() {
         let filter;
         const newPokeList = [];
         setData([]);
-
-        // if (Search !== "") {
-        //     filter = "/" + Search;
-
-        //     api.get(`/pokemon${filter}`).then((response) => {
-        //         newPokeList.push(response.data);
-        //         setData(newPokeList);
-        //         setRemoveLoading(true);
-        //     });
-        // } else
-
         if (Types !== "") {
             filter = "/" + Types;
 
@@ -112,7 +102,7 @@ function Pokedex() {
                     setNumberFeaturedPokemon(
                         randomNumber([newPokeList.length])
                     );
-
+                    setOriginalData(newPokeList);
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
@@ -150,7 +140,7 @@ function Pokedex() {
                     setNumberFeaturedPokemon(
                         randomNumber([newPokeList.length])
                     );
-
+                    setOriginalData(newPokeList);
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
@@ -186,7 +176,7 @@ function Pokedex() {
                     setNumberFeaturedPokemon(
                         randomNumber([newPokeList.length])
                     );
-
+                    setOriginalData(newPokeList);
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
@@ -203,7 +193,7 @@ function Pokedex() {
 
             <Headder />
 
-            {/*Modais - Search / Generation / Region / Types */}
+            {/*Modais - Search / Generation / Region / Types / Filters */}
             <SearchPokemon />
             <SelectorPokemonPerGeneration
                 Generation={Generation}
@@ -233,6 +223,13 @@ function Pokedex() {
                 setGeneration={setGeneration}
                 setRemoveLoading={setRemoveLoading}
                 setData={setData}
+            />
+
+            <FiltersPokemon
+                DataFilter={Data}
+                OriginalData={OriginalData}
+                setData={setData}
+                setRemoveLoading={setRemoveLoading}
             />
             {/*########################################*/}
 

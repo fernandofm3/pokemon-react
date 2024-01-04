@@ -33,7 +33,7 @@ const SearchPokemon = () => {
             >
                 <div className="modal-dialog modal-dialog modal-xl">
                     <div className="modal-content">
-                        <div className="modal-body">
+                        <div className="modal-body mb-4">
                             <div className="input-group input-group-lg mb-3">
                                 <span
                                     className="input-group-text"

@@ -55,7 +55,7 @@ const Headder = (props) => {
 
                                 <li className="nav-item dropdown">
                                     <button
-                                        className="nav-link dropdown-toggle"
+                                        className="nav-link dropdown-toggle btn-dropdown"
                                         type="button"
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
@@ -66,7 +66,7 @@ const Headder = (props) => {
                                     <ul className="dropdown-menu">
                                         <li>
                                             <button
-                                                className="dropdown-item btn-generation"
+                                                className="btn btn-outline-danger btn-generation"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalGeneration"
                                             >
@@ -78,7 +78,7 @@ const Headder = (props) => {
                                         </li>
                                         <li>
                                             <button
-                                                className="dropdown-item btn-region"
+                                                className="btn btn-outline-success btn-region"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalRegion"
                                             >
@@ -90,7 +90,7 @@ const Headder = (props) => {
                                         </li>
                                         <li>
                                             <button
-                                                className="dropdown-item btn-types"
+                                                className="btn btn-outline-warning btn-types"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalTypes"
                                             >
@@ -114,8 +114,11 @@ const Headder = (props) => {
                                     or Number
                                 </button>
                                 <button
-                                    className="btn btn-warning"
+                                    className="btn btn-light"
                                     type="button"
+                                    data-bs-toggle="offcanvas"
+                                    data-bs-target="#filterpokemon"
+                                    aria-controls="offcanvasExample"
                                 >
                                     <i className="bi bi-filter"></i>
                                 </button>
