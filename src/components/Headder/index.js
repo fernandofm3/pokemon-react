@@ -44,10 +44,10 @@ const Headder = (props) => {
                                 <li className="nav-item">
                                     <Link
                                         className="nav-link"
-                                        to={
-                                            "/pokeinfo?id=1&offset=0&limit=12&type=&color=&qtPokemons=" +
-                                            props.TotalItens
-                                        }
+                                        // to={
+                                        //     "/pokeinfo?id=1&offset=0&limit=12&type=&color=&qtPokemons=" +
+                                        //     props.TotalItens
+                                        // }
                                     >
                                         Pokeinfo
                                     </Link>
@@ -71,7 +71,7 @@ const Headder = (props) => {
                                                 data-bs-target="#modalGeneration"
                                             >
                                                 <span>
-                                                    <i className="bi bi-boxes me-2"></i>{" "}
+                                                    <i className="bi bi-diagram-3-fill me-2"></i>{" "}
                                                     Generation
                                                 </span>
                                             </button>

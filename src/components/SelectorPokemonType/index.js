@@ -11,6 +11,7 @@ const SelectorPokemonType = ({
     setGeneration,
     setRemoveLoading,
     setData,
+    setSearchNameApi,
 }) => {
     useEffect(() => {
         //Buscando a lista com os nomes do TIPOS de Pokemons
@@ -85,6 +86,10 @@ const SelectorPokemonType = ({
                                                         setRegion("");
                                                         handleCardClick(index);
                                                         setTypes(type.name);
+                                                        setSearchNameApi(
+                                                            type.name +
+                                                                "-type Pokemon"
+                                                        );
                                                         setRemoveLoading(false);
                                                     }
                                                 }}

@@ -14,7 +14,7 @@ export const FeaturedPokemon = styled.div`
         rgba(254, 252, 246, 0) 100%
     );
     margin-bottom: 40px;
-    border-top: 1px solid #fff;
+    //border-top: 1px solid #fff;
 
     /******************************************/
 

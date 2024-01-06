@@ -6,6 +6,7 @@ import SelectorPokemonPerRigion from "../../components/SelectorPokemonPerRegion"
 import SelectorPokemonPerGeneration from "../../components/SelectorPokemonPerGeneration";
 import FeaturedPokemon from "../../components/FeaturedPokemon";
 import SearchPokemon from "../../components/Search";
+import SearchName from "../../components/SearchName";
 import FiltersPokemon from "../../components/FiltersPokemon";
 import Headder from "../../components/Headder";
 import Loading from "../../components/Loading";
@@ -68,6 +69,9 @@ function Pokedex() {
     const [Region, setRegion] = useState("");
     const [RemoveLoading, setRemoveLoading] = useState(false);
     const [NumberFeaturedPokemon, setNumberFeaturedPokemon] = useState("");
+    const [SearchNameApi, setSearchNameApi] = useState(
+        "Generation " + Generation
+    );
 
     //Ir para o último Pokemon selecionado.
     scrollToPokemon(query.get("id"));
@@ -204,6 +208,7 @@ function Pokedex() {
                 setTypes={setTypes}
                 setRemoveLoading={setRemoveLoading}
                 setData={setData}
+                setSearchNameApi={setSearchNameApi}
             />
             <SelectorPokemonPerRigion
                 setRegion={setRegion}
@@ -213,6 +218,7 @@ function Pokedex() {
                 setTypes={setTypes}
                 setRemoveLoading={setRemoveLoading}
                 setData={setData}
+                setSearchNameApi={setSearchNameApi}
             />
             <SelectorPokemonType
                 Types={Types}
@@ -223,6 +229,7 @@ function Pokedex() {
                 setGeneration={setGeneration}
                 setRemoveLoading={setRemoveLoading}
                 setData={setData}
+                setSearchNameApi={setSearchNameApi}
             />
 
             <FiltersPokemon
@@ -230,29 +237,37 @@ function Pokedex() {
                 OriginalData={OriginalData}
                 setData={setData}
                 setRemoveLoading={setRemoveLoading}
+                setNumberFeaturedPokemon={setNumberFeaturedPokemon}
             />
             {/*########################################*/}
 
+            <SearchName SearchNameApi={SearchNameApi} />
+
             {Data.length !== 0 && (
-                // <FeaturedPokemon pokemon={Data[randomNumber([Data.length])]} />
                 <FeaturedPokemon pokemon={Data[NumberFeaturedPokemon]} />
             )}
 
             <S.Container>
                 <div className="div-pokecard">
-                    {Data.length !== 0 &&
-                        Data.map((p) => {
-                            return (
-                                //p.id <= TotalItens &&
-                                <PokeCard
-                                    name={p.name}
-                                    id={p.id}
-                                    img={p.sprites}
-                                    types={p.types}
-                                    key={p.id}
-                                />
-                            );
-                        })}
+                    {Data.map((p) => {
+                        return (
+                            //p.id <= TotalItens &&
+                            <PokeCard
+                                name={p.name}
+                                id={p.id}
+                                img={p.sprites}
+                                types={p.types}
+                                key={p.id}
+                            />
+                        );
+                    })}
+
+                    {Data.length === 0 && (
+                        <div className="alert alert-primary mt-4" role="alert">
+                            <i className="bi bi-info-circle-fill me-2"></i>No
+                            Pokémon found! Please change the filters.
+                        </div>
+                    )}
                 </div>
 
                 <BackToTop />

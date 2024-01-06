@@ -12,8 +12,9 @@ const SelectorPokemonsPerGeneration = ({
     setTypes,
     setRemoveLoading,
     setData,
+    setSearchNameApi,
 }) => {
-    //Pokemons por regiões
+    //Pokemons por gerações
     const [PokeGererations, setPokeGenerations] = useState([]);
 
     const [SelectedCard, setSelectedCard] = useState(Number(Generation - 1));
@@ -53,8 +54,8 @@ const SelectorPokemonsPerGeneration = ({
                                 className="modal-title fs-5"
                                 id="staticBackdropLabel"
                             >
-                                <i className="bi bi-boxes me-2"></i> Pokemon
-                                Generation
+                                <i className="bi bi-diagram-3-fill me-2"></i>{" "}
+                                Pokemon Generation
                             </h1>
                             <button
                                 type="button"
@@ -87,6 +88,10 @@ const SelectorPokemonsPerGeneration = ({
                                                         splitedUrl[6]
                                                     );
                                                     handleCardClick(index);
+                                                    setSearchNameApi(
+                                                        "Generation " +
+                                                            splitedUrl[6]
+                                                    );
                                                     setRemoveLoading(false);
                                                 }
                                             }}

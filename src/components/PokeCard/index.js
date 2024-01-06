@@ -92,22 +92,22 @@ function PokeCard(props) {
     return (
         <S.PokeCard>
             <Link
-                to={
-                    "/pokeinfo?id=" +
-                    props.id +
-                    "&offset=" +
-                    props.Offset +
-                    "&limit=" +
-                    props.Limit +
-                    "&type=" +
-                    props.SelectorType +
-                    "&color=" +
-                    props.SelectorColor +
-                    "&qtPokemons=" +
-                    props.TotalItens
-                }
-                onClick={() => scrollUp()}
-                id={"p" + props.id}
+            // to={
+            //     "/pokeinfo?id=" +
+            //     props.id +
+            //     "&offset=" +
+            //     props.Offset +
+            //     "&limit=" +
+            //     props.Limit +
+            //     "&type=" +
+            //     props.SelectorType +
+            //     "&color=" +
+            //     props.SelectorColor +
+            //     "&qtPokemons=" +
+            //     props.TotalItens
+            // }
+            //onClick={() => scrollUp()}
+            //id={"p" + props.id}
             >
                 <div
                     className="card animate__animated animate__fadeIn animate__slow"

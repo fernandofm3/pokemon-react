@@ -11,6 +11,7 @@ const SelectorPokemonsPerRegion = ({
     setTypes,
     setRemoveLoading,
     setData,
+    setSearchNameApi,
 }) => {
     //Pokemons por regiões
     const [PokeRegion, setPokeRegion] = useState([]);
@@ -83,6 +84,10 @@ const SelectorPokemonsPerRegion = ({
                                                     setTypes("");
                                                     setRegion(region.name);
                                                     handleCardClick(index);
+                                                    setSearchNameApi(
+                                                        "Region - " +
+                                                            region.name
+                                                    );
                                                     setRemoveLoading(false);
                                                 }
                                             }}
