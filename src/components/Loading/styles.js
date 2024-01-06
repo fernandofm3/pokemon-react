@@ -8,15 +8,19 @@ export const Loading = styled.div`
     justify-content: center;
     width: 100%;
     height: 100vh;
-    background-color: rgba(255, 255, 255, 0.5);
-    z-index: 1001;
+    background-color: #0d6efd;
+    z-index: 1060;
 
-    img {
-        width: 100px;
-        height: 100px;
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
     }
 
-    h1 {
-        color: #555;
+    .infinite-rotation {
+        animation: rotate 1.5s linear infinite;
     }
 `;

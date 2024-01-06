@@ -1,27 +1,18 @@
 import styled from "styled-components";
 
 export const SearchBar = styled.div`
-    width: 100%;
+    .div-modal-search .modal-body .input-group input {
+        border: 2px solid #1070fd;
+    }
 
-    input {
-        width: 100%;
-        padding: 10px 15px 10px 15px;
+    .div-modal-search .modal-body .input-group span {
+        border: 2px solid #1070fd;
+        background-color: #1070fd;
+        color: #fff;
+    }
+
+    .div-modal-search .modal-body .div-component-featured-pokemon > div {
         border-radius: 7px;
-        border: 1px solid #000;
-        margin-bottom: 15px;
-    }
-
-    .search {
-        display: none;
-    }
-
-    @media screen and (min-width: 1024px) {
-        .search {
-            display: block;
-        }
-
-        .searchMobile {
-            display: none;
-        }
+        margin-bottom: 0;
     }
 `;

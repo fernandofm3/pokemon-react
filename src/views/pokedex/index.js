@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import api from "../../services/api";
 import PokeCard from "../../components/PokeCard";
-import Pagination from "../../components/Pagination";
-import SelectorItemPerPage from "../../components/SelectorItemPerPage";
-import SelectorPokemonType from "../../components/SelectorPokemonType";
-import SelectorPokemonColor from "../../components/SelectorPokemonColor";
+import SelectorPokemonPerRigion from "../../components/SelectorPokemonPerRegion";
+import SelectorPokemonPerGeneration from "../../components/SelectorPokemonPerGeneration";
+import FeaturedPokemon from "../../components/FeaturedPokemon";
 import SearchPokemon from "../../components/Search";
+import SearchName from "../../components/SearchName";
+import FiltersPokemon from "../../components/FiltersPokemon";
 import Headder from "../../components/Headder";
 import Loading from "../../components/Loading";
 import BackToTop from "../../components/BackTotop";
-
-//Import Styles
+import SelectorPokemonType from "../../components/SelectorPokemonType";
 import * as S from "./styles";
 
 function Pokedex() {
@@ -46,39 +46,31 @@ function Pokedex() {
         return React.useMemo(() => new URLSearchParams(search), [search]);
     }
 
+    //Gerando número aliatório
+    function randomNumber(limitNumber) {
+        // Gera um número decimal aleatório entre 0 (inclusivo) e 1 (exclusivo)
+        const decimalNumber = Math.random();
+
+        // Multiplica por 9 para obter um número entre 0 (inclusivo) e 9 (exclusivo)
+        // Adiciona 1 para ajustar o intervalo para 1 (inclusivo) a 9 (inclusive)
+        const multipliedNumber = decimalNumber * limitNumber + 1;
+
+        // Arredonda para baixo para o número inteiro mais próximo
+        const intNumber = Math.floor(multipliedNumber);
+
+        return intNumber;
+    }
+
     const query = useQuery();
     const [Data, setData] = useState([]);
-    const [Search, setSearch] = useState("");
-    const [ListNameType, setListNameType] = useState([]);
-    const [SelectorType, setSelectorType] = useState(
-        query.get("type") ? query.get("type") : ""
-    );
-    const [ListNameColor, setListNameColor] = useState([]);
-    const [SelectorColor, setSelectorColor] = useState(
-        query.get("color") ? query.get("color") : ""
-    );
-    const [Offset, setOffset] = useState(
-        query.get("offset") ? query.get("offset") : 0
-    );
-    const [Limit, setLimit] = useState(
-        query.get("limit") ? query.get("limit") : 12
-    );
-    const [TotalItens, setTotalItens] = useState(
-        query.get("qtPokemons") ? query.get("qtPokemons") : 0
-    );
+    const [OriginalData, setOriginalData] = useState([]);
+    const [Types, setTypes] = useState("");
+    const [Generation, setGeneration] = useState(randomNumber(8));
+    const [Region, setRegion] = useState("");
     const [RemoveLoading, setRemoveLoading] = useState(false);
-
-    const maxButtonPagination = 9;
-    const maxLeftPagination = (maxButtonPagination - 1) / 2;
-    const totalPages = Math.ceil(TotalItens / Limit);
-    const currentPagePagination = Offset ? Offset / Limit + 1 : 1;
-    const maxfirstPagePagination = Math.max(
-        totalPages - (maxButtonPagination - 1),
-        1
-    );
-    const firstPagePagination = Math.min(
-        Math.max(currentPagePagination - maxLeftPagination, 1),
-        maxfirstPagePagination
+    const [NumberFeaturedPokemon, setNumberFeaturedPokemon] = useState("");
+    const [SearchNameApi, setSearchNameApi] = useState(
+        "Generation " + Generation
     );
 
     //Ir para o último Pokemon selecionado.
@@ -86,42 +78,35 @@ function Pokedex() {
 
     //Conexão com API - Recuperando os Dados
     useEffect(() => {
-        //Buscando a lista com os nomes do TIPOS de Pokemons
-        api.get(`/type`).then((response) => {
-            setListNameType(response.data.results);
-        });
-
-        //Buscando a lista com os nomes das COLORS dos Pokemons
-        api.get(`/pokemon-color`).then((response) => {
-            setListNameColor(response.data.results);
-        });
-
         let filter;
         const newPokeList = [];
-
-        if (Search !== "") {
-            filter = "/" + Search;
-
-            api.get(`/pokemon${filter}`).then((response) => {
-                newPokeList.push(response.data);
-                setData(newPokeList);
-                setRemoveLoading(true);
-            });
-        } else if (SelectorType !== "") {
-            filter = "/" + SelectorType;
+        setData([]);
+        if (Types !== "") {
+            filter = "/" + Types;
 
             api.get(`/type${filter}`).then((response) => {
                 async function getInfoPokemonPerType() {
-                    let dataResults = response.data.pokemon;
+                    await Promise.all(
+                        response.data.pokemon.map((pokemonItem) => {
+                            return api
+                                .get(
+                                    `https://pokeapi.co/api/v2/pokemon/${pokemonItem.pokemon.name}`
+                                )
+                                .then((result) => {
+                                    newPokeList.push(result.data);
+                                });
+                        })
+                    );
 
-                    //Realizando um laço para buscar a informação de cada Pokemon para salvar em novo array
-                    for (let i = 0; i < dataResults.length; i++) {
-                        let resultPokeInfo = await api.get(
-                            `/pokemon/${dataResults[i].pokemon.name}`
-                        );
-                        resultPokeInfo = resultPokeInfo.data;
-                        newPokeList.push(resultPokeInfo);
-                    }
+                    //Função para order os pokemons pelo ID de forma crescente
+                    newPokeList.sort((a, b) =>
+                        a.id > b.id ? 1 : b.id > a.id ? -1 : 0
+                    );
+
+                    setNumberFeaturedPokemon(
+                        randomNumber([newPokeList.length])
+                    );
+                    setOriginalData(newPokeList);
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
@@ -129,53 +114,73 @@ function Pokedex() {
 
                 getInfoPokemonPerType();
             });
-        } else if (SelectorColor !== "") {
-            filter = "/" + SelectorColor;
+        } else if (Region !== "") {
+            filter = Region;
 
-            api.get(`/pokemon-color${filter}`).then((response) => {
-                async function getInfoPokemonPerColor() {
-                    let dataResults = response.data.pokemon_species;
+            api.get(`/pokedex/${filter}`).then((response) => {
+                async function getInfoPokemon() {
+                    await Promise.all(
+                        //response.data.results.map((pokemonItem) => {
+                        response.data.pokemon_entries.map((pokemonItem) => {
+                            //Dividindo a URL para pegar o ID do Pokemon
+                            const splitedUrl =
+                                pokemonItem.pokemon_species.url.split("/");
 
-                    //Realizando um laço para buscar a informação de cada Pokemon para salvar em novo array
-                    for (let i = 0; i < dataResults.length; i++) {
-                        //Dividindo a URL para pegar o ID do Pokemon
-                        const splitedUrl = dataResults[i].url.split("/");
+                            return api
+                                .get(
+                                    `https://pokeapi.co/api/v2/pokemon/${splitedUrl[6]}`
+                                )
+                                .then((result) => {
+                                    newPokeList.push(result.data);
+                                });
+                        })
+                    );
 
-                        let resultPokeInfo = await api.get(
-                            `/pokemon/${splitedUrl[6]}`
-                        );
-                        resultPokeInfo = resultPokeInfo.data;
-                        newPokeList.push(resultPokeInfo);
-                    }
+                    //Função para order os pokemons pelo ID de forma crescente
+                    newPokeList.sort((a, b) =>
+                        a.id > b.id ? 1 : b.id > a.id ? -1 : 0
+                    );
 
+                    setNumberFeaturedPokemon(
+                        randomNumber([newPokeList.length])
+                    );
+                    setOriginalData(newPokeList);
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
                 }
 
-                getInfoPokemonPerColor();
+                getInfoPokemon();
             });
         } else {
-            filter = `?offset=${Offset}&limit=${Limit}`;
+            filter = Generation;
 
-            api.get(`/pokemon-species${filter}`).then((response) => {
-                setTotalItens(response.data.count);
-
+            api.get(`/generation/${filter}`).then((response) => {
                 async function getInfoPokemon() {
-                    let dataResults = response.data.results;
+                    await Promise.all(
+                        response.data.pokemon_species.map((pokemonItem) => {
+                            //Dividindo a URL para pegar o ID do Pokemon
+                            const splitedUrl = pokemonItem.url.split("/");
 
-                    //Realizando um laço para buscar a informação de cada Pokemon para salvar em novo array
-                    for (let i = 0; i < dataResults.length; i++) {
-                        //Dividindo a URL para pegar o ID do Pokemon
-                        const splitedUrl = dataResults[i].url.split("/");
+                            return api
+                                .get(
+                                    `https://pokeapi.co/api/v2/pokemon/${splitedUrl[6]}`
+                                )
+                                .then((result) => {
+                                    newPokeList.push(result.data);
+                                });
+                        })
+                    );
 
-                        let resultPokeInfo = await api.get(
-                            `/pokemon/${splitedUrl[6]}`
-                        );
-                        resultPokeInfo = resultPokeInfo.data;
-                        newPokeList.push(resultPokeInfo);
-                    }
+                    //Função para order os pokemons pelo ID de forma crescente
+                    newPokeList.sort((a, b) =>
+                        a.id > b.id ? 1 : b.id > a.id ? -1 : 0
+                    );
 
+                    setNumberFeaturedPokemon(
+                        randomNumber([newPokeList.length])
+                    );
+                    setOriginalData(newPokeList);
                     setData(newPokeList);
                     setRemoveLoading(true);
                     scrollUp();
@@ -184,84 +189,86 @@ function Pokedex() {
                 getInfoPokemon();
             });
         }
-    }, [Search, Offset, Limit, SelectorType, SelectorColor]);
+    }, [Types, Region, Generation]);
 
     return (
         <div>
             {!RemoveLoading && <Loading />}
 
-            <Headder setOffset={setOffset} TotalItens={TotalItens} />
+            <Headder />
+
+            {/*Modais - Search / Generation / Region / Types / Filters */}
+            <SearchPokemon />
+            <SelectorPokemonPerGeneration
+                Generation={Generation}
+                setGeneration={setGeneration}
+                Region={Region}
+                setRegion={setRegion}
+                Types={Types}
+                setTypes={setTypes}
+                setRemoveLoading={setRemoveLoading}
+                setData={setData}
+                setSearchNameApi={setSearchNameApi}
+            />
+            <SelectorPokemonPerRigion
+                setRegion={setRegion}
+                Generation={Generation}
+                setGeneration={setGeneration}
+                Types={Types}
+                setTypes={setTypes}
+                setRemoveLoading={setRemoveLoading}
+                setData={setData}
+                setSearchNameApi={setSearchNameApi}
+            />
+            <SelectorPokemonType
+                Types={Types}
+                setTypes={setTypes}
+                Region={Region}
+                setRegion={setRegion}
+                Generation={Generation}
+                setGeneration={setGeneration}
+                setRemoveLoading={setRemoveLoading}
+                setData={setData}
+                setSearchNameApi={setSearchNameApi}
+            />
+
+            <FiltersPokemon
+                DataFilter={Data}
+                OriginalData={OriginalData}
+                setData={setData}
+                setRemoveLoading={setRemoveLoading}
+                setNumberFeaturedPokemon={setNumberFeaturedPokemon}
+            />
+            {/*########################################*/}
+
+            <SearchName SearchNameApi={SearchNameApi} />
+
+            {Data.length !== 0 && (
+                <FeaturedPokemon pokemon={Data[NumberFeaturedPokemon]} />
+            )}
 
             <S.Container>
-                <div className="div-search">
-                    <SearchPokemon setSearch={setSearch} search={Search} />
-
-                    <div className="div-seletors">
-                        <SelectorPokemonType
-                            SelectorType={SelectorType}
-                            setSelectorType={setSelectorType}
-                            Search={Search}
-                            ListNameType={ListNameType}
-                            SelectorColor={SelectorColor}
-                            setRemoveLoading={setRemoveLoading}
-                        />
-                        <SelectorPokemonColor
-                            SelectorColor={SelectorColor}
-                            setSelectorColor={setSelectorColor}
-                            Search={Search}
-                            ListNameColor={ListNameColor}
-                            SelectorType={SelectorType}
-                            setRemoveLoading={setRemoveLoading}
-                        />
-                        <SelectorItemPerPage
-                            className="selector-item"
-                            setLimit={setLimit}
-                            setOffset={setOffset}
-                            limit={Limit}
-                            Search={Search}
-                            SelectorType={SelectorType}
-                            SelectorColor={SelectorColor}
-                            setRemoveLoading={setRemoveLoading}
-                        />
-                    </div>
-                </div>
-
                 <div className="div-pokecard">
-                    {Data.length > 0 &&
-                        Data.map((p) => {
-                            return (
-                                p.id <= TotalItens && (
-                                    <PokeCard
-                                        name={p.name}
-                                        id={p.id}
-                                        img={p.sprites}
-                                        types={p.types}
-                                        Offset={Offset}
-                                        SelectorType={SelectorType}
-                                        SelectorColor={SelectorColor}
-                                        Limit={Limit}
-                                        TotalItens={TotalItens}
-                                        key={p.id}
-                                    />
-                                )
-                            );
-                        })}
-                </div>
+                    {Data.map((p) => {
+                        return (
+                            //p.id <= TotalItens &&
+                            <PokeCard
+                                name={p.name}
+                                id={p.id}
+                                img={p.sprites}
+                                types={p.types}
+                                key={p.id}
+                            />
+                        );
+                    })}
 
-                {Data.length > 0 && (
-                    <Pagination
-                        Search={Search}
-                        SelectorType={SelectorType}
-                        SelectorColor={SelectorColor}
-                        setOffset={setOffset}
-                        maxButtonPagination={maxButtonPagination}
-                        limit={Limit}
-                        firstPagePagination={firstPagePagination}
-                        currentPagePagination={currentPagePagination}
-                        totalPages={totalPages}
-                        setRemoveLoading={setRemoveLoading}
-                    />
-                )}
+                    {Data.length === 0 && (
+                        <div className="alert alert-primary mt-4" role="alert">
+                            <i className="bi bi-info-circle-fill me-2"></i>No
+                            Pokémon found! Please change the filters.
+                        </div>
+                    )}
+                </div>
 
                 <BackToTop />
             </S.Container>

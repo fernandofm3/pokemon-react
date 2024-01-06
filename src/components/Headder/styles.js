@@ -1,61 +1,70 @@
 import styled from "styled-components";
 
 export const Headder = styled.div`
-    width: 100%;
-    background-color: #3b64a5;
-
-    nav {
-        display: flex;
-        flez-direction: row;
-        justify-content: space-between;
-        max-width: 1280px;
-        margin: auto;
+    .div-nav .navbar {
+        padding-bottom: 20px;
     }
 
-    ul {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        list-style: none;
-        padding: 10px 20px 10px 20px;
-        margin: 0;
-    }
-
-    li {
-        font-size: 1.1rem;
+    .div-nav nav ul li a {
+        color: #fff;
         font-weight: bold;
     }
 
-    a + a {
-        margin-left: 20px;
-        cursor: pointer;
-        text-decoration: none;
-        transition: 0.3s;
+    .div-nav nav ul li > .btn-dropdown {
         color: #fff;
+        font-weight: bold;
     }
 
-    a:hover {
-        color: #eee;
+    .div-nav nav ul li .dropdown-menu li {
+        padding: 3px 10px;
     }
 
-    li img {
-        width: 100px;
+    .div-nav .navbar-toggler {
+        background-color: #ffcc03;
     }
 
-    .versionApp {
+    .div-nav .navbar-nav .nav-link.show {
         color: #ddd;
-        font-size: 0.725rem;
     }
 
-    @media screen and (min-width: 1024px) {
-        li img {
-            width: 150px;
+    .div-nav img {
+        width: 120px;
+    }
+
+    .div-nav .btn-generation,
+    .div-nav .btn-region,
+    .div-nav .btn-types {
+        display: flex;
+        padding: 5px 10px;
+        width: 100%;
+        //border: none;
+        //border-radius: 7px;
+        font-weight: 600;
+    }
+
+    .div-nav .btn-search {
+        display: flex;
+        width: 100%;
+        background-color: #0e5fd5;
+        color: #bbb;
+        font-wight: 600;
+        border-color: #bbb;
+        transition: 0.3s;
+    }
+
+    .div-nav .btn-search:hover {
+        background-color: #0d54bb;
+        color: #fff;
+        border-color: #fff;
+    }
+
+    @media screen and (min-width: 995px) {
+        .div-nav .navbar {
+            padding-bottom: 8px;
         }
-    }
 
-    @media screen and (max-width: 390px) {
-        .ulVersionApp {
-            display: none;
+        .div-nav .btn-search {
+            width: 300px;
         }
     }
 `;

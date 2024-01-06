@@ -3,73 +3,67 @@ import styled from "styled-components";
 export const Container = styled.div`
     max-width: 1280px;
     margin: auto;
-    padding: 20px 30px 20px 30px;
-    .item-display-none {
-        display: none;
+    padding: 0px 15px 30px 15px;
+
+    .div-pokecard {
+        display: grid;
+        column-gap: 20px;
+        row-gap: 90px;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        margin-bottom: 80px;
     }
 
-    .div-search {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 40px;
-    }
-
-    .div-seletors {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .div-seletors label {
-        width: 90px;
-    }
-
-    .div-seletors select {
-        width: 100%;
-    }
-
-    @media screen and (min-width: 650px) {
-        .div-seletors {
-            flex-direction: row;
-            justify-content: space-between;
+    @media screen and (min-width: 450px) {
+        .div-pokecard {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         }
+    }
 
-        .div-seletors label,
-        .div-seletors select {
-            width: auto;
+    @media screen and (min-width: 500px) {
+        .div-pokecard {
+            //column-gap: auto;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        .div-pokecard {
+            column-gap: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 160px));
+        }
+    }
+
+    @media screen and (min-width: 820px) {
+        .div-pokecard {
+            column-gap: 44px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 160px));
         }
     }
 
     @media screen and (min-width: 900px) {
-        .div-search {
-            flex-direction: row;
-            justify-content: space-between;
-        }
-
-        .div-seletors {
-            width: 220%;
-            margin-left: 20px;
+        .div-pokecard {
+            column-gap: 48px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 180px));
         }
     }
 
     @media screen and (min-width: 1024px) {
-        .div-seletors {
-            width: 150%;
-            margin-left: 20px;
+        .div-pokecard {
+            column-gap: 31px;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 170px));
         }
     }
 
     @media screen and (min-width: 1280px) {
-        .div-seletors {
-            width: 100%;
-            margin-left: 20px;
+        .div-pokecard {
+            column-gap: 51px;
+            grid-template-columns: repeat(auto-fit, minmax(215px, 215px));
         }
     }
 
-    .div-pokecard {
-        display: grid;
-        column-gap: 25px;
-        row-gap: 25px;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        margin-bottom: 40px;
+    @media screen and (min-width: 1320px) {
+        padding: 0;
+        // .div-pokecard {
+        //     column-gap: 40px;
+        // }
     }
 `;
