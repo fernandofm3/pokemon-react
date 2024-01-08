@@ -18,9 +18,16 @@ export const FiltersPokemon = styled.div`
         background-color: #fff;
     }
 
+    // .div-filters select {
+    //     background-color: #6c757d;
+    //     color: #fff;
+    // }
+
     .div-filters .div-height,
     .div-filters .div-sort-by-category,
-    .div-filters .div-weight {
+    .div-filters .div-weight,
+    .div-filters .div-stats,
+    .div-filters .div-types {
         padding: 10px;
         background-color: #dee2e6;
         border-radius: 7px;

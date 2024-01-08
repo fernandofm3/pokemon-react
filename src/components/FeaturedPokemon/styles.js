@@ -14,7 +14,6 @@ export const FeaturedPokemon = styled.div`
         rgba(254, 252, 246, 0) 100%
     );
     margin-bottom: 40px;
-    //border-top: 1px solid #fff;
 
     /******************************************/
 
@@ -53,6 +52,7 @@ export const FeaturedPokemon = styled.div`
     /******************************************/
 
     .div-featured-pokemon-1 .div-img-pokemon {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -77,8 +77,28 @@ export const FeaturedPokemon = styled.div`
 
     .div-featured-pokemon-1 .div-types-pokemon {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: center;
         align-items: center;
+    }
+
+    .div-featured-pokemon-1 .div-types-pokemon p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 75px;
+        height: 75px;
+        padding: 0px;
+        border-radius: 50%;
+        background-color: #21252973;
+        color: #fff;
+        font-weight: bold;
+        text-shadow: 1px 2px 6px #000;
+        transition: 0.3s;
+    }
+
+    .div-featured-pokemon-1 .div-types-pokemon p:hover {
+        box-shadow: 1px 1px 16px 1px #fff;
     }
 
     /*********************************************************/

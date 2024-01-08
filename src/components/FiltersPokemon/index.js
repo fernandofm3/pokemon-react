@@ -19,22 +19,28 @@ const FiltersPokemon = ({
     const [sortByCategory, setSortByCategory] = useState("");
 
     //Referente a altura
+    //const [sortByHeight, setSortByHeight] = useState("");
     const [chekedSmallHeight, setChekedSmallHeight] = useState(false);
     const [chekedMediumHeight, setChekedMediumHeight] = useState(false);
     const [chekedTallHeight, setChekedTallHeight] = useState(false);
     const [chekedAllHeight, setChekedAllHeight] = useState(true);
 
     //Referente ao peso
+    //const [sortByWeight, setSortByWeight] = useState("");
     const [chekedLightweight, setChekedLightweight] = useState(false);
     const [chekedMediumWeight, setChekedMediumWeight] = useState(false);
     const [chekedHeavyWeight, setChekedHeavyWeight] = useState(false);
     const [chekedAllWeight, setChekedAllWeight] = useState(true);
+
+    //Referente as Estatisticas de poder
+    //const [sortByStats, setSortByStats] = useState("");
 
     //Objeto de filtros com valores padrão
     const [FiltersObject, setFiltersObject] = useState({
         sortByCategory: "",
         sortByHeight: "",
         sortByWeight: "",
+        sortByStats: "",
     });
 
     const [ShowBtnAplly, setShowBtnAplly] = useState(
@@ -206,33 +212,33 @@ const FiltersPokemon = ({
                 );
             });
 
-            console.log(newFilteredArray.length);
+            //console.log(newFilteredArray.length);
 
-            //Condições para verificar a classificação do array
+            //Classificação por nome do pokemon
             if (FiltersObject.sortByCategory === "asc") {
                 newFilteredArray = newFilteredArray.sort((a, b) =>
                     a.name.localeCompare(b.name)
                 );
             }
-
             if (FiltersObject.sortByCategory === "desc") {
                 newFilteredArray = newFilteredArray.sort((a, b) =>
                     b.name.localeCompare(a.name)
                 );
             }
 
+            //Classificação por número do pokemon
             if (FiltersObject.sortByCategory === "smallestNumberFirst") {
                 newFilteredArray.sort((a, b) =>
                     a.id > b.id ? 1 : b.id > a.id ? -1 : 0
                 );
             }
-
             if (FiltersObject.sortByCategory === "highestNumberFirst") {
                 newFilteredArray.sort((a, b) =>
                     a.id < b.id ? 1 : b.id < a.id ? -1 : 0
                 );
             }
 
+            //Classificação por altura do pokemon
             if (
                 FiltersObject.sortByCategory === "shorterHeightToGreaterHeight"
             ) {
@@ -249,6 +255,7 @@ const FiltersPokemon = ({
                 );
             }
 
+            //Classificação por peso do pokemon
             if (FiltersObject.sortByCategory === "lightWeightToHeavyWeight") {
                 newFilteredArray.sort((a, b) =>
                     a.weight > b.weight ? 1 : b.weight > a.weight ? -1 : 0
@@ -258,6 +265,192 @@ const FiltersPokemon = ({
             if (FiltersObject.sortByCategory === "heavyWeightToLightWeight") {
                 newFilteredArray.sort((a, b) =>
                     a.weight < b.weight ? 1 : b.weight < a.weight ? -1 : 0
+                );
+            }
+
+            //Classificação por hp do pokemon
+            if (FiltersObject.sortByCategory === "hpWorstToBest") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[0].base_stat > b.stats[0].base_stat
+                        ? 1
+                        : b.stats[0].base_stat > a.stats[0].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+            if (FiltersObject.sortByCategory === "hpBestToWorst") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[0].base_stat < b.stats[0].base_stat
+                        ? 1
+                        : b.stats[0].base_stat < a.stats[0].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+
+            //Classificação por Attack do pokemon
+            if (FiltersObject.sortByCategory === "attackWorstToBest") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[1].base_stat > b.stats[1].base_stat
+                        ? 1
+                        : b.stats[1].base_stat > a.stats[1].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+            if (FiltersObject.sortByCategory === "attackBestToWorst") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[1].base_stat < b.stats[1].base_stat
+                        ? 1
+                        : b.stats[1].base_stat < a.stats[1].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+
+            //Classificação por Defesa do pokemon
+            if (FiltersObject.sortByCategory === "defenseWorstToBest") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[2].base_stat > b.stats[2].base_stat
+                        ? 1
+                        : b.stats[2].base_stat > a.stats[2].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+            if (FiltersObject.sortByCategory === "defenseBestToWorst") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[2].base_stat < b.stats[2].base_stat
+                        ? 1
+                        : b.stats[2].base_stat < a.stats[2].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+
+            //Classificação por Especial Ataque do pokemon
+            if (FiltersObject.sortByCategory === "spAtkWorstToBest") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[3].base_stat > b.stats[3].base_stat
+                        ? 1
+                        : b.stats[3].base_stat > a.stats[3].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+            if (FiltersObject.sortByCategory === "spAtkBestToWorst") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[3].base_stat < b.stats[3].base_stat
+                        ? 1
+                        : b.stats[3].base_stat < a.stats[3].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+
+            //Classificação por Especial Defesa do pokemon
+            if (FiltersObject.sortByCategory === "spDefWorstToBest") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[4].base_stat > b.stats[4].base_stat
+                        ? 1
+                        : b.stats[4].base_stat > a.stats[4].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+            if (FiltersObject.sortByCategory === "spDefBestToWorst") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[4].base_stat < b.stats[4].base_stat
+                        ? 1
+                        : b.stats[4].base_stat < a.stats[4].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+
+            //Classificação por Velocidade do pokemon
+            if (FiltersObject.sortByCategory === "speedWorstToBest") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[5].base_stat > b.stats[5].base_stat
+                        ? 1
+                        : b.stats[5].base_stat > a.stats[5].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+            if (FiltersObject.sortByCategory === "speedBestToWorst") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[5].base_stat < b.stats[5].base_stat
+                        ? 1
+                        : b.stats[5].base_stat < a.stats[5].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+
+            //Pokemon mais Fraco para o mais Forte
+            if (FiltersObject.sortByCategory === "weakerToStronger") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[0].base_stat +
+                        a.stats[1].base_stat +
+                        a.stats[2].base_stat +
+                        a.stats[3].base_stat +
+                        a.stats[4].base_stat +
+                        a.stats[5].base_stat >
+                    b.stats[0].base_stat +
+                        b.stats[1].base_stat +
+                        b.stats[2].base_stat +
+                        b.stats[3].base_stat +
+                        b.stats[4].base_stat +
+                        b.stats[5].base_stat
+                        ? 1
+                        : b.stats[0].base_stat +
+                              b.stats[1].base_stat +
+                              b.stats[2].base_stat +
+                              b.stats[3].base_stat +
+                              b.stats[4].base_stat +
+                              b.stats[5].base_stat >
+                          a.stats[0].base_stat +
+                              a.stats[1].base_stat +
+                              a.stats[2].base_stat +
+                              a.stats[3].base_stat +
+                              a.stats[4].base_stat +
+                              a.stats[5].base_stat
+                        ? -1
+                        : 0
+                );
+            }
+
+            //Pokemon mais Forte para o mais Fraco
+            if (FiltersObject.sortByCategory === "strongerToWeaker") {
+                newFilteredArray.sort((a, b) =>
+                    a.stats[0].base_stat +
+                        a.stats[1].base_stat +
+                        a.stats[2].base_stat +
+                        a.stats[3].base_stat +
+                        a.stats[4].base_stat +
+                        a.stats[5].base_stat <
+                    b.stats[0].base_stat +
+                        b.stats[1].base_stat +
+                        b.stats[2].base_stat +
+                        b.stats[3].base_stat +
+                        b.stats[4].base_stat +
+                        b.stats[5].base_stat
+                        ? 1
+                        : b.stats[0].base_stat +
+                              b.stats[1].base_stat +
+                              b.stats[2].base_stat +
+                              b.stats[3].base_stat +
+                              b.stats[4].base_stat +
+                              b.stats[5].base_stat <
+                          a.stats[0].base_stat +
+                              a.stats[1].base_stat +
+                              a.stats[2].base_stat +
+                              a.stats[3].base_stat +
+                              a.stats[4].base_stat +
+                              a.stats[5].base_stat
+                        ? -1
+                        : 0
                 );
             }
 
@@ -315,7 +508,7 @@ const FiltersPokemon = ({
 
                                 <div className="mb-3">
                                     <select
-                                        className="form-select form-select-sm"
+                                        className="form-select"
                                         aria-label=".form-select-lg example"
                                         name="sortByCategory"
                                         value={sortByCategory}
@@ -329,26 +522,92 @@ const FiltersPokemon = ({
                                         <option value="">Default</option>
                                         <option value="asc">A-Z</option>
                                         <option value="desc">Z-A</option>
+
                                         <option value="smallestNumberFirst">
                                             Smallest number first
                                         </option>
                                         <option value="highestNumberFirst">
                                             Highest number first
                                         </option>
+
                                         <option value="shorterHeightToGreaterHeight">
-                                            Shorter Height to Greater Height
+                                            Height - Shorter to Greater
                                         </option>
                                         <option value="greaterHeightToShorterHeight">
-                                            Greater Height to Shorter Height
+                                            Height - Greater to Shorter
                                         </option>
+
                                         <option value="lightWeightToHeavyWeight">
-                                            Light Weight to Heavy Weight
+                                            Weight - Light to Heavy
                                         </option>
                                         <option value="heavyWeightToLightWeight">
-                                            Heavy Weight to Light Weight
+                                            Weight - Heavy to Light
+                                        </option>
+
+                                        <option value="hpWorstToBest">
+                                            HP - Worst to Best
+                                        </option>
+                                        <option value="hpBestToWorst">
+                                            HP - Best to Worst
+                                        </option>
+
+                                        <option value="attackWorstToBest">
+                                            Attack - Worst to Best
+                                        </option>
+                                        <option value="attackBestToWorst">
+                                            Attack - Best to Worst
+                                        </option>
+
+                                        <option value="defenseWorstToBest">
+                                            Defense - Worst to Best
+                                        </option>
+                                        <option value="defenseBestToWorst">
+                                            Defense - Best to Worst
+                                        </option>
+
+                                        <option value="spAtkWorstToBest">
+                                            Sp. Atk - Worst to Best
+                                        </option>
+                                        <option value="spAtkBestToWorst">
+                                            Sp. Atk - Best to Worst
+                                        </option>
+
+                                        <option value="spDefWorstToBest">
+                                            Sp. Def - Worst to Best
+                                        </option>
+                                        <option value="spDefBestToWorst">
+                                            Sp. Def - Best to Worst
+                                        </option>
+
+                                        <option value="speedWorstToBest">
+                                            Speed - Worst to Best
+                                        </option>
+                                        <option value="speedBestToWorst">
+                                            Speed - Best to Worst
+                                        </option>
+
+                                        <option value="weakerToStronger">
+                                            Total Stats - Worst to Best
+                                        </option>
+                                        <option value="strongerToWeaker">
+                                            Total Stats - Best to Worst
                                         </option>
                                     </select>
                                 </div>
+                            </div>
+
+                            <div className="div-stats mb-3">
+                                <h5 className="filters-title mb-3">
+                                    <i className="bi bi-bar-chart-steps me-1"></i>{" "}
+                                    Stats
+                                </h5>
+                            </div>
+
+                            <div className="div-types mb-3">
+                                <h5 className="filters-title mb-3">
+                                    <i class="bi bi-lightning-fill me-1"></i>{" "}
+                                    Types
+                                </h5>
                             </div>
 
                             <div className="div-height mb-3">
@@ -613,7 +872,7 @@ const FiltersPokemon = ({
                                     clearFilter();
                                     setClearFilter(true);
 
-                                    //referente a Categoria
+                                    //referente as classificações
                                     setSortByCategory("");
 
                                     //Referente a Altura
