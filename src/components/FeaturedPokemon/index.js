@@ -82,7 +82,11 @@ function FeaturedPokemon(props) {
     }
 
     return (
-        <S.FeaturedPokemon>
+        <S.FeaturedPokemon
+        // style={{
+        //     backgroundImage: `url(${spriteOfficial})`,
+        // }}
+        >
             <div className="div-main-featured-pokemon animate__animated animate__fadeIn animate__slow">
                 <div className="div-featured-pokemon-1 mb-3">
                     <div className="div-name-pokemon">
@@ -113,10 +117,17 @@ function FeaturedPokemon(props) {
                     </div>
 
                     <div className="div-types-pokemon">
+                        <p className="text-center me-4">
+                            {props.pokemon.height / 10} <br /> m
+                        </p>
                         <PokeTypes
                             types={props.pokemon.types}
                             pokeId={props.pokemon.id}
                         />
+                        <p className="text-center ms-2">
+                            {props.pokemon.weight / 10}
+                            <br /> kg
+                        </p>
                     </div>
                 </div>
 
@@ -140,9 +151,20 @@ function FeaturedPokemon(props) {
                 </div>
 
                 <div className="div-featured-pokemon-3 mt-3">
-                    {/* <h1 className="mb-4">Description</h1> */}
-
                     <div className="div-info-pokemon">
+                        <div className="div-abilities mb-2">
+                            <h5>Abilities</h5>
+                            <div>
+                                {props.pokemon.abilities.map(
+                                    (abilities, index) => (
+                                        <span className="me-3" key={index}>
+                                            {abilities.ability.name}
+                                        </span>
+                                    )
+                                )}
+                            </div>
+                        </div>
+
                         <p>
                             <span>{splitName(props.pokemon.name)}</span> is a
                             Pokémon that can reach a height of{" "}
@@ -158,14 +180,6 @@ function FeaturedPokemon(props) {
                             </span>{" "}
                             points, reflecting directly on the challenges it
                             faces in its daily life.
-                            {/* His abilities are
-                            {props.pokemon.abilities.map((abilities, index) => (
-                                <span key={index}>
-                                    {abilities.ability.name},{" "}
-                                </span>
-                            ))}
-                            but as he gains experience he can acquire other
-                            abilities. */}
                         </p>
 
                         <div className="div-more-details">

@@ -46,7 +46,7 @@ const SelectorPokemonsPerRegion = ({
                 aria-labelledby="staticBackdropLabel"
                 aria-hidden="true"
             >
-                <div className="modal-dialog modal-dialog-centered modal-xl">
+                <div className="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-sm-down">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1

@@ -1,12 +1,13 @@
 import React from "react";
 import * as S from "./styles";
+import SearchName from "../../components/SearchName";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 
 const Headder = (props) => {
     return (
         <S.Headder>
-            <div className="div-nav">
+            <div className="div-nav fixed-top">
                 <nav className="navbar bg-primary navbar-expand-lg">
                     <div className="container-fluid">
                         <Link className="navbar-brand" to="/">
@@ -54,10 +55,17 @@ const Headder = (props) => {
                                 </li>
 
                                 <li className="nav-item dropdown">
+                                    {/* <button
+                                        className="nav-link dropdown-toggle btn-dropdown"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    > */}
                                     <button
                                         className="nav-link dropdown-toggle btn-dropdown"
                                         type="button"
                                         data-bs-toggle="dropdown"
+                                        data-bs-auto-close="false"
                                         aria-expanded="false"
                                     >
                                         Pokedex
@@ -126,6 +134,7 @@ const Headder = (props) => {
                         </div>
                     </div>
                 </nav>
+                <SearchName SearchNameApi={props.SearchNameApi} />
             </div>
         </S.Headder>
     );

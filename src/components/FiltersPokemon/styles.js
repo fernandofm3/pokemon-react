@@ -15,12 +15,22 @@ export const FiltersPokemon = styled.div`
     }
 
     .offcanvas-body {
+        color: #333;
         background-color: #fff;
+    }
+
+    .div-filters select {
+        background-color: #fff;
+        color: #000;
+        border-radius: 7px;
+        font-weight: bold;
     }
 
     .div-filters .div-height,
     .div-filters .div-sort-by-category,
-    .div-filters .div-weight {
+    .div-filters .div-weight,
+    .div-filters .div-stats,
+    .div-filters .div-types {
         padding: 10px;
         background-color: #dee2e6;
         border-radius: 7px;
@@ -58,6 +68,10 @@ export const FiltersPokemon = styled.div`
     .div-filters .div-height .div-all-height label,
     .div-filters .div-weight .div-all-weight label {
         font-weight: bold;
+    }
+
+    .div-filters .div-types select {
+        text-transform: capitalize;
     }
 
     // @media screen and (min-width: 995px) {
