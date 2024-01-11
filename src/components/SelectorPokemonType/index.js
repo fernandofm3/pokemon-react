@@ -47,7 +47,7 @@ const SelectorPokemonType = ({
                 aria-labelledby="staticBackdropLabel"
                 aria-hidden="true"
             >
-                <div className="modal-dialog modal-dialog-centered modal-xl">
+                <div className="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-sm-down">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1
@@ -126,50 +126,6 @@ const SelectorPokemonType = ({
                     </div>
                 </div>
             </div>
-
-            {/* <div className="btn-group div-types">
-                <button
-                    className="btn btn-primary dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
-                    <i className="bi bi-lightning-fill me-1"></i> Type
-                </button>
-                <ul className="dropdown-menu">
-                    {ListNameType.map((type, index) => (
-                        <li
-                            key={index}
-                            onClick={() => {
-                                if (SelectedType !== index) {
-                                    setGeneration("");
-                                    setRegion("");
-                                    handleCardClick(index);
-                                    setTypes(type.name);
-                                    setRemoveLoading(false);
-                                }
-                            }}
-                        >
-                            <div
-                                className={
-                                    SelectedType === index
-                                        ? "dropdown-item active"
-                                        : "dropdown-item"
-                                }
-                            >
-                                <div className={`poke__type__bg ${type.name}`}>
-                                    <img
-                                        src={`${type.name}.png`}
-                                        alt="poke-type"
-                                    ></img>
-                                </div>
-
-                                {type.name}
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div> */}
         </S.SelectorPokemonType>
     );
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import api from "../../services/api";
 import imgSmallHeight from "../../assets/small-height.png";
 import imgMediumHeight from "../../assets/medium-height.png";
 import imgTallHeight from "../../assets/tall-height.png";
@@ -12,6 +13,16 @@ const FiltersPokemon = ({
     setRemoveLoading,
     setNumberFeaturedPokemon,
 }) => {
+    useEffect(() => {
+        //Buscando a lista com os nomes do TIPOS de Pokemons
+        api.get(`/type`).then((response) => {
+            setListNameType(response.data.results);
+        });
+    }, []);
+
+    //Lista de tipos
+    const [ListNameType, setListNameType] = useState([]);
+
     const [FilterAplly, setFilterAplly] = useState(false);
     const [ClearFilter, setClearFilter] = useState(false);
 
@@ -32,8 +43,8 @@ const FiltersPokemon = ({
     const [chekedHeavyWeight, setChekedHeavyWeight] = useState(false);
     const [chekedAllWeight, setChekedAllWeight] = useState(true);
 
-    //Referente as Estatisticas de poder
-    //const [sortByStats, setSortByStats] = useState("");
+    //Referente aos tipos dos pokemons
+    const [sortByTypes, setSortByTypes] = useState("");
 
     //Objeto de filtros com valores padrão
     const [FiltersObject, setFiltersObject] = useState({
@@ -41,6 +52,7 @@ const FiltersPokemon = ({
         sortByHeight: "",
         sortByWeight: "",
         sortByStats: "",
+        sortByTypes: "",
     });
 
     const [ShowBtnAplly, setShowBtnAplly] = useState(
@@ -152,6 +164,9 @@ const FiltersPokemon = ({
                 let weightGreaterThan45 = 0;
                 let weightGreaterThan230 = 0;
 
+                //Tipos
+                let type = "";
+
                 //Verifica se o filtro foi ativado
                 //Filtro referente a altura do pokemon
                 if (FiltersObject.sortByHeight !== "") {
@@ -190,6 +205,15 @@ const FiltersPokemon = ({
                     }
                 }
 
+                //Filtro referente ao tipo do pokemon
+                if (FiltersObject.sortByTypes !== "") {
+                    pokemon.types.map((t) => {
+                        if (t.type.name === FiltersObject.sortByTypes) {
+                            type = t.type.name;
+                        }
+                    });
+                }
+
                 return (
                     //Filtra a altura do pokemon
                     pokemon.height / 10 <= heightUpTo1 &&
@@ -200,19 +224,13 @@ const FiltersPokemon = ({
                     pokemon.weight / 10 <= weightUpTo45 &&
                     pokemon.weight / 10 > weightGreaterThan45 &&
                     pokemon.weight / 10 <= weightUpTo230 &&
-                    pokemon.weight / 10 > weightGreaterThan230
-
-                    // filtroQtDisponivel < filtroM23 &&
-                    // filtroQtPendente >= filtroQtGeral &&
-                    // validade === filtroValidade &&
-                    // filtroLotesBloqueados > 0 &&
-                    // filtroOrdensEmProducao > 0 &&
-                    // qtDisponivel >= filtroMinDisponivel &&
-                    // qtDisponivel <= filtroMaxDisponivel
+                    pokemon.weight / 10 > weightGreaterThan230 &&
+                    //Filtra o tipo do pokemon
+                    type === FiltersObject.sortByTypes
                 );
             });
 
-            //console.log(newFilteredArray.length);
+            //console.log(newFilteredArray);
 
             //Classificação por nome do pokemon
             if (FiltersObject.sortByCategory === "asc") {
@@ -508,7 +526,7 @@ const FiltersPokemon = ({
 
                                 <div className="mb-3">
                                     <select
-                                        className="form-select"
+                                        className="form-select form-select-sm"
                                         aria-label=".form-select-lg example"
                                         name="sortByCategory"
                                         value={sortByCategory}
@@ -596,17 +614,43 @@ const FiltersPokemon = ({
                                 </div>
                             </div>
 
+                            <div className="div-types mb-3">
+                                <h5 className="filters-title mb-3">
+                                    <i className="bi bi-lightning-fill me-1"></i>{" "}
+                                    Types
+                                </h5>
+
+                                <select
+                                    className="form-select form-select-sm"
+                                    aria-label=".form-select-lg example"
+                                    name="sortByTypes"
+                                    value={sortByTypes}
+                                    onChange={(e) => {
+                                        setSortByTypes(e.currentTarget.value);
+                                        filterChangeInput(e);
+                                    }}
+                                >
+                                    <option value="">All</option>
+
+                                    {ListNameType.map((type, index) => {
+                                        return (
+                                            index < 18 && (
+                                                <option
+                                                    value={type.name}
+                                                    key={index}
+                                                >
+                                                    {type.name}
+                                                </option>
+                                            )
+                                        );
+                                    })}
+                                </select>
+                            </div>
+
                             <div className="div-stats mb-3">
                                 <h5 className="filters-title mb-3">
                                     <i className="bi bi-bar-chart-steps me-1"></i>{" "}
                                     Stats
-                                </h5>
-                            </div>
-
-                            <div className="div-types mb-3">
-                                <h5 className="filters-title mb-3">
-                                    <i class="bi bi-lightning-fill me-1"></i>{" "}
-                                    Types
                                 </h5>
                             </div>
 
@@ -886,6 +930,9 @@ const FiltersPokemon = ({
                                     setChekedMediumWeight(false);
                                     setChekedHeavyWeight(false);
                                     setChekedAllWeight(true);
+
+                                    //Referente ao Tipos
+                                    setSortByTypes("");
                                 }}
                             >
                                 <i className="bi bi-trash"></i>

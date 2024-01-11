@@ -11,7 +11,8 @@ export const PokeCard = styled.div`
         border: none;
         border-radius: 7px;
         transition: all 0.3s ease-in-out;
-        max-width: 220px;
+        width: 100%;
+        //max-width: 220px;
         height: 300px;
     }
 
@@ -40,7 +41,7 @@ export const PokeCard = styled.div`
     }
 
     .pokeNum {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         margin-top: 20px;
         margin-bottom: 10px;
         font-weight: bold;
@@ -51,7 +52,7 @@ export const PokeCard = styled.div`
     .pokeName {
         font-weight: bold;
 
-        font-size: 1.2rem;
+        font-size: 1rem;
         margin-top: 20px;
         margin-bottom: 5px;
         color: #fff;
@@ -65,9 +66,18 @@ export const PokeCard = styled.div`
         margin-top: -25px;
     }
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 360px) {
+        .card {
+            max-width: 220px;
+        }
+    }
+
+    @media screen and (min-width: 1280px) {
+        .pokeNum {
+            font-size: 1.2rem;
+        }
         .pokeName {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
     }
 `;

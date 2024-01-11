@@ -5,7 +5,7 @@ export const FeaturedPokemon = styled.div`
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    padding: 30px 20px 10px 20px;
+    padding: 30px 15px 10px 15px;
     background: rgb(13, 110, 253);
     background: linear-gradient(
         180deg,
@@ -13,6 +13,7 @@ export const FeaturedPokemon = styled.div`
         rgba(13, 110, 253, 1) 0%,
         rgba(254, 252, 246, 0) 100%
     );
+    margin-top: 98px;
     margin-bottom: 40px;
 
     /******************************************/
@@ -186,9 +187,46 @@ export const FeaturedPokemon = styled.div`
         text-shadow: 1px 1px 1px #000;
     }
 
+    /******************************************/
+
+    .div-featured-pokemon-3 .div-abilities {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding: 0 0 5px 0;
+        border-bottom: 1px solid #fff;
+    }
+
+    .div-featured-pokemon-3 .div-abilities h5 {
+        margin: 0;
+        color: #fff;
+        padding: 0 12px 0 0;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        margin-right: 15px;
+        margin-bottom: 15px;
+        text-shadow: 1px 2px 6px #000;
+    }
+
+    .div-featured-pokemon-3 .div-abilities div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .div-featured-pokemon-3 .div-abilities div span {
+        background-color: #fff;
+        border-radius: 7px;
+        padding: 2px 10px;
+        text-transform: capitalize;
+        color: #000;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
     /**********************************************************/
 
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 768px) {
         .div-main-featured-pokemon {
             flex-direction: row;
             flex-wrap: wrap;
@@ -210,17 +248,5 @@ export const FeaturedPokemon = styled.div`
         .div-featured-pokemon-1 .div-name-pokemon {
             align-items: start;
         }
-    }
-
-    @media screen and (min-width: 768px) {
-        // .div-featured-pokemon-1 .div-img-pokemon div {
-        //     width: 190px;
-        //     height: 190px;
-        // }
-
-        // .div-featured-pokemon-1 .div-img-pokemon div img {
-        //     width: 190px;
-        //     height: 190px;
-        // }
     }
 `;

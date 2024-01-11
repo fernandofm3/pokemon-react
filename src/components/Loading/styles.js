@@ -6,6 +6,7 @@ export const Loading = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    top: 0;
     width: 100%;
     height: 100vh;
     background-color: #0d6efd;

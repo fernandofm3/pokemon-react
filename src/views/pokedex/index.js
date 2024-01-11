@@ -195,7 +195,7 @@ function Pokedex() {
         <div>
             {!RemoveLoading && <Loading />}
 
-            <Headder />
+            <Headder SearchNameApi={SearchNameApi} />
 
             {/*Modais - Search / Generation / Region / Types / Filters */}
             <SearchPokemon />
@@ -241,13 +241,20 @@ function Pokedex() {
             />
             {/*########################################*/}
 
-            <SearchName SearchNameApi={SearchNameApi} />
-
             {Data.length !== 0 && (
                 <FeaturedPokemon pokemon={Data[NumberFeaturedPokemon]} />
             )}
 
             <S.Container>
+                {Data.length === 0 && (
+                    <div
+                        className="alert alert-primary me-3 ms-3 div-error"
+                        role="alert"
+                    >
+                        <i className="bi bi-info-circle-fill me-2"></i>No
+                        Pokémon found! Please change the filters.
+                    </div>
+                )}
                 <div className="div-pokecard">
                     {Data.map((p) => {
                         return (
@@ -261,13 +268,6 @@ function Pokedex() {
                             />
                         );
                     })}
-
-                    {Data.length === 0 && (
-                        <div className="alert alert-primary mt-4" role="alert">
-                            <i className="bi bi-info-circle-fill me-2"></i>No
-                            Pokémon found! Please change the filters.
-                        </div>
-                    )}
                 </div>
 
                 <BackToTop />

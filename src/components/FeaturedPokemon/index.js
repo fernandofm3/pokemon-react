@@ -151,9 +151,20 @@ function FeaturedPokemon(props) {
                 </div>
 
                 <div className="div-featured-pokemon-3 mt-3">
-                    {/* <h1 className="mb-4">Description</h1> */}
-
                     <div className="div-info-pokemon">
+                        <div className="div-abilities mb-2">
+                            <h5>Abilities</h5>
+                            <div>
+                                {props.pokemon.abilities.map(
+                                    (abilities, index) => (
+                                        <span className="me-3" key={index}>
+                                            {abilities.ability.name}
+                                        </span>
+                                    )
+                                )}
+                            </div>
+                        </div>
+
                         <p>
                             <span>{splitName(props.pokemon.name)}</span> is a
                             Pokémon that can reach a height of{" "}
@@ -169,14 +180,6 @@ function FeaturedPokemon(props) {
                             </span>{" "}
                             points, reflecting directly on the challenges it
                             faces in its daily life.
-                            {/* His abilities are
-                            {props.pokemon.abilities.map((abilities, index) => (
-                                <span key={index}>
-                                    {abilities.ability.name},{" "}
-                                </span>
-                            ))}
-                            but as he gains experience he can acquire other
-                            abilities. */}
                         </p>
 
                         <div className="div-more-details">

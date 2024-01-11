@@ -31,9 +31,9 @@ const SearchPokemon = () => {
                 aria-labelledby="staticBackdropLabel"
                 aria-hidden="true"
             >
-                <div className="modal-dialog modal-dialog modal-xl">
+                <div className="modal-dialog modal-xl modal-fullscreen-lg-down">
                     <div className="modal-content">
-                        <div className="modal-body mb-4">
+                        <div className="modal-body">
                             <div className="input-group input-group-lg mb-3">
                                 <span
                                     className="input-group-text"
