@@ -54,8 +54,8 @@ const SelectorPokemonType = ({
                                 className="modal-title fs-5"
                                 id="staticBackdropLabel"
                             >
-                                <i className="bi bi-lightning-fill me-2"></i>{" "}
-                                Pokemon Types
+                                <i className="bi bi-fire me-2"></i> Pokemon
+                                Types
                             </h1>
                             <button
                                 type="button"
