@@ -39,10 +39,10 @@ function FilterSortBy({
                         <option value="desc">Z-A</option>
 
                         <option value="smallestNumberFirst">
-                            Smallest number first
+                            {"Pokemon Number - Asc"}
                         </option>
                         <option value="highestNumberFirst">
-                            Highest number first
+                            {"Pokemon number - Desc"}
                         </option>
 
                         <option value="shorterHeightToGreaterHeight">

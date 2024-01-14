@@ -7,12 +7,14 @@ import FilterWeight from "./FilterWeight";
 import * as S from "./styles";
 
 const FiltersPokemon = ({
-    DataFilter,
     OriginalData,
     setData,
     setRemoveLoading,
     setNumberFeaturedPokemon,
 }) => {
+    //Variável resposável por receberr os dados originais vindo da api.
+    let dataToFilter = [];
+
     //Aciona a filtragem no array de pokemons
     const [FilterAplly, setFilterAplly] = useState(false);
 
@@ -56,7 +58,7 @@ const FiltersPokemon = ({
             }));
         }
 
-        console.log(FiltersObject);
+        //console.log(FiltersObject);
     };
 
     //Adiciona o valor digitado pelo usuário no objeto de filtros.
@@ -77,7 +79,7 @@ const FiltersPokemon = ({
             }));
         }
 
-        console.log(FiltersObject);
+        //console.log(FiltersObject);
     };
 
     //Coloca os valores padrões no objeto de Filters.
@@ -126,11 +128,13 @@ const FiltersPokemon = ({
     useEffect(() => {
         //console.log("Precisa aplicar o filtro!");
 
-        if (FilterAplly === true) {
-            // Filtrar os Products com base nos critérios selecionados
-            let newFilteredArray = DataFilter.filter((pokemon) => {
-                console.log(pokemon);
+        //Dados originais para ser filtrado
+        dataToFilter = OriginalData;
 
+        if (FilterAplly === true) {
+            // Filtrar os Pokemons com base nos critérios selecionados
+            //let newFilteredArray = DataFilter.filter((pokemon) => {
+            let newFilteredArray = dataToFilter.filter((pokemon) => {
                 //Variaveis com valor padrão para os filtro
                 //Altura
                 let heightUpTo1 = Infinity;
@@ -845,20 +849,16 @@ const FiltersPokemon = ({
                 );
             }
 
-            //if (newFilteredArray.length !== 0) {
             setData(newFilteredArray);
             setNumberFeaturedPokemon(0);
             setRemoveLoading(true);
             setFilterAplly(false);
-            //}
         }
     }, [FilterAplly]);
 
     //Limpar o filtro aplicado pelo usuário
     useEffect(() => {
         if (clearFilterForm === true) {
-            //console.log(OriginalData);
-
             OriginalData.sort((a, b) =>
                 a.id > b.id ? 1 : b.id > a.id ? -1 : 0
             );
@@ -929,6 +929,10 @@ const FiltersPokemon = ({
                                     setRemoveLoading(false);
                                     clearFilter();
                                     setClearFilterForm(true);
+                                    window.scrollTo({
+                                        top: 0,
+                                        behavior: "smooth",
+                                    });
                                 }}
                             >
                                 RESET
@@ -940,7 +944,10 @@ const FiltersPokemon = ({
                                 onClick={(e) => {
                                     e.preventDefault();
                                     setRemoveLoading(false);
-                                    setData(OriginalData);
+                                    window.scrollTo({
+                                        top: 0,
+                                        behavior: "smooth",
+                                    });
                                     setFilterAplly(true);
                                 }}
                             >

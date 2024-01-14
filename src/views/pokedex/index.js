@@ -6,7 +6,6 @@ import SelectorPokemonPerRigion from "../../components/SelectorPokemonPerRegion"
 import SelectorPokemonPerGeneration from "../../components/SelectorPokemonPerGeneration";
 import FeaturedPokemon from "../../components/FeaturedPokemon";
 import SearchPokemon from "../../components/Search";
-import SearchName from "../../components/SearchName";
 import FiltersPokemon from "../../components/FiltersPokemon";
 import Headder from "../../components/Headder";
 import Loading from "../../components/Loading";
@@ -233,7 +232,6 @@ function Pokedex() {
             />
 
             <FiltersPokemon
-                DataFilter={Data}
                 OriginalData={OriginalData}
                 setData={setData}
                 setRemoveLoading={setRemoveLoading}
