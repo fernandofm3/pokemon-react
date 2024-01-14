@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import api from "../../services/api";
-import imgSmallHeight from "../../assets/small-height.png";
-import imgMediumHeight from "../../assets/medium-height.png";
-import imgTallHeight from "../../assets/tall-height.png";
-import imgWeight from "../../assets/weight.png";
+import FilterSortBy from "./FilterSortBy";
+import FilterTypes from "./FilterTypes";
+import FilterStats from "./FilterStats";
+import FilterHeight from "./FilterHeight";
+import FilterWeight from "./FilterWeight";
 import * as S from "./styles";
 
 const FiltersPokemon = ({
@@ -13,46 +13,24 @@ const FiltersPokemon = ({
     setRemoveLoading,
     setNumberFeaturedPokemon,
 }) => {
-    useEffect(() => {
-        //Buscando a lista com os nomes do TIPOS de Pokemons
-        api.get(`/type`).then((response) => {
-            setListNameType(response.data.results);
-        });
-    }, []);
-
-    //Lista de tipos
-    const [ListNameType, setListNameType] = useState([]);
-
+    //Aciona a filtragem no array de pokemons
     const [FilterAplly, setFilterAplly] = useState(false);
-    const [ClearFilter, setClearFilter] = useState(false);
 
-    //Referente as categorias
-    const [sortByCategory, setSortByCategory] = useState("");
-
-    //Referente a altura
-    //const [sortByHeight, setSortByHeight] = useState("");
-    const [chekedSmallHeight, setChekedSmallHeight] = useState(false);
-    const [chekedMediumHeight, setChekedMediumHeight] = useState(false);
-    const [chekedTallHeight, setChekedTallHeight] = useState(false);
-    const [chekedAllHeight, setChekedAllHeight] = useState(true);
-
-    //Referente ao peso
-    //const [sortByWeight, setSortByWeight] = useState("");
-    const [chekedLightweight, setChekedLightweight] = useState(false);
-    const [chekedMediumWeight, setChekedMediumWeight] = useState(false);
-    const [chekedHeavyWeight, setChekedHeavyWeight] = useState(false);
-    const [chekedAllWeight, setChekedAllWeight] = useState(true);
-
-    //Referente aos tipos dos pokemons
-    const [sortByTypes, setSortByTypes] = useState("");
+    //Aciona a limpeza dos filtros no formulário
+    const [clearFilterForm, setClearFilterForm] = useState(false);
 
     //Objeto de filtros com valores padrão
     const [FiltersObject, setFiltersObject] = useState({
         sortByCategory: "",
         sortByHeight: "",
         sortByWeight: "",
-        sortByStats: "",
         sortByTypes: "",
+        sortByHpStats: "",
+        sortByAttackStats: "",
+        sortByDefenseStats: "",
+        sortBySpAtkStats: "",
+        sortBySpDefStats: "",
+        sortBySpeedStats: "",
     });
 
     const [ShowBtnAplly, setShowBtnAplly] = useState(
@@ -151,6 +129,8 @@ const FiltersPokemon = ({
         if (FilterAplly === true) {
             // Filtrar os Products com base nos critérios selecionados
             let newFilteredArray = DataFilter.filter((pokemon) => {
+                console.log(pokemon);
+
                 //Variaveis com valor padrão para os filtro
                 //Altura
                 let heightUpTo1 = Infinity;
@@ -166,6 +146,80 @@ const FiltersPokemon = ({
 
                 //Tipos
                 let type = "";
+
+                //Stats
+                //HP
+                let hpVeryLowStats = Infinity;
+                let hpLowStats = 0;
+                let hpLowStatsMax = Infinity;
+                let hpMediumStats = 0;
+                let hpMediumStatsMax = Infinity;
+                let hpHighStats = 0;
+                let hpHighStatsMax = Infinity;
+                let hpVeryHighStats = 0;
+                let hpVeryHighStatsMax = Infinity;
+                let hpSuperStats = 0;
+                let hpSuperStatsMax = Infinity;
+                //Attack
+                let attackVeryLowStats = Infinity;
+                let attackLowStats = 0;
+                let attackLowStatsMax = Infinity;
+                let attackMediumStats = 0;
+                let attackMediumStatsMax = Infinity;
+                let attackHighStats = 0;
+                let attackHighStatsMax = Infinity;
+                let attackVeryHighStats = 0;
+                let attackVeryHighStatsMax = Infinity;
+                let attackSuperStats = 0;
+                let attackSuperStatsMax = Infinity;
+                //Defense
+                let defenseVeryLowStats = Infinity;
+                let defenseLowStats = 0;
+                let defenseLowStatsMax = Infinity;
+                let defenseMediumStats = 0;
+                let defenseMediumStatsMax = Infinity;
+                let defenseHighStats = 0;
+                let defenseHighStatsMax = Infinity;
+                let defenseVeryHighStats = 0;
+                let defenseVeryHighStatsMax = Infinity;
+                let defenseSuperStats = 0;
+                let defenseSuperStatsMax = Infinity;
+                //Sp.Atk
+                let spAtkVeryLowStats = Infinity;
+                let spAtkLowStats = 0;
+                let spAtkLowStatsMax = Infinity;
+                let spAtkMediumStats = 0;
+                let spAtkMediumStatsMax = Infinity;
+                let spAtkHighStats = 0;
+                let spAtkHighStatsMax = Infinity;
+                let spAtkVeryHighStats = 0;
+                let spAtkVeryHighStatsMax = Infinity;
+                let spAtkSuperStats = 0;
+                let spAtkSuperStatsMax = Infinity;
+                //Sp.Def
+                let spDefVeryLowStats = Infinity;
+                let spDefLowStats = 0;
+                let spDefLowStatsMax = Infinity;
+                let spDefMediumStats = 0;
+                let spDefMediumStatsMax = Infinity;
+                let spDefHighStats = 0;
+                let spDefHighStatsMax = Infinity;
+                let spDefVeryHighStats = 0;
+                let spDefVeryHighStatsMax = Infinity;
+                let spDefSuperStats = 0;
+                let spDefSuperStatsMax = Infinity;
+                //Speed
+                let speedVeryLowStats = Infinity;
+                let speedLowStats = 0;
+                let speedLowStatsMax = Infinity;
+                let speedMediumStats = 0;
+                let speedMediumStatsMax = Infinity;
+                let speedHighStats = 0;
+                let speedHighStatsMax = Infinity;
+                let speedVeryHighStats = 0;
+                let speedVeryHighStatsMax = Infinity;
+                let speedSuperStats = 0;
+                let speedSuperStatsMax = Infinity;
 
                 //Verifica se o filtro foi ativado
                 //Filtro referente a altura do pokemon
@@ -214,6 +268,253 @@ const FiltersPokemon = ({
                     });
                 }
 
+                //Filtro referente a estatistica HP do pokemon
+                if (FiltersObject.sortByHpStats !== "") {
+                    if (
+                        FiltersObject.sortByHpStats === "sortByHpVeryLowStats"
+                    ) {
+                        hpVeryLowStats = 30;
+                    }
+                    if (FiltersObject.sortByHpStats === "sortByHpLowStats") {
+                        hpLowStats = 30;
+                        hpLowStatsMax = 60;
+                    }
+                    if (FiltersObject.sortByHpStats === "sortByHpMediumStats") {
+                        hpMediumStats = 60;
+                        hpMediumStatsMax = 90;
+                    }
+                    if (FiltersObject.sortByHpStats === "sortByHpHighStats") {
+                        hpHighStats = 90;
+                        hpHighStatsMax = 120;
+                    }
+                    if (
+                        FiltersObject.sortByHpStats === "sortByHpVeryHighStats"
+                    ) {
+                        hpVeryHighStats = 120;
+                        hpVeryHighStatsMax = 150;
+                    }
+                    if (FiltersObject.sortByHpStats === "sortByHpSuperStats") {
+                        hpSuperStats = 150;
+                    }
+                }
+
+                //Filtro referente a estatistica Attack do pokemon
+                if (FiltersObject.sortByAttackStats !== "") {
+                    if (
+                        FiltersObject.sortByAttackStats ===
+                        "sortByAttackVeryLowStats"
+                    ) {
+                        attackVeryLowStats = 30;
+                    }
+                    if (
+                        FiltersObject.sortByAttackStats ===
+                        "sortByAttackLowStats"
+                    ) {
+                        attackLowStats = 30;
+                        attackLowStatsMax = 60;
+                    }
+                    if (
+                        FiltersObject.sortByAttackStats ===
+                        "sortByAttackMediumStats"
+                    ) {
+                        attackMediumStats = 60;
+                        attackMediumStatsMax = 90;
+                    }
+                    if (
+                        FiltersObject.sortByAttackStats ===
+                        "sortByAttackHighStats"
+                    ) {
+                        attackHighStats = 90;
+                        attackHighStatsMax = 120;
+                    }
+                    if (
+                        FiltersObject.sortByAttackStats ===
+                        "sortByAttackVeryHighStats"
+                    ) {
+                        attackVeryHighStats = 120;
+                        attackVeryHighStatsMax = 150;
+                    }
+                    if (
+                        FiltersObject.sortByAttackStats ===
+                        "sortByAttackSuperStats"
+                    ) {
+                        attackSuperStats = 150;
+                    }
+                }
+
+                //Filtro referente a estatistica Defense do pokemon
+                if (FiltersObject.sortByDefenseStats !== "") {
+                    if (
+                        FiltersObject.sortByDefenseStats ===
+                        "sortByDefenseVeryLowStats"
+                    ) {
+                        defenseVeryLowStats = 30;
+                    }
+                    if (
+                        FiltersObject.sortByDefenseStats ===
+                        "sortByDefenseLowStats"
+                    ) {
+                        defenseLowStats = 30;
+                        defenseLowStatsMax = 60;
+                    }
+                    if (
+                        FiltersObject.sortByDefenseStats ===
+                        "sortByDefenseMediumStats"
+                    ) {
+                        defenseMediumStats = 60;
+                        defenseMediumStatsMax = 90;
+                    }
+                    if (
+                        FiltersObject.sortByDefenseStats ===
+                        "sortByDefenseHighStats"
+                    ) {
+                        defenseHighStats = 90;
+                        defenseHighStatsMax = 120;
+                    }
+                    if (
+                        FiltersObject.sortByDefenseStats ===
+                        "sortByDefenseVeryHighStats"
+                    ) {
+                        defenseVeryHighStats = 120;
+                        defenseVeryHighStatsMax = 150;
+                    }
+                    if (
+                        FiltersObject.sortByDefenseStats ===
+                        "sortByDefenseSuperStats"
+                    ) {
+                        defenseSuperStats = 150;
+                    }
+                }
+
+                //Filtro referente a estatistica Sp.Atk do pokemon
+                if (FiltersObject.sortBySpAtkStats !== "") {
+                    if (
+                        FiltersObject.sortBySpAtkStats ===
+                        "sortBySpAtkVeryLowStats"
+                    ) {
+                        spAtkVeryLowStats = 30;
+                    }
+                    if (
+                        FiltersObject.sortBySpAtkStats === "sortBySpAtkLowStats"
+                    ) {
+                        spAtkLowStats = 30;
+                        spAtkLowStatsMax = 60;
+                    }
+                    if (
+                        FiltersObject.sortBySpAtkStats ===
+                        "sortBySpAtkMediumStats"
+                    ) {
+                        spAtkMediumStats = 60;
+                        spAtkMediumStatsMax = 90;
+                    }
+                    if (
+                        FiltersObject.sortBySpAtkStats ===
+                        "sortBySpAtkHighStats"
+                    ) {
+                        spAtkHighStats = 90;
+                        spAtkHighStatsMax = 120;
+                    }
+                    if (
+                        FiltersObject.sortBySpAtkStats ===
+                        "sortBySpAtkVeryHighStats"
+                    ) {
+                        spAtkVeryHighStats = 120;
+                        spAtkVeryHighStatsMax = 150;
+                    }
+                    if (
+                        FiltersObject.sortBySpAtkStats ===
+                        "sortBySpAtkSuperStats"
+                    ) {
+                        spAtkSuperStats = 150;
+                    }
+                }
+
+                //Filtro referente a estatistica Sp.Def do pokemon
+                if (FiltersObject.sortBySpDefStats !== "") {
+                    if (
+                        FiltersObject.sortBySpDefStats ===
+                        "sortBySpDefVeryLowStats"
+                    ) {
+                        spDefVeryLowStats = 30;
+                    }
+                    if (
+                        FiltersObject.sortBySpDefStats === "sortBySpDefLowStats"
+                    ) {
+                        spDefLowStats = 30;
+                        spDefLowStatsMax = 60;
+                    }
+                    if (
+                        FiltersObject.sortBySpDefStats ===
+                        "sortBySpDefMediumStats"
+                    ) {
+                        spDefMediumStats = 60;
+                        spDefMediumStatsMax = 90;
+                    }
+                    if (
+                        FiltersObject.sortBySpDefStats ===
+                        "sortBySpDefHighStats"
+                    ) {
+                        spDefHighStats = 90;
+                        spDefHighStatsMax = 120;
+                    }
+                    if (
+                        FiltersObject.sortBySpDefStats ===
+                        "sortBySpDefVeryHighStats"
+                    ) {
+                        spDefVeryHighStats = 120;
+                        spDefVeryHighStatsMax = 150;
+                    }
+                    if (
+                        FiltersObject.sortBySpDefStats ===
+                        "sortBySpDefSuperStats"
+                    ) {
+                        spDefSuperStats = 150;
+                    }
+                }
+
+                //Filtro referente a estatistica Speed do pokemon
+                if (FiltersObject.sortBySpeedStats !== "") {
+                    if (
+                        FiltersObject.sortBySpeedStats ===
+                        "sortBySpeedVeryLowStats"
+                    ) {
+                        speedVeryLowStats = 30;
+                    }
+                    if (
+                        FiltersObject.sortBySpeedStats === "sortBySpeedLowStats"
+                    ) {
+                        speedLowStats = 30;
+                        speedLowStatsMax = 60;
+                    }
+                    if (
+                        FiltersObject.sortBySpeedStats ===
+                        "sortBySpeedMediumStats"
+                    ) {
+                        speedMediumStats = 60;
+                        speedMediumStatsMax = 90;
+                    }
+                    if (
+                        FiltersObject.sortBySpeedStats ===
+                        "sortBySpeedHighStats"
+                    ) {
+                        speedHighStats = 90;
+                        speedHighStatsMax = 120;
+                    }
+                    if (
+                        FiltersObject.sortBySpeedStats ===
+                        "sortBySpeedVeryHighStats"
+                    ) {
+                        speedVeryHighStats = 120;
+                        speedVeryHighStatsMax = 150;
+                    }
+                    if (
+                        FiltersObject.sortBySpeedStats ===
+                        "sortBySpeedSuperStats"
+                    ) {
+                        speedSuperStats = 150;
+                    }
+                }
+
                 return (
                     //Filtra a altura do pokemon
                     pokemon.height / 10 <= heightUpTo1 &&
@@ -226,7 +527,79 @@ const FiltersPokemon = ({
                     pokemon.weight / 10 <= weightUpTo230 &&
                     pokemon.weight / 10 > weightGreaterThan230 &&
                     //Filtra o tipo do pokemon
-                    type === FiltersObject.sortByTypes
+                    type === FiltersObject.sortByTypes &&
+                    //Filtra por HP
+                    pokemon.stats[0].base_stat < hpVeryLowStats &&
+                    pokemon.stats[0].base_stat >= hpLowStats &&
+                    pokemon.stats[0].base_stat < hpLowStatsMax &&
+                    pokemon.stats[0].base_stat >= hpMediumStats &&
+                    pokemon.stats[0].base_stat < hpMediumStatsMax &&
+                    pokemon.stats[0].base_stat >= hpHighStats &&
+                    pokemon.stats[0].base_stat < hpHighStatsMax &&
+                    pokemon.stats[0].base_stat >= hpVeryHighStats &&
+                    pokemon.stats[0].base_stat < hpVeryHighStatsMax &&
+                    pokemon.stats[0].base_stat >= hpSuperStats &&
+                    pokemon.stats[0].base_stat < hpSuperStatsMax &&
+                    //Filtra por Attack
+                    pokemon.stats[1].base_stat < attackVeryLowStats &&
+                    pokemon.stats[1].base_stat >= attackLowStats &&
+                    pokemon.stats[1].base_stat < attackLowStatsMax &&
+                    pokemon.stats[1].base_stat >= attackMediumStats &&
+                    pokemon.stats[1].base_stat < attackMediumStatsMax &&
+                    pokemon.stats[1].base_stat >= attackHighStats &&
+                    pokemon.stats[1].base_stat < attackHighStatsMax &&
+                    pokemon.stats[1].base_stat >= attackVeryHighStats &&
+                    pokemon.stats[1].base_stat < attackVeryHighStatsMax &&
+                    pokemon.stats[1].base_stat >= attackSuperStats &&
+                    pokemon.stats[1].base_stat < attackSuperStatsMax &&
+                    //Filtra por Defense
+                    pokemon.stats[2].base_stat < defenseVeryLowStats &&
+                    pokemon.stats[2].base_stat >= defenseLowStats &&
+                    pokemon.stats[2].base_stat < defenseLowStatsMax &&
+                    pokemon.stats[2].base_stat >= defenseMediumStats &&
+                    pokemon.stats[2].base_stat < defenseMediumStatsMax &&
+                    pokemon.stats[2].base_stat >= defenseHighStats &&
+                    pokemon.stats[2].base_stat < defenseHighStatsMax &&
+                    pokemon.stats[2].base_stat >= defenseVeryHighStats &&
+                    pokemon.stats[2].base_stat < defenseVeryHighStatsMax &&
+                    pokemon.stats[2].base_stat >= defenseSuperStats &&
+                    pokemon.stats[2].base_stat < defenseSuperStatsMax &&
+                    //Filtra por Sp.Atk
+                    pokemon.stats[3].base_stat < spAtkVeryLowStats &&
+                    pokemon.stats[3].base_stat >= spAtkLowStats &&
+                    pokemon.stats[3].base_stat < spAtkLowStatsMax &&
+                    pokemon.stats[3].base_stat >= spAtkMediumStats &&
+                    pokemon.stats[3].base_stat < spAtkMediumStatsMax &&
+                    pokemon.stats[3].base_stat >= spAtkHighStats &&
+                    pokemon.stats[3].base_stat < spAtkHighStatsMax &&
+                    pokemon.stats[3].base_stat >= spAtkVeryHighStats &&
+                    pokemon.stats[3].base_stat < spAtkVeryHighStatsMax &&
+                    pokemon.stats[3].base_stat >= spAtkSuperStats &&
+                    pokemon.stats[3].base_stat < spAtkSuperStatsMax &&
+                    //Filtra por Sp.Def
+                    pokemon.stats[4].base_stat < spDefVeryLowStats &&
+                    pokemon.stats[4].base_stat >= spDefLowStats &&
+                    pokemon.stats[4].base_stat < spDefLowStatsMax &&
+                    pokemon.stats[4].base_stat >= spDefMediumStats &&
+                    pokemon.stats[4].base_stat < spDefMediumStatsMax &&
+                    pokemon.stats[4].base_stat >= spDefHighStats &&
+                    pokemon.stats[4].base_stat < spDefHighStatsMax &&
+                    pokemon.stats[4].base_stat >= spDefVeryHighStats &&
+                    pokemon.stats[4].base_stat < spDefVeryHighStatsMax &&
+                    pokemon.stats[4].base_stat >= spDefSuperStats &&
+                    pokemon.stats[4].base_stat < spDefSuperStatsMax &&
+                    //Filtra por Sp.Def
+                    pokemon.stats[5].base_stat < speedVeryLowStats &&
+                    pokemon.stats[5].base_stat >= speedLowStats &&
+                    pokemon.stats[5].base_stat < speedLowStatsMax &&
+                    pokemon.stats[5].base_stat >= speedMediumStats &&
+                    pokemon.stats[5].base_stat < speedMediumStatsMax &&
+                    pokemon.stats[5].base_stat >= speedHighStats &&
+                    pokemon.stats[5].base_stat < speedHighStatsMax &&
+                    pokemon.stats[5].base_stat >= speedVeryHighStats &&
+                    pokemon.stats[5].base_stat < speedVeryHighStatsMax &&
+                    pokemon.stats[5].base_stat >= speedSuperStats &&
+                    pokemon.stats[5].base_stat < speedSuperStatsMax
                 );
             });
 
@@ -483,7 +856,7 @@ const FiltersPokemon = ({
 
     //Limpar o filtro aplicado pelo usuário
     useEffect(() => {
-        if (ClearFilter === true) {
+        if (clearFilterForm === true) {
             //console.log(OriginalData);
 
             OriginalData.sort((a, b) =>
@@ -492,9 +865,9 @@ const FiltersPokemon = ({
 
             setData(OriginalData);
             setRemoveLoading(true);
-            setClearFilter(false);
+            setClearFilterForm(false);
         }
-    }, [ClearFilter]);
+    }, [clearFilterForm]);
 
     return (
         <S.FiltersPokemon>
@@ -517,425 +890,49 @@ const FiltersPokemon = ({
                 </div>
                 <div className="offcanvas-body">
                     <form>
-                        <div className="mb-4 div-filters">
-                            <div className="div-sort-by-category mb-3">
-                                <h5 className="filters-title mb-3">
-                                    <i className="bi bi-list-columns me-1"></i>{" "}
-                                    Sort by
-                                </h5>
+                        <FilterSortBy
+                            filterChangeInput={filterChangeInput}
+                            clearFilterForm={clearFilterForm}
+                            setClearFilterForm={setClearFilterForm}
+                        />
 
-                                <div className="mb-3">
-                                    <select
-                                        className="form-select form-select-sm"
-                                        aria-label=".form-select-lg example"
-                                        name="sortByCategory"
-                                        value={sortByCategory}
-                                        onChange={(e) => {
-                                            setSortByCategory(
-                                                e.currentTarget.value
-                                            );
-                                            filterChangeInput(e);
-                                        }}
-                                    >
-                                        <option value="">Default</option>
-                                        <option value="asc">A-Z</option>
-                                        <option value="desc">Z-A</option>
+                        <FilterTypes
+                            filterChangeInput={filterChangeInput}
+                            clearFilterForm={clearFilterForm}
+                            setClearFilterForm={setClearFilterForm}
+                        />
 
-                                        <option value="smallestNumberFirst">
-                                            Smallest number first
-                                        </option>
-                                        <option value="highestNumberFirst">
-                                            Highest number first
-                                        </option>
+                        <FilterStats
+                            filterChangeCheckbox={filterChangeCheckbox}
+                            clearFilterForm={clearFilterForm}
+                            setClearFilterForm={setClearFilterForm}
+                        />
 
-                                        <option value="shorterHeightToGreaterHeight">
-                                            Height - Shorter to Greater
-                                        </option>
-                                        <option value="greaterHeightToShorterHeight">
-                                            Height - Greater to Shorter
-                                        </option>
+                        <FilterHeight
+                            filterChangeCheckbox={filterChangeCheckbox}
+                            clearFilterForm={clearFilterForm}
+                            setClearFilterForm={setClearFilterForm}
+                        />
 
-                                        <option value="lightWeightToHeavyWeight">
-                                            Weight - Light to Heavy
-                                        </option>
-                                        <option value="heavyWeightToLightWeight">
-                                            Weight - Heavy to Light
-                                        </option>
+                        <FilterWeight
+                            filterChangeCheckbox={filterChangeCheckbox}
+                            clearFilterForm={clearFilterForm}
+                            setClearFilterForm={setClearFilterForm}
+                        />
 
-                                        <option value="hpWorstToBest">
-                                            HP - Worst to Best
-                                        </option>
-                                        <option value="hpBestToWorst">
-                                            HP - Best to Worst
-                                        </option>
-
-                                        <option value="attackWorstToBest">
-                                            Attack - Worst to Best
-                                        </option>
-                                        <option value="attackBestToWorst">
-                                            Attack - Best to Worst
-                                        </option>
-
-                                        <option value="defenseWorstToBest">
-                                            Defense - Worst to Best
-                                        </option>
-                                        <option value="defenseBestToWorst">
-                                            Defense - Best to Worst
-                                        </option>
-
-                                        <option value="spAtkWorstToBest">
-                                            Sp. Atk - Worst to Best
-                                        </option>
-                                        <option value="spAtkBestToWorst">
-                                            Sp. Atk - Best to Worst
-                                        </option>
-
-                                        <option value="spDefWorstToBest">
-                                            Sp. Def - Worst to Best
-                                        </option>
-                                        <option value="spDefBestToWorst">
-                                            Sp. Def - Best to Worst
-                                        </option>
-
-                                        <option value="speedWorstToBest">
-                                            Speed - Worst to Best
-                                        </option>
-                                        <option value="speedBestToWorst">
-                                            Speed - Best to Worst
-                                        </option>
-
-                                        <option value="weakerToStronger">
-                                            Total Stats - Worst to Best
-                                        </option>
-                                        <option value="strongerToWeaker">
-                                            Total Stats - Best to Worst
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="div-types mb-3">
-                                <h5 className="filters-title mb-3">
-                                    <i className="bi bi-lightning-fill me-1"></i>{" "}
-                                    Types
-                                </h5>
-
-                                <select
-                                    className="form-select form-select-sm"
-                                    aria-label=".form-select-lg example"
-                                    name="sortByTypes"
-                                    value={sortByTypes}
-                                    onChange={(e) => {
-                                        setSortByTypes(e.currentTarget.value);
-                                        filterChangeInput(e);
-                                    }}
-                                >
-                                    <option value="">All</option>
-
-                                    {ListNameType.map((type, index) => {
-                                        return (
-                                            index < 18 && (
-                                                <option
-                                                    value={type.name}
-                                                    key={index}
-                                                >
-                                                    {type.name}
-                                                </option>
-                                            )
-                                        );
-                                    })}
-                                </select>
-                            </div>
-
-                            <div className="div-stats mb-3">
-                                <h5 className="filters-title mb-3">
-                                    <i className="bi bi-bar-chart-steps me-1"></i>{" "}
-                                    Stats
-                                </h5>
-                            </div>
-
-                            <div className="div-height mb-3">
-                                <h5 className="mb-3 filters-title">
-                                    <i className="bi bi-rulers me-2"></i>
-                                    Height
-                                </h5>
-
-                                <div>
-                                    <div className="form-check div-small-height me-3">
-                                        <input
-                                            className="form-check-input me-2"
-                                            type="radio"
-                                            name="sortByHeight"
-                                            value="heightUpTo1"
-                                            id="smallHeight"
-                                            checked={chekedSmallHeight}
-                                            onChange={(e) => {
-                                                setChekedMediumHeight(false);
-                                                setChekedTallHeight(false);
-                                                setChekedAllHeight(false);
-
-                                                setChekedSmallHeight(
-                                                    e.currentTarget.checked
-                                                );
-                                                filterChangeCheckbox(e);
-                                            }}
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="smallHeight"
-                                        >
-                                            <img
-                                                src={imgSmallHeight}
-                                                alt="Small Pokemon"
-                                            />
-                                        </label>
-                                    </div>
-
-                                    <div className="form-check div-medium-height me-3">
-                                        <input
-                                            className="form-check-input me-2"
-                                            type="radio"
-                                            name="sortByHeight"
-                                            value="heightGreaterThan1UpTo2"
-                                            id="mediumHeight"
-                                            checked={chekedMediumHeight}
-                                            onChange={(e) => {
-                                                setChekedSmallHeight(false);
-                                                setChekedTallHeight(false);
-                                                setChekedAllHeight(false);
-
-                                                setChekedMediumHeight(
-                                                    e.currentTarget.checked
-                                                );
-                                                filterChangeCheckbox(e);
-                                            }}
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="mediumHeight"
-                                        >
-                                            <img
-                                                src={imgMediumHeight}
-                                                alt="Medium Pokemon"
-                                            />
-                                        </label>
-                                    </div>
-
-                                    <div className="form-check div-tall-height me-3 ">
-                                        <input
-                                            className="form-check-input me-2"
-                                            type="radio"
-                                            name="sortByHeight"
-                                            value="heightGreaterThan2"
-                                            id="tallHeight"
-                                            checked={chekedTallHeight}
-                                            onChange={(e) => {
-                                                setChekedSmallHeight(false);
-                                                setChekedMediumHeight(false);
-                                                setChekedAllHeight(false);
-
-                                                setChekedTallHeight(
-                                                    e.currentTarget.checked
-                                                );
-                                                filterChangeCheckbox(e);
-                                            }}
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="tallHeight"
-                                        >
-                                            <img
-                                                src={imgTallHeight}
-                                                alt="Tall Pokemon"
-                                            />
-                                        </label>
-                                    </div>
-
-                                    <div className="form-check div-all-height">
-                                        <input
-                                            className="form-check-input me-2"
-                                            type="radio"
-                                            name="sortByHeight"
-                                            value=""
-                                            id="allHeight"
-                                            checked={chekedAllHeight}
-                                            onChange={(e) => {
-                                                setChekedSmallHeight(false);
-                                                setChekedMediumHeight(false);
-                                                setChekedTallHeight(false);
-
-                                                setChekedAllHeight(
-                                                    e.currentTarget.checked
-                                                );
-                                                filterChangeCheckbox(e);
-                                            }}
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="allHeight"
-                                        >
-                                            All
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="div-weight mb-3">
-                                <h5 className="filters-title mb-3">
-                                    <i className="bi bi-boxes me-1"></i> Weight
-                                </h5>
-
-                                <div>
-                                    <div className="form-check div-lightWeight me-3">
-                                        <input
-                                            className="form-check-input me-2"
-                                            type="radio"
-                                            name="sortByWeight"
-                                            value="weightUpTo45"
-                                            id="lightWeight"
-                                            checked={chekedLightweight}
-                                            onChange={(e) => {
-                                                setChekedMediumWeight(false);
-                                                setChekedHeavyWeight(false);
-                                                setChekedAllWeight(false);
-
-                                                setChekedLightweight(
-                                                    e.currentTarget.checked
-                                                );
-                                                filterChangeCheckbox(e);
-                                            }}
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="lightWeight"
-                                        >
-                                            <img
-                                                src={imgWeight}
-                                                alt="lightWeight Pokemon"
-                                            />
-                                        </label>
-                                    </div>
-
-                                    <div className="form-check div-medium-weight me-3">
-                                        <input
-                                            className="form-check-input me-2"
-                                            type="radio"
-                                            name="sortByWeight"
-                                            value="weightGreaterThan45UpTo230"
-                                            id="mediumWeight"
-                                            checked={chekedMediumWeight}
-                                            onChange={(e) => {
-                                                setChekedLightweight(false);
-                                                setChekedHeavyWeight(false);
-                                                setChekedAllWeight(false);
-
-                                                setChekedMediumWeight(
-                                                    e.currentTarget.checked
-                                                );
-                                                filterChangeCheckbox(e);
-                                            }}
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="mediumWeight"
-                                        >
-                                            <img
-                                                src={imgWeight}
-                                                alt="Medium Weight Pokemon"
-                                            />
-                                        </label>
-                                    </div>
-
-                                    <div className="form-check div-heavy-weight me-3">
-                                        <input
-                                            className="form-check-input me-2"
-                                            type="radio"
-                                            name="sortByWeight"
-                                            value="weightGreaterThan230"
-                                            id="heavyWeight"
-                                            checked={chekedHeavyWeight}
-                                            onChange={(e) => {
-                                                setChekedLightweight(false);
-                                                setChekedMediumWeight(false);
-                                                setChekedAllWeight(false);
-
-                                                setChekedHeavyWeight(
-                                                    e.currentTarget.checked
-                                                );
-                                                filterChangeCheckbox(e);
-                                            }}
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="heavyWeight"
-                                        >
-                                            <img
-                                                src={imgWeight}
-                                                alt="Heavy Weight Pokemon"
-                                            />
-                                        </label>
-                                    </div>
-
-                                    <div className="form-check div-all-weight">
-                                        <input
-                                            className="form-check-input me-2"
-                                            type="radio"
-                                            name="sortByWeight"
-                                            value=""
-                                            id="allWeight"
-                                            checked={chekedAllWeight}
-                                            onChange={(e) => {
-                                                setChekedLightweight(false);
-                                                setChekedMediumWeight(false);
-                                                setChekedHeavyWeight(false);
-
-                                                setChekedAllWeight(
-                                                    e.currentTarget.checked
-                                                );
-                                                filterChangeCheckbox(e);
-                                            }}
-                                        />
-                                        <label
-                                            className="form-check-label"
-                                            htmlFor="allWeight"
-                                        >
-                                            All
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
+                        <div className="div-buttons">
                             <button
-                                className="btn btn-danger me-2"
+                                className="btn btn-primary me-2"
                                 type="reset"
                                 onClick={(e) => {
                                     e.preventDefault();
                                     setRemoveLoading(false);
                                     clearFilter();
-                                    setClearFilter(true);
-
-                                    //referente as classificações
-                                    setSortByCategory("");
-
-                                    //Referente a Altura
-                                    setChekedSmallHeight(false);
-                                    setChekedMediumHeight(false);
-                                    setChekedTallHeight(false);
-                                    setChekedAllHeight(true);
-
-                                    //Referente ao peso
-                                    setChekedLightweight(false);
-                                    setChekedMediumWeight(false);
-                                    setChekedHeavyWeight(false);
-                                    setChekedAllWeight(true);
-
-                                    //Referente ao Tipos
-                                    setSortByTypes("");
+                                    setClearFilterForm(true);
                                 }}
                             >
-                                <i className="bi bi-trash"></i>
+                                RESET
+                                <i className="bi bi-arrow-clockwise ms-2"></i>
                             </button>
 
                             <button
@@ -947,7 +944,8 @@ const FiltersPokemon = ({
                                     setFilterAplly(true);
                                 }}
                             >
-                                <i className="bi bi-check-square"></i>
+                                APPLY
+                                <i className="bi bi-check-lg ms-2"></i>
                             </button>
                         </div>
                     </form>

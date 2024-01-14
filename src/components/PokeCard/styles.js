@@ -12,7 +12,6 @@ export const PokeCard = styled.div`
         border-radius: 7px;
         transition: all 0.3s ease-in-out;
         width: 100%;
-        //max-width: 220px;
         height: 300px;
     }
 

@@ -16,64 +16,20 @@ export const FiltersPokemon = styled.div`
 
     .offcanvas-body {
         color: #333;
-        background-color: #fff;
+        background-color: #ffb97145;
     }
 
-    .div-filters select {
-        background-color: #fff;
-        color: #000;
-        border-radius: 7px;
-        font-weight: bold;
+    .offcanvas-body form {
+        padding-bottom: 55px;
     }
 
-    .div-filters .div-height,
-    .div-filters .div-sort-by-category,
-    .div-filters .div-weight,
-    .div-filters .div-stats,
-    .div-filters .div-types {
-        padding: 10px;
-        background-color: #dee2e6;
-        border-radius: 7px;
+    .offcanvas-body .div-buttons {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #ffecd9;
+        padding: 15px;
+        border-top: 2px solid #eddcca;
     }
-
-    .div-filters .div-height div,
-    .div-filters .div-weight div {
-        display: flex;
-        align-items: center;
-    }
-
-    .div-filters .div-height div label,
-    .div-filters .div-weight div label {
-        cursor: pointer;
-    }
-
-    .div-filters .div-height .div-small-height label img,
-    .div-filters .div-weight .div-lightWeight label img {
-        width: 30px;
-    }
-
-    .div-filters .div-height .div-medium-height label img {
-        width: 30px;
-    }
-
-    .div-filters .div-weight .div-medium-weight label img {
-        width: 45px;
-    }
-
-    .div-filters .div-height .div-tall-height label img,
-    .div-filters .div-weight .div-heavy-weight label img {
-        width: 60px;
-    }
-
-    .div-filters .div-height .div-all-height label,
-    .div-filters .div-weight .div-all-weight label {
-        font-weight: bold;
-    }
-
-    .div-filters .div-types select {
-        text-transform: capitalize;
-    }
-
-    // @media screen and (min-width: 995px) {
-    // }
 `;

@@ -103,7 +103,7 @@ const Headder = (props) => {
                                                 data-bs-target="#modalTypes"
                                             >
                                                 <span>
-                                                    <i className="bi bi-lightning-fill me-1"></i>{" "}
+                                                    <i className="bi bi-fire me-1"></i>{" "}
                                                     Types
                                                 </span>
                                             </button>

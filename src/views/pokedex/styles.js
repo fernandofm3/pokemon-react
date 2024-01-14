@@ -11,8 +11,7 @@ export const Container = styled.div`
 
     .div-pokecard {
         display: grid;
-        column-gap: 20px;
-        row-gap: 90px;
+        grid-gap: 90px 20px;
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
         margin-bottom: 80px;
     }
@@ -25,21 +24,29 @@ export const Container = styled.div`
 
     @media screen and (min-width: 550px) {
         .div-pokecard {
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(3, minmax(160px, 1fr));
         }
     }
 
     @media screen and (min-width: 768px) {
         .div-pokecard {
             column-gap: 32px;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(4, minmax(160px, 1fr));
+        }
+    }
+
+    @media screen and (min-width: 1000px) {
+        .div-pokecard {
+            column-gap: 32px;
+            grid-template-columns: repeat(5, minmax(170px, 1fr));
         }
     }
 
     @media screen and (min-width: 1280px) {
         .div-pokecard {
             column-gap: 51px;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            //grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(5, minmax(200px, 1fr));
         }
     }
 
