@@ -69,45 +69,49 @@ const SelectorPokemonsPerRegion = ({
                                     const splitedNme = region.name.split("-");
 
                                     return (
-                                        <div
-                                            data-bs-dismiss="modal"
-                                            className={
-                                                SelectedCard === index
-                                                    ? "card color-selected-card"
-                                                    : "card"
-                                            }
-                                            key={region.name}
-                                            onClick={() => {
-                                                if (SelectedCard !== index) {
-                                                    setData([]);
-                                                    setGeneration("");
-                                                    setTypes("");
-                                                    setRegion(region.name);
-                                                    handleCardClick(index);
-                                                    setSearchNameApi(
-                                                        "Region - " +
-                                                            region.name
-                                                    );
-                                                    setRemoveLoading(false);
+                                        region.name !== "national" && (
+                                            <div
+                                                data-bs-dismiss="modal"
+                                                className={
+                                                    SelectedCard === index
+                                                        ? "card color-selected-card"
+                                                        : "card"
                                                 }
-                                            }}
-                                        >
-                                            <div className="card-body text-center">
-                                                <img
-                                                    src={imgRegion}
-                                                    alt="Pokemon Region"
-                                                />
+                                                key={region.name}
+                                                onClick={() => {
+                                                    if (
+                                                        SelectedCard !== index
+                                                    ) {
+                                                        setData([]);
+                                                        setGeneration("");
+                                                        setTypes("");
+                                                        setRegion(region.name);
+                                                        handleCardClick(index);
+                                                        setSearchNameApi(
+                                                            "Region - " +
+                                                                region.name
+                                                        );
+                                                        setRemoveLoading(false);
+                                                    }
+                                                }}
+                                            >
+                                                <div className="card-body text-center">
+                                                    <img
+                                                        src={imgRegion}
+                                                        alt="Pokemon Region"
+                                                    />
 
-                                                <h6 className="card-title mt-3">
-                                                    {splitedNme[0] &&
-                                                    splitedNme[1]
-                                                        ? splitedNme[0] +
-                                                          " " +
-                                                          splitedNme[1]
-                                                        : splitedNme[0]}
-                                                </h6>
+                                                    <h6 className="card-title mt-3">
+                                                        {splitedNme[0] &&
+                                                        splitedNme[1]
+                                                            ? splitedNme[0] +
+                                                              " " +
+                                                              splitedNme[1]
+                                                            : splitedNme[0]}
+                                                    </h6>
+                                                </div>
                                             </div>
-                                        </div>
+                                        )
                                     );
                                 })}
                             </div>

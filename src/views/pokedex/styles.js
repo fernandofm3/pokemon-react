@@ -9,6 +9,11 @@ export const Container = styled.div`
         margin-top: 120px;
     }
 
+    .div-error span {
+        font-weight: 600;
+        text-transform: capitalize;
+    }
+
     .div-pokecard {
         display: grid;
         grid-gap: 90px 20px;
@@ -45,7 +50,6 @@ export const Container = styled.div`
     @media screen and (min-width: 1280px) {
         .div-pokecard {
             column-gap: 51px;
-            //grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             grid-template-columns: repeat(5, minmax(200px, 1fr));
         }
     }

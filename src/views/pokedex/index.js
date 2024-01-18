@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+//import { useLocation } from "react-router-dom";
 import api from "../../services/api";
 import PokeCard from "../../components/PokeCard";
 import SelectorPokemonPerRigion from "../../components/SelectorPokemonPerRegion";
 import SelectorPokemonPerGeneration from "../../components/SelectorPokemonPerGeneration";
 import FeaturedPokemon from "../../components/FeaturedPokemon";
-import SearchPokemon from "../../components/Search";
 import FiltersPokemon from "../../components/FiltersPokemon";
 import Headder from "../../components/Headder";
+import PokemonModal from "../../components/PokemonModal";
 import Loading from "../../components/Loading";
 import BackToTop from "../../components/BackTotop";
 import SelectorPokemonType from "../../components/SelectorPokemonType";
@@ -23,27 +23,27 @@ function Pokedex() {
     }
 
     //Ir para o último Pokemon selecionado.
-    function scrollToPokemon(id) {
-        setTimeout(() => {
-            if (document.querySelector("#p" + id)) {
-                let pId = document.querySelector("#p" + id);
+    // function scrollToPokemon(id) {
+    //     setTimeout(() => {
+    //         if (document.querySelector("#p" + id)) {
+    //             let pId = document.querySelector("#p" + id);
 
-                pId.scrollIntoView(
-                    {
-                        behavior: "smooth",
-                    },
-                    500
-                );
-            }
-        }, 500);
-    }
+    //             pId.scrollIntoView(
+    //                 {
+    //                     behavior: "smooth",
+    //                 },
+    //                 500
+    //             );
+    //         }
+    //     }, 500);
+    // }
 
     //Função para pegar o conteúdo que veio via query na URL.
-    function useQuery() {
-        const { search } = useLocation();
+    // function useQuery() {
+    //     const { search } = useLocation();
 
-        return React.useMemo(() => new URLSearchParams(search), [search]);
-    }
+    //     return React.useMemo(() => new URLSearchParams(search), [search]);
+    // }
 
     //Gerando número aliatório
     function randomNumber(limitNumber) {
@@ -60,7 +60,7 @@ function Pokedex() {
         return intNumber;
     }
 
-    const query = useQuery();
+    //const query = useQuery();
     const [Data, setData] = useState([]);
     const [OriginalData, setOriginalData] = useState([]);
     const [Types, setTypes] = useState("");
@@ -73,7 +73,7 @@ function Pokedex() {
     );
 
     //Ir para o último Pokemon selecionado.
-    scrollToPokemon(query.get("id"));
+    //scrollToPokemon(query.get("id"));
 
     //Conexão com API - Recuperando os Dados
     useEffect(() => {
@@ -135,6 +135,8 @@ function Pokedex() {
                         })
                     );
 
+                    console.log(newPokeList.length);
+
                     //Função para order os pokemons pelo ID de forma crescente
                     newPokeList.sort((a, b) =>
                         a.id > b.id ? 1 : b.id > a.id ? -1 : 0
@@ -179,6 +181,7 @@ function Pokedex() {
                     setNumberFeaturedPokemon(
                         randomNumber([newPokeList.length])
                     );
+
                     setOriginalData(newPokeList);
                     setData(newPokeList);
                     setRemoveLoading(true);
@@ -196,8 +199,7 @@ function Pokedex() {
 
             <Headder SearchNameApi={SearchNameApi} />
 
-            {/*Modais - Search / Generation / Region / Types / Filters */}
-            <SearchPokemon />
+            {/*Modais - Generation / Region / Types / Filters */}
             <SelectorPokemonPerGeneration
                 Generation={Generation}
                 setGeneration={setGeneration}
@@ -250,9 +252,11 @@ function Pokedex() {
                         role="alert"
                     >
                         <i className="bi bi-info-circle-fill me-2"></i>No
-                        Pokémon found! Please change the filters.
+                        Pokémon found in <span>{SearchNameApi}!</span> Please
+                        change the filters.
                     </div>
                 )}
+
                 <div className="div-pokecard">
                     {Data.map((p) => {
                         return (
@@ -270,6 +274,13 @@ function Pokedex() {
 
                 <BackToTop />
             </S.Container>
+
+            {Data.length !== 0 &&
+                Data.map((p) => {
+                    return (
+                        <PokemonModal infoPokemon={p} key={"modal" + p.id} />
+                    );
+                })}
         </div>
     );
 }

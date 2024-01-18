@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import FilterSortBySearch from "./FelterSearch";
 import FilterSortBy from "./FilterSortBy";
 import FilterTypes from "./FilterTypes";
 import FilterStats from "./FilterStats";
@@ -23,6 +24,7 @@ const FiltersPokemon = ({
 
     //Objeto de filtros com valores padrão
     const [FiltersObject, setFiltersObject] = useState({
+        sortBySearch: "",
         sortByCategory: "",
         sortByHeight: "",
         sortByWeight: "",
@@ -133,20 +135,10 @@ const FiltersPokemon = ({
 
         if (FilterAplly === true) {
             // Filtrar os Pokemons com base nos critérios selecionados
-            //let newFilteredArray = DataFilter.filter((pokemon) => {
             let newFilteredArray = dataToFilter.filter((pokemon) => {
                 //Variaveis com valor padrão para os filtro
-                //Altura
-                let heightUpTo1 = Infinity;
-                let heightUpTo2 = Infinity;
-                let heightGreaterThan1 = 0;
-                let heightGreaterThan2 = 0;
-
-                //Peso
-                let weightUpTo45 = Infinity;
-                let weightUpTo230 = Infinity;
-                let weightGreaterThan45 = 0;
-                let weightGreaterThan230 = 0;
+                //Pesquisa
+                let search = String(pokemon.id);
 
                 //Tipos
                 let type = "";
@@ -225,42 +217,22 @@ const FiltersPokemon = ({
                 let speedSuperStats = 0;
                 let speedSuperStatsMax = Infinity;
 
+                //Altura
+                let heightUpTo1 = Infinity;
+                let heightUpTo2 = Infinity;
+                let heightGreaterThan1 = 0;
+                let heightGreaterThan2 = 0;
+
+                //Peso
+                let weightUpTo45 = Infinity;
+                let weightUpTo230 = Infinity;
+                let weightGreaterThan45 = 0;
+                let weightGreaterThan230 = 0;
+
                 //Verifica se o filtro foi ativado
-                //Filtro referente a altura do pokemon
-                if (FiltersObject.sortByHeight !== "") {
-                    if (FiltersObject.sortByHeight === "heightUpTo1") {
-                        heightUpTo1 = 1;
-                    }
-
-                    if (
-                        FiltersObject.sortByHeight === "heightGreaterThan1UpTo2"
-                    ) {
-                        heightGreaterThan1 = 1;
-                        heightUpTo2 = 2;
-                    }
-
-                    if (FiltersObject.sortByHeight === "heightGreaterThan2") {
-                        heightGreaterThan2 = 2;
-                    }
-                }
-
-                //Filtro referente ao peso do pokemon
-                if (FiltersObject.sortByWeight !== "") {
-                    if (FiltersObject.sortByWeight === "weightUpTo45") {
-                        weightUpTo45 = 45;
-                    }
-
-                    if (
-                        FiltersObject.sortByWeight ===
-                        "weightGreaterThan45UpTo230"
-                    ) {
-                        weightGreaterThan45 = 45;
-                        weightUpTo230 = 230;
-                    }
-
-                    if (FiltersObject.sortByWeight === "weightGreaterThan230") {
-                        weightGreaterThan230 = 230;
-                    }
+                //Filtro referente a pesquisa por nome ou número do pokemon
+                if (FiltersObject.sortBySearch !== "") {
+                    search = FiltersObject.sortBySearch;
                 }
 
                 //Filtro referente ao tipo do pokemon
@@ -519,17 +491,47 @@ const FiltersPokemon = ({
                     }
                 }
 
+                //Filtro referente a altura do pokemon
+                if (FiltersObject.sortByHeight !== "") {
+                    if (FiltersObject.sortByHeight === "heightUpTo1") {
+                        heightUpTo1 = 1;
+                    }
+
+                    if (
+                        FiltersObject.sortByHeight === "heightGreaterThan1UpTo2"
+                    ) {
+                        heightGreaterThan1 = 1;
+                        heightUpTo2 = 2;
+                    }
+
+                    if (FiltersObject.sortByHeight === "heightGreaterThan2") {
+                        heightGreaterThan2 = 2;
+                    }
+                }
+
+                //Filtro referente ao peso do pokemon
+                if (FiltersObject.sortByWeight !== "") {
+                    if (FiltersObject.sortByWeight === "weightUpTo45") {
+                        weightUpTo45 = 45;
+                    }
+
+                    if (
+                        FiltersObject.sortByWeight ===
+                        "weightGreaterThan45UpTo230"
+                    ) {
+                        weightGreaterThan45 = 45;
+                        weightUpTo230 = 230;
+                    }
+
+                    if (FiltersObject.sortByWeight === "weightGreaterThan230") {
+                        weightGreaterThan230 = 230;
+                    }
+                }
+
                 return (
-                    //Filtra a altura do pokemon
-                    pokemon.height / 10 <= heightUpTo1 &&
-                    pokemon.height / 10 > heightGreaterThan1 &&
-                    pokemon.height / 10 <= heightUpTo2 &&
-                    pokemon.height / 10 > heightGreaterThan2 &&
-                    //Filtra o peso do pokemon
-                    pokemon.weight / 10 <= weightUpTo45 &&
-                    pokemon.weight / 10 > weightGreaterThan45 &&
-                    pokemon.weight / 10 <= weightUpTo230 &&
-                    pokemon.weight / 10 > weightGreaterThan230 &&
+                    //Filtra o pokemon por nome ou número
+                    (search === String(pokemon.id) ||
+                        search === pokemon.name) &&
                     //Filtra o tipo do pokemon
                     type === FiltersObject.sortByTypes &&
                     //Filtra por HP
@@ -603,7 +605,17 @@ const FiltersPokemon = ({
                     pokemon.stats[5].base_stat >= speedVeryHighStats &&
                     pokemon.stats[5].base_stat < speedVeryHighStatsMax &&
                     pokemon.stats[5].base_stat >= speedSuperStats &&
-                    pokemon.stats[5].base_stat < speedSuperStatsMax
+                    pokemon.stats[5].base_stat < speedSuperStatsMax &&
+                    //Filtra a altura do pokemon
+                    pokemon.height / 10 <= heightUpTo1 &&
+                    pokemon.height / 10 > heightGreaterThan1 &&
+                    pokemon.height / 10 <= heightUpTo2 &&
+                    pokemon.height / 10 > heightGreaterThan2 &&
+                    //Filtra o peso do pokemon
+                    pokemon.weight / 10 <= weightUpTo45 &&
+                    pokemon.weight / 10 > weightGreaterThan45 &&
+                    pokemon.weight / 10 <= weightUpTo230 &&
+                    pokemon.weight / 10 > weightGreaterThan230
                 );
             });
 
@@ -890,6 +902,12 @@ const FiltersPokemon = ({
                 </div>
                 <div className="offcanvas-body">
                     <form>
+                        <FilterSortBySearch
+                            filterChangeInput={filterChangeInput}
+                            clearFilterForm={clearFilterForm}
+                            setClearFilterForm={setClearFilterForm}
+                        />
+
                         <FilterSortBy
                             filterChangeInput={filterChangeInput}
                             clearFilterForm={clearFilterForm}

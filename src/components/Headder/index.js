@@ -108,21 +108,23 @@ const Headder = (props) => {
                                                 </span>
                                             </button>
                                         </li>
+                                        <li>
+                                            <Link
+                                                to={"/all-pokemon"}
+                                                className="btn btn-outline-dark btn-all-pokemon"
+                                            >
+                                                <span>
+                                                    <i className="bi bi-globe me-1"></i>{" "}
+                                                    All Pokemon
+                                                </span>
+                                            </Link>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
                             <div className="d-flex" role="search">
                                 <button
-                                    className="btn btn-light btn-search me-2 "
-                                    type="button"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modalSearch"
-                                >
-                                    <i className="bi bi-search me-2"></i> Name
-                                    or Number
-                                </button>
-                                <button
-                                    className="btn btn-light"
+                                    className="btn btn-light btn-filtres"
                                     type="button"
                                     data-bs-toggle="offcanvas"
                                     data-bs-target="#filterpokemon"
