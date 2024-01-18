@@ -58,7 +58,7 @@ function PokeStats(props) {
                         <td>
                             <div className="progress">
                                 <div
-                                    className="progress-bar animate__animated animate__fadeInLeft animate__slow"
+                                    className="progress-bar animate__animated animate__fadeInLeft"
                                     role="progressbar"
                                     aria-label="Basic example"
                                     style={{
@@ -84,7 +84,7 @@ function PokeStats(props) {
                         <td>
                             <div className="progress">
                                 <div
-                                    className="progress-bar animate__animated animate__fadeInLeft animate__slow"
+                                    className="progress-bar animate__animated animate__fadeInLeft"
                                     role="progressbar"
                                     aria-label="Basic example"
                                     style={{
@@ -110,7 +110,7 @@ function PokeStats(props) {
                         <td>
                             <div className="progress">
                                 <div
-                                    className="progress-bar animate__animated animate__fadeInLeft animate__slow"
+                                    className="progress-bar animate__animated animate__fadeInLeft "
                                     role="progressbar"
                                     aria-label="Basic example"
                                     style={{
@@ -136,7 +136,7 @@ function PokeStats(props) {
                         <td>
                             <div className="progress">
                                 <div
-                                    className="progress-bar animate__animated animate__fadeInLeft animate__slow"
+                                    className="progress-bar animate__animated animate__fadeInLeft "
                                     role="progressbar"
                                     aria-label="Basic example"
                                     style={{
@@ -162,7 +162,7 @@ function PokeStats(props) {
                         <td>
                             <div className="progress">
                                 <div
-                                    className="progress-bar animate__animated animate__fadeInLeft animate__slow"
+                                    className="progress-bar animate__animated animate__fadeInLeft "
                                     role="progressbar"
                                     aria-label="Basic example"
                                     style={{
@@ -188,7 +188,7 @@ function PokeStats(props) {
                         <td>
                             <div className="progress">
                                 <div
-                                    className="progress-bar animate__animated animate__fadeInLeft animate__slow"
+                                    className="progress-bar animate__animated animate__fadeInLeft "
                                     role="progressbar"
                                     aria-label="Basic example"
                                     style={{

@@ -180,15 +180,6 @@ export const FeaturedPokemon = styled.div`
 
     /******************************************/
 
-    .div-featured-pokemon-3 .div-info-pokemon .div-more-details button {
-        text-transform: uppercase;
-        font-weight: bold;
-        color: #fff;
-        text-shadow: 1px 1px 1px #000;
-    }
-
-    /******************************************/
-
     .div-featured-pokemon-3 .div-abilities {
         display: flex;
         flex-direction: column;
@@ -217,11 +208,22 @@ export const FeaturedPokemon = styled.div`
     .div-featured-pokemon-3 .div-abilities div span {
         background-color: #fff;
         border-radius: 7px;
+        border: 1px solid #000;
         padding: 2px 10px;
         text-transform: capitalize;
         color: #000;
         font-weight: 600;
         margin-bottom: 8px;
+    }
+
+    /******************************************/
+
+    .div-featured-pokemon-3 .div-info-pokemon .div-more-details button {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 1px 1px 1px #000;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
     /**********************************************************/

@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Pokedex from "./views/pokedex";
 import Pokeinfo from "./views/pokeinfo";
+import AllPokemon from "./views/allPokemon";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,6 +14,7 @@ root.render(
             <Routes>
                 <Route path="/" element={<Pokedex />} />
                 <Route path="/pokeinfo" element={<Pokeinfo />} />
+                <Route path="/all-Pokemon" element={<AllPokemon />} />
             </Routes>
         </main>
     </BrowserRouter>

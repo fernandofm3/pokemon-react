@@ -82,12 +82,8 @@ function FeaturedPokemon(props) {
     }
 
     return (
-        <S.FeaturedPokemon
-        // style={{
-        //     backgroundImage: `url(${spriteOfficial})`,
-        // }}
-        >
-            <div className="div-main-featured-pokemon animate__animated animate__fadeIn animate__slow">
+        <S.FeaturedPokemon>
+            <div className="div-main-featured-pokemon animate__animated animate__fadeIn">
                 <div className="div-featured-pokemon-1 mb-3">
                     <div className="div-name-pokemon">
                         <h1>{splitName(props.pokemon.name)}</h1>
@@ -99,7 +95,7 @@ function FeaturedPokemon(props) {
                             style={{
                                 background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
                             }}
-                            className="animate__animated animate__fadeInLeft animate__slow"
+                            className="animate__animated animate__fadeInLeft"
                         >
                             {!spriteOfficial ? (
                                 <img
@@ -183,7 +179,13 @@ function FeaturedPokemon(props) {
                         </p>
 
                         <div className="div-more-details">
-                            <button className="btn btn-warning">
+                            <button
+                                className="btn btn-warning"
+                                data-bs-toggle="modal"
+                                data-bs-target={
+                                    "#pokemonDetails" + props.pokemon.id
+                                }
+                            >
                                 <i className="bi bi-info-circle-fill me-1"></i>{" "}
                                 more details
                             </button>

@@ -33,38 +33,29 @@ export const Headder = styled.div`
 
     .div-nav .btn-generation,
     .div-nav .btn-region,
-    .div-nav .btn-types {
+    .div-nav .btn-types,
+    .div-nav .btn-all-pokemon {
         display: flex;
         padding: 5px 10px;
         width: 100%;
-        //border: none;
-        //border-radius: 7px;
         font-weight: 600;
     }
 
-    .div-nav .btn-search {
-        display: flex;
-        width: 100%;
-        background-color: #0e5fd5;
-        color: #bbb;
-        font-wight: 600;
-        border-color: #bbb;
-        transition: 0.3s;
+    .div-nav .btn-all-pokemon {
+        color: #000;
     }
 
-    .div-nav .btn-search:hover {
-        background-color: #0d54bb;
+    .div-nav .btn-all-pokemon:hover {
         color: #fff;
-        border-color: #fff;
+    }
+
+    .div-nav .btn-filtres {
+        font-weight: 600;
     }
 
     @media screen and (min-width: 995px) {
         .div-nav .navbar {
             padding-bottom: 8px;
-        }
-
-        .div-nav .btn-search {
-            width: 300px;
         }
     }
 `;
