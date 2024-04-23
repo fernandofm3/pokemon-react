@@ -54,85 +54,90 @@ const Headder = (props) => {
                                     </Link>
                                 </li>
 
-                                <li className="nav-item dropdown">
-                                    {/* <button
-                                        className="nav-link dropdown-toggle btn-dropdown"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                    > */}
-                                    <button
-                                        className="nav-link dropdown-toggle btn-dropdown"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        data-bs-auto-close="false"
-                                        aria-expanded="false"
-                                    >
-                                        Pokedex
-                                    </button>
-
-                                    <ul className="dropdown-menu">
-                                        <li>
-                                            <button
-                                                className="btn btn-outline-danger btn-generation"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalGeneration"
-                                            >
-                                                <span>
-                                                    <i className="bi bi-diagram-3-fill me-2"></i>{" "}
-                                                    Generation
-                                                </span>
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button
-                                                className="btn btn-outline-success btn-region"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalRegion"
-                                            >
-                                                <span>
-                                                    <i className="bi bi-geo-fill me-2"></i>{" "}
-                                                    Region
-                                                </span>
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button
-                                                className="btn btn-outline-warning btn-types"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalTypes"
-                                            >
-                                                <span>
-                                                    <i className="bi bi-fire me-1"></i>{" "}
-                                                    Types
-                                                </span>
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                to={"/all-pokemon"}
-                                                className="btn btn-outline-dark btn-all-pokemon"
-                                            >
-                                                <span>
-                                                    <i className="bi bi-globe me-1"></i>{" "}
-                                                    All Pokemon
-                                                </span>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <div className="d-flex" role="search">
-                                <button
-                                    className="btn btn-light btn-filtres"
+                                {props.page !== "allPokemon" && (
+                                    <li className="nav-item dropdown">
+                                        {/* <button
+                                    className="nav-link dropdown-toggle btn-dropdown"
                                     type="button"
-                                    data-bs-toggle="offcanvas"
-                                    data-bs-target="#filterpokemon"
-                                    aria-controls="offcanvasExample"
-                                >
-                                    <i className="bi bi-filter"></i>
-                                </button>
-                            </div>
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                > */}
+                                        <button
+                                            className="nav-link dropdown-toggle btn-dropdown"
+                                            type="button"
+                                            data-bs-toggle="dropdown"
+                                            data-bs-auto-close="true"
+                                            aria-expanded="false"
+                                        >
+                                            Pokedex
+                                        </button>
+
+                                        <ul className="dropdown-menu">
+                                            <li>
+                                                <button
+                                                    className="btn btn-outline-danger btn-generation"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalGeneration"
+                                                >
+                                                    <span>
+                                                        <i className="bi bi-diagram-3-fill me-2"></i>{" "}
+                                                        Generation
+                                                    </span>
+                                                </button>
+                                            </li>
+                                            {/* <li>
+                                                <button
+                                                    className="btn btn-outline-success btn-region"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalRegion"
+                                                >
+                                                    <span>
+                                                        <i className="bi bi-geo-fill me-2"></i>{" "}
+                                                        Region
+                                                    </span>
+                                                </button>
+                                            </li> */}
+                                            <li>
+                                                <button
+                                                    className="btn btn-outline-success btn-types"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalTypes"
+                                                >
+                                                    <span>
+                                                        <i className="bi bi-fire me-1"></i>{" "}
+                                                        Types
+                                                    </span>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <Link
+                                                    to={"/all-pokemon"}
+                                                    className="btn btn-outline-dark btn-all-pokemon"
+                                                >
+                                                    <span>
+                                                        <i className="bi bi-globe me-1"></i>{" "}
+                                                        All Pokemon
+                                                    </span>
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                )}
+                            </ul>
+
+                            {props.page !== "allPokemon" && (
+                                <div className="d-flex" role="search">
+                                    <button
+                                        className="btn btn-light btn-filtres"
+                                        type="button"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#filterpokemon"
+                                        aria-controls="offcanvasExample"
+                                    >
+                                        <i className="bi bi-filter"></i>
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </nav>

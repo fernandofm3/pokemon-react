@@ -7,7 +7,7 @@ const ColumnsOptions = (props) => {
         <S.ColumnsOptions>
             <div className="div-options">
                 <div className="div-search">
-                    <div className="input-group input-search">
+                    {/* <div className="input-group input-search">
                         <input
                             type="text"
                             className="form-control"
@@ -19,18 +19,19 @@ const ColumnsOptions = (props) => {
                                 props.setGlobalFilter(e.target.value)
                             }
                         />
-                    </div>
+                    </div> */}
 
                     <select
-                        className="form-select selection-lines-per-page ms-2"
+                        className="form-select selection-lines-per-page"
                         value={props.pageSize}
                         onChange={(e) =>
                             props.setPageSize(Number(e.target.value))
                         }
                     >
-                        {[10, 20, 30, 40, 50].map((pageSize) => (
+                        {/* {[20, 60, 100, 200, props.data.length].map( */}
+                        {[20, 60, 100, 200].map((pageSize) => (
                             <option key={pageSize} value={pageSize}>
-                                {pageSize} Linhas
+                                {pageSize} Pokemon
                             </option>
                         ))}
                     </select>

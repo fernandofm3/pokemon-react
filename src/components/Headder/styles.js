@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Headder = styled.div`
     .div-nav .navbar {
-        padding-bottom: 20px;
+        padding-bottom: 8px;
     }
 
     .div-nav nav ul li a {
@@ -51,11 +51,5 @@ export const Headder = styled.div`
 
     .div-nav .btn-filtres {
         font-weight: 600;
-    }
-
-    @media screen and (min-width: 995px) {
-        .div-nav .navbar {
-            padding-bottom: 8px;
-        }
     }
 `;

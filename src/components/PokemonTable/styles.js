@@ -2,11 +2,8 @@ import styled from "styled-components";
 
 export const PokemonTable = styled.div`
     .div-table {
-        border: 1px solid #ddd;
-        height: 100vh;
-        overflow-y: auto;
-        padding-top: 214px;
-        padding-bottom: 0;
+        overflow: visible;
+        max-height: calc(100vh - 180px); /* Defina uma altura máxima, ajuste conforme necessário */     
     }
 
     .div-table table {
@@ -17,26 +14,20 @@ export const PokemonTable = styled.div`
         border-collapse: separate;
         border-spacing: 0;
         background-color: #fff;
+    }   
+
+    .div-table table thead {
+        position: sticky;
+        top: 0;
     }
 
-    // .div-table table > :not(caption) > * > * {
-    //     border-right-width: 1px;
-    //     border-bottom-width: 1px;
-    // }
-
-    // .div-table table thead {
-    //     width: 100%;
-    //     background-color: #f5f5f5;
-    // }
-
-    .div-table table thead .tr-columns th {
-        position: sticky;
+    .div-table table thead .tr-columns th {        
         background-color: #ffcc03;
-        padding: 14px 16px;
+        padding: 5px 10px 0 10px;
         border-top: 1px solid #ffcc03;
-        top: 0;
         border-bottom: 1px solid #ffcc03;
         border-right: 1px solid #dee2e6;
+        font-size: 1rem;
     }
 
     .div-table table thead .tr-columns th .thead-div-arrow {
@@ -56,12 +47,8 @@ export const PokemonTable = styled.div`
 
     .div-table table thead .tr-columns th .div-thead-arrow-up-down i {
         margin-bottom: -7px;
-    }
-
-    .div-table table tbody > tr:nth-child(2n) {
-        background-color: #eaf2ff;
-    }
-
+    }    
+   
     .div-table table tbody tr {
         transition: 0.3s;
     }
@@ -71,17 +58,66 @@ export const PokemonTable = styled.div`
     }
 
     .div-table table tbody tr td {
-        padding: 5px 18px;
+        padding: 5px; 10px;
         border-bottom: 1px solid #dee2e6;
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: capitalize;
+        color: #777;
+        text-align: center;
+    }
+
+    .div-table table tbody tr td div img {
+        width: 65px;
+        height: 65px;
+    }
+
+    .div-table table tbody tr td div .poke-number {
+        color: #555;
+        font-weight: bold;
+        //text-shadow: 1px 2px 3px #aaa;
+    }   
+
+    .div-table table tbody tr td .poke-name {
+        width: 100%;
+        font-weight: bold;
+    }
+
+    .div-table table tbody tr td .div-types > div > div {
+        margin-bottom: 0;
+    }
+
+    .div-table table tbody tr td .div-types > div > div > img {
+        width: 20px;
+        height: 20px;;
+    }
+
+    .div-table table tbody tr td .total-stats {
+        color: #333;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .div-table table tbody tr td .div-abilities span {
+        color: #333;
+        font-size: 0.825rem;
+        font-weight: bold;        
+        text-align: left;        
     }
 
     .selected-row {
         background-color: #fff1b8 !important;
     }
 
-    @media (width > 900px) {
+    @media (width <= 500px) {
         .div-table {
-            padding-top: 156px;
+            max-height: calc(100vh - 270px); /* Defina uma altura máxima, ajuste conforme necessário */
+        }
+    }
+
+    @media (width <= 1500px) {
+        .div-table {
+            overflow: auto;
         }
     }
 `;
