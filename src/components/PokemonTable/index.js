@@ -13,7 +13,6 @@ import * as S from "./styles";
 
 const PokemonTable = (props) => {
     const columns = useMemo(() => COLUMNS, []);
-    //const columns = useMemo(() => GROUPED_COLUMNS, []);
     const data = useMemo(() => props.AllPokemon, []);
 
     const [selectedRow, setSelectedRow] = useState(null);
@@ -31,7 +30,7 @@ const PokemonTable = (props) => {
                     if (column.show === false)
                         return column.accessor || column.id;
                 }),
-                pageSize: 50,
+                pageSize: 100,
             },
         },
         useFilters,

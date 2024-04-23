@@ -1,14 +1,10 @@
 import styled from "styled-components";
 
 export const ColumnsOptions = styled.div`
-    position: fixed;
-    top: 110px;
+    position: initial;
     width: 100%;
-    //background-color: rgb(240, 245, 250);
     background-color: #0d6efd;
     padding: 10.5px 10px;
-    //border-left: 1px solid #dee2e6;
-    //border-right: 1px solid #dee2e6;
 
     .div-options {
         display: flex;
@@ -49,7 +45,7 @@ export const ColumnsOptions = styled.div`
     }
 
     .div-options .div-search .selection-lines-per-page {
-        width: 120px;
+        width: 100%;
     }
 
     .div-options .div-pagination .btn-excel {
@@ -61,7 +57,7 @@ export const ColumnsOptions = styled.div`
         font-size: 0.72rem;
     }
 
-    @media (width > 900px) {
+    @media (width > 500px) {
         .div-options .div-search {
             width: auto;
         }
@@ -78,9 +74,5 @@ export const ColumnsOptions = styled.div`
         .div-options .div-pagination .number-page {
             font-size: 1rem;
         }
-    }
-
-    @media (width > 992px) {
-        top: 98px;
     }
 `;
