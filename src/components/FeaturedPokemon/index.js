@@ -5,6 +5,7 @@ import PokeStats from "../../components/PokeStats";
 import imgPokeball from "../../assets/pokeball.png";
 import _get from "lodash/get";
 import { colorTypeGradients } from "../../utils/utils";
+import { Link } from "react-router-dom";
 
 function FeaturedPokemon(props) {
     //Verrificando o tamanho do NOME do Pokemon, se preciso o nome será dividio e mostrado só o primeiro nome.
@@ -179,7 +180,7 @@ function FeaturedPokemon(props) {
                         </p>
 
                         <div className="div-more-details">
-                            <button
+                            {/* <button
                                 className="btn btn-warning"
                                 data-bs-toggle="modal"
                                 data-bs-target={
@@ -188,7 +189,21 @@ function FeaturedPokemon(props) {
                             >
                                 <i className="bi bi-info-circle-fill me-1"></i>{" "}
                                 more details
-                            </button>
+                            </button> */}
+
+                            <Link
+                                to={
+                                    "/pokeinfo?id=" +
+                                    props.pokemon.id +
+                                    "&qtPokemons=" +
+                                    props.TotalPokemon
+                                }
+                                className="btn btn-warning"
+                                target="_blank"
+                            >
+                                <i className="bi bi-info-circle-fill me-1"></i>{" "}
+                                more details
+                            </Link>
                         </div>
                     </div>
                 </div>

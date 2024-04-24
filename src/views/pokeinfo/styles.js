@@ -14,10 +14,12 @@ export const Container = styled.div`
         display: flex;
         flex-direction: column;
         width: 100%;
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(255, 255, 255, 1);
         border-radius: 7px;
         box-shadow: 3px 2px 10px 4px #888;
+        //border: 25px solid #cf7321;
         padding: 30px;
+        margin-top: 120px;
     }
 
     .div-poke-info {

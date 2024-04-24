@@ -72,6 +72,15 @@ function Pokedex() {
         "Generation " + Generation
     );
 
+    const [TotalPokemon, setTotalPokemon] = useState(0);
+
+    useEffect(() => {
+        //Descobrindo a quantidade atual do pokemon-species
+        api.get(`/pokemon-species`).then((response) => {
+            setTotalPokemon(response.data.count);
+        });
+    }, []);
+
     //Ir para o último Pokemon selecionado.
     //scrollToPokemon(query.get("id"));
 
@@ -197,7 +206,7 @@ function Pokedex() {
         <div>
             {!RemoveLoading && <Loading />}
 
-            <Headder SearchNameApi={SearchNameApi} />
+            <Headder SearchNameApi={SearchNameApi} page={"pokeDex"} />
 
             {/*Modais - Generation / Region / Types / Filters */}
             <SelectorPokemonPerGeneration
@@ -242,7 +251,10 @@ function Pokedex() {
             {/*########################################*/}
 
             {Data.length !== 0 && (
-                <FeaturedPokemon pokemon={Data[NumberFeaturedPokemon]} />
+                <FeaturedPokemon
+                    pokemon={Data[NumberFeaturedPokemon]}
+                    TotalPokemon={TotalPokemon}
+                />
             )}
 
             <S.Container>
@@ -278,7 +290,11 @@ function Pokedex() {
             {Data.length !== 0 &&
                 Data.map((p) => {
                     return (
-                        <PokemonModal infoPokemon={p} key={"modal" + p.id} />
+                        <PokemonModal
+                            infoPokemon={p}
+                            TotalPokemon={TotalPokemon}
+                            key={"modal" + p.id}
+                        />
                     );
                 })}
         </div>

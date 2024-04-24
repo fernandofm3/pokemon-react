@@ -5,7 +5,7 @@ import "../../styles/pokeTypes.css";
 
 import * as S from "./styles";
 
-const PokemonModal = ({ infoPokemon }) => {
+const PokemonModal = ({ infoPokemon, TotalPokemon }) => {
     return (
         <S.PokemonModal>
             <div
@@ -33,7 +33,10 @@ const PokemonModal = ({ infoPokemon }) => {
                             ></button>
                         </div>
                         <div className="modal-body">
-                            <FeaturedPokemon pokemon={infoPokemon} />
+                            <FeaturedPokemon
+                                pokemon={infoPokemon}
+                                TotalPokemon={TotalPokemon}
+                            />
                         </div>
                         <div className="modal-footer">
                             <button

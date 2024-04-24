@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./styles";
+import api from "../../services/api";
 import SearchName from "../../components/SearchName";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 
 const Headder = (props) => {
+    const [TotalPokemon, setTotalPokemon] = useState(0);
+
+    useEffect(() => {
+        //Descobrindo a quantidade atual do pokemon-species
+        api.get(`/pokemon-species`).then((response) => {
+            setTotalPokemon(response.data.count);
+        });
+    }, []);
+
     return (
         <S.Headder>
             <div className="div-nav fixed-top">
@@ -43,49 +53,70 @@ const Headder = (props) => {
                                 </li>
 
                                 <li className="nav-item">
+                                    {/* <Link
+                                        className="nav-link"
+                                        to={
+                                            "/pokeinfo?id=1&offset=0&limit=12&type=&color=&qtPokemons=" +
+                                            TotalPokemon
+                                        }
+                                    >
+                                        Pokeinfo
+                                    </Link> */}
+
                                     <Link
                                         className="nav-link"
-                                        // to={
-                                        //     "/pokeinfo?id=1&offset=0&limit=12&type=&color=&qtPokemons=" +
-                                        //     props.TotalItens
-                                        // }
+                                        to={
+                                            "/pokeinfo?id=1&qtPokemons=" +
+                                            TotalPokemon
+                                        }
                                     >
                                         Pokeinfo
                                     </Link>
                                 </li>
 
-                                {props.page !== "allPokemon" && (
-                                    <li className="nav-item dropdown">
-                                        {/* <button
-                                    className="nav-link dropdown-toggle btn-dropdown"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                > */}
-                                        <button
-                                            className="nav-link dropdown-toggle btn-dropdown"
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            data-bs-auto-close="true"
-                                            aria-expanded="false"
-                                        >
-                                            Pokedex
-                                        </button>
+                                <li className="nav-item dropdown">
+                                    <button
+                                        className="nav-link dropdown-toggle btn-dropdown"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        data-bs-auto-close="true"
+                                        aria-expanded="false"
+                                    >
+                                        Pokedex
+                                    </button>
 
-                                        <ul className="dropdown-menu">
-                                            <li>
-                                                <button
-                                                    className="btn btn-outline-danger btn-generation"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalGeneration"
-                                                >
-                                                    <span>
-                                                        <i className="bi bi-diagram-3-fill me-2"></i>{" "}
-                                                        Generation
-                                                    </span>
-                                                </button>
-                                            </li>
-                                            {/* <li>
+                                    <ul className="dropdown-menu">
+                                        {props.page !== "pokeInfo" &&
+                                            props.page !== "allPokemon" && (
+                                                <>
+                                                    <li>
+                                                        <button
+                                                            className="btn btn-outline-danger btn-generation"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalGeneration"
+                                                        >
+                                                            <span>
+                                                                <i className="bi bi-diagram-3-fill me-2"></i>{" "}
+                                                                Generation
+                                                            </span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                            className="btn btn-outline-success btn-types"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalTypes"
+                                                        >
+                                                            <span>
+                                                                <i className="bi bi-fire me-1"></i>{" "}
+                                                                Types
+                                                            </span>
+                                                        </button>
+                                                    </li>
+                                                </>
+                                            )}
+
+                                        {/* <li>
                                                 <button
                                                     className="btn btn-outline-success btn-region"
                                                     data-bs-toggle="modal"
@@ -97,35 +128,23 @@ const Headder = (props) => {
                                                     </span>
                                                 </button>
                                             </li> */}
-                                            <li>
-                                                <button
-                                                    className="btn btn-outline-success btn-types"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalTypes"
-                                                >
-                                                    <span>
-                                                        <i className="bi bi-fire me-1"></i>{" "}
-                                                        Types
-                                                    </span>
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <Link
-                                                    to={"/all-pokemon"}
-                                                    className="btn btn-outline-dark btn-all-pokemon"
-                                                >
-                                                    <span>
-                                                        <i className="bi bi-globe me-1"></i>{" "}
-                                                        All Pokemon
-                                                    </span>
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                )}
+
+                                        <li>
+                                            <Link
+                                                to={"/all-pokemon"}
+                                                className="btn btn-outline-dark btn-all-pokemon"
+                                            >
+                                                <span>
+                                                    <i className="bi bi-globe me-1"></i>{" "}
+                                                    All Pokemon
+                                                </span>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
 
-                            {props.page !== "allPokemon" && (
+                            {props.page === "pokeDex" && (
                                 <div className="d-flex" role="search">
                                     <button
                                         className="btn btn-light btn-filtres"
