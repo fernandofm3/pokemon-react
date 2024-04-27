@@ -334,9 +334,8 @@ const TypesStats = (props) => {
     return (
         <S.TypesStats>
             <div className="div-types-stats">
-                <h6>Effectiveness</h6>
-
                 <div className="table-responsive-sm table-responsive-md table-responsive-lg">
+                    <h1>Effectiveness</h1>
                     <table className="table table-bordered">
                         <thead>
                             <tr>

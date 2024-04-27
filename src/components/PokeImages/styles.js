@@ -8,6 +8,8 @@ export const PokeImages = styled.div`
         text-transform: capitalize;
         padding: 3px;
         border-radius: 7px;
+        margin-top: 8px;
+        margin-bottom: 15px;
     }
 
     .div-images {
@@ -22,17 +24,20 @@ export const PokeImages = styled.div`
     }
 
     h1 {
-        color: #212529;
+        display: flex;
+        flex-direction: column;
         font-weight: bold;
-        font-size: 1.25rem;
+        font-size: 1.5rem;
+        color: #333;
+        text-shadow: 1px 2px 6px #ddd;
+        border-left: 10px solid #0e5fd5;
+        padding-left: 10px;
     }
 
     h1 .poke-name {
-        color: #aaa;
-    }
-
-    .poke-name {
-        text-transform: capitalize;
+        text-transform: uppercase;
+        font-size: 2rem;
+        color: #adb5bd;
     }
 
     .div-btn {
@@ -45,7 +50,7 @@ export const PokeImages = styled.div`
         width: 48%;
         height: 40px;
         border: none;
-        background-color: #3f66a2;
+        background-color: #0e5fd5;
         padding: 3px;
         font-size: 1.25rem;
         color: #fff;
@@ -80,13 +85,7 @@ export const PokeImages = styled.div`
     }
 
     .div-btn button:hover {
-        background-color: #3f66a2e0;
-    }
-
-    @media screen and (min-width: 415px) {
-        h1 {
-            font-size: 1.8rem;
-        }
+        background-color: #417cd1;
     }
 
     @media screen and (min-width: 500px) {
@@ -101,17 +100,21 @@ export const PokeImages = styled.div`
         }
 
         h1 {
+            font-size: 1.2rem;
+        }
+    }
+
+    @media screen and (min-width: 900px) {
+        h1 {
             font-size: 1.5rem;
         }
     }
 
     @media screen and (min-width: 1024px) {
-        h1 {
+        h1 .poke-name {
             font-size: 2rem;
         }
-    }
 
-    @media screen and (min-width: 1024px) {
         img {
             width: 380px;
         }

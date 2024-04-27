@@ -34,7 +34,7 @@ export const PokeEvolutions = styled.div`
     }
 
     .evo-img-pokemon {
-        width: 90px;
+        width: 120px;
         transition: 0.3s;
     }
 
@@ -53,6 +53,15 @@ export const PokeEvolutions = styled.div`
         margin-bottom: 5px !important;
         text-transform: capitalize !important;
         text-shadow: 2px 2px 2px #aaa !important;
+    }
+
+    .evo-type-pokemon .div-types > div {
+        padding: 8px;
+    }
+
+    .evo-type-pokemon .div-types > div > div {
+        margin-right: 0;
+        margin-bottom: 0;
     }
 
     @media screen and (min-width: 500px) {

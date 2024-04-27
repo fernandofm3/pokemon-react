@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
 export const TypesStats = styled.div`
-    .div-types-stats h6 {
-        text-transform: uppercase;
-        margin-bottom: 20px;
-        color: #212529;
+    .div-types-stats h1 {
+        margin-bottom: 50px;
         font-weight: bold;
+        border-left: 10px solid #c0392b;
+        padding-left: 10px;
+        margin-left: 0;
+        color: #212529;
     }
 
     .div-types-stats .table-responsive-sm {
@@ -16,6 +18,16 @@ export const TypesStats = styled.div`
 
     .div-types-stats .div-types {
         flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .div-types-stats .div-types > div {
+        padding: 8px;
+    }
+
+    .div-types-stats .div-types > div > div {
+        margin-right: 0;
+        margin-bottom: 0;
     }
 
     .div-types-stats .div-types span {
@@ -41,5 +53,11 @@ export const TypesStats = styled.div`
         text-shadow: none !important;
         border: 2px solid #fff;
         color: #fff;
+    }
+
+    @media screen and (min-width: 435px) {
+        .div-types-stats .div-types {
+            justify-content: start;
+        }
     }
 `;

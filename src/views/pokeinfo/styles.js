@@ -4,7 +4,6 @@ import styled from "styled-components";
 export const Container = styled.div`
     max-width: 1280px;
     margin: auto;
-    padding: 20px 20px 20px 20px;
 
     .item-display-none {
         display: none;
@@ -15,11 +14,9 @@ export const Container = styled.div`
         flex-direction: column;
         width: 100%;
         background-color: rgba(255, 255, 255, 1);
-        border-radius: 7px;
         box-shadow: 3px 2px 10px 4px #888;
-        //border: 25px solid #cf7321;
-        padding: 30px;
-        margin-top: 120px;
+        padding: 30px 15px;
+        margin-top: 100px;
     }
 
     .div-poke-info {
@@ -119,6 +116,15 @@ export const Container = styled.div`
     }
 
     @media screen and (min-width: 768px) {
+        padding: 20px 20px 20px 20px;
+
+        .div-poke-info-main {
+            border-radius: 7px;
+            margin-top: 120px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
         .div-poke-info {
             flex-direction: row;
         }
@@ -136,7 +142,6 @@ export const Container = styled.div`
     @media screen and (min-width: 1024px) {
         .div-evolutions h1 {
             text-align: left;
-            margin-left: 40px;
             margin-bottom: 15px;
         }
 

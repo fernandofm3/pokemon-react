@@ -49,7 +49,7 @@ export const COLUMNS = [
         disableFilters: false,
         Cell: (props) => {
             const pokeId = props.cell.row.original.id;
-            const totalPokemon = props.rows.length;
+            const totalPokemon = props.initialRows.length;
             return (
                 <Link
                     to={
