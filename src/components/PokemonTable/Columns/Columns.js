@@ -1,6 +1,5 @@
 import { ColumnFilter } from "./ColumnFilter";
 import Types from "../../../components/PokeTypes";
-
 import { Link } from "react-router-dom";
 
 //Adicionando zero a esqueda no númeoro do Pokemon.
@@ -49,8 +48,16 @@ export const COLUMNS = [
         Filter: ColumnFilter,
         disableFilters: false,
         Cell: (props) => {
+            const pokeId = props.cell.row.original.id;
+            const totalPokemon = props.initialRows.length;
             return (
-                <Link to="#" className="btn btn-outline-primary poke-name">
+                <Link
+                    to={
+                        "/pokeinfo?id=" + pokeId + "&qtPokemons=" + totalPokemon
+                    }
+                    className="btn btn-outline-primary poke-name"
+                    target="_blank"
+                >
                     {props.cell.row.original.name}
                 </Link>
             );

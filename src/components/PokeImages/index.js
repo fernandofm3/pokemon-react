@@ -108,13 +108,12 @@ function PokeImages(props) {
         <S.PokeImages>
             <div className="div-nome-id-pokemon">
                 <h1>
-                    <span className="poke-number">
-                        Nº {zeroLeft(idPokemonActual)}
-                    </span>{" "}
-                    -{" "}
                     <span className="poke-name">
                         {splitNameVarieties(props.name)}
                     </span>
+                    <span className="poke-number">
+                        #{zeroLeft(idPokemonActual)}
+                    </span>{" "}
                 </h1>
 
                 {props.varieties.length > 1 && (

@@ -16,15 +16,14 @@ export const PokeInformations = styled.div`
         border-collapse: separate;
         border: 1px solid #333;
         border-radius: 7px;
-        // background-color: #eee;
         border-radius: 7px;
     }
 
     td {
         padding: 5px 15px 5px 5px;
-        color: #000;
+        color: #333;
         text-transform: capitalize;
-        font-size: 0.75rem;
+        font-size: 1rem;
         font-weight: bold;
     }
 
@@ -35,10 +34,10 @@ export const PokeInformations = styled.div`
     }
 
     .td-title {
-        width: 100px;
+        width: 115px;
         font-weight: bold;
         color: #999;
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     @media screen and (min-width: 400px) {

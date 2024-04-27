@@ -372,11 +372,11 @@ function PokeInfo() {
     return (
         <div>
             {!RemoveLoading && <Loading />}
-            <Headder />
+            <Headder SearchNameApi={"POKEINFO"} page={"pokeInfo"} />
             {RemoveLoading && (
                 <S.Container>
                     <div className="div-poke-info-main">
-                        <KeepExploring query={query} scrollUp={scrollUp} />
+                        {/* <KeepExploring query={query} scrollUp={scrollUp} /> */}
 
                         {JSON.stringify(infoPokemon) !== "{}" &&
                             JSON.stringify(PokeData) !== "{}" &&
@@ -636,7 +636,7 @@ function PokeInfo() {
                             </ul>
                         </div>
 
-                        <KeepExploring query={query} scrollUp={scrollUp} />
+                        {/* <KeepExploring query={query} scrollUp={scrollUp} /> */}
                     </div>
                 </S.Container>
             )}

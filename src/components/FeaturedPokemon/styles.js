@@ -218,7 +218,7 @@ export const FeaturedPokemon = styled.div`
 
     /******************************************/
 
-    .div-featured-pokemon-3 .div-info-pokemon .div-more-details button {
+    .div-featured-pokemon-3 .div-info-pokemon .div-more-details a {
         text-transform: uppercase;
         font-weight: bold;
         color: #fff;

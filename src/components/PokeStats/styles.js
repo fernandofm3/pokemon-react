@@ -29,14 +29,14 @@ export const PokeStats = styled.div`
         width: 0;
         font-weight: bold;
         color: #999;
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     .td-value {
         width: 0;
         font-weight: bold;
         color: #555;
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     .td-total {
