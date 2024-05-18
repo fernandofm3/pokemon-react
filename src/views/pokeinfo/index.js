@@ -135,6 +135,11 @@ function PokeInfo() {
             genres: getGenresNameInEn(PokeDataSpecies.genera),
             gender: PokeDataSpecies.gender_rate,
             varieties: PokeDataSpecies.varieties,
+            generation: PokeDataSpecies.generation,
+            captureRate: PokeDataSpecies.capture_rate,
+            growthRate: PokeDataSpecies.growth_rate.name,
+            baseHappiness: PokeDataSpecies.base_happiness,
+            egg_groups: PokeDataSpecies.egg_groups,
         };
     }
 
@@ -375,142 +380,92 @@ function PokeInfo() {
             <Headder SearchNameApi={"POKEINFO"} page={"pokeInfo"} />
             {RemoveLoading && (
                 <S.Container>
-                    <div className="div-poke-info-main">
-                        {/* <KeepExploring query={query} scrollUp={scrollUp} /> */}
+                    <div className="div-main-pokeinfo">
+                        <div className="div-image-description">
+                            <div className="div-image">
+                                <PokeImages
+                                    id={infoPokemon.id}
+                                    name={infoPokemon.name}
+                                    img={infoPokemon.img}
+                                    setPokemonId={setPokemonId}
+                                    varieties={infoPokemon.varieties}
+                                    setRemoveLoading={setRemoveLoading}
+                                    TotalPokemons={qtPokemons}
+                                />
+                            </div>
 
-                        {JSON.stringify(infoPokemon) !== "{}" &&
-                            JSON.stringify(PokeData) !== "{}" &&
-                            JSON.stringify(PokeDataSpecies) !== "{}" && (
-                                <div className="div-poke-info">
-                                    <div className="div-images-description">
-                                        <PokeImages
-                                            id={infoPokemon.id}
-                                            name={infoPokemon.name}
-                                            img={infoPokemon.img}
-                                            setPokemonId={setPokemonId}
-                                            varieties={infoPokemon.varieties}
-                                            setRemoveLoading={setRemoveLoading}
-                                            TotalPokemons={qtPokemons}
-                                        />
-                                        <PokeDescription
-                                            description={
-                                                infoPokemon.description
-                                            }
-                                            gender={infoPokemon.gender}
-                                        />
-                                    </div>
-                                    <div className="div-type-stats-informations">
-                                        <div className="div-h6">
-                                            <h6>Type</h6>
+                            <div className="div-types-description">
+                                <div className="div-types">
+                                    <h6>Type</h6>
 
-                                            <PokeTypes
-                                                types={infoPokemon.types}
-                                            />
-                                        </div>
-
-                                        <PokeStats
-                                            hp={infoPokemon.hp}
-                                            attack={infoPokemon.attack}
-                                            attackSpecial={
-                                                infoPokemon.attackSpecial
-                                            }
-                                            defense={infoPokemon.defense}
-                                            defenseSpecial={
-                                                infoPokemon.defenseSpecial
-                                            }
-                                            speed={infoPokemon.speed}
-                                            totalStats={infoPokemon.totalStats}
-                                        />
-
-                                        <PokeInformations
-                                            xp={infoPokemon.xp}
-                                            height={infoPokemon.height}
-                                            weight={infoPokemon.weight}
-                                            habitat={infoPokemon.habitat}
-                                            abilities={infoPokemon.abilities}
-                                            genres={infoPokemon.genres}
-                                        />
-                                    </div>
+                                    <PokeTypes types={infoPokemon.types} />
                                 </div>
-                            )}
 
-                        {DataTypesStats.length !== 0 &&
-                            JSON.stringify(PokeData) !== "{}" &&
-                            JSON.stringify(PokeDataSpecies) !== "{}" && (
-                                <TypesStats DataTypesStats={DataTypesStats} />
-                            )}
+                                <PokeDescription
+                                    description={infoPokemon.description}
+                                    gender={infoPokemon.gender}
+                                    genres={infoPokemon.genres}
+                                    types={infoPokemon.types}
+                                    name={infoPokemon.name}
+                                    generation={infoPokemon.generation.url}
+                                />
+                            </div>
+                        </div>
 
-                        <div className="div-evolutions">
-                            <h1>Evolutions</h1>
+                        <div className="">
+                            <PokeStats
+                                hp={infoPokemon.hp}
+                                attack={infoPokemon.attack}
+                                attackSpecial={infoPokemon.attackSpecial}
+                                defense={infoPokemon.defense}
+                                defenseSpecial={infoPokemon.defenseSpecial}
+                                speed={infoPokemon.speed}
+                                totalStats={infoPokemon.totalStats}
+                            />
+                        </div>
 
-                            {MiddleEvolution.length === 0 && (
-                                <p className="text-does-not-evolve">
-                                    This Pokémon does not evolve.
-                                </p>
-                            )}
+                        <div className="">
+                            <PokeInformations
+                                xp={infoPokemon.xp}
+                                height={infoPokemon.height}
+                                weight={infoPokemon.weight}
+                                habitat={infoPokemon.habitat}
+                                abilities={infoPokemon.abilities}
+                                genres={infoPokemon.genres}
+                                generation={infoPokemon.generation}
+                                captureRate={infoPokemon.captureRate}
+                                growthRate={infoPokemon.growthRate}
+                                baseHappiness={infoPokemon.baseHappiness}
+                                eggGroups={infoPokemon.egg_groups}
+                                gender={infoPokemon.gender}
+                                hp={infoPokemon.hp}
+                            />
+                        </div>
 
-                            <ul className="div-pokemon-evolutions">
-                                <li className="first-evolution">
-                                    {FirstEvolution.length > 0 &&
-                                        FirstEvolution.map((p) => (
-                                            <Link
-                                                to={
-                                                    "/pokeinfo?id=" +
-                                                    query.get("id") +
-                                                    "&offset=" +
-                                                    query.get("offset") +
-                                                    "&limit=" +
-                                                    query.get("limit") +
-                                                    "&type=" +
-                                                    query.get("type") +
-                                                    "&color=" +
-                                                    query.get("color") +
-                                                    "&qtPokemons=" +
-                                                    TotalPokemon
-                                                }
-                                                onClick={() => {
-                                                    setPokemonId(p.id);
-                                                    scrollUp();
-                                                }}
-                                                key={p.id}
-                                            >
-                                                <PokeEvolutions
-                                                    name={p.name}
-                                                    id={p.id}
-                                                    img={p.img}
-                                                    types={p.types}
-                                                    key={p.id}
-                                                />
-                                            </Link>
-                                        ))}
-                                </li>
+                        <div className="">
+                            {DataTypesStats.length !== 0 &&
+                                JSON.stringify(PokeData) !== "{}" &&
+                                JSON.stringify(PokeDataSpecies) !== "{}" && (
+                                    <TypesStats
+                                        DataTypesStats={DataTypesStats}
+                                    />
+                                )}
+                        </div>
 
-                                {MiddleEvolution.length > 0 && (
-                                    <li className="li-evo-arrow">
-                                        {MiddleEvolution.length > 0 &&
-                                            MiddleEvolution.length < 3 &&
-                                            MiddleEvolution.map((p) => (
-                                                <p key={p.id}>
-                                                    <i className="bi bi-caret-right-fill arrow-right"></i>
-                                                    <i className="bi bi-caret-down-fill arrow-bottom"></i>
-                                                </p>
-                                            ))}
+                        <div className="">
+                            <div className="div-evolutions">
+                                <h1>Evolutions</h1>
 
-                                        {MiddleEvolution.length > 0 &&
-                                            MiddleEvolution.length > 2 && (
-                                                <p>
-                                                    <i className="bi bi-caret-right-fill arrow-right"></i>
-                                                    <i className="bi bi-caret-down-fill arrow-bottom"></i>
-                                                </p>
-                                            )}
-                                    </li>
+                                {MiddleEvolution.length === 0 && (
+                                    <p className="text-does-not-evolve">
+                                        This Pokémon does not evolve.
+                                    </p>
                                 )}
 
-                                {MiddleEvolution.length > 0 && (
-                                    <li>
-                                        {MiddleEvolution.length > 0 &&
-                                            MiddleEvolution.length < 3 &&
-                                            MiddleEvolution.map((p) => (
+                                <ul className="div-pokemon-evolutions">
+                                    <li className="first-evolution">
+                                        {FirstEvolution.length > 0 &&
+                                            FirstEvolution.map((p) => (
                                                 <Link
                                                     to={
                                                         "/pokeinfo?id=" +
@@ -542,12 +497,32 @@ function PokeInfo() {
                                                 </Link>
                                             ))}
                                     </li>
-                                )}
 
-                                {MiddleEvolution.length > 2 &&
-                                    LastEvolution.length <= 0 && (
-                                        <li className="middle-evolution">
+                                    {MiddleEvolution.length > 0 && (
+                                        <li className="li-evo-arrow">
                                             {MiddleEvolution.length > 0 &&
+                                                MiddleEvolution.length < 3 &&
+                                                MiddleEvolution.map((p) => (
+                                                    <p key={p.id}>
+                                                        <i className="bi bi-caret-right-fill arrow-right"></i>
+                                                        <i className="bi bi-caret-down-fill arrow-bottom"></i>
+                                                    </p>
+                                                ))}
+
+                                            {MiddleEvolution.length > 0 &&
+                                                MiddleEvolution.length > 2 && (
+                                                    <p>
+                                                        <i className="bi bi-caret-right-fill arrow-right"></i>
+                                                        <i className="bi bi-caret-down-fill arrow-bottom"></i>
+                                                    </p>
+                                                )}
+                                        </li>
+                                    )}
+
+                                    {MiddleEvolution.length > 0 && (
+                                        <li>
+                                            {MiddleEvolution.length > 0 &&
+                                                MiddleEvolution.length < 3 &&
                                                 MiddleEvolution.map((p) => (
                                                     <Link
                                                         to={
@@ -570,7 +545,6 @@ function PokeInfo() {
                                                             setPokemonId(p.id);
                                                             scrollUp();
                                                         }}
-                                                        className="middle-evolution-link"
                                                         key={p.id}
                                                     >
                                                         <PokeEvolutions
@@ -585,58 +559,110 @@ function PokeInfo() {
                                         </li>
                                     )}
 
-                                {LastEvolution.length > 0 && (
-                                    <li className="li-evo-arrow">
-                                        {LastEvolution.length > 0 &&
-                                            LastEvolution.map((p) => (
-                                                <p key={p.id}>
-                                                    <i className="bi bi-caret-right-fill arrow-right"></i>
-                                                    <i className="bi bi-caret-down-fill arrow-bottom"></i>
-                                                </p>
-                                            ))}
-                                    </li>
-                                )}
+                                    {MiddleEvolution.length > 2 &&
+                                        LastEvolution.length <= 0 && (
+                                            <li className="middle-evolution">
+                                                {MiddleEvolution.length > 0 &&
+                                                    MiddleEvolution.map((p) => (
+                                                        <Link
+                                                            to={
+                                                                "/pokeinfo?id=" +
+                                                                query.get(
+                                                                    "id"
+                                                                ) +
+                                                                "&offset=" +
+                                                                query.get(
+                                                                    "offset"
+                                                                ) +
+                                                                "&limit=" +
+                                                                query.get(
+                                                                    "limit"
+                                                                ) +
+                                                                "&type=" +
+                                                                query.get(
+                                                                    "type"
+                                                                ) +
+                                                                "&color=" +
+                                                                query.get(
+                                                                    "color"
+                                                                ) +
+                                                                "&qtPokemons=" +
+                                                                TotalPokemon
+                                                            }
+                                                            onClick={() => {
+                                                                setPokemonId(
+                                                                    p.id
+                                                                );
+                                                                scrollUp();
+                                                            }}
+                                                            className="middle-evolution-link"
+                                                            key={p.id}
+                                                        >
+                                                            <PokeEvolutions
+                                                                name={p.name}
+                                                                id={p.id}
+                                                                img={p.img}
+                                                                types={p.types}
+                                                                key={p.id}
+                                                            />
+                                                        </Link>
+                                                    ))}
+                                            </li>
+                                        )}
 
-                                {LastEvolution.length > 0 && (
-                                    <li className="last-evolution">
-                                        {LastEvolution.length > 0 &&
-                                            LastEvolution.map((p) => (
-                                                <Link
-                                                    to={
-                                                        "/pokeinfo?id=" +
-                                                        query.get("id") +
-                                                        "&offset=" +
-                                                        query.get("offset") +
-                                                        "&limit=" +
-                                                        query.get("limit") +
-                                                        "&type=" +
-                                                        query.get("type") +
-                                                        "&color=" +
-                                                        query.get("color") +
-                                                        "&qtPokemons=" +
-                                                        TotalPokemon
-                                                    }
-                                                    onClick={() => {
-                                                        setPokemonId(p.id);
-                                                        scrollUp();
-                                                    }}
-                                                    key={p.id}
-                                                >
-                                                    <PokeEvolutions
-                                                        name={p.name}
-                                                        id={p.id}
-                                                        img={p.img}
-                                                        types={p.types}
+                                    {LastEvolution.length > 0 && (
+                                        <li className="li-evo-arrow">
+                                            {LastEvolution.length > 0 &&
+                                                LastEvolution.map((p) => (
+                                                    <p key={p.id}>
+                                                        <i className="bi bi-caret-right-fill arrow-right"></i>
+                                                        <i className="bi bi-caret-down-fill arrow-bottom"></i>
+                                                    </p>
+                                                ))}
+                                        </li>
+                                    )}
+
+                                    {LastEvolution.length > 0 && (
+                                        <li className="last-evolution">
+                                            {LastEvolution.length > 0 &&
+                                                LastEvolution.map((p) => (
+                                                    <Link
+                                                        to={
+                                                            "/pokeinfo?id=" +
+                                                            query.get("id") +
+                                                            "&offset=" +
+                                                            query.get(
+                                                                "offset"
+                                                            ) +
+                                                            "&limit=" +
+                                                            query.get("limit") +
+                                                            "&type=" +
+                                                            query.get("type") +
+                                                            "&color=" +
+                                                            query.get("color") +
+                                                            "&qtPokemons=" +
+                                                            TotalPokemon
+                                                        }
+                                                        onClick={() => {
+                                                            setPokemonId(p.id);
+                                                            scrollUp();
+                                                        }}
                                                         key={p.id}
-                                                    />
-                                                </Link>
-                                            ))}
-                                    </li>
-                                )}
-                            </ul>
+                                                    >
+                                                        <PokeEvolutions
+                                                            name={p.name}
+                                                            id={p.id}
+                                                            img={p.img}
+                                                            types={p.types}
+                                                            key={p.id}
+                                                        />
+                                                    </Link>
+                                                ))}
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
                         </div>
-
-                        {/* <KeepExploring query={query} scrollUp={scrollUp} /> */}
                     </div>
                 </S.Container>
             )}

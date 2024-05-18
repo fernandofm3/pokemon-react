@@ -7,14 +7,7 @@ export const PokeTypes = styled.div`
         text-transform: capitalize;
     }
 
-    .poke__type__bg > img {
-        width: 20px;
-        height: 20px;
-    }
-
     .poke__type__bg {
-        width: 40px;
-        height: 40px;
         border-radius: 100%;
         display: flex;
         justify-content: center;
