@@ -2,45 +2,24 @@ import React from "react";
 import * as S from "./styles";
 
 function PokeDescription(props) {
-    //Recuperando os valores dos Genders em porcentagem com uma base máxima de 8 para ser Female. Conta usada regra de 3.
-    function findValueGenderInPercentage(value) {
-        let result = (value * 100) / 8;
-        return result;
-    }
+    //Dividindo a URL para pegar o ID da Geração
+    const splitedUrGeneration = props.generation.split("/");
 
     return (
         <S.PokeDescription>
             <h6>Description</h6>
-            <p>{props.description}</p>
 
-            {props.gender === -1 ? (
-                <div className="div-gender">
-                    <div className="div-gender-percentage">
-                        <div>
-                            <p>Genderless</p>
-                        </div>
-                    </div>
-                </div>
-            ) : (
-                <div className="div-gender">
-                    <div className="div-gender-percentage">
-                        <div>
-                            <i className="bi bi-gender-female"></i>
-                            <p>
-                                Female{" "}
-                                {findValueGenderInPercentage(props.gender)}%
-                            </p>
-                        </div>
-                        <div>
-                            <i className="bi bi-gender-male"></i>
-                            <p>
-                                Male{" "}
-                                {findValueGenderInPercentage(8 - props.gender)}%
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <p>
+                <span>{props.name}</span> is a{" "}
+                <span>
+                    {props.types.map((type) => {
+                        return type.type.name + "-";
+                    })}
+                </span>
+                type pokemon and its introduction into the pokemon world was in{" "}
+                <span>Generation {splitedUrGeneration[6]}</span>. Its gender is{" "}
+                <span>{props.genres}</span>. {props.description}
+            </p>
         </S.PokeDescription>
     );
 }

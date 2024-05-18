@@ -76,7 +76,7 @@ export const PokeEvolutions = styled.div`
 
     @media screen and (min-width: 768px) {
         .evo-img-pokemon {
-            width: 180px;
+            width: 174px;
         }
 
         .evo-type-pokemon p {

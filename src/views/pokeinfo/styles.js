@@ -3,40 +3,26 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     max-width: 1280px;
+    widht: 100%;
     margin: auto;
+    margin-top: 98px;
 
-    .item-display-none {
-        display: none;
+    .div-main-pokeinfo {
+        background-color: #fff;
+        padding: 10px;
     }
 
-    .div-poke-info-main {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        background-color: rgba(255, 255, 255, 1);
-        box-shadow: 3px 2px 10px 4px #888;
-        padding: 30px 15px;
-        margin-top: 100px;
-    }
-
-    .div-poke-info {
+    .div-image-description {
         display: flex;
         flex-direction: column;
     }
 
-    .div-poke-info .div-images-description {
+    .div-image-description .div-types-description .div-types {
         width: 100%;
-    }
-
-    .div-poke-info .div-type-stats-informations {
-        width: 100%;
-    }
-
-    .div-poke-info .div-type-stats-informations .div-h6 {
         margin-bottom: 40px;
     }
 
-    .div-poke-info .div-type-stats-informations .div-h6 h6 {
+    .div-image-description .div-types-description .div-types h6 {
         text-transform: uppercase;
         margin-bottom: 20px;
         color: #212529;
@@ -99,6 +85,8 @@ export const Container = styled.div`
         width: auto;
     }
 
+    //#####################################################################
+
     .li-evo-arrow p {
         display: flex;
         flex-direction: row;
@@ -115,71 +103,88 @@ export const Container = styled.div`
         display: none;
     }
 
+    //#####################################################################
+
     @media screen and (min-width: 768px) {
-        padding: 20px 20px 20px 20px;
-
-        .div-poke-info-main {
-            border-radius: 7px;
-            margin-top: 120px;
+        .div-main-pokeinfo {
             padding: 30px;
-            margin-bottom: 20px;
+            border-radius: 7px;
+            box-shadow: rgb(209 209 209) 3px 2px 10px 4px;
         }
 
-        .div-poke-info {
+        .div-image-description {
             flex-direction: row;
+            justify-content: space-between;
         }
 
-        .div-poke-info .div-images-description {
-            margin-right: 40px;
-            width: 40%;
-        }
-
-        .div-poke-info .div-type-stats-informations {
+        .div-image-description .div-image {
             width: 60%;
+        }
+
+        .div-image-description .div-types-description {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 38%;
+        }
+
+        .div-image-description .div-types-description .div-types {
+            margin-bottom: 20px;
         }
     }
 
     @media screen and (min-width: 1024px) {
-        .div-evolutions h1 {
+        .div-main-cards .div-evolutions h1 {
             text-align: left;
             margin-bottom: 15px;
         }
 
-        .text-does-not-evolve {
+        .div-main-cards .text-does-not-evolve {
             margin-top: 0px;
             margin-left: 40px;
         }
 
-        .div-evolutions .div-pokemon-evolutions {
+        .div-main-cards .div-evolutions .div-pokemon-evolutions {
             flex-direction: row;
             justify-content: center;
         }
 
-        .div-evolutions .div-pokemon-evolutions li {
+        .div-main-cards .div-evolutions .div-pokemon-evolutions li {
             flex-direction: column;
             width: auto;
         }
 
-        .div-evolutions .div-pokemon-evolutions .li-evo-arrow {
+        .div-main-cards .div-evolutions .div-pokemon-evolutions .li-evo-arrow {
             width: 20%;
         }
 
-        .div-evolutions .div-pokemon-evolutions .li-evo-arrow p {
+        .div-main-cards
+            .div-evolutions
+            .div-pokemon-evolutions
+            .li-evo-arrow
+            p {
             padding: 130px 0;
         }
 
-        .arrow-bottom {
+        .div-main-cards .arrow-bottom {
             display: none;
         }
 
-        .arrow-right {
+        .div-main-cards .arrow-right {
             display: block;
         }
 
-        .div-evolutions .div-pokemon-evolutions .middle-evolution-wrap {
+        .div-main-cards
+            .div-evolutions
+            .div-pokemon-evolutions
+            .middle-evolution {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
         }
+    }
+
+    @media screen and (min-width: 1280px) {
+        margin-top: 140px;
     }
 `;
