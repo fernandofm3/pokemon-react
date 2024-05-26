@@ -5,52 +5,137 @@ export const Container = styled.div`
     max-width: 1280px;
     widht: 100%;
     margin: auto;
-    margin-top: 98px;
+    margin-top: 80px;
 
-    .div-main-pokeinfo {
-        background-color: #fff;
+    .dashboard {
+        padding: 15px;
+    }
+
+    .dashboard .row > div {
         padding: 10px;
     }
 
-    .div-image-description {
+    .dashboard .row div .card {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-bottom: 5px solid #0d6efd;
+        transition: 0.3s;
+    }
+
+    .dashboard .row div .card:hover {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    .dashboard .row div .card .card-body .data-icon {
         display: flex;
         flex-direction: column;
+        padding: 10px;
+        background-color: #0d6efd24;
+        border-radius: 7px;
+        margin-bottom: 30px;
     }
 
-    .div-image-description .div-types-description .div-types {
-        width: 100%;
-        margin-bottom: 40px;
+    .dashboard .row div .card .card-body .data-icon i {
+        color: #0d6efd;
+        font-size: 1.3rem;
     }
 
-    .div-image-description .div-types-description .div-types h6 {
-        text-transform: uppercase;
-        margin-bottom: 20px;
-        color: #212529;
-        font-weight: bold;
+    .dashboard .row div .card .card-body h5 {
+        color: #7b8a9a;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+
+    .dashboard .row div .card .card-body h3 {
+        color: #566a7f;
+        text-transform: capitalize;
+        font-size: 1.6rem;
+    }
+
+    .dashboard .row-data div .card {
+        height: 210px;
+    }
+
+    .dashboard .row-data div .card .card-body {
+        padding: 20px;
+    }
+
+    .dashboard .row-training div .card .card-body p {
+        color: #768597;
+    }
+
+    .dashboard .row-training div .card .card-body img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .dashboard .row-training div .card .card-body .div-icon-percent i {
+        font-size: 1.7rem;
+        margin-left: 5px;
+        margin-right: 12px;
+    }
+
+    .dashboard .row-training-breeding div .card {
+        height: 210px;
+    }
+
+    .dashboard .row-stats-Effectiveness div .card .card-body .div-stats {
+        padding: 12px;
+    }
+
+    .dashboard .row-stats-Effectiveness div .card .card-body .div-stats h3 {
+        color: #7b8a9a;
+    }
+
+    .dashboard
+        .row-stats-Effectiveness
+        div
+        .card
+        .card-body
+        .div-effectiveness {
+        padding: 12px;
+    }
+
+    .dashboard
+        .row-stats-Effectiveness
+        div
+        .card
+        .card-body
+        .div-effectiveness
+        h3 {
+        color: #7b8a9a;
+    }
+
+    .dashboard
+        .row-stats-Effectiveness
+        div
+        .card
+        .card-body
+        > div
+        > div
+        > div
+        > h6 {
+        display: none;
+    }
+
+    //#### Evolution #######################
+
+    .dashboard .row-evolutions div .card .card-body .div-title-evolution {
+        padding: 12px;
+    }
+
+    .dashboard .row-evolutions div .card .card-body .div-title-evolution h3 {
+        color: #0d6efd;
     }
 
     .div-evolutions {
         display: flex;
         flex-direction: column;
-        margin-top: 50px;
-        border: 1px solid #000;
-        padding: 30px 5px;
-        border-radius: 7px;
-        margin-bottom: 20px;
-    }
-
-    .div-evolutions h1 {
-        margin-bottom: 50px;
-        font-weight: bold;
-        border-left: 10px solid #c0392b;
-        padding-left: 10px;
-        margin-left: 20px;
-        color: #212529;
+        margin-top: 30px;
     }
 
     .text-does-not-evolve {
         margin-top: -35px;
-        margin-left: 20px;
+        margin-left: 13px;
     }
 
     .div-evolutions .div-pokemon-evolutions {
@@ -85,8 +170,6 @@ export const Container = styled.div`
         width: auto;
     }
 
-    //#####################################################################
-
     .li-evo-arrow p {
         display: flex;
         flex-direction: row;
@@ -106,85 +189,61 @@ export const Container = styled.div`
     //#####################################################################
 
     @media screen and (min-width: 768px) {
-        .div-main-pokeinfo {
-            padding: 30px;
-            border-radius: 7px;
-            box-shadow: rgb(209 209 209) 3px 2px 10px 4px;
-        }
-
-        .div-image-description {
-            flex-direction: row;
-            justify-content: space-between;
-        }
-
-        .div-image-description .div-image {
-            width: 60%;
-        }
-
-        .div-image-description .div-types-description {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 38%;
-        }
-
-        .div-image-description .div-types-description .div-types {
-            margin-bottom: 20px;
+        .dashboard .row-training div .card {
+            height: 410px;
         }
     }
 
     @media screen and (min-width: 1024px) {
-        .div-main-cards .div-evolutions h1 {
+        .div-evolutions h1 {
             text-align: left;
             margin-bottom: 15px;
         }
 
-        .div-main-cards .text-does-not-evolve {
+        .text-does-not-evolve {
             margin-top: 0px;
-            margin-left: 40px;
+            margin-left: 13px;
+            color: #566a7f;
         }
 
-        .div-main-cards .div-evolutions .div-pokemon-evolutions {
+        .div-evolutions .div-pokemon-evolutions {
             flex-direction: row;
             justify-content: center;
         }
 
-        .div-main-cards .div-evolutions .div-pokemon-evolutions li {
+        .div-evolutions .div-pokemon-evolutions li {
             flex-direction: column;
             width: auto;
         }
 
-        .div-main-cards .div-evolutions .div-pokemon-evolutions .li-evo-arrow {
+        .div-evolutions .div-pokemon-evolutions .li-evo-arrow {
             width: 20%;
         }
 
-        .div-main-cards
-            .div-evolutions
-            .div-pokemon-evolutions
-            .li-evo-arrow
-            p {
+        .div-evolutions .div-pokemon-evolutions .li-evo-arrow p {
             padding: 130px 0;
         }
 
-        .div-main-cards .arrow-bottom {
+        .arrow-bottom {
             display: none;
         }
 
-        .div-main-cards .arrow-right {
+        .arrow-right {
             display: block;
         }
 
-        .div-main-cards
-            .div-evolutions
-            .div-pokemon-evolutions
-            .middle-evolution {
+        .div-evolutions .div-pokemon-evolutions .middle-evolution {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
         }
     }
 
-    @media screen and (min-width: 1280px) {
-        margin-top: 140px;
+    @media screen and (min-width: 1200px) {
+        margin-top: 100px;
+
+        .dashboard .row-stats-Effectiveness div .card {
+            height: 610px;
+        }
     }
 `;

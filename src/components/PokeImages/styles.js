@@ -1,7 +1,43 @@
 import styled from "styled-components";
 
 export const PokeImages = styled.div`
-    margin-bottom: 40px;
+    .div-nome-id-pokemon h1 {
+        display: flex;
+        flex-direction: column;
+        font-weight: bold;
+        font-size: 1.5rem;
+        color: #566a7f;
+    }
+
+    .div-nome-id-pokemon h1 .poke-name {
+        text-transform: uppercase;
+        font-size: 2rem;
+        color: #0d6efd;
+    }
+
+    .text-generation {
+        margin-top: 35px;
+        color: #0e5fd5 !important;
+        font-size: 1.4rem !important;
+    }
+
+    .text-description {
+        color: #6a7b8e;
+        font-weight: 500;
+    }
+
+    .dashboard-types {
+        margin-top: 40px;
+    }
+
+    .div-image-desktop {
+        display: none;
+    }
+
+    .div-select-varietes {
+        height: 50px;
+        margin-bottom: 15px;
+    }
 
     .select-nome-id-pokemon {
         width: 100%;
@@ -10,34 +46,18 @@ export const PokeImages = styled.div`
         border-radius: 7px;
         margin-top: 8px;
         margin-bottom: 15px;
+        background-color: #fff;
     }
 
-    .div-images {
+    .div-image-btn .div-image {
         display: flex;
         flex-direction: row;
         justify-content: center;
     }
 
-    img {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    h1 {
-        display: flex;
-        flex-direction: column;
-        font-weight: bold;
-        font-size: 1.5rem;
-        color: #333;
-        text-shadow: 1px 2px 6px #ddd;
-        border-left: 10px solid #0e5fd5;
-        padding-left: 10px;
-    }
-
-    h1 .poke-name {
-        text-transform: uppercase;
-        font-size: 2rem;
-        color: #adb5bd;
+    .div-image-btn .div-image img {
+        width: 200px;
+        height: 200px;
     }
 
     .div-btn {
@@ -88,35 +108,35 @@ export const PokeImages = styled.div`
         background-color: #417cd1;
     }
 
-    @media screen and (min-width: 500px) {
-        img {
-            width: 400px;
-        }
-    }
-
     @media screen and (min-width: 768px) {
-        img {
-            width: 100%;
+        .div-nome-id-pokemon h1 {
+            font-size: 1.2rem;
         }
 
-        h1 {
-            font-size: 1.2rem;
+        .div-image-mobile {
+            display: none;
+        }
+
+        .div-image-desktop {
+            display: block;
         }
     }
 
     @media screen and (min-width: 900px) {
-        h1 {
+        padding: 10px 30px;
+
+        .div-nome-id-pokemon h1 {
             font-size: 1.5rem;
         }
     }
 
     @media screen and (min-width: 1024px) {
-        h1 .poke-name {
+        .div-nome-id-pokemon h1 .poke-name {
             font-size: 2rem;
         }
 
-        img {
-            width: 380px;
+        .text-description {
+            height: 40px;
         }
     }
 `;

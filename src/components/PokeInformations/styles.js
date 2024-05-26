@@ -1,22 +1,42 @@
 import styled from "styled-components";
 
 export const PokeInformations = styled.div`
-    margin-bottom: 40px;
-
     .poke-data {
         display: grid;
         gap: 10px 10px;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        margin-bottom: 40px;
     }
 
-    .poke-training {
-        margin-bottom: 40px;
-    }
-
-    .poke-training .div-main-capture {
+    .div-select-pokeball {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+    }
+
+    .div-select-pokeball img {
+        width: 35px;
+        height: 35px;
+        margin-right: 12px;
+        background-color: #333;
+        border-radius: 50%;
+        border: 1px solid #333;
+    }
+
+    .div-select-pokeball select {
+        border: 1px solid #333;
+    }
+
+    .div-calc-catch-rate {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .div-calc-catch-rate i {
+        font-size: 1.7rem;
+        margin-right: 15px;
+        margin-left: 5px;
+    }
+
+    .div-calc-catch-rate .progress {
         width: 100%;
     }
 
@@ -52,8 +72,8 @@ export const PokeInformations = styled.div`
 
     .div-gender-percentage div p {
         font-size: 1rem;
-        font-weight: bold;
-        color: #aaa;
+        font-weight: 600;
+        color: #333;
         margin-bottom: 0;
     }
 
@@ -65,20 +85,7 @@ export const PokeInformations = styled.div`
     }
 
     @media screen and (min-width: 768px) {
-        .poke-training .div-main-capture {
-            flex-direction: row;
-            justify-content: space-between;
-        }
-        .poke-training .div-main-capture .div-select-pokeball {
-            width: 180px;
-            margin-right: 10px;
-        }
-
-        .poke-training .div-main-capture .div-calc-catch-rate {
-            width: 100%;
-        }
-
-        .poke-training .div-cards-training {
+        .div-cards-training {
             display: grid;
             gap: 10px 10px;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
