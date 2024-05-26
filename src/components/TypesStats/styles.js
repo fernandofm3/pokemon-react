@@ -1,20 +1,20 @@
 import styled from "styled-components";
 
 export const TypesStats = styled.div`
-    .div-types-stats h1 {
-        margin-bottom: 50px;
-        font-weight: bold;
-        border-left: 10px solid #c0392b;
-        padding-left: 10px;
-        margin-left: 0;
-        color: #212529;
-    }
+    // .div-types-stats h1 {
+    //     margin-bottom: 50px;
+    //     font-weight: bold;
+    //     border-left: 10px solid #c0392b;
+    //     padding-left: 10px;
+    //     margin-left: 0;
+    //     color: #212529;
+    // }
 
-    .div-types-stats .table-responsive-sm {
-        padding: 20px;
-        border: 1px solid #000;
-        border-radius: 7px;
-    }
+    // .div-types-stats .table-responsive-sm {
+    //     padding: 20px;
+    //     border: 1px solid #000;
+    //     border-radius: 7px;
+    // }
 
     .div-types-stats .div-types {
         flex-wrap: wrap;

@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const PokeStats = styled.div`
-    margin-bottom: 40px;
-
     h6 {
         text-transform: uppercase;
         margin-bottom: 20px;
