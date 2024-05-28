@@ -3,18 +3,13 @@ import { useLocation } from "react-router-dom";
 import Headder from "../../components/Headder";
 import api from "../../services/api";
 import _get from "lodash/get";
-//import PokeDescription from "../../components/PokeDescription";
-//import PokeTypes from "../../components/PokeTypes";
-//import PokeInformations from "../../components/PokeInformations";
 import PokeStats from "../../components/PokeStats";
 import PokeImages from "../../components/PokeImages";
 import PokeEvolutions from "../../components/PokeEvolutions";
 import TypesStats from "../../components/TypesStats";
-//import KeepExploring from "../../components/keepExploring";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
 import imgPokeBall from "../../assets/pokeball.png";
-//import { colorTypeGradients } from "../../utils/utils";
 import {
     borderColorInfoPokemon,
     lightColorInfoPokemon,
@@ -91,7 +86,6 @@ function PokeInfo() {
     const id = query.get("id");
     const qtPokemons = query.get("qtPokemons");
     const [PokemonId, setPokemonId] = useState(id);
-    //const [TotalPokemon, setTotalPokemon] = useState(qtPokemons);
     const TotalPokemon = qtPokemons;
     const [PokeData, setPokeData] = useState({});
     const [PokeDataSpecies, setPokeDataSpecies] = useState({});
@@ -152,7 +146,6 @@ function PokeInfo() {
             captureRate: PokeDataSpecies.capture_rate,
             growthRate: PokeDataSpecies.growth_rate.name,
             baseHappiness: PokeDataSpecies.base_happiness,
-
             egg_groups:
                 PokeDataSpecies.egg_groups === null
                     ? "Undefined"
@@ -160,6 +153,12 @@ function PokeInfo() {
                           .map((egg) => " " + egg.name)
                           .toString(),
             pokemonColor: PokeDataSpecies.color.name,
+            hatchCounter: PokeDataSpecies.hatch_counter,
+            pokemonCategory: {
+                baby: PokeDataSpecies.is_baby,
+                legendary: PokeDataSpecies.is_legendary,
+                mythical: PokeDataSpecies.is_mythical,
+            },
         };
     }
 
@@ -183,7 +182,6 @@ function PokeInfo() {
                     await api
                         .get("/type/" + types[i].type.name)
                         .then((response) => {
-                            //arrayTypes.push(response.data.damage_relations);
                             arrayTypes.push(response.data.damage_relations);
                         });
                 }
@@ -250,6 +248,9 @@ function PokeInfo() {
                                                 img: spriteAdapterOfficial(
                                                     response.data.sprites
                                                 ),
+                                                evolutionDetails:
+                                                    evo.evolves_to[i]
+                                                        .evolution_details[0],
                                             });
                                         });
                                 }
@@ -263,7 +264,7 @@ function PokeInfo() {
                             //Salvando os Pokemons evoluídos em uma nova variável para corrigir um alerta do React.
                             const newEvoChain = evoChain;
 
-                            //Separando e salvando as evoluções em arrays separados (esse procedimento facilitou na renderição).
+                            //Separando e salvando as evoluções em arrays distintos (esse procedimento facilitou na renderição).
                             const pokeMiddleEvolitions = [];
                             const pokeLastEvolutions = [];
 
@@ -323,7 +324,7 @@ function PokeInfo() {
                                     .name,
                             });
 
-                            //Função resposável por acessar a árvore de evoluções recursivamente e guarda os Pokemons no Array (evoChain).
+                            //Função resposável por acessar a árvore de evoluções recursivamente e guardar os Pokemons no Array (evoChain).
                             getEvo(evolutions, evolutions.species.name);
                         } else {
                             //Ação quando não possui evoluções
@@ -503,7 +504,7 @@ function PokeInfo() {
                 <S.Container>
                     {/*** Dashboard ***************************************/}
                     <div className="dashboard">
-                        <div className="row ">
+                        <div className="row row-img">
                             <div className="col">
                                 <div
                                     className="card"
@@ -530,6 +531,12 @@ function PokeInfo() {
                                             types={infoPokemon.types}
                                             generation={
                                                 infoPokemon.generation.url
+                                            }
+                                            pokemonColor={
+                                                infoPokemon.pokemonColor
+                                            }
+                                            pokemonCategory={
+                                                infoPokemon.pokemonCategory
                                             }
                                         />
                                     </div>
@@ -1008,7 +1015,7 @@ function PokeInfo() {
                                             }}
                                         >
                                             <i
-                                                className="bi bi-hourglass-split"
+                                                className="bi bi-star-fill"
                                                 style={{
                                                     color: `${borderColorInfoPokemon(
                                                         infoPokemon.pokemonColor
@@ -1096,7 +1103,52 @@ function PokeInfo() {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="col-sm-6 col-lg-3">
+                                {" "}
+                                <div
+                                    className="card"
+                                    style={{
+                                        borderBottom: `5px solid ${borderColorInfoPokemon(
+                                            infoPokemon.pokemonColor
+                                        )}`,
+                                    }}
+                                >
+                                    <div className="card-body">
+                                        <div
+                                            className="data-icon"
+                                            style={{
+                                                backgroundColor: `${lightColorInfoPokemon(
+                                                    infoPokemon.pokemonColor
+                                                )}`,
+                                            }}
+                                        >
+                                            <i
+                                                //className="bi bi-basket-fill"
+                                                className="bi bi-hourglass-split"
+                                                style={{
+                                                    color: `${borderColorInfoPokemon(
+                                                        infoPokemon.pokemonColor
+                                                    )}`,
+                                                }}
+                                            ></i>
+                                        </div>
+
+                                        <h5>Hatch Counter</h5>
+
+                                        <h3>{infoPokemon.hatchCounter} </h3>
+                                        <span>
+                                            {" "}
+                                            Approximately{" "}
+                                            {Number(
+                                                infoPokemon.hatchCounter * 256
+                                            )}{" "}
+                                            steps{" "}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-sm-12 col-lg-6">
                                 {" "}
                                 <div
                                     className="card card-breeding"
@@ -1127,25 +1179,26 @@ function PokeInfo() {
 
                                         <h5 className="mb-4">Gender</h5>
 
-                                        <div className="d-flex justify-content-between">
+                                        <div className="d-flex justify-content-around">
                                             <div className="d-flex mb-0">
                                                 <h5 className="text-danger-emphasis">
                                                     <i className="bi bi-gender-female me-2"></i>
-                                                    Female{" "}
+                                                    Female{" ("}
                                                     {findValueGenderInPercentage(
                                                         infoPokemon.gender
                                                     )}
-                                                    %
+                                                    %{") "}
                                                 </h5>
                                             </div>
+
                                             <div className="d-flex">
                                                 <h5 className="text-primary">
                                                     <i className="bi bi-gender-male me-2"></i>
-                                                    Male{" "}
+                                                    Male{" ("}
                                                     {findValueGenderInPercentage(
                                                         8 - infoPokemon.gender
                                                     )}
-                                                    %
+                                                    %{") "}
                                                 </h5>
                                             </div>
                                         </div>
@@ -1509,6 +1562,269 @@ function PokeInfo() {
                                                     </li>
                                                 )}
                                             </ul>
+
+                                            <div className=" p-3">
+                                                <div className="table-responsive">
+                                                    <table className="table table-hover table-bordered">
+                                                        <thead>
+                                                            <tr className="table-light">
+                                                                <th
+                                                                    className=""
+                                                                    scope="col"
+                                                                >
+                                                                    #
+                                                                </th>
+                                                                <th scope="col">
+                                                                    Name
+                                                                </th>
+                                                                <th scope="col">
+                                                                    Stage
+                                                                </th>
+                                                                <th scope="col">
+                                                                    Evolution_Method
+                                                                </th>
+                                                                <th
+                                                                    scope="col"
+                                                                    style={{
+                                                                        minWidth:
+                                                                            "600px",
+                                                                    }}
+                                                                >
+                                                                    Details
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {FirstEvolution.length >
+                                                                0 &&
+                                                                FirstEvolution.map(
+                                                                    (p) => {
+                                                                        return (
+                                                                            <tr
+                                                                                key={
+                                                                                    p.id
+                                                                                }
+                                                                            >
+                                                                                <th scope="row">
+                                                                                    {
+                                                                                        p.id
+                                                                                    }
+                                                                                </th>
+                                                                                <td className="text-capitalize">
+                                                                                    {
+                                                                                        p.name
+                                                                                    }
+                                                                                </td>
+                                                                                <td>
+                                                                                    1
+                                                                                </td>
+                                                                                <td>
+                                                                                    -
+                                                                                </td>
+                                                                                <td>
+                                                                                    -
+                                                                                </td>
+                                                                            </tr>
+                                                                        );
+                                                                    }
+                                                                )}
+
+                                                            {MiddleEvolution.length >
+                                                                0 &&
+                                                                MiddleEvolution.map(
+                                                                    (
+                                                                        p,
+                                                                        index
+                                                                    ) => {
+                                                                        return (
+                                                                            <tr
+                                                                                key={
+                                                                                    p.id
+                                                                                }
+                                                                            >
+                                                                                <th scope="row">
+                                                                                    {
+                                                                                        p.id
+                                                                                    }
+                                                                                </th>
+                                                                                <td className="text-capitalize">
+                                                                                    {
+                                                                                        p.name
+                                                                                    }
+                                                                                </td>
+                                                                                <td>
+                                                                                    2
+                                                                                </td>
+
+                                                                                <td className="text-capitalize">
+                                                                                    {p
+                                                                                        .evolutionDetails
+                                                                                        .trigger
+                                                                                        .name
+                                                                                        ? p
+                                                                                              .evolutionDetails
+                                                                                              .trigger
+                                                                                              .name
+                                                                                        : "-"}
+                                                                                </td>
+
+                                                                                <td className="">
+                                                                                    {Object.entries(
+                                                                                        p.evolutionDetails
+                                                                                    )
+                                                                                        .filter(
+                                                                                            ([
+                                                                                                key,
+                                                                                                value,
+                                                                                            ]) =>
+                                                                                                value !==
+                                                                                                    null &&
+                                                                                                value !==
+                                                                                                    false &&
+                                                                                                value !==
+                                                                                                    ""
+                                                                                        )
+                                                                                        .map(
+                                                                                            ([
+                                                                                                key,
+                                                                                                value,
+                                                                                            ]) => (
+                                                                                                <span
+                                                                                                    className="w-100"
+                                                                                                    key={
+                                                                                                        key
+                                                                                                    }
+                                                                                                >
+                                                                                                    {key !==
+                                                                                                        "trigger" &&
+                                                                                                        key +
+                                                                                                            " : "}
+                                                                                                    {key !==
+                                                                                                        "trigger" &&
+                                                                                                    typeof value ===
+                                                                                                        "object" &&
+                                                                                                    value !==
+                                                                                                        null &&
+                                                                                                    "name" in
+                                                                                                        value ? (
+                                                                                                        <span className="badge text-bg-warning me-3">
+                                                                                                            {value.name.toString()}
+                                                                                                        </span>
+                                                                                                    ) : key !==
+                                                                                                      "trigger" ? (
+                                                                                                        <span className="badge text-bg-warning me-3">
+                                                                                                            {value.toString()}
+                                                                                                        </span>
+                                                                                                    ) : (
+                                                                                                        "-"
+                                                                                                    )}
+                                                                                                </span>
+                                                                                            )
+                                                                                        )}
+                                                                                </td>
+                                                                            </tr>
+                                                                        );
+                                                                    }
+                                                                )}
+
+                                                            {LastEvolution.length >
+                                                                0 &&
+                                                                LastEvolution.map(
+                                                                    (
+                                                                        p,
+                                                                        index
+                                                                    ) => {
+                                                                        return (
+                                                                            <tr
+                                                                                key={
+                                                                                    p.id
+                                                                                }
+                                                                            >
+                                                                                <th scope="row">
+                                                                                    {
+                                                                                        p.id
+                                                                                    }
+                                                                                </th>
+                                                                                <td className="text-capitalize">
+                                                                                    {
+                                                                                        p.name
+                                                                                    }
+                                                                                </td>
+                                                                                <td>
+                                                                                    3
+                                                                                </td>
+                                                                                <td className="text-capitalize">
+                                                                                    {p
+                                                                                        .evolutionDetails
+                                                                                        .trigger
+                                                                                        .name
+                                                                                        ? p
+                                                                                              .evolutionDetails
+                                                                                              .trigger
+                                                                                              .name
+                                                                                        : "-"}
+                                                                                </td>
+                                                                                <td className="">
+                                                                                    {Object.entries(
+                                                                                        p.evolutionDetails
+                                                                                    )
+                                                                                        .filter(
+                                                                                            ([
+                                                                                                key,
+                                                                                                value,
+                                                                                            ]) =>
+                                                                                                value !==
+                                                                                                    null &&
+                                                                                                value !==
+                                                                                                    false &&
+                                                                                                value !==
+                                                                                                    ""
+                                                                                        )
+                                                                                        .map(
+                                                                                            ([
+                                                                                                key,
+                                                                                                value,
+                                                                                            ]) => (
+                                                                                                <span
+                                                                                                    key={
+                                                                                                        key
+                                                                                                    }
+                                                                                                >
+                                                                                                    {key !==
+                                                                                                        "trigger" &&
+                                                                                                        key +
+                                                                                                            " : "}
+                                                                                                    {key !==
+                                                                                                        "trigger" &&
+                                                                                                    typeof value ===
+                                                                                                        "object" &&
+                                                                                                    value !==
+                                                                                                        null &&
+                                                                                                    "name" in
+                                                                                                        value ? (
+                                                                                                        <span className="badge text-bg-danger me-3">
+                                                                                                            {value.name.toString()}
+                                                                                                        </span>
+                                                                                                    ) : key !==
+                                                                                                      "trigger" ? (
+                                                                                                        <span className="badge text-bg-danger me-3">
+                                                                                                            {value.toString()}
+                                                                                                        </span>
+                                                                                                    ) : (
+                                                                                                        "-"
+                                                                                                    )}
+                                                                                                </span>
+                                                                                            )
+                                                                                        )}
+                                                                                </td>
+                                                                            </tr>
+                                                                        );
+                                                                    }
+                                                                )}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -46,8 +46,6 @@ function PokeTypes(props) {
                             id={t.type.name + props.pokeId}
                             place="bottom"
                             content={t.type.name}
-                            //variant="dark"
-                            //opacity={0.7}
                         />
                     </div>
                 ))}
