@@ -27,7 +27,30 @@ export const PokeImages = styled.div`
     }
 
     .dashboard-types {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         margin-top: 40px;
+    }
+
+    .dashboard-types .div-title-category-pokemon {
+        margin-left: 30px;
+        border-radius: 20px;
+        color: #fff;
+        border: 1px solid #999;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+            rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+
+    .dashboard-types .div-title-category-pokemon h4 {
+        color: #fff !important;
+        font-weight: bold;
+        text-shadow: 2px 1px 3px #000;
+        margin-bottom: 0;
+        padding: 5px 25px;
+        font-family: "Roboto", sans-serif; /* Exemplo de fonte */
+        letter-spacing: 0.5px; /* Espaçamento entre as letras */
+        text-transform: uppercase;
     }
 
     .div-image-desktop {

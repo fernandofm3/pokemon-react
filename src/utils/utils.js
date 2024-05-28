@@ -157,13 +157,13 @@ export const borderColorInfoPokemon = (color) => {
             finalColor = "purple";
             break;
         case "red":
-            finalColor = "red";
+            finalColor = "#f05936";
             break;
         case "white":
             finalColor = "#adb5bd";
             break;
         case "yellow":
-            finalColor = "#ffc107";
+            finalColor = "#b59960";
             break;
         default:
             finalColor = "gainsboro";
@@ -199,7 +199,7 @@ export const lightColorInfoPokemon = (color) => {
             finalColor = "#80008021";
             break;
         case "red":
-            finalColor = "#ff000021";
+            finalColor = "#f0593630";
             break;
         case "white":
             finalColor = "#adb5bd33";

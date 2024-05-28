@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as S from "./styles";
 import PokeTypes from "../../components/PokeTypes";
 import imgPokeball from "../../assets/pokeball.png";
+import { borderColorInfoPokemon } from "../../utils/utils";
 
 function PokeImages(props) {
     //controlando a exibição da imagem após ir ao próximo Pokemon ou voltar um Pokemon
@@ -113,7 +114,6 @@ function PokeImages(props) {
             if (img.src !== props.img) {
                 img.classList.add("animate__fadeIn");
                 img.classList.remove("animate__fadeOut");
-                //img.classList.add("animate__delay-1s");
             }
         }
     }
@@ -124,7 +124,14 @@ function PokeImages(props) {
                 <div className="col-md-8">
                     <div className="div-nome-id-pokemon">
                         <h1>
-                            <span className="poke-name">
+                            <span
+                                className="poke-name"
+                                style={{
+                                    color: `${borderColorInfoPokemon(
+                                        props.pokemonColor
+                                    )}`,
+                                }}
+                            >
                                 {splitNameVarieties(props.name)}
                             </span>
                             <span className="poke-number">
@@ -161,14 +168,12 @@ function PokeImages(props) {
                             <div className="div-image animate__animated animate__fadeIn mb-4">
                                 {ImgPokemon !== null && props.img ? (
                                     <img
-                                        //id="imgPokeInfo"
                                         className="imgPokeInfoMobile animate__animated animate__fadeIn"
                                         src={ImgPokemon}
                                         alt="Imagem do Pokemon."
                                     />
                                 ) : (
                                     <img
-                                        //id="imgPokeInfo"
                                         className="imgPokeInfoMobile animate__animated animate__fadeIn opacity-25"
                                         src={ImgPokemon}
                                         alt="Imagem do Pokemon."
@@ -243,6 +248,41 @@ function PokeImages(props) {
                             imgSize={"25px"}
                             bgSize={"50px"}
                         />
+
+                        {props.pokemonCategory &&
+                        props.pokemonCategory.baby === true ? (
+                            <div
+                                className="div-title-category-pokemon"
+                                style={{
+                                    background:
+                                        "linear-gradient(45deg, #ee9ca7 0%, #ffdde1 100%)",
+                                }}
+                            >
+                                <h4>Baby</h4>
+                            </div>
+                        ) : props.pokemonCategory.legendary === true ? (
+                            <div
+                                className="div-title-category-pokemon"
+                                style={{
+                                    background:
+                                        "radial-gradient(circle at 10% 20%, rgb(228, 118, 0) 0%, rgb(247, 189, 2) 90%)",
+                                }}
+                            >
+                                <h4>Legendary</h4>
+                            </div>
+                        ) : props.pokemonCategory.mythical === true ? (
+                            <div
+                                className="div-title-category-pokemon"
+                                style={{
+                                    background:
+                                        "linear-gradient(109.8deg, rgb(62, 5, 116) -5.2%, rgb(41, 14, 151) -5.2%, rgb(216, 68, 148) 103.3%)",
+                                }}
+                            >
+                                <h4>Mythical</h4>
+                            </div>
+                        ) : (
+                            ""
+                        )}
                     </div>
                 </div>
 
@@ -275,14 +315,12 @@ function PokeImages(props) {
                             <div className="div-image animate__animated animate__fadeIn mb-4">
                                 {ImgPokemon !== null && props.img ? (
                                     <img
-                                        //id="imgPokeInfo"
                                         className="imgPokeInfo animate__animated animate__fadeIn"
                                         src={ImgPokemon}
                                         alt="Imagem do Pokemon."
                                     />
                                 ) : (
                                     <img
-                                        //id="imgPokeInfo"
                                         className="imgPokeInfo animate__animated animate__fadeIn opacity-25"
                                         src={ImgPokemon}
                                         alt="Imagem do Pokemon."

@@ -124,7 +124,7 @@ export const Container = styled.div`
     }
 
     .dashboard .row-evolutions div .card .card-body .div-title-evolution h3 {
-        color: #0d6efd;
+        color: #7b8a9a;
     }
 
     .div-evolutions {
