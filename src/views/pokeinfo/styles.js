@@ -75,7 +75,101 @@ export const Container = styled.div`
     }
 
     .dashboard .row-training-breeding div .card {
-        height: 210px;
+        height: 230px;
+    }
+
+    .dashboard
+        .row-training-breeding
+        .card
+        .card-body
+        .table-ev-yield
+        tbody
+        tr
+        td,
+    th {
+        color: #566a7f;
+    }
+
+    .dashboard
+        .row-training-breeding
+        .card
+        .card-body
+        .table-ev-yield
+        tbody
+        tr
+        th {
+        min-width: 150px;
+    }
+
+    .dashboard .row-training-breeding .card .card-body .div-gender {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .dashboard .row-training-breeding .card .card-body .div-gender h5 i {
+        font-size: 1.4rem;
+        padding: 8px;
+        border-radius: 15px;
+        color: #fff;
+    }
+
+    .dashboard
+        .row-training-breeding
+        .card
+        .card-body
+        .div-gender
+        .gender-female {
+        margin-right: 40px;
+    }
+
+    .dashboard
+        .row-training-breeding
+        .card
+        .card-body
+        .div-gender
+        .gender-female
+        h5
+        i {
+        background-color: #8e44ad;
+    }
+
+    .dashboard
+        .row-training-breeding
+        .card
+        .card-body
+        .div-gender
+        .gender-male
+        h5
+        i {
+        background-color: #3498db;
+    }
+
+    .dashboard .row-training-breeding .card .card-body .div-gender p {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #637588;
+        margin-top: 15px;
+        padding-left: 3px;
+    }
+
+    .dashboard
+        .row-training-breeding
+        .card
+        .card-body
+        .div-gender
+        .gender-female
+        p {
+        border-bottom: 2px solid #8e44ad;
+    }
+
+    .dashboard
+        .row-training-breeding
+        .card
+        .card-body
+        .div-gender
+        .gender-male
+        p {
+        border-bottom: 2px solid #3498db;
     }
 
     .dashboard .row-stats-Effectiveness div .card .card-body .div-stats {
@@ -168,6 +262,11 @@ export const Container = styled.div`
 
     .div-evolutions .div-pokemon-evolutions .middle-evolution-link {
         width: auto;
+    }
+
+    .div-evolutions .table-evo-details tbody tr td,
+    th {
+        color: #566a7f;
     }
 
     .li-evo-arrow p {

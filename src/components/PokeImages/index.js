@@ -137,6 +137,40 @@ function PokeImages(props) {
                             <span className="poke-number">
                                 #{zeroLeft(idPokemonActual)}
                             </span>{" "}
+                            {props.pokemonCategory &&
+                            props.pokemonCategory.baby === true ? (
+                                <div
+                                    className="div-title-category-pokemon"
+                                    style={{
+                                        background:
+                                            "linear-gradient(45deg, #ee9ca7 0%, #ffdde1 100%)",
+                                    }}
+                                >
+                                    <h4>Baby</h4>
+                                </div>
+                            ) : props.pokemonCategory.legendary === true ? (
+                                <div
+                                    className="div-title-category-pokemon"
+                                    style={{
+                                        background:
+                                            "radial-gradient(circle at 10% 20%, rgb(228, 118, 0) 0%, rgb(247, 189, 2) 90%)",
+                                    }}
+                                >
+                                    <h4>Legendary</h4>
+                                </div>
+                            ) : props.pokemonCategory.mythical === true ? (
+                                <div
+                                    className="div-title-category-pokemon"
+                                    style={{
+                                        background:
+                                            "linear-gradient(109.8deg, rgb(62, 5, 116) -5.2%, rgb(41, 14, 151) -5.2%, rgb(216, 68, 148) 103.3%)",
+                                    }}
+                                >
+                                    <h4>Mythical</h4>
+                                </div>
+                            ) : (
+                                ""
+                            )}
                         </h1>
                     </div>
 
@@ -248,41 +282,6 @@ function PokeImages(props) {
                             imgSize={"25px"}
                             bgSize={"50px"}
                         />
-
-                        {props.pokemonCategory &&
-                        props.pokemonCategory.baby === true ? (
-                            <div
-                                className="div-title-category-pokemon"
-                                style={{
-                                    background:
-                                        "linear-gradient(45deg, #ee9ca7 0%, #ffdde1 100%)",
-                                }}
-                            >
-                                <h4>Baby</h4>
-                            </div>
-                        ) : props.pokemonCategory.legendary === true ? (
-                            <div
-                                className="div-title-category-pokemon"
-                                style={{
-                                    background:
-                                        "radial-gradient(circle at 10% 20%, rgb(228, 118, 0) 0%, rgb(247, 189, 2) 90%)",
-                                }}
-                            >
-                                <h4>Legendary</h4>
-                            </div>
-                        ) : props.pokemonCategory.mythical === true ? (
-                            <div
-                                className="div-title-category-pokemon"
-                                style={{
-                                    background:
-                                        "linear-gradient(109.8deg, rgb(62, 5, 116) -5.2%, rgb(41, 14, 151) -5.2%, rgb(216, 68, 148) 103.3%)",
-                                }}
-                            >
-                                <h4>Mythical</h4>
-                            </div>
-                        ) : (
-                            ""
-                        )}
                     </div>
                 </div>
 
