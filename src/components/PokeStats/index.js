@@ -54,7 +54,7 @@ function PokeStats(props) {
                 <tbody>
                     <tr>
                         <td className="td-title">HP</td>
-                        <td className="td-value">{props.hp}</td>
+                        <td className="td-value">{props.stats[0].base_stat}</td>
                         <td>
                             <div className="progress">
                                 <div
@@ -63,14 +63,14 @@ function PokeStats(props) {
                                     aria-label="Basic example"
                                     style={{
                                         width: `${findValueStatsInPercentage(
-                                            props.hp
+                                            props.stats[0].base_stat
                                         )}%`,
                                         backgroundColor: `${getColorBar(
-                                            props.hp
+                                            props.stats[0].base_stat
                                         )}`,
                                     }}
                                     aria-valuenow={findValueStatsInPercentage(
-                                        props.hp
+                                        props.stats[0].base_stat
                                     )}
                                     aria-valuemin="0"
                                     aria-valuemax="100"
@@ -80,7 +80,7 @@ function PokeStats(props) {
                     </tr>
                     <tr>
                         <td className="td-title">Attack</td>
-                        <td className="td-value">{props.attack}</td>
+                        <td className="td-value">{props.stats[1].base_stat}</td>
                         <td>
                             <div className="progress">
                                 <div
@@ -89,14 +89,14 @@ function PokeStats(props) {
                                     aria-label="Basic example"
                                     style={{
                                         width: `${findValueStatsInPercentage(
-                                            props.attack
+                                            props.stats[1].base_stat
                                         )}%`,
                                         backgroundColor: `${getColorBar(
-                                            props.attack
+                                            props.stats[1].base_stat
                                         )}`,
                                     }}
                                     aria-valuenow={findValueStatsInPercentage(
-                                        props.attack
+                                        props.stats[1].base_stat
                                     )}
                                     aria-valuemin="0"
                                     aria-valuemax="100"
@@ -106,7 +106,7 @@ function PokeStats(props) {
                     </tr>
                     <tr>
                         <td className="td-title">Defense</td>
-                        <td className="td-value">{props.defense}</td>
+                        <td className="td-value">{props.stats[2].base_stat}</td>
                         <td>
                             <div className="progress">
                                 <div
@@ -115,14 +115,14 @@ function PokeStats(props) {
                                     aria-label="Basic example"
                                     style={{
                                         width: `${findValueStatsInPercentage(
-                                            props.defense
+                                            props.stats[2].base_stat
                                         )}%`,
                                         backgroundColor: `${getColorBar(
-                                            props.defense
+                                            props.stats[2].base_stat
                                         )}`,
                                     }}
                                     aria-valuenow={findValueStatsInPercentage(
-                                        props.defense
+                                        props.stats[2].base_stat
                                     )}
                                     aria-valuemin="0"
                                     aria-valuemax="100"
@@ -132,7 +132,7 @@ function PokeStats(props) {
                     </tr>
                     <tr>
                         <td className="td-title">Sp. Atk</td>
-                        <td className="td-value">{props.attackSpecial}</td>
+                        <td className="td-value">{props.stats[3].base_stat}</td>
                         <td>
                             <div className="progress">
                                 <div
@@ -141,14 +141,14 @@ function PokeStats(props) {
                                     aria-label="Basic example"
                                     style={{
                                         width: `${findValueStatsInPercentage(
-                                            props.attackSpecial
+                                            props.stats[3].base_stat
                                         )}%`,
                                         backgroundColor: `${getColorBar(
-                                            props.attackSpecial
+                                            props.stats[3].base_stat
                                         )}`,
                                     }}
                                     aria-valuenow={findValueStatsInPercentage(
-                                        props.attackSpecial
+                                        props.stats[3].base_stat
                                     )}
                                     aria-valuemin="0"
                                     aria-valuemax="100"
@@ -158,7 +158,7 @@ function PokeStats(props) {
                     </tr>
                     <tr>
                         <td className="td-title">Sp. Def</td>
-                        <td className="td-value">{props.defenseSpecial}</td>
+                        <td className="td-value">{props.stats[4].base_stat}</td>
                         <td>
                             <div className="progress">
                                 <div
@@ -167,14 +167,14 @@ function PokeStats(props) {
                                     aria-label="Basic example"
                                     style={{
                                         width: `${findValueStatsInPercentage(
-                                            props.defenseSpecial
+                                            props.stats[4].base_stat
                                         )}%`,
                                         backgroundColor: `${getColorBar(
-                                            props.defenseSpecial
+                                            props.stats[4].base_stat
                                         )}`,
                                     }}
                                     aria-valuenow={findValueStatsInPercentage(
-                                        props.defenseSpecial
+                                        props.stats[4].base_stat
                                     )}
                                     aria-valuemin="0"
                                     aria-valuemax="100"
@@ -184,7 +184,7 @@ function PokeStats(props) {
                     </tr>
                     <tr>
                         <td className="td-title">Speed</td>
-                        <td className="td-value">{props.speed}</td>
+                        <td className="td-value">{props.stats[5].base_stat}</td>
                         <td>
                             <div className="progress">
                                 <div
@@ -193,14 +193,14 @@ function PokeStats(props) {
                                     aria-label="Basic example"
                                     style={{
                                         width: `${findValueStatsInPercentage(
-                                            props.speed
+                                            props.stats[5].base_stat
                                         )}%`,
                                         backgroundColor: `${getColorBar(
-                                            props.speed
+                                            props.stats[5].base_stat
                                         )}`,
                                     }}
                                     aria-valuenow={findValueStatsInPercentage(
-                                        props.speed
+                                        props.stats[5].base_stat
                                     )}
                                     aria-valuemin="0"
                                     aria-valuemax="100"
@@ -211,7 +211,12 @@ function PokeStats(props) {
                     <tr>
                         <td className="td-title">Total</td>
                         <td className="td-value td-total">
-                            {props.totalStats}
+                            {props.stats[0].base_stat +
+                                props.stats[1].base_stat +
+                                props.stats[3].base_stat +
+                                props.stats[2].base_stat +
+                                props.stats[4].base_stat +
+                                props.stats[5].base_stat}
                         </td>
                     </tr>
                 </tbody>

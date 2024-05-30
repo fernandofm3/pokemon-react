@@ -129,22 +129,7 @@ function FeaturedPokemon(props) {
                 </div>
 
                 <div className="div-featured-pokemon-2 mb-3">
-                    <PokeStats
-                        hp={props.pokemon.stats[0].base_stat}
-                        attack={props.pokemon.stats[1].base_stat}
-                        attackSpecial={props.pokemon.stats[3].base_stat}
-                        defense={props.pokemon.stats[2].base_stat}
-                        defenseSpecial={props.pokemon.stats[4].base_stat}
-                        speed={props.pokemon.stats[5].base_stat}
-                        totalStats={
-                            props.pokemon.stats[0].base_stat +
-                            props.pokemon.stats[1].base_stat +
-                            props.pokemon.stats[2].base_stat +
-                            props.pokemon.stats[3].base_stat +
-                            props.pokemon.stats[4].base_stat +
-                            props.pokemon.stats[5].base_stat
-                        }
-                    />
+                    <PokeStats stats={props.pokemon.stats} />
                 </div>
 
                 <div className="div-featured-pokemon-3 mt-3">

@@ -82,6 +82,25 @@ function PokeInfo() {
         return a / 255; // Chance de captura em porcentagem
     }
 
+    //Adicionando zero a esqueda no númeoro do Pokemon.
+    function zeroLeft(pokeId) {
+        if (pokeId < 10) {
+            return "000" + pokeId;
+        }
+
+        if (pokeId >= 10 && pokeId < 100) {
+            return "00" + pokeId;
+        }
+
+        if (pokeId >= 100 && pokeId < 1000) {
+            return "0" + pokeId;
+        }
+
+        if (pokeId >= 1000) {
+            return pokeId;
+        }
+    }
+
     const query = useQuery();
     const id = query.get("id");
     const qtPokemons = query.get("qtPokemons");
@@ -109,19 +128,7 @@ function PokeInfo() {
             types: PokeData.types,
             height: PokeData.height / 10,
             weight: PokeData.weight / 10,
-            hp: PokeData.stats[0].base_stat,
-            attack: PokeData.stats[1].base_stat,
-            attackSpecial: PokeData.stats[3].base_stat,
-            defense: PokeData.stats[2].base_stat,
-            defenseSpecial: PokeData.stats[4].base_stat,
-            speed: PokeData.stats[5].base_stat,
-            totalStats:
-                PokeData.stats[0].base_stat +
-                PokeData.stats[1].base_stat +
-                PokeData.stats[3].base_stat +
-                PokeData.stats[2].base_stat +
-                PokeData.stats[4].base_stat +
-                PokeData.stats[5].base_stat,
+            stats: PokeData.stats,
             abilities:
                 PokeData.abilities === null
                     ? "Undefined"
@@ -482,12 +489,14 @@ function PokeInfo() {
 
     const handleBallTypeChange = (e) => setBallType(e.target.value);
 
-    const catchChance = calculateCatchRate(
-        infoPokemon.hp,
-        infoPokemon.hp,
-        infoPokemon.captureRate,
-        pokeBalls[ballType]
-    );
+    const catchChance =
+        infoPokemon.stats &&
+        calculateCatchRate(
+            infoPokemon.stats[0].base_stat,
+            infoPokemon.stats[0].base_stat,
+            infoPokemon.captureRate,
+            pokeBalls[ballType]
+        );
     //#############################################################################
 
     //Recuperando os valores dos Genders em porcentagem com uma base máxima de 8 para ser Female. Conta usada regra de 3.
@@ -565,7 +574,7 @@ function PokeInfo() {
                                             }}
                                         >
                                             <i
-                                                className="bi bi-diagram-3-fill"
+                                                className="bi bi-fingerprint"
                                                 style={{
                                                     color: `${borderColorInfoPokemon(
                                                         infoPokemon.pokemonColor
@@ -760,21 +769,7 @@ function PokeInfo() {
 
                                             <div className="mt-4">
                                                 <PokeStats
-                                                    hp={infoPokemon.hp}
-                                                    attack={infoPokemon.attack}
-                                                    attackSpecial={
-                                                        infoPokemon.attackSpecial
-                                                    }
-                                                    defense={
-                                                        infoPokemon.defense
-                                                    }
-                                                    defenseSpecial={
-                                                        infoPokemon.defenseSpecial
-                                                    }
-                                                    speed={infoPokemon.speed}
-                                                    totalStats={
-                                                        infoPokemon.totalStats
-                                                    }
+                                                    stats={infoPokemon.stats}
                                                 />
                                             </div>
                                         </div>
@@ -801,7 +796,7 @@ function PokeInfo() {
                                             }}
                                         >
                                             <i
-                                                className="bi bi-shield-slash-fill"
+                                                className="bi bi-trophy-fill"
                                                 style={{
                                                     color: `${borderColorInfoPokemon(
                                                         infoPokemon.pokemonColor
@@ -861,7 +856,7 @@ function PokeInfo() {
                                             }}
                                         >
                                             <i
-                                                className="bi bi-save-fill ms-1 me-1"
+                                                className="bi bi-check-circle-fill"
                                                 style={{
                                                     color: `${borderColorInfoPokemon(
                                                         infoPokemon.pokemonColor
@@ -1015,7 +1010,7 @@ function PokeInfo() {
                                             }}
                                         >
                                             <i
-                                                className="bi bi-star-fill"
+                                                className="bi bi-journal-bookmark-fill"
                                                 style={{
                                                     color: `${borderColorInfoPokemon(
                                                         infoPokemon.pokemonColor
@@ -1065,6 +1060,99 @@ function PokeInfo() {
                                     </div>
                                 </div>
                             </div>
+
+                            <div className="col-sm-12 col-lg-6">
+                                {" "}
+                                <div
+                                    className="card"
+                                    style={{
+                                        borderBottom: `5px solid ${borderColorInfoPokemon(
+                                            infoPokemon.pokemonColor
+                                        )}`,
+                                    }}
+                                >
+                                    <div className="card-body text-capitalize">
+                                        <div
+                                            className="data-icon"
+                                            style={{
+                                                backgroundColor: `${lightColorInfoPokemon(
+                                                    infoPokemon.pokemonColor
+                                                )}`,
+                                            }}
+                                        >
+                                            <i
+                                                className="bi bi-battery-half"
+                                                style={{
+                                                    color: `${borderColorInfoPokemon(
+                                                        infoPokemon.pokemonColor
+                                                    )}`,
+                                                }}
+                                            ></i>
+                                        </div>
+
+                                        <h5>EV Yield</h5>
+
+                                        <div className="table-responsive">
+                                            <table className="table table-sm table-ev-yield">
+                                                <thead>
+                                                    <tr className="table-light">
+                                                        {infoPokemon.stats
+                                                            .filter(
+                                                                (stat) =>
+                                                                    stat.effort >
+                                                                    0
+                                                            )
+                                                            .map((stat) => (
+                                                                <th
+                                                                    scope="col"
+                                                                    className="text-center"
+                                                                    key={
+                                                                        stat
+                                                                            .stat
+                                                                            .name
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        stat
+                                                                            .stat
+                                                                            .name
+                                                                    }
+                                                                </th>
+                                                            ))}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        {infoPokemon.stats
+                                                            .filter(
+                                                                (stat) =>
+                                                                    stat.effort >
+                                                                    0
+                                                            )
+                                                            .map((stat) => (
+                                                                <td
+                                                                    className="text-center"
+                                                                    key={
+                                                                        stat
+                                                                            .stat
+                                                                            .name
+                                                                    }
+                                                                >
+                                                                    <span className="badge text-bg-success">
+                                                                        {
+                                                                            stat.effort
+                                                                        }
+                                                                    </span>
+                                                                </td>
+                                                            ))}
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="col-sm-6 col-lg-3">
                                 {" "}
                                 <div
@@ -1103,7 +1191,6 @@ function PokeInfo() {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="col-sm-6 col-lg-3">
                                 {" "}
                                 <div
@@ -1125,7 +1212,7 @@ function PokeInfo() {
                                         >
                                             <i
                                                 //className="bi bi-basket-fill"
-                                                className="bi bi-hourglass-split"
+                                                className="bi bi-person-walking"
                                                 style={{
                                                     color: `${borderColorInfoPokemon(
                                                         infoPokemon.pokemonColor
@@ -1148,6 +1235,7 @@ function PokeInfo() {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="col-sm-12 col-lg-6">
                                 {" "}
                                 <div
@@ -1179,27 +1267,32 @@ function PokeInfo() {
 
                                         <h5 className="mb-4">Gender</h5>
 
-                                        <div className="d-flex justify-content-around">
-                                            <div className="d-flex mb-0">
-                                                <h5 className="text-danger-emphasis">
+                                        <div className="div-gender">
+                                            <div className="gender-female">
+                                                <h5>
                                                     <i className="bi bi-gender-female me-2"></i>
-                                                    Female{" ("}
+                                                </h5>
+
+                                                <p>
+                                                    Female{" "}
                                                     {findValueGenderInPercentage(
                                                         infoPokemon.gender
                                                     )}
-                                                    %{") "}
-                                                </h5>
+                                                    %
+                                                </p>
                                             </div>
 
-                                            <div className="d-flex">
-                                                <h5 className="text-primary">
+                                            <div className="gender-male">
+                                                <h5>
                                                     <i className="bi bi-gender-male me-2"></i>
-                                                    Male{" ("}
+                                                </h5>
+                                                <p>
+                                                    Male{" "}
                                                     {findValueGenderInPercentage(
                                                         8 - infoPokemon.gender
                                                     )}
-                                                    %{") "}
-                                                </h5>
+                                                    %
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -1565,7 +1658,7 @@ function PokeInfo() {
 
                                             <div className=" p-3">
                                                 <div className="table-responsive">
-                                                    <table className="table table-hover table-bordered">
+                                                    <table className="table table-hover table-evo-details">
                                                         <thead>
                                                             <tr className="table-light">
                                                                 <th
@@ -1606,9 +1699,9 @@ function PokeInfo() {
                                                                                 }
                                                                             >
                                                                                 <th scope="row">
-                                                                                    {
+                                                                                    {zeroLeft(
                                                                                         p.id
-                                                                                    }
+                                                                                    )}
                                                                                 </th>
                                                                                 <td className="text-capitalize">
                                                                                     {
@@ -1643,9 +1736,9 @@ function PokeInfo() {
                                                                                 }
                                                                             >
                                                                                 <th scope="row">
-                                                                                    {
+                                                                                    {zeroLeft(
                                                                                         p.id
-                                                                                    }
+                                                                                    )}
                                                                                 </th>
                                                                                 <td className="text-capitalize">
                                                                                     {
@@ -1741,9 +1834,9 @@ function PokeInfo() {
                                                                                 }
                                                                             >
                                                                                 <th scope="row">
-                                                                                    {
+                                                                                    {zeroLeft(
                                                                                         p.id
-                                                                                    }
+                                                                                    )}
                                                                                 </th>
                                                                                 <td className="text-capitalize">
                                                                                     {
