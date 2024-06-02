@@ -1745,7 +1745,7 @@ function PokeInfo() {
                                                     )}
                                             </ul>
 
-                                            {/* {FirstEvolution.length > 0 &&
+                                            {FirstEvolution.length > 0 &&
                                                 MiddleEvolution.length > 0 && (
                                                     <div className=" p-3">
                                                         <div className="table-responsive">
@@ -1819,8 +1819,7 @@ function PokeInfo() {
                                                                         0 &&
                                                                         MiddleEvolution.map(
                                                                             (
-                                                                                p,
-                                                                                index
+                                                                                p
                                                                             ) => {
                                                                                 return (
                                                                                     <tr
@@ -1843,9 +1842,8 @@ function PokeInfo() {
                                                                                         </td>
 
                                                                                         <td className="text-capitalize">
-                                                                                            {p
-                                                                                                .evolutionDetails
-                                                                                                .trigger &&
+                                                                                            {p.evolutionDetails !==
+                                                                                                undefined &&
                                                                                             p
                                                                                                 .evolutionDetails
                                                                                                 .trigger
@@ -1858,58 +1856,61 @@ function PokeInfo() {
                                                                                         </td>
 
                                                                                         <td className="">
-                                                                                            {Object.entries(
-                                                                                                p.evolutionDetails
-                                                                                            )
-                                                                                                .filter(
-                                                                                                    ([
-                                                                                                        key,
-                                                                                                        value,
-                                                                                                    ]) =>
-                                                                                                        value !==
-                                                                                                            null &&
-                                                                                                        value !==
-                                                                                                            false &&
-                                                                                                        value !==
-                                                                                                            ""
-                                                                                                )
-                                                                                                .map(
-                                                                                                    ([
-                                                                                                        key,
-                                                                                                        value,
-                                                                                                    ]) => (
-                                                                                                        <span
-                                                                                                            className="w-100"
-                                                                                                            key={
-                                                                                                                key
-                                                                                                            }
-                                                                                                        >
-                                                                                                            {key !==
-                                                                                                                "trigger" &&
-                                                                                                                key +
-                                                                                                                    " : "}
-                                                                                                            {key !==
-                                                                                                                "trigger" &&
-                                                                                                            typeof value ===
-                                                                                                                "object" &&
-                                                                                                            value !==
-                                                                                                                null &&
-                                                                                                            "name" in
-                                                                                                                value ? (
-                                                                                                                <span className="badge text-bg-warning me-3">
-                                                                                                                    {value.name.toString()}
-                                                                                                                </span>
-                                                                                                            ) : key !==
-                                                                                                              "trigger" ? (
-                                                                                                                <span className="badge text-bg-warning me-3">
-                                                                                                                    {value.toString()}
-                                                                                                                </span>
-                                                                                                            ) : (
-                                                                                                                "-"
-                                                                                                            )}
-                                                                                                        </span>
-                                                                                                    )
-                                                                                                )}
+                                                                                            {p.evolutionDetails !==
+                                                                                            undefined
+                                                                                                ? Object.entries(
+                                                                                                      p.evolutionDetails
+                                                                                                  )
+                                                                                                      .filter(
+                                                                                                          ([
+                                                                                                              key,
+                                                                                                              value,
+                                                                                                          ]) =>
+                                                                                                              value !==
+                                                                                                                  null &&
+                                                                                                              value !==
+                                                                                                                  false &&
+                                                                                                              value !==
+                                                                                                                  ""
+                                                                                                      )
+                                                                                                      .map(
+                                                                                                          ([
+                                                                                                              key,
+                                                                                                              value,
+                                                                                                          ]) => (
+                                                                                                              <span
+                                                                                                                  className="w-100"
+                                                                                                                  key={
+                                                                                                                      key
+                                                                                                                  }
+                                                                                                              >
+                                                                                                                  {key !==
+                                                                                                                      "trigger" &&
+                                                                                                                      key +
+                                                                                                                          " : "}
+                                                                                                                  {key !==
+                                                                                                                      "trigger" &&
+                                                                                                                  typeof value ===
+                                                                                                                      "object" &&
+                                                                                                                  value !==
+                                                                                                                      null &&
+                                                                                                                  "name" in
+                                                                                                                      value ? (
+                                                                                                                      <span className="badge text-bg-warning me-3">
+                                                                                                                          {value.name.toString()}
+                                                                                                                      </span>
+                                                                                                                  ) : key !==
+                                                                                                                    "trigger" ? (
+                                                                                                                      <span className="badge text-bg-warning me-3">
+                                                                                                                          {value.toString()}
+                                                                                                                      </span>
+                                                                                                                  ) : (
+                                                                                                                      "-"
+                                                                                                                  )}
+                                                                                                              </span>
+                                                                                                          )
+                                                                                                      )
+                                                                                                : "-"}
                                                                                         </td>
                                                                                     </tr>
                                                                                 );
@@ -1920,8 +1921,7 @@ function PokeInfo() {
                                                                         0 &&
                                                                         LastEvolution.map(
                                                                             (
-                                                                                p,
-                                                                                index
+                                                                                p
                                                                             ) => {
                                                                                 return (
                                                                                     <tr
@@ -1943,9 +1943,8 @@ function PokeInfo() {
                                                                                             3
                                                                                         </td>
                                                                                         <td className="text-capitalize">
-                                                                                            {p
-                                                                                                .evolutionDetails
-                                                                                                .trigger &&
+                                                                                            {p.evolutionDetails !==
+                                                                                                undefined &&
                                                                                             p
                                                                                                 .evolutionDetails
                                                                                                 .trigger
@@ -1958,57 +1957,60 @@ function PokeInfo() {
                                                                                         </td>
 
                                                                                         <td className="">
-                                                                                            {Object.entries(
-                                                                                                p.evolutionDetails
-                                                                                            )
-                                                                                                .filter(
-                                                                                                    ([
-                                                                                                        key,
-                                                                                                        value,
-                                                                                                    ]) =>
-                                                                                                        value !==
-                                                                                                            null &&
-                                                                                                        value !==
-                                                                                                            false &&
-                                                                                                        value !==
-                                                                                                            ""
-                                                                                                )
-                                                                                                .map(
-                                                                                                    ([
-                                                                                                        key,
-                                                                                                        value,
-                                                                                                    ]) => (
-                                                                                                        <span
-                                                                                                            key={
-                                                                                                                key
-                                                                                                            }
-                                                                                                        >
-                                                                                                            {key !==
-                                                                                                                "trigger" &&
-                                                                                                                key +
-                                                                                                                    " : "}
-                                                                                                            {key !==
-                                                                                                                "trigger" &&
-                                                                                                            typeof value ===
-                                                                                                                "object" &&
-                                                                                                            value !==
-                                                                                                                null &&
-                                                                                                            "name" in
-                                                                                                                value ? (
-                                                                                                                <span className="badge text-bg-danger me-3">
-                                                                                                                    {value.name.toString()}
-                                                                                                                </span>
-                                                                                                            ) : key !==
-                                                                                                              "trigger" ? (
-                                                                                                                <span className="badge text-bg-danger me-3">
-                                                                                                                    {value.toString()}
-                                                                                                                </span>
-                                                                                                            ) : (
-                                                                                                                "-"
-                                                                                                            )}
-                                                                                                        </span>
-                                                                                                    )
-                                                                                                )}
+                                                                                            {p.evolutionDetails !==
+                                                                                            undefined
+                                                                                                ? Object.entries(
+                                                                                                      p.evolutionDetails
+                                                                                                  )
+                                                                                                      .filter(
+                                                                                                          ([
+                                                                                                              key,
+                                                                                                              value,
+                                                                                                          ]) =>
+                                                                                                              value !==
+                                                                                                                  null &&
+                                                                                                              value !==
+                                                                                                                  false &&
+                                                                                                              value !==
+                                                                                                                  ""
+                                                                                                      )
+                                                                                                      .map(
+                                                                                                          ([
+                                                                                                              key,
+                                                                                                              value,
+                                                                                                          ]) => (
+                                                                                                              <span
+                                                                                                                  key={
+                                                                                                                      key
+                                                                                                                  }
+                                                                                                              >
+                                                                                                                  {key !==
+                                                                                                                      "trigger" &&
+                                                                                                                      key +
+                                                                                                                          " : "}
+                                                                                                                  {key !==
+                                                                                                                      "trigger" &&
+                                                                                                                  typeof value ===
+                                                                                                                      "object" &&
+                                                                                                                  value !==
+                                                                                                                      null &&
+                                                                                                                  "name" in
+                                                                                                                      value ? (
+                                                                                                                      <span className="badge text-bg-danger me-3">
+                                                                                                                          {value.name.toString()}
+                                                                                                                      </span>
+                                                                                                                  ) : key !==
+                                                                                                                    "trigger" ? (
+                                                                                                                      <span className="badge text-bg-danger me-3">
+                                                                                                                          {value.toString()}
+                                                                                                                      </span>
+                                                                                                                  ) : (
+                                                                                                                      "-"
+                                                                                                                  )}
+                                                                                                              </span>
+                                                                                                          )
+                                                                                                      )
+                                                                                                : "-"}
                                                                                         </td>
                                                                                     </tr>
                                                                                 );
@@ -2018,7 +2020,7 @@ function PokeInfo() {
                                                             </table>
                                                         </div>
                                                     </div>
-                                                )} */}
+                                                )}
                                         </div>
                                     </div>
                                 </div>
