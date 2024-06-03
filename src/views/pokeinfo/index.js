@@ -108,6 +108,7 @@ function PokeInfo() {
     const TotalPokemon = qtPokemons;
     const [PokeData, setPokeData] = useState({});
     const [PokeDataSpecies, setPokeDataSpecies] = useState({});
+    const [PokeGeneration, setPokeGeneration] = useState({});
     const [FirstEvolution, setFirstEvolution] = useState([]);
     const [MiddleEvolution, setMiddleEvolution] = useState([]);
     const [LastEvolution, setLastEvolution] = useState([]);
@@ -125,6 +126,7 @@ function PokeInfo() {
             id: PokeData.id,
             img: spriteAdapterOfficial(PokeData.sprites),
             name: splitName(PokeData.name),
+            regionName: PokeGeneration.main_region,
             types: PokeData.types,
             height: PokeData.height / 10,
             weight: PokeData.weight / 10,
@@ -203,14 +205,28 @@ function PokeInfo() {
         if (qtPokemons && PokemonId <= Number(qtPokemons)) {
             //Buscando informações Pokemon(Species) com o ID recuperado do useParams.
             api.get(`/pokemon-species/${PokemonId}`).then((response) => {
+                //Informações recuperadas do pokemon-species.
+                let resultPokeDataSpecies = response.data;
+
+                //Enviando o objeto (infoPokemon).
+                setPokeDataSpecies(resultPokeDataSpecies);
+
+                //Função assíncrona auto-executável para pegar as informações da geração
+                (async () => {
+                    try {
+                        const response = await fetch(
+                            resultPokeDataSpecies.generation.url
+                        );
+                        const result = await response.json();
+                        setPokeGeneration(result);
+                    } catch (error) {
+                        console.error("Error fetching data:", error);
+                    } finally {
+                    }
+                })();
+
                 //Função responsável por tratar as Evoluções dos Pokemons.
                 async function getEvolutions() {
-                    //Informações recuperadas do pokemon-species.
-                    let resultPokeDataSpecies = response.data;
-
-                    //Enviando o objeto (infoPokemon).
-                    setPokeDataSpecies(resultPokeDataSpecies);
-
                     let resultPokeEvolutions = "";
 
                     //Verificando se possui evolução.
@@ -555,6 +571,7 @@ function PokeInfo() {
                                             pokemonCategory={
                                                 infoPokemon.pokemonCategory
                                             }
+                                            regionName={infoPokemon.regionName}
                                         />
                                     </div>
                                 </div>
@@ -738,7 +755,7 @@ function PokeInfo() {
                         </div>
 
                         <div className="row row-stats-Effectiveness">
-                            <div className="col-xl-5">
+                            <div className="col-xl-12">
                                 <div
                                     className="card"
                                     style={{
@@ -785,7 +802,7 @@ function PokeInfo() {
                                 </div>
                             </div>
 
-                            <div className="col-xl-7">
+                            <div className="col-xl-12">
                                 <div
                                     className="card"
                                     style={{
@@ -834,6 +851,9 @@ function PokeInfo() {
                                                         <TypesStats
                                                             DataTypesStats={
                                                                 DataTypesStats
+                                                            }
+                                                            pokemonTypes={
+                                                                infoPokemon.types
                                                             }
                                                         />
                                                     )}

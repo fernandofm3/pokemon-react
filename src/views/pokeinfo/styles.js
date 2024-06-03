@@ -1,5 +1,4 @@
 import styled from "styled-components";
-//import wallpaperEvolution from "../../assets/wallpaper-evolution.png";
 
 export const Container = styled.div`
     max-width: 1280px;
@@ -341,8 +340,8 @@ export const Container = styled.div`
     @media screen and (min-width: 1200px) {
         margin-top: 100px;
 
-        .dashboard .row-stats-Effectiveness div .card {
-            height: 610px;
-        }
+        // .dashboard .row-stats-Effectiveness div .card {
+        //     height: 780px;
+        // }
     }
 `;

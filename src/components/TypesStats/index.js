@@ -3,8 +3,6 @@ import * as S from "./styles";
 import PokeTypes from "../../components/PokeTypes";
 
 const TypesStats = (props) => {
-    //console.log(props.DataTypesStats);
-
     const dataTypes = props.DataTypesStats;
     let arrayDoubleDamageFrom = [];
     let arrayDoubleDamageTo = [];
@@ -212,7 +210,7 @@ const TypesStats = (props) => {
         }
     }
 
-    //Atualizando a eficacia no caso do Pokemon possuir dois types(exe: fire e flying)
+    //Atualizando a eficacia no caso do Pokemon possuir dois types(Exemplo: fire e flying)
     if (dataTypes.length > 1) {
         //Defense
         //Verificando se o arrayNoDamageFrom possui algum type, se sim, depois é verificado nos arrays arrayHalfDamageFrom e
@@ -347,30 +345,54 @@ const TypesStats = (props) => {
                             <tr>
                                 <td>Not effective</td>
                                 <td>
-                                    <PokeTypes types={arrayNoDamageTo} />
+                                    <PokeTypes
+                                        types={arrayNoDamageTo}
+                                        pokemonTypes={props.pokemonTypes}
+                                        AtkDfs="attack"
+                                    />
                                 </td>
                                 <td>
-                                    <PokeTypes types={arrayNoDamageFrom} />
+                                    <PokeTypes
+                                        types={arrayNoDamageFrom}
+                                        pokemonTypes={props.pokemonTypes}
+                                        AtkDfs="defense"
+                                    />
                                 </td>
                             </tr>
 
                             <tr>
                                 <td>Not very effective</td>
                                 <td>
-                                    <PokeTypes types={arrayHalfDamageTo} />
+                                    <PokeTypes
+                                        types={arrayHalfDamageTo}
+                                        pokemonTypes={props.pokemonTypes}
+                                        AtkDfs="attack"
+                                    />
                                 </td>
                                 <td>
-                                    <PokeTypes types={arrayHalfDamageFrom} />
+                                    <PokeTypes
+                                        types={arrayHalfDamageFrom}
+                                        pokemonTypes={props.pokemonTypes}
+                                        AtkDfs="defense"
+                                    />
                                 </td>
                             </tr>
 
                             <tr>
                                 <td>Super effective</td>
                                 <td>
-                                    <PokeTypes types={arrayDoubleDamageTo} />
+                                    <PokeTypes
+                                        types={arrayDoubleDamageTo}
+                                        pokemonTypes={props.pokemonTypes}
+                                        AtkDfs="attack"
+                                    />
                                 </td>
                                 <td>
-                                    <PokeTypes types={arrayDoubleDamageFrom} />
+                                    <PokeTypes
+                                        types={arrayDoubleDamageFrom}
+                                        pokemonTypes={props.pokemonTypes}
+                                        AtkDfs="defense"
+                                    />
                                 </td>
                             </tr>
                         </tbody>
