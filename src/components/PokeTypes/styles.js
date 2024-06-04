@@ -1,6 +1,20 @@
 import styled from "styled-components";
 
 export const PokeTypes = styled.div`
+    .custom-tooltip {
+        padding: 5px 10px;
+        background-color: #000;
+    }
+
+    .tooltip-content span {
+        color: #fff !important;
+        text-shadow: none !important;
+    }
+
+    .tooltip-content .pokemon-type {
+        font-weight: bold;
+    }
+
     .div-types {
         display: flex;
         flex-direction: row;

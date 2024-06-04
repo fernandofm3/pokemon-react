@@ -267,10 +267,15 @@ function PokeImages(props) {
 
                     <h5 className="text-generation">
                         Pokémon introduced in{" "}
-                        <span>
+                        <span className="me-1">
                             Generation{" "}
                             {props.generation &&
                                 getNumberGenerationOfUrl(props.generation)}
+                        </span>
+                        -
+                        <span className="ms-1 text-capitalize">
+                            {props.regionName &&
+                                props.regionName.name + " region"}
                         </span>
                     </h5>
 

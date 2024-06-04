@@ -108,6 +108,7 @@ function PokeInfo() {
     const TotalPokemon = qtPokemons;
     const [PokeData, setPokeData] = useState({});
     const [PokeDataSpecies, setPokeDataSpecies] = useState({});
+    const [PokeGeneration, setPokeGeneration] = useState({});
     const [FirstEvolution, setFirstEvolution] = useState([]);
     const [MiddleEvolution, setMiddleEvolution] = useState([]);
     const [LastEvolution, setLastEvolution] = useState([]);
@@ -125,6 +126,7 @@ function PokeInfo() {
             id: PokeData.id,
             img: spriteAdapterOfficial(PokeData.sprites),
             name: splitName(PokeData.name),
+            regionName: PokeGeneration.main_region,
             types: PokeData.types,
             height: PokeData.height / 10,
             weight: PokeData.weight / 10,
@@ -203,14 +205,28 @@ function PokeInfo() {
         if (qtPokemons && PokemonId <= Number(qtPokemons)) {
             //Buscando informações Pokemon(Species) com o ID recuperado do useParams.
             api.get(`/pokemon-species/${PokemonId}`).then((response) => {
+                //Informações recuperadas do pokemon-species.
+                let resultPokeDataSpecies = response.data;
+
+                //Enviando o objeto (infoPokemon).
+                setPokeDataSpecies(resultPokeDataSpecies);
+
+                //Função assíncrona auto-executável para pegar as informações da geração
+                (async () => {
+                    try {
+                        const response = await fetch(
+                            resultPokeDataSpecies.generation.url
+                        );
+                        const result = await response.json();
+                        setPokeGeneration(result);
+                    } catch (error) {
+                        console.error("Error fetching data:", error);
+                    } finally {
+                    }
+                })();
+
                 //Função responsável por tratar as Evoluções dos Pokemons.
                 async function getEvolutions() {
-                    //Informações recuperadas do pokemon-species.
-                    let resultPokeDataSpecies = response.data;
-
-                    //Enviando o objeto (infoPokemon).
-                    setPokeDataSpecies(resultPokeDataSpecies);
-
                     let resultPokeEvolutions = "";
 
                     //Verificando se possui evolução.
@@ -236,8 +252,8 @@ function PokeInfo() {
                             for (let i = 0; i < evo.evolves_to.length; i++) {
                                 if (
                                     evoChain.indexOf(
-                                        evo.evolves_to[i].species.name === -1
-                                    )
+                                        evo.evolves_to[i].species.name
+                                    ) === -1
                                 ) {
                                     let idSplitedUrl =
                                         evo.evolves_to[i].species.url.split(
@@ -258,6 +274,9 @@ function PokeInfo() {
                                                 evolutionDetails:
                                                     evo.evolves_to[i]
                                                         .evolution_details[0],
+                                                hasEvolution:
+                                                    evo.evolves_to[i].evolves_to
+                                                        .length > 0 && true,
                                             });
                                         });
                                 }
@@ -302,7 +321,11 @@ function PokeInfo() {
                         }
 
                         //Verificando se o Pokemon possui evoluções.
-                        if (evolutions.evolves_to.length > 0) {
+                        if (
+                            evolutions.evolves_to.length > 0 &&
+                            evolutions.evolves_to[0].evolution_details.length >
+                                0
+                        ) {
                             //Extraindo o ID do Pokemon da url
                             let idSplitedUrlPokeOrigin =
                                 resultPokeEvolutions.data.chain.species.url.split(
@@ -321,6 +344,7 @@ function PokeInfo() {
                                         img: spriteAdapterOfficial(
                                             response.data.sprites
                                         ),
+                                        hasEvolution: true,
                                     });
                                     setFirstEvolution(firstEvolutionPokemon);
                                 });
@@ -547,6 +571,7 @@ function PokeInfo() {
                                             pokemonCategory={
                                                 infoPokemon.pokemonCategory
                                             }
+                                            regionName={infoPokemon.regionName}
                                         />
                                     </div>
                                 </div>
@@ -730,7 +755,7 @@ function PokeInfo() {
                         </div>
 
                         <div className="row row-stats-Effectiveness">
-                            <div className="col-xl-5">
+                            <div className="col-xl-12">
                                 <div
                                     className="card"
                                     style={{
@@ -777,7 +802,7 @@ function PokeInfo() {
                                 </div>
                             </div>
 
-                            <div className="col-xl-7">
+                            <div className="col-xl-12">
                                 <div
                                     className="card"
                                     style={{
@@ -826,6 +851,9 @@ function PokeInfo() {
                                                         <TypesStats
                                                             DataTypesStats={
                                                                 DataTypesStats
+                                                            }
+                                                            pokemonTypes={
+                                                                infoPokemon.types
                                                             }
                                                         />
                                                     )}
@@ -1407,45 +1435,20 @@ function PokeInfo() {
                                                             )
                                                         )}
                                                 </li>
-
+                                                {/*## Seta ##*/}
                                                 {MiddleEvolution.length > 0 && (
                                                     <li className="li-evo-arrow">
-                                                        {MiddleEvolution.length >
-                                                            0 &&
-                                                            MiddleEvolution.length <
-                                                                3 &&
-                                                            MiddleEvolution.map(
-                                                                (p) => (
-                                                                    <p
-                                                                        key={
-                                                                            p.id
-                                                                        }
-                                                                    >
-                                                                        <i className="bi bi-caret-right-fill arrow-right"></i>
-                                                                        <i className="bi bi-caret-down-fill arrow-bottom"></i>
-                                                                    </p>
-                                                                )
-                                                            )}
-
-                                                        {MiddleEvolution.length >
-                                                            0 &&
-                                                            MiddleEvolution.length >
-                                                                2 && (
-                                                                <p>
-                                                                    <i className="bi bi-caret-right-fill arrow-right"></i>
-                                                                    <i className="bi bi-caret-down-fill arrow-bottom"></i>
-                                                                </p>
-                                                            )}
+                                                        <p>
+                                                            <i className="bi bi-caret-right-fill arrow-right"></i>
+                                                            <i className="bi bi-caret-down-fill arrow-bottom"></i>
+                                                        </p>
                                                     </li>
-                                                )}
-
-                                                {MiddleEvolution.length > 0 && (
-                                                    <li>
-                                                        {MiddleEvolution.length >
-                                                            0 &&
-                                                            MiddleEvolution.length <
-                                                                3 &&
-                                                            MiddleEvolution.map(
+                                                )}{" "}
+                                                {MiddleEvolution.length > 0 &&
+                                                    MiddleEvolution.length <
+                                                        3 && (
+                                                        <li>
+                                                            {MiddleEvolution.map(
                                                                 (p) => (
                                                                     <Link
                                                                         to={
@@ -1502,100 +1505,77 @@ function PokeInfo() {
                                                                     </Link>
                                                                 )
                                                             )}
-                                                    </li>
-                                                )}
-
+                                                        </li>
+                                                    )}
                                                 {MiddleEvolution.length > 2 &&
                                                     LastEvolution.length <=
                                                         0 && (
                                                         <li className="middle-evolution">
-                                                            {MiddleEvolution.length >
-                                                                0 &&
-                                                                MiddleEvolution.map(
-                                                                    (p) => (
-                                                                        <Link
-                                                                            to={
-                                                                                "/pokeinfo?id=" +
-                                                                                query.get(
-                                                                                    "id"
-                                                                                ) +
-                                                                                "&offset=" +
-                                                                                query.get(
-                                                                                    "offset"
-                                                                                ) +
-                                                                                "&limit=" +
-                                                                                query.get(
-                                                                                    "limit"
-                                                                                ) +
-                                                                                "&type=" +
-                                                                                query.get(
-                                                                                    "type"
-                                                                                ) +
-                                                                                "&color=" +
-                                                                                query.get(
-                                                                                    "color"
-                                                                                ) +
-                                                                                "&qtPokemons=" +
-                                                                                TotalPokemon
-                                                                            }
-                                                                            onClick={() => {
-                                                                                setPokemonId(
-                                                                                    p.id
-                                                                                );
-                                                                                scrollUp();
-                                                                            }}
-                                                                            className="middle-evolution-link"
-                                                                            key={
-                                                                                p.id
-                                                                            }
-                                                                        >
-                                                                            <PokeEvolutions
-                                                                                name={
-                                                                                    p.name
-                                                                                }
-                                                                                id={
-                                                                                    p.id
-                                                                                }
-                                                                                img={
-                                                                                    p.img
-                                                                                }
-                                                                                types={
-                                                                                    p.types
-                                                                                }
-                                                                                key={
-                                                                                    p.id
-                                                                                }
-                                                                            />
-                                                                        </Link>
-                                                                    )
-                                                                )}
-                                                        </li>
-                                                    )}
-
-                                                {LastEvolution.length > 0 && (
-                                                    <li className="li-evo-arrow">
-                                                        {LastEvolution.length >
-                                                            0 &&
-                                                            LastEvolution.map(
+                                                            {MiddleEvolution.map(
                                                                 (p) => (
-                                                                    <p
+                                                                    <Link
+                                                                        to={
+                                                                            "/pokeinfo?id=" +
+                                                                            query.get(
+                                                                                "id"
+                                                                            ) +
+                                                                            "&offset=" +
+                                                                            query.get(
+                                                                                "offset"
+                                                                            ) +
+                                                                            "&limit=" +
+                                                                            query.get(
+                                                                                "limit"
+                                                                            ) +
+                                                                            "&type=" +
+                                                                            query.get(
+                                                                                "type"
+                                                                            ) +
+                                                                            "&color=" +
+                                                                            query.get(
+                                                                                "color"
+                                                                            ) +
+                                                                            "&qtPokemons=" +
+                                                                            TotalPokemon
+                                                                        }
+                                                                        onClick={() => {
+                                                                            setPokemonId(
+                                                                                p.id
+                                                                            );
+                                                                            scrollUp();
+                                                                        }}
+                                                                        className="middle-evolution-link"
                                                                         key={
                                                                             p.id
                                                                         }
                                                                     >
-                                                                        <i className="bi bi-caret-right-fill arrow-right"></i>
-                                                                        <i className="bi bi-caret-down-fill arrow-bottom"></i>
-                                                                    </p>
+                                                                        <PokeEvolutions
+                                                                            name={
+                                                                                p.name
+                                                                            }
+                                                                            id={
+                                                                                p.id
+                                                                            }
+                                                                            img={
+                                                                                p.img
+                                                                            }
+                                                                            types={
+                                                                                p.types
+                                                                            }
+                                                                            key={
+                                                                                p.id
+                                                                            }
+                                                                        />
+                                                                    </Link>
                                                                 )
                                                             )}
-                                                    </li>
-                                                )}
-
-                                                {LastEvolution.length > 0 && (
-                                                    <li className="last-evolution">
-                                                        {LastEvolution.length >
-                                                            0 &&
-                                                            LastEvolution.map(
+                                                        </li>
+                                                    )}
+                                                {MiddleEvolution.length > 2 &&
+                                                    LastEvolution.length >
+                                                        0 && (
+                                                        <li>
+                                                            {MiddleEvolution.map(
                                                                 (p) => (
                                                                     <Link
                                                                         to={
@@ -1652,272 +1632,415 @@ function PokeInfo() {
                                                                     </Link>
                                                                 )
                                                             )}
-                                                    </li>
-                                                )}
+                                                        </li>
+                                                    )}
+                                                {/*## Seta ##*/}
+                                                {MiddleEvolution.length > 0 &&
+                                                    LastEvolution.length >
+                                                        0 && (
+                                                        <li className="li-evo-arrow">
+                                                            {MiddleEvolution.map(
+                                                                (p) => {
+                                                                    if (
+                                                                        p.hasEvolution ===
+                                                                        true
+                                                                    ) {
+                                                                        return (
+                                                                            <p
+                                                                                key={
+                                                                                    p.id
+                                                                                }
+                                                                            >
+                                                                                <i className="bi bi-caret-right-fill arrow-right"></i>
+                                                                                <i className="bi bi-caret-down-fill arrow-bottom"></i>
+                                                                            </p>
+                                                                        );
+                                                                    } else {
+                                                                        return (
+                                                                            <p
+                                                                                key={
+                                                                                    p.id
+                                                                                }
+                                                                            ></p>
+                                                                        );
+                                                                    }
+                                                                }
+                                                            )}
+                                                        </li>
+                                                    )}
+                                                {/*## Last Evolution ##*/}
+                                                {MiddleEvolution.length > 0 &&
+                                                    LastEvolution.length >
+                                                        0 && (
+                                                        <li className="last-evolution">
+                                                            {MiddleEvolution.map(
+                                                                (p) => {
+                                                                    if (
+                                                                        p.hasEvolution ===
+                                                                        true
+                                                                    ) {
+                                                                        return LastEvolution.map(
+                                                                            (
+                                                                                l
+                                                                            ) => {
+                                                                                if (
+                                                                                    p.name ===
+                                                                                    l.evoFrom
+                                                                                ) {
+                                                                                    return (
+                                                                                        <Link
+                                                                                            to={
+                                                                                                "/pokeinfo?id=" +
+                                                                                                query.get(
+                                                                                                    "id"
+                                                                                                ) +
+                                                                                                "&offset=" +
+                                                                                                query.get(
+                                                                                                    "offset"
+                                                                                                ) +
+                                                                                                "&limit=" +
+                                                                                                query.get(
+                                                                                                    "limit"
+                                                                                                ) +
+                                                                                                "&type=" +
+                                                                                                query.get(
+                                                                                                    "type"
+                                                                                                ) +
+                                                                                                "&color=" +
+                                                                                                query.get(
+                                                                                                    "color"
+                                                                                                ) +
+                                                                                                "&qtPokemons=" +
+                                                                                                TotalPokemon
+                                                                                            }
+                                                                                            onClick={() => {
+                                                                                                setPokemonId(
+                                                                                                    l.id
+                                                                                                );
+                                                                                                scrollUp();
+                                                                                            }}
+                                                                                            key={
+                                                                                                l.id
+                                                                                            }
+                                                                                        >
+                                                                                            <PokeEvolutions
+                                                                                                name={
+                                                                                                    l.name
+                                                                                                }
+                                                                                                id={
+                                                                                                    l.id
+                                                                                                }
+                                                                                                img={
+                                                                                                    l.img
+                                                                                                }
+                                                                                                types={
+                                                                                                    l.types
+                                                                                                }
+                                                                                                key={
+                                                                                                    l.id
+                                                                                                }
+                                                                                            />
+                                                                                        </Link>
+                                                                                    );
+                                                                                } else {
+                                                                                    return null;
+                                                                                }
+                                                                            }
+                                                                        );
+                                                                    } else {
+                                                                        return (
+                                                                            <Link
+                                                                                style={{
+                                                                                    height: "336px",
+                                                                                }}
+                                                                                key={
+                                                                                    p.id
+                                                                                }
+                                                                            ></Link>
+                                                                        );
+                                                                    }
+                                                                }
+                                                            )}
+                                                        </li>
+                                                    )}
                                             </ul>
 
-                                            <div className=" p-3">
-                                                <div className="table-responsive">
-                                                    <table className="table table-hover table-evo-details">
-                                                        <thead>
-                                                            <tr className="table-light">
-                                                                <th
-                                                                    className=""
-                                                                    scope="col"
-                                                                >
-                                                                    #
-                                                                </th>
-                                                                <th scope="col">
-                                                                    Name
-                                                                </th>
-                                                                <th scope="col">
-                                                                    Stage
-                                                                </th>
-                                                                <th scope="col">
-                                                                    Evolution_Method
-                                                                </th>
-                                                                <th
-                                                                    scope="col"
-                                                                    style={{
-                                                                        minWidth:
-                                                                            "600px",
-                                                                    }}
-                                                                >
-                                                                    Details
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {FirstEvolution.length >
-                                                                0 &&
-                                                                FirstEvolution.map(
-                                                                    (p) => {
-                                                                        return (
-                                                                            <tr
-                                                                                key={
-                                                                                    p.id
-                                                                                }
-                                                                            >
-                                                                                <th scope="row">
-                                                                                    {zeroLeft(
-                                                                                        p.id
-                                                                                    )}
-                                                                                </th>
-                                                                                <td className="text-capitalize">
-                                                                                    {
-                                                                                        p.name
-                                                                                    }
-                                                                                </td>
-                                                                                <td>
-                                                                                    1
-                                                                                </td>
-                                                                                <td>
-                                                                                    -
-                                                                                </td>
-                                                                                <td>
-                                                                                    -
-                                                                                </td>
-                                                                            </tr>
-                                                                        );
-                                                                    }
-                                                                )}
+                                            {FirstEvolution.length > 0 &&
+                                                MiddleEvolution.length > 0 && (
+                                                    <div className=" p-3">
+                                                        <div className="table-responsive">
+                                                            <table className="table table-hover table-evo-details">
+                                                                <thead>
+                                                                    <tr className="table-light">
+                                                                        <th
+                                                                            className=""
+                                                                            scope="col"
+                                                                        >
+                                                                            #
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            Name
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            Stage
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            Evolution_Method
+                                                                        </th>
+                                                                        <th
+                                                                            scope="col"
+                                                                            style={{
+                                                                                minWidth:
+                                                                                    "600px",
+                                                                            }}
+                                                                        >
+                                                                            Details
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {FirstEvolution.length >
+                                                                        0 &&
+                                                                        FirstEvolution.map(
+                                                                            (
+                                                                                p
+                                                                            ) => {
+                                                                                return (
+                                                                                    <tr
+                                                                                        key={
+                                                                                            p.id
+                                                                                        }
+                                                                                    >
+                                                                                        <th scope="row">
+                                                                                            {zeroLeft(
+                                                                                                p.id
+                                                                                            )}
+                                                                                        </th>
+                                                                                        <td className="text-capitalize">
+                                                                                            {
+                                                                                                p.name
+                                                                                            }
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            1
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            -
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            -
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                );
+                                                                            }
+                                                                        )}
 
-                                                            {MiddleEvolution.length >
-                                                                0 &&
-                                                                MiddleEvolution.map(
-                                                                    (
-                                                                        p,
-                                                                        index
-                                                                    ) => {
-                                                                        return (
-                                                                            <tr
-                                                                                key={
-                                                                                    p.id
-                                                                                }
-                                                                            >
-                                                                                <th scope="row">
-                                                                                    {zeroLeft(
-                                                                                        p.id
-                                                                                    )}
-                                                                                </th>
-                                                                                <td className="text-capitalize">
-                                                                                    {
-                                                                                        p.name
-                                                                                    }
-                                                                                </td>
-                                                                                <td>
-                                                                                    2
-                                                                                </td>
+                                                                    {MiddleEvolution.length >
+                                                                        0 &&
+                                                                        MiddleEvolution.map(
+                                                                            (
+                                                                                p
+                                                                            ) => {
+                                                                                return (
+                                                                                    <tr
+                                                                                        key={
+                                                                                            p.id
+                                                                                        }
+                                                                                    >
+                                                                                        <th scope="row">
+                                                                                            {zeroLeft(
+                                                                                                p.id
+                                                                                            )}
+                                                                                        </th>
+                                                                                        <td className="text-capitalize">
+                                                                                            {
+                                                                                                p.name
+                                                                                            }
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            2
+                                                                                        </td>
 
-                                                                                <td className="text-capitalize">
-                                                                                    {p
-                                                                                        .evolutionDetails
-                                                                                        .trigger
-                                                                                        .name
-                                                                                        ? p
-                                                                                              .evolutionDetails
-                                                                                              .trigger
-                                                                                              .name
-                                                                                        : "-"}
-                                                                                </td>
+                                                                                        <td className="text-capitalize">
+                                                                                            {p.evolutionDetails !==
+                                                                                                undefined &&
+                                                                                            p
+                                                                                                .evolutionDetails
+                                                                                                .trigger
+                                                                                                .name
+                                                                                                ? p
+                                                                                                      .evolutionDetails
+                                                                                                      .trigger
+                                                                                                      .name
+                                                                                                : "-"}
+                                                                                        </td>
 
-                                                                                <td className="">
-                                                                                    {Object.entries(
-                                                                                        p.evolutionDetails
-                                                                                    )
-                                                                                        .filter(
-                                                                                            ([
-                                                                                                key,
-                                                                                                value,
-                                                                                            ]) =>
-                                                                                                value !==
-                                                                                                    null &&
-                                                                                                value !==
-                                                                                                    false &&
-                                                                                                value !==
-                                                                                                    ""
-                                                                                        )
-                                                                                        .map(
-                                                                                            ([
-                                                                                                key,
-                                                                                                value,
-                                                                                            ]) => (
-                                                                                                <span
-                                                                                                    className="w-100"
-                                                                                                    key={
-                                                                                                        key
-                                                                                                    }
-                                                                                                >
-                                                                                                    {key !==
-                                                                                                        "trigger" &&
-                                                                                                        key +
-                                                                                                            " : "}
-                                                                                                    {key !==
-                                                                                                        "trigger" &&
-                                                                                                    typeof value ===
-                                                                                                        "object" &&
-                                                                                                    value !==
-                                                                                                        null &&
-                                                                                                    "name" in
-                                                                                                        value ? (
-                                                                                                        <span className="badge text-bg-warning me-3">
-                                                                                                            {value.name.toString()}
-                                                                                                        </span>
-                                                                                                    ) : key !==
-                                                                                                      "trigger" ? (
-                                                                                                        <span className="badge text-bg-warning me-3">
-                                                                                                            {value.toString()}
-                                                                                                        </span>
-                                                                                                    ) : (
-                                                                                                        "-"
-                                                                                                    )}
-                                                                                                </span>
-                                                                                            )
-                                                                                        )}
-                                                                                </td>
-                                                                            </tr>
-                                                                        );
-                                                                    }
-                                                                )}
+                                                                                        <td className="">
+                                                                                            {p.evolutionDetails !==
+                                                                                            undefined
+                                                                                                ? Object.entries(
+                                                                                                      p.evolutionDetails
+                                                                                                  )
+                                                                                                      .filter(
+                                                                                                          ([
+                                                                                                              key,
+                                                                                                              value,
+                                                                                                          ]) =>
+                                                                                                              value !==
+                                                                                                                  null &&
+                                                                                                              value !==
+                                                                                                                  false &&
+                                                                                                              value !==
+                                                                                                                  ""
+                                                                                                      )
+                                                                                                      .map(
+                                                                                                          ([
+                                                                                                              key,
+                                                                                                              value,
+                                                                                                          ]) => (
+                                                                                                              <span
+                                                                                                                  className="w-100"
+                                                                                                                  key={
+                                                                                                                      key
+                                                                                                                  }
+                                                                                                              >
+                                                                                                                  {key !==
+                                                                                                                      "trigger" &&
+                                                                                                                      key +
+                                                                                                                          " : "}
+                                                                                                                  {key !==
+                                                                                                                      "trigger" &&
+                                                                                                                  typeof value ===
+                                                                                                                      "object" &&
+                                                                                                                  value !==
+                                                                                                                      null &&
+                                                                                                                  "name" in
+                                                                                                                      value ? (
+                                                                                                                      <span className="badge text-bg-warning me-3">
+                                                                                                                          {value.name.toString()}
+                                                                                                                      </span>
+                                                                                                                  ) : key !==
+                                                                                                                    "trigger" ? (
+                                                                                                                      <span className="badge text-bg-warning me-3">
+                                                                                                                          {value.toString()}
+                                                                                                                      </span>
+                                                                                                                  ) : (
+                                                                                                                      "-"
+                                                                                                                  )}
+                                                                                                              </span>
+                                                                                                          )
+                                                                                                      )
+                                                                                                : "-"}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                );
+                                                                            }
+                                                                        )}
 
-                                                            {LastEvolution.length >
-                                                                0 &&
-                                                                LastEvolution.map(
-                                                                    (
-                                                                        p,
-                                                                        index
-                                                                    ) => {
-                                                                        return (
-                                                                            <tr
-                                                                                key={
-                                                                                    p.id
-                                                                                }
-                                                                            >
-                                                                                <th scope="row">
-                                                                                    {zeroLeft(
-                                                                                        p.id
-                                                                                    )}
-                                                                                </th>
-                                                                                <td className="text-capitalize">
-                                                                                    {
-                                                                                        p.name
-                                                                                    }
-                                                                                </td>
-                                                                                <td>
-                                                                                    3
-                                                                                </td>
-                                                                                <td className="text-capitalize">
-                                                                                    {p
-                                                                                        .evolutionDetails
-                                                                                        .trigger
-                                                                                        .name
-                                                                                        ? p
-                                                                                              .evolutionDetails
-                                                                                              .trigger
-                                                                                              .name
-                                                                                        : "-"}
-                                                                                </td>
-                                                                                <td className="">
-                                                                                    {Object.entries(
-                                                                                        p.evolutionDetails
-                                                                                    )
-                                                                                        .filter(
-                                                                                            ([
-                                                                                                key,
-                                                                                                value,
-                                                                                            ]) =>
-                                                                                                value !==
-                                                                                                    null &&
-                                                                                                value !==
-                                                                                                    false &&
-                                                                                                value !==
-                                                                                                    ""
-                                                                                        )
-                                                                                        .map(
-                                                                                            ([
-                                                                                                key,
-                                                                                                value,
-                                                                                            ]) => (
-                                                                                                <span
-                                                                                                    key={
-                                                                                                        key
-                                                                                                    }
-                                                                                                >
-                                                                                                    {key !==
-                                                                                                        "trigger" &&
-                                                                                                        key +
-                                                                                                            " : "}
-                                                                                                    {key !==
-                                                                                                        "trigger" &&
-                                                                                                    typeof value ===
-                                                                                                        "object" &&
-                                                                                                    value !==
-                                                                                                        null &&
-                                                                                                    "name" in
-                                                                                                        value ? (
-                                                                                                        <span className="badge text-bg-danger me-3">
-                                                                                                            {value.name.toString()}
-                                                                                                        </span>
-                                                                                                    ) : key !==
-                                                                                                      "trigger" ? (
-                                                                                                        <span className="badge text-bg-danger me-3">
-                                                                                                            {value.toString()}
-                                                                                                        </span>
-                                                                                                    ) : (
-                                                                                                        "-"
-                                                                                                    )}
-                                                                                                </span>
-                                                                                            )
-                                                                                        )}
-                                                                                </td>
-                                                                            </tr>
-                                                                        );
-                                                                    }
-                                                                )}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                                                    {LastEvolution.length >
+                                                                        0 &&
+                                                                        LastEvolution.map(
+                                                                            (
+                                                                                p
+                                                                            ) => {
+                                                                                return (
+                                                                                    <tr
+                                                                                        key={
+                                                                                            p.id
+                                                                                        }
+                                                                                    >
+                                                                                        <th scope="row">
+                                                                                            {zeroLeft(
+                                                                                                p.id
+                                                                                            )}
+                                                                                        </th>
+                                                                                        <td className="text-capitalize">
+                                                                                            {
+                                                                                                p.name
+                                                                                            }
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            3
+                                                                                        </td>
+                                                                                        <td className="text-capitalize">
+                                                                                            {p.evolutionDetails !==
+                                                                                                undefined &&
+                                                                                            p
+                                                                                                .evolutionDetails
+                                                                                                .trigger
+                                                                                                .name
+                                                                                                ? p
+                                                                                                      .evolutionDetails
+                                                                                                      .trigger
+                                                                                                      .name
+                                                                                                : "-"}
+                                                                                        </td>
+
+                                                                                        <td className="">
+                                                                                            {p.evolutionDetails !==
+                                                                                            undefined
+                                                                                                ? Object.entries(
+                                                                                                      p.evolutionDetails
+                                                                                                  )
+                                                                                                      .filter(
+                                                                                                          ([
+                                                                                                              key,
+                                                                                                              value,
+                                                                                                          ]) =>
+                                                                                                              value !==
+                                                                                                                  null &&
+                                                                                                              value !==
+                                                                                                                  false &&
+                                                                                                              value !==
+                                                                                                                  ""
+                                                                                                      )
+                                                                                                      .map(
+                                                                                                          ([
+                                                                                                              key,
+                                                                                                              value,
+                                                                                                          ]) => (
+                                                                                                              <span
+                                                                                                                  key={
+                                                                                                                      key
+                                                                                                                  }
+                                                                                                              >
+                                                                                                                  {key !==
+                                                                                                                      "trigger" &&
+                                                                                                                      key +
+                                                                                                                          " : "}
+                                                                                                                  {key !==
+                                                                                                                      "trigger" &&
+                                                                                                                  typeof value ===
+                                                                                                                      "object" &&
+                                                                                                                  value !==
+                                                                                                                      null &&
+                                                                                                                  "name" in
+                                                                                                                      value ? (
+                                                                                                                      <span className="badge text-bg-danger me-3">
+                                                                                                                          {value.name.toString()}
+                                                                                                                      </span>
+                                                                                                                  ) : key !==
+                                                                                                                    "trigger" ? (
+                                                                                                                      <span className="badge text-bg-danger me-3">
+                                                                                                                          {value.toString()}
+                                                                                                                      </span>
+                                                                                                                  ) : (
+                                                                                                                      "-"
+                                                                                                                  )}
+                                                                                                              </span>
+                                                                                                          )
+                                                                                                      )
+                                                                                                : "-"}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                );
+                                                                            }
+                                                                        )}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                )}
                                         </div>
                                     </div>
                                 </div>

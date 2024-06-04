@@ -45,16 +45,6 @@ export const PokeEvolutions = styled.div`
         width: 100%;
     }
 
-    .evo-type-pokemon span {
-        padding: 4px 8px 3px 8px !important;
-        font-size: 0.6rem !important;
-        border-radius: 4px !important;
-        margin-right: 7px !important;
-        margin-bottom: 5px !important;
-        text-transform: capitalize !important;
-        text-shadow: 2px 2px 2px #aaa !important;
-    }
-
     .evo-type-pokemon .div-types > div {
         padding: 8px;
     }
