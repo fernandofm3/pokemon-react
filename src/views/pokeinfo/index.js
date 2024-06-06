@@ -125,9 +125,21 @@ function PokeInfo() {
     }
 
     //Recuperando os valores dos Genders em porcentagem com uma base máxima de 8 para ser Female. Conta usada regra de 3.
-    function findValueGenderInPercentage(value) {
-        let result = (value * 100) / 8;
-        return result;
+    function calculateGenderRatio() {
+        if (PokemonGender === -1) {
+            setPokemonGenderInfo({ male: "Genderless", female: "Genderless" });
+        } else if (PokemonGender === 0) {
+            setPokemonGenderInfo({ male: "100% Male", female: "0% Famale" }); // Pokémon só tem machos
+        } else if (PokemonGender === 8) {
+            setPokemonGenderInfo({ male: "0% Male", female: "100% Famale" }); // Pokémon tem igual proporção de machos e fêmeas
+        } else {
+            const malePercentage = (PokemonGender / 8) * 100;
+            const femalePercentage = 100 - malePercentage;
+            setPokemonGenderInfo({
+                male: malePercentage + "% Male",
+                female: femalePercentage + "% Famale",
+            });
+        }
     }
 
     // Função para determinar a classificação e a frase com base na Base Friendship
@@ -201,6 +213,8 @@ function PokeInfo() {
     const [BallType, setBallType] = useState("PokeBall");
     const [PokemonStatus, setPokemonStatus] = useState("Normal");
     const [PokemonHpCurrent, setPokemonHpCurrent] = useState(0);
+    const [PokemonGender, setPokemonGender] = useState(0);
+    const [PokemonGenderInfo, setPokemonGenderInfo] = useState({});
     const [catchChance, setCatchChance] = useState(null);
 
     const pokeBalls = {
@@ -336,6 +350,8 @@ function PokeInfo() {
 
                 //Enviando o objeto (infoPokemon).
                 setPokeDataSpecies(resultPokeDataSpecies);
+                //Enviando o HP do Pokemon para realizar o calculo de captura pela primeira vez.
+                setPokemonGender(response.data.gender_rate);
 
                 //Função assíncrona auto-executável para pegar as informações da geração
                 (async () => {
@@ -554,6 +570,7 @@ function PokeInfo() {
 
     useEffect(() => {
         handleCalculate();
+        calculateGenderRatio();
     }, [PokeData, PokeDataSpecies]);
 
     //#############################################################################
@@ -1008,6 +1025,14 @@ function PokeInfo() {
                                                     >
                                                         Full HP
                                                     </option>
+                                                    <option
+                                                        value={
+                                                            infoPokemon.stats[0]
+                                                                .base_stat / 2
+                                                        }
+                                                    >
+                                                        Half HP
+                                                    </option>
                                                     <option value={1}>
                                                         1 HP
                                                     </option>
@@ -1384,32 +1409,37 @@ function PokeInfo() {
                                         <h5 className="mb-4">Gender</h5>
 
                                         <div className="div-gender">
-                                            <div className="gender-female">
-                                                <h5>
-                                                    <i className="bi bi-gender-female me-2"></i>
-                                                </h5>
+                                            {PokemonGenderInfo.male ===
+                                                "Genderless" &&
+                                            PokemonGenderInfo.female ===
+                                                "Genderless" ? (
+                                                <h3>Genderless</h3>
+                                            ) : (
+                                                <>
+                                                    <div className="gender-female">
+                                                        <h5>
+                                                            <i className="bi bi-gender-female me-2"></i>
+                                                        </h5>
 
-                                                <p>
-                                                    Female{" "}
-                                                    {findValueGenderInPercentage(
-                                                        infoPokemon.gender
-                                                    )}
-                                                    %
-                                                </p>
-                                            </div>
+                                                        <p>
+                                                            {
+                                                                PokemonGenderInfo.female
+                                                            }
+                                                        </p>
+                                                    </div>
 
-                                            <div className="gender-male">
-                                                <h5>
-                                                    <i className="bi bi-gender-male me-2"></i>
-                                                </h5>
-                                                <p>
-                                                    Male{" "}
-                                                    {findValueGenderInPercentage(
-                                                        8 - infoPokemon.gender
-                                                    )}
-                                                    %
-                                                </p>
-                                            </div>
+                                                    <div className="gender-male">
+                                                        <h5>
+                                                            <i className="bi bi-gender-male me-2"></i>
+                                                        </h5>
+                                                        <p>
+                                                            {
+                                                                PokemonGenderInfo.male
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -1927,7 +1957,8 @@ function PokeInfo() {
                                                                         0 &&
                                                                         MiddleEvolution.map(
                                                                             (
-                                                                                p
+                                                                                p,
+                                                                                index
                                                                             ) => {
                                                                                 return (
                                                                                     <tr
@@ -1954,6 +1985,9 @@ function PokeInfo() {
                                                                                                 undefined &&
                                                                                             p
                                                                                                 .evolutionDetails
+                                                                                                .trigger &&
+                                                                                            p
+                                                                                                .evolutionDetails
                                                                                                 .trigger
                                                                                                 .name
                                                                                                 ? p
@@ -1965,7 +1999,23 @@ function PokeInfo() {
 
                                                                                         <td className="">
                                                                                             {p.evolutionDetails !==
-                                                                                            undefined
+                                                                                                undefined &&
+                                                                                            Object.entries(
+                                                                                                p.evolutionDetails
+                                                                                            ).some(
+                                                                                                ([
+                                                                                                    key,
+                                                                                                    value,
+                                                                                                ]) =>
+                                                                                                    key !==
+                                                                                                        "trigger" &&
+                                                                                                    value !==
+                                                                                                        null &&
+                                                                                                    value !==
+                                                                                                        "" &&
+                                                                                                    value !==
+                                                                                                        false
+                                                                                            )
                                                                                                 ? Object.entries(
                                                                                                       p.evolutionDetails
                                                                                                   )
@@ -1994,8 +2044,7 @@ function PokeInfo() {
                                                                                                               >
                                                                                                                   {key !==
                                                                                                                       "trigger" &&
-                                                                                                                      key +
-                                                                                                                          " : "}
+                                                                                                                      `${key} : `}
                                                                                                                   {key !==
                                                                                                                       "trigger" &&
                                                                                                                   typeof value ===
@@ -2013,7 +2062,7 @@ function PokeInfo() {
                                                                                                                           {value.toString()}
                                                                                                                       </span>
                                                                                                                   ) : (
-                                                                                                                      "-"
+                                                                                                                      ""
                                                                                                                   )}
                                                                                                               </span>
                                                                                                           )
@@ -2029,7 +2078,8 @@ function PokeInfo() {
                                                                         0 &&
                                                                         LastEvolution.map(
                                                                             (
-                                                                                p
+                                                                                p,
+                                                                                index
                                                                             ) => {
                                                                                 return (
                                                                                     <tr
@@ -2050,9 +2100,13 @@ function PokeInfo() {
                                                                                         <td>
                                                                                             3
                                                                                         </td>
+
                                                                                         <td className="text-capitalize">
                                                                                             {p.evolutionDetails !==
                                                                                                 undefined &&
+                                                                                            p
+                                                                                                .evolutionDetails
+                                                                                                .trigger &&
                                                                                             p
                                                                                                 .evolutionDetails
                                                                                                 .trigger
@@ -2066,7 +2120,23 @@ function PokeInfo() {
 
                                                                                         <td className="">
                                                                                             {p.evolutionDetails !==
-                                                                                            undefined
+                                                                                                undefined &&
+                                                                                            Object.entries(
+                                                                                                p.evolutionDetails
+                                                                                            ).some(
+                                                                                                ([
+                                                                                                    key,
+                                                                                                    value,
+                                                                                                ]) =>
+                                                                                                    key !==
+                                                                                                        "trigger" &&
+                                                                                                    value !==
+                                                                                                        null &&
+                                                                                                    value !==
+                                                                                                        "" &&
+                                                                                                    value !==
+                                                                                                        false
+                                                                                            )
                                                                                                 ? Object.entries(
                                                                                                       p.evolutionDetails
                                                                                                   )
@@ -2094,8 +2164,7 @@ function PokeInfo() {
                                                                                                               >
                                                                                                                   {key !==
                                                                                                                       "trigger" &&
-                                                                                                                      key +
-                                                                                                                          " : "}
+                                                                                                                      `${key} : `}
                                                                                                                   {key !==
                                                                                                                       "trigger" &&
                                                                                                                   typeof value ===
@@ -2113,7 +2182,7 @@ function PokeInfo() {
                                                                                                                           {value.toString()}
                                                                                                                       </span>
                                                                                                                   ) : (
-                                                                                                                      "-"
+                                                                                                                      ""
                                                                                                                   )}
                                                                                                               </span>
                                                                                                           )
