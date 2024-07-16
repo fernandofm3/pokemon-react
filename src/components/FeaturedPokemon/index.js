@@ -134,7 +134,7 @@ function FeaturedPokemon(props) {
 
                 <div className="div-featured-pokemon-3 mt-3">
                     <div className="div-info-pokemon">
-                        <div className="div-abilities mb-2">
+                        <div className="div-abilities">
                             <h5>Abilities</h5>
                             <div>
                                 {props.pokemon.abilities.map(
@@ -145,50 +145,6 @@ function FeaturedPokemon(props) {
                                     )
                                 )}
                             </div>
-                        </div>
-
-                        <p>
-                            <span>{splitName(props.pokemon.name)}</span> is a
-                            Pokémon that can reach a height of{" "}
-                            <span>{props.pokemon.height / 10} meters</span> and
-                            weigh up to{" "}
-                            <span>{props.pokemon.weight / 10} kg</span> in its
-                            natural habitat. Its base experience is{" "}
-                            <span>
-                                {" "}
-                                {props.pokemon.base_experience
-                                    ? props.pokemon.base_experience
-                                    : "undefined, "}
-                            </span>{" "}
-                            points, reflecting directly on the challenges it
-                            faces in its daily life.
-                        </p>
-
-                        <div className="div-more-details">
-                            {/* <button
-                                className="btn btn-warning"
-                                data-bs-toggle="modal"
-                                data-bs-target={
-                                    "#pokemonDetails" + props.pokemon.id
-                                }
-                            >
-                                <i className="bi bi-info-circle-fill me-1"></i>{" "}
-                                more details
-                            </button> */}
-
-                            <Link
-                                to={
-                                    "/pokeinfo?id=" +
-                                    props.pokemon.id +
-                                    "&qtPokemons=" +
-                                    props.TotalPokemon
-                                }
-                                className="btn btn-warning"
-                                target="_blank"
-                            >
-                                <i className="bi bi-info-circle-fill me-1"></i>{" "}
-                                more details
-                            </Link>
                         </div>
                     </div>
                 </div>

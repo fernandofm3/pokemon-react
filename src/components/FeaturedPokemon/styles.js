@@ -41,7 +41,7 @@ export const FeaturedPokemon = styled.div`
     }
 
     .div-featured-pokemon-1 .div-name-pokemon h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
         text-transform: uppercase;
     }
 
@@ -151,31 +151,10 @@ export const FeaturedPokemon = styled.div`
 
     /**** Div 3 **********************************************/
 
-    .div-featured-pokemon-3 h1 {
-        font-size: 1.5rem;
-        text-transform: uppercase;
-        color: #fff;
-        text-shadow: 1px 2px 6px #000;
-    }
-
-    /******************************************/
-
     .div-featured-pokemon-3 .div-info-pokemon {
         background-color: rgba(0, 0, 0, 0.4);
         padding: 20px;
         border-radius: 7px;
-    }
-
-    .div-featured-pokemon-3 .div-info-pokemon p {
-        color: #fff;
-        font-size: 1rem;
-        font-weight: 600;
-        line-height: 1.6rem;
-    }
-
-    .div-featured-pokemon-3 .div-info-pokemon p span {
-        text-transform: capitalize;
-        color: #fff;
     }
 
     /******************************************/
@@ -184,8 +163,6 @@ export const FeaturedPokemon = styled.div`
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        padding: 0 0 5px 0;
-        border-bottom: 1px solid #fff;
     }
 
     .div-featured-pokemon-3 .div-abilities h5 {
@@ -214,16 +191,7 @@ export const FeaturedPokemon = styled.div`
         color: #000;
         font-weight: 600;
         margin-bottom: 8px;
-    }
-
-    /******************************************/
-
-    .div-featured-pokemon-3 .div-info-pokemon .div-more-details a {
-        text-transform: uppercase;
-        font-weight: bold;
-        color: #fff;
-        text-shadow: 1px 1px 1px #000;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        margin-top: 8px;
     }
 
     /**********************************************************/
