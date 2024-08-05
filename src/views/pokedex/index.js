@@ -250,12 +250,12 @@ function Pokedex() {
             />
             {/*########################################*/}
 
-            {Data.length !== 0 && (
+            {/* {Data.length !== 0 && (
                 <FeaturedPokemon
                     pokemon={Data[NumberFeaturedPokemon]}
                     TotalPokemon={TotalPokemon}
                 />
-            )}
+            )} */}
 
             <S.Container>
                 {Data.length === 0 && (
@@ -265,7 +265,7 @@ function Pokedex() {
                     >
                         <i className="bi bi-info-circle-fill me-2"></i>No
                         Pokémon found in <span>{SearchNameApi}!</span> Please
-                        change the filters.
+                        change the filters!
                     </div>
                 )}
 

@@ -2,6 +2,7 @@ import React from "react";
 import FeaturedPokemon from "../../components/FeaturedPokemon";
 import _get from "lodash/get";
 import "../../styles/pokeTypes.css";
+import { Link } from "react-router-dom";
 
 import * as S from "./styles";
 
@@ -23,7 +24,7 @@ const PokemonModal = ({ infoPokemon, TotalPokemon }) => {
                                 id="staticBackdropLabel"
                             >
                                 <i className="bi bi-info-circle-fill me-1"></i>{" "}
-                                Pokemon Info
+                                Pokémon
                             </h1>
                             <button
                                 type="button"
@@ -39,6 +40,20 @@ const PokemonModal = ({ infoPokemon, TotalPokemon }) => {
                             />
                         </div>
                         <div className="modal-footer">
+                            <Link
+                                to={
+                                    "/pokeinfo?id=" +
+                                    infoPokemon.id +
+                                    "&qtPokemons=" +
+                                    TotalPokemon
+                                }
+                                className="btn btn-primary"
+                                target="_blank"
+                            >
+                                {/* <i className="bi bi-info-circle-fill me-1"></i>{" "} */}
+                                More Details
+                            </Link>
+
                             <button
                                 type="button"
                                 className="btn btn-secondary"
