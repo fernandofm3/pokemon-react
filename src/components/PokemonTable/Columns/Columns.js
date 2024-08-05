@@ -68,9 +68,12 @@ export const COLUMNS = [
         Header: "Type",
         accessor: (row) => {
             const types = row.types;
+
+            //console.log(types);
+
             let type = row.types[0].type.name;
 
-            if (types.length > 1) {
+            if (row.types && types.length > 1) {
                 type = row.types[0].type.name + "-" + row.types[1].type.name;
             }
 
