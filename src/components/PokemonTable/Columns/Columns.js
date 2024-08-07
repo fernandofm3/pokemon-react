@@ -67,13 +67,10 @@ export const COLUMNS = [
     {
         Header: "Type",
         accessor: (row) => {
-            // Adicionando verificação para garantir que row[0] existe
             if (row && row.types[0]) {
-                let types = row.types;
-
                 let type = row.types[0].type.name;
 
-                if (types.length > 1) {
+                if (row.types.length > 1) {
                     type =
                         row.types[0].type.name + "-" + row.types[1].type.name;
                 }
@@ -114,15 +111,17 @@ export const COLUMNS = [
     {
         Header: "TotalStats",
         accessor: (row) => {
-            const stats = row.stats;
-            return (
-                stats[0].base_stat +
-                stats[1].base_stat +
-                stats[2].base_stat +
-                stats[3].base_stat +
-                stats[4].base_stat +
-                stats[5].base_stat
-            );
+            if (row && row.stats[0]) {
+                const stats = row.stats;
+                return (
+                    stats[0].base_stat +
+                    stats[1].base_stat +
+                    stats[2].base_stat +
+                    stats[3].base_stat +
+                    stats[4].base_stat +
+                    stats[5].base_stat
+                );
+            }
         },
         Filter: ColumnFilter,
         disableFilters: true,
@@ -144,8 +143,10 @@ export const COLUMNS = [
     {
         Header: "HP",
         accessor: (row) => {
-            const stats = row.stats[0].base_stat;
-            return stats;
+            if (row && row.stats[0]) {
+                const value = row.stats[0].base_stat;
+                return value;
+            }
         },
         Filter: ColumnFilter,
         disableFilters: true,
@@ -154,8 +155,10 @@ export const COLUMNS = [
     {
         Header: "Attack",
         accessor: (row) => {
-            const stats = row.stats[1].base_stat;
-            return stats;
+            if (row && row.stats[0]) {
+                const value = row.stats[1].base_stat;
+                return value;
+            }
         },
         Filter: ColumnFilter,
         disableFilters: true,
@@ -164,8 +167,10 @@ export const COLUMNS = [
     {
         Header: "Defense",
         accessor: (row) => {
-            const stats = row.stats[2].base_stat;
-            return stats;
+            if (row && row.stats[0]) {
+                const value = row.stats[2].base_stat;
+                return value;
+            }
         },
         Filter: ColumnFilter,
         disableFilters: true,
@@ -174,8 +179,10 @@ export const COLUMNS = [
     {
         Header: "Sp.Atk",
         accessor: (row) => {
-            const stats = row.stats[3].base_stat;
-            return stats;
+            if (row && row.stats[0]) {
+                const value = row.stats[3].base_stat;
+                return value;
+            }
         },
         Filter: ColumnFilter,
         disableFilters: true,
@@ -184,8 +191,10 @@ export const COLUMNS = [
     {
         Header: "Sp.Def",
         accessor: (row) => {
-            const stats = row.stats[4].base_stat;
-            return stats;
+            if (row && row.stats[0]) {
+                const value = row.stats[4].base_stat;
+                return value;
+            }
         },
         Filter: ColumnFilter,
         disableFilters: true,
@@ -194,8 +203,10 @@ export const COLUMNS = [
     {
         Header: "Speed",
         accessor: (row) => {
-            const stats = row.stats[5].base_stat;
-            return stats;
+            if (row && row.stats[0]) {
+                const value = row.stats[5].base_stat;
+                return value;
+            }
         },
         Filter: ColumnFilter,
         disableFilters: true,
