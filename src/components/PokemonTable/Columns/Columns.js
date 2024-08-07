@@ -28,17 +28,23 @@ export const COLUMNS = [
         Filter: ColumnFilter,
         disableFilters: false,
         Cell: (props) => {
-            return (
-                <div className="d-flex flex-inline align-items-center">
-                    <img
-                        className="me-3"
-                        src={props.cell.row.original.sprites.front_default}
-                    />{" "}
-                    <span className="poke-number">
-                        #{zeroLeft(props.cell.row.original.id)}
-                    </span>
-                </div>
-            );
+            if (
+                props &&
+                props.cell.row.original.sprites.front_default &&
+                props.cell.row.original.id
+            ) {
+                return (
+                    <div className="d-flex flex-inline align-items-center">
+                        <img
+                            className="me-3"
+                            src={props.cell.row.original.sprites.front_default}
+                        />{" "}
+                        <span className="poke-number">
+                            #{zeroLeft(props.cell.row.original.id)}
+                        </span>
+                    </div>
+                );
+            }
         },
     },
 
@@ -126,17 +132,19 @@ export const COLUMNS = [
         Filter: ColumnFilter,
         disableFilters: true,
         Cell: (props) => {
-            const stats = props.cell.row.original.stats;
-            return (
-                <span className="total-stats">
-                    {stats[0].base_stat +
-                        stats[1].base_stat +
-                        stats[2].base_stat +
-                        stats[3].base_stat +
-                        stats[4].base_stat +
-                        stats[5].base_stat}
-                </span>
-            );
+            if (props && props.cell.row.original.stats[0]) {
+                const stats = props.cell.row.original.stats;
+                return (
+                    <span className="total-stats">
+                        {stats[0].base_stat +
+                            stats[1].base_stat +
+                            stats[2].base_stat +
+                            stats[3].base_stat +
+                            stats[4].base_stat +
+                            stats[5].base_stat}
+                    </span>
+                );
+            }
         },
     },
 
@@ -241,16 +249,18 @@ export const COLUMNS = [
         disableFilters: true,
         disableSortBy: true,
         Cell: (props) => {
-            const abilities = props.cell.row.original.abilities;
-            return (
-                <div className="d-flex flex-column div-abilities">
-                    {abilities.map((a, index) => (
-                        <span key={index}>
-                            {index + 1} - {a.ability.name}
-                        </span>
-                    ))}
-                </div>
-            );
+            if (props && props.cell.row.original.abilities) {
+                const abilities = props.cell.row.original.abilities;
+                return (
+                    <div className="d-flex flex-column div-abilities">
+                        {abilities.map((a, index) => (
+                            <span key={index}>
+                                {index + 1} - {a.ability.name}
+                            </span>
+                        ))}
+                    </div>
+                );
+            }
         },
     },
 ];
