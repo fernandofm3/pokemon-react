@@ -67,17 +67,19 @@ export const COLUMNS = [
     {
         Header: "Type",
         accessor: (row) => {
-            const types = row.types;
+            // Adicionando verificação para garantir que row[0] existe
+            if (row && row.types[0]) {
+                let types = row.types;
 
-            //console.log(types);
+                let type = row.types[0].type.name;
 
-            let type = row.types[0].type.name;
+                if (types.length > 1) {
+                    type =
+                        row.types[0].type.name + "-" + row.types[1].type.name;
+                }
 
-            if (row.types && types.length > 1) {
-                type = row.types[0].type.name + "-" + row.types[1].type.name;
+                return type;
             }
-
-            return type;
         },
         Filter: ColumnFilter,
         disableFilters: false,
