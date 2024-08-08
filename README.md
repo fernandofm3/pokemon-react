@@ -2,8 +2,6 @@
 
 # PokeView
 
-__Site__ - https://pokeview.netlify.app/
-
 __Base de dados (API) - Pokeapi https://pokeapi.co/__
 
 O projeto PokeView atualmente é uma agenda com várias informações importantes e relevantes sobre Pokemons. O objetivo do App é facilitar a busca de informações sobre um determinado Pokemon e assim poder estudá-lo.
