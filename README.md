@@ -1,4 +1,4 @@
-<img style="width: 70px;" src="https://raw.githubusercontent.com/fernandofm3/pokemon-react/main/src/assets/pokeball.png" alt="Logo TopSales6" />
+<img style="width: 70px;" src="https://raw.githubusercontent.com/fernandofm3/pokemon-react/main/src/assets/pokeball-2.png" alt="Logo TopSales6" />
 
 # PokeView
 
