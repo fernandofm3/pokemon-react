@@ -7,20 +7,6 @@ const ColumnsOptions = (props) => {
         <S.ColumnsOptions>
             <div className="div-options">
                 <div className="div-search">
-                    {/* <div className="input-group input-search">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Pesquisar"
-                            aria-label="Pesquisar"
-                            aria-describedby="basic-addon1"
-                            value={props.globalFilter || ""}
-                            onChange={(e) =>
-                                props.setGlobalFilter(e.target.value)
-                            }
-                        />
-                    </div> */}
-
                     <select
                         className="form-select selection-lines-per-page"
                         value={props.pageSize}
@@ -28,7 +14,6 @@ const ColumnsOptions = (props) => {
                             props.setPageSize(Number(e.target.value))
                         }
                     >
-                        {/* {[20, 60, 100, 200, props.data.length].map( */}
                         {[20, 60, 100, 200].map((pageSize) => (
                             <option key={pageSize} value={pageSize}>
                                 {pageSize} Pokemon
@@ -101,45 +86,6 @@ const ColumnsOptions = (props) => {
                     </div>
                 </div>
             </div>
-
-            {/* <div className="collapse" id="collapseCheckboxListColulns">
-                <div className="card card-body mt-2">
-                    <h6 className="mb-3">Mostrar ou ocultar colunas</h6>
-                    <div className="div-show-columns">
-                        <br />
-                        <div className="form-check">
-                            <Checkbox
-                                className="form-check-input"
-                                id="todas-colunas"
-                                {...props.getToggleHideAllColumnsProps()}
-                            />{" "}
-                            <label
-                                className="form-check-label"
-                                htmlFor="todas-colunas"
-                            >
-                                Todas Colunas
-                            </label>
-                        </div>
-
-                        {props.allColumns.map((column) => (
-                            <div className="form-check" key={column.id}>
-                                <input
-                                    id={column.id}
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    {...column.getToggleHiddenProps()}
-                                />
-                                <label
-                                    className="form-check-label"
-                                    htmlFor={column.id}
-                                >
-                                    {column.header}
-                                </label>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div> */}
         </S.ColumnsOptions>
     );
 };

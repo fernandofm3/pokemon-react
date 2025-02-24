@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import Headder from "../../components/Headder";
+//import Headder from "../../components/Headder";
 import api from "../../services/api";
 import _get from "lodash/get";
 import PokeStats from "../../components/PokeStats";
@@ -234,14 +234,16 @@ function PokeInfo() {
         LuxuryBall: 1, // Aumenta a amizade do Pokémon capturado
         MasterBall: 255,
         MoonBall: 4, // Eficaz contra Pokémon que evoluem com a Pedra da Lua
-        NetBall: 3, // Eficaz contra Pokémon de água e inseto
         NestBall: 1, // Fator de captura variável: (40 - nível do Pokémon) / 10
+        NetBall: 3, // Eficaz contra Pokémon de água e inseto
         PokeBall: 1,
         PremierBall: 1,
         QuickBall: 5, // Eficaz se usada no primeiro turno da batalha
         RepeatBall: 3.5, // Eficaz contra Pokémon já capturados
         SafariBall: 1.5,
+        SuperBall: 1.5, // Nome japonês da Great Ball
         TimerBall: 1, // Fator de captura aumenta com o número de turnos: +1 a cada 10 turnos
+        UltraBall: 2, // Melhor que a Great Ball, menor que a Master Ball
     };
 
     const statusMultipliers = {
@@ -578,7 +580,7 @@ function PokeInfo() {
     return (
         <div>
             {!RemoveLoading && <Loading />}
-            <Headder SearchNameApi={"POKEINFO"} page={"pokeInfo"} />
+            {/* <Headder SearchNameApi={"POKEINFO"} page={"pokeInfo"} /> */}
             {RemoveLoading && (
                 <S.Container>
                     {/*** Dashboard ***************************************/}

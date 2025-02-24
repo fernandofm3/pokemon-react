@@ -58,11 +58,24 @@ export const COLUMNS = [
             const totalPokemon = props.initialRows.length;
             return (
                 <Link
-                    to={
-                        "/pokeinfo?id=" + pokeId + "&qtPokemons=" + totalPokemon
-                    }
                     className="btn btn-outline-primary poke-name"
-                    target="_blank"
+                    to="#"
+                    onClick={(e) => {
+                        e.preventDefault();
+
+                        const width = 1200;
+                        const height = 700;
+
+                        // Calcula o centro da tela
+                        const left = (window.screen.width - width) / 2;
+                        const top = (window.screen.height - height) / 2;
+
+                        window.open(
+                            `/pokeinfo?id=${pokeId}&qtPokemons=${totalPokemon}`,
+                            "_blank",
+                            `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no`
+                        );
+                    }}
                 >
                     {props.cell.row.original.name}
                 </Link>

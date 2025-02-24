@@ -4,13 +4,6 @@ import FeaturedPokemon from "../../components/FeaturedPokemon";
 import * as S from "./styles";
 
 const SearchPokemon = () => {
-    //Função que verifica se o usuário apertou o Enter.
-    // const handleKeyDown = (event) => {
-    //     if (event.key === "Enter") {
-    //         setSearch(event.target.value.toLowerCase());
-    //     }
-    // };
-
     const [Search, setSearch] = useState("1");
     const [SearchPokemon, setSearchPokemon] = useState([]);
 

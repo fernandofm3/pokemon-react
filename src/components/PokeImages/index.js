@@ -175,28 +175,32 @@ function PokeImages(props) {
                     </div>
 
                     <div className="div-image-mobile">
-                        <div className="div-select-varietes">
-                            {props.varieties.length > 1 && (
-                                <select
-                                    className="select-nome-id-pokemon"
-                                    onChange={(e) => {
-                                        getIdVerietieOfUrl(
-                                            e.target.value,
-                                            ".imgPokeInfoMobile"
-                                        );
-                                    }}
-                                >
-                                    {props.varieties.map((v) => (
-                                        <option
-                                            value={v.pokemon.url}
-                                            key={v.pokemon.name}
-                                        >
-                                            {v.pokemon.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            )}
-                        </div>
+                        {props.pokeComparation ? (
+                            ""
+                        ) : (
+                            <div className="div-select-varietes">
+                                {props.varieties.length > 1 && (
+                                    <select
+                                        className="select-nome-id-pokemon"
+                                        onChange={(e) => {
+                                            getIdVerietieOfUrl(
+                                                e.target.value,
+                                                ".imgPokeInfoMobile"
+                                            );
+                                        }}
+                                    >
+                                        {props.varieties.map((v) => (
+                                            <option
+                                                value={v.pokemon.url}
+                                                key={v.pokemon.name}
+                                            >
+                                                {v.pokemon.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )}
+                            </div>
+                        )}
 
                         <div className="div-image-btn">
                             <div className="div-image animate__animated animate__fadeIn mb-4">
@@ -292,28 +296,32 @@ function PokeImages(props) {
 
                 <div className="col-md-4">
                     <div className="div-image-desktop">
-                        <div className="div-select-varietes">
-                            {props.varieties.length > 1 && (
-                                <select
-                                    className="select-nome-id-pokemon"
-                                    onChange={(e) => {
-                                        getIdVerietieOfUrl(
-                                            e.target.value,
-                                            ".imgPokeInfo"
-                                        );
-                                    }}
-                                >
-                                    {props.varieties.map((v) => (
-                                        <option
-                                            value={v.pokemon.url}
-                                            key={v.pokemon.name}
-                                        >
-                                            {v.pokemon.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            )}
-                        </div>
+                        {props.pokeComparation ? (
+                            ""
+                        ) : (
+                            <div className="div-select-varietes">
+                                {props.varieties.length > 1 && (
+                                    <select
+                                        className="select-nome-id-pokemon"
+                                        onChange={(e) => {
+                                            getIdVerietieOfUrl(
+                                                e.target.value,
+                                                ".imgPokeInfo"
+                                            );
+                                        }}
+                                    >
+                                        {props.varieties.map((v) => (
+                                            <option
+                                                value={v.pokemon.url}
+                                                key={v.pokemon.name}
+                                            >
+                                                {v.pokemon.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )}
+                            </div>
+                        )}
 
                         <div className="div-image-btn">
                             <div className="div-image animate__animated animate__fadeIn mb-4">
@@ -332,49 +340,55 @@ function PokeImages(props) {
                                 )}
                             </div>
 
-                            <div className="div-btn">
-                                {props.id <= props.TotalPokemons ? (
-                                    <button
-                                        className="btn-previews"
-                                        onClick={() => {
-                                            setImgPokemon(null);
-                                            props.setPokemonId(previewsPokemon);
-                                            removeclassCss(".imgPokeInfo");
-                                        }}
-                                    >
-                                        <i className="bi bi-chevron-double-left"></i>
-                                    </button>
-                                ) : (
-                                    <button
-                                        disabled
-                                        className="btn-previews"
-                                        style={{ backgroundColor: "#eee" }}
-                                    >
-                                        <i className="bi bi-chevron-double-left"></i>
-                                    </button>
-                                )}
+                            {props.pokeComparation ? (
+                                ""
+                            ) : (
+                                <div className="div-btn">
+                                    {props.id <= props.TotalPokemons ? (
+                                        <button
+                                            className="btn-previews"
+                                            onClick={() => {
+                                                setImgPokemon(null);
+                                                props.setPokemonId(
+                                                    previewsPokemon
+                                                );
+                                                removeclassCss(".imgPokeInfo");
+                                            }}
+                                        >
+                                            <i className="bi bi-chevron-double-left"></i>
+                                        </button>
+                                    ) : (
+                                        <button
+                                            disabled
+                                            className="btn-previews"
+                                            style={{ backgroundColor: "#eee" }}
+                                        >
+                                            <i className="bi bi-chevron-double-left"></i>
+                                        </button>
+                                    )}
 
-                                {props.id <= props.TotalPokemons ? (
-                                    <button
-                                        className="btn-next"
-                                        onClick={() => {
-                                            setImgPokemon(null);
-                                            props.setPokemonId(nextPokemon);
-                                            removeclassCss(".imgPokeInfo");
-                                        }}
-                                    >
-                                        <i className="bi bi-chevron-double-right"></i>
-                                    </button>
-                                ) : (
-                                    <button
-                                        disabled
-                                        className="btn-next"
-                                        style={{ backgroundColor: "#eee" }}
-                                    >
-                                        <i className="bi bi-chevron-double-right"></i>
-                                    </button>
-                                )}
-                            </div>
+                                    {props.id <= props.TotalPokemons ? (
+                                        <button
+                                            className="btn-next"
+                                            onClick={() => {
+                                                setImgPokemon(null);
+                                                props.setPokemonId(nextPokemon);
+                                                removeclassCss(".imgPokeInfo");
+                                            }}
+                                        >
+                                            <i className="bi bi-chevron-double-right"></i>
+                                        </button>
+                                    ) : (
+                                        <button
+                                            disabled
+                                            className="btn-next"
+                                            style={{ backgroundColor: "#eee" }}
+                                        >
+                                            <i className="bi bi-chevron-double-right"></i>
+                                        </button>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

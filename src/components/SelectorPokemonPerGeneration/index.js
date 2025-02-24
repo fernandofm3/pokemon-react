@@ -125,34 +125,6 @@ const SelectorPokemonsPerGeneration = ({
                     </div>
                 </div>
             </div>
-
-            {/* <div className="div-selector-box">
-               
-                <div className="form-floating">
-                    <select
-                        className="form-select"
-                        aria-label="Floating label select example"
-                        id="floatingSelect"                        
-                        onChange={(e) => {
-                            console.log(e.target.value);
-                            setRegionName(e.target.value);
-                            setRemoveLoading(false);
-                        }}
-                        
-                    >
-                        <option selected disabled>
-                            Open this select menu
-                        </option>
-                        {pokeRegion.map((region) => (
-                            <option value={region.name} key={region.name}>
-                                {" "}
-                                {region.name}{" "}
-                            </option>
-                        ))}
-                    </select>
-                    <label htmlFor="floatingSelect">Pokemon per Region</label>
-                </div>
-            </div> */}
         </S.SelectorPokemonsPerGeneration>
     );
 };

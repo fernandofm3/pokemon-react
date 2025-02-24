@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-//import { useLocation } from "react-router-dom";
 import api from "../../services/api";
 import PokeCard from "../../components/PokeCard";
 import SelectorPokemonPerRigion from "../../components/SelectorPokemonPerRegion";
 import SelectorPokemonPerGeneration from "../../components/SelectorPokemonPerGeneration";
-import FeaturedPokemon from "../../components/FeaturedPokemon";
 import FiltersPokemon from "../../components/FiltersPokemon";
 import Headder from "../../components/Headder";
-import PokemonModal from "../../components/PokemonModal";
 import Loading from "../../components/Loading";
 import BackToTop from "../../components/BackTotop";
 import SelectorPokemonType from "../../components/SelectorPokemonType";
@@ -21,29 +18,6 @@ function Pokedex() {
             behavior: "smooth",
         });
     }
-
-    //Ir para o último Pokemon selecionado.
-    // function scrollToPokemon(id) {
-    //     setTimeout(() => {
-    //         if (document.querySelector("#p" + id)) {
-    //             let pId = document.querySelector("#p" + id);
-
-    //             pId.scrollIntoView(
-    //                 {
-    //                     behavior: "smooth",
-    //                 },
-    //                 500
-    //             );
-    //         }
-    //     }, 500);
-    // }
-
-    //Função para pegar o conteúdo que veio via query na URL.
-    // function useQuery() {
-    //     const { search } = useLocation();
-
-    //     return React.useMemo(() => new URLSearchParams(search), [search]);
-    // }
 
     //Gerando número aliatório
     function randomNumber(limitNumber) {
@@ -64,7 +38,8 @@ function Pokedex() {
     const [Data, setData] = useState([]);
     const [OriginalData, setOriginalData] = useState([]);
     const [Types, setTypes] = useState("");
-    const [Generation, setGeneration] = useState(randomNumber(8));
+    //const [Generation, setGeneration] = useState(randomNumber(8));
+    const [Generation, setGeneration] = useState(1);
     const [Region, setRegion] = useState("");
     const [RemoveLoading, setRemoveLoading] = useState(false);
     const [NumberFeaturedPokemon, setNumberFeaturedPokemon] = useState("");
@@ -80,9 +55,6 @@ function Pokedex() {
             setTotalPokemon(response.data.count);
         });
     }, []);
-
-    //Ir para o último Pokemon selecionado.
-    //scrollToPokemon(query.get("id"));
 
     //Conexão com API - Recuperando os Dados
     useEffect(() => {
@@ -250,13 +222,6 @@ function Pokedex() {
             />
             {/*########################################*/}
 
-            {/* {Data.length !== 0 && (
-                <FeaturedPokemon
-                    pokemon={Data[NumberFeaturedPokemon]}
-                    TotalPokemon={TotalPokemon}
-                />
-            )} */}
-
             <S.Container>
                 {Data.length === 0 && (
                     <div
@@ -270,33 +235,20 @@ function Pokedex() {
                 )}
 
                 <div className="div-pokecard">
-                    {Data.map((p) => {
-                        return (
-                            //p.id <= TotalItens &&
-                            <PokeCard
-                                name={p.name}
-                                id={p.id}
-                                img={p.sprites}
-                                types={p.types}
-                                key={p.id}
-                            />
-                        );
-                    })}
+                    {Data.filter((p) => p.id <= TotalPokemon).map((p) => (
+                        <PokeCard
+                            name={p.name}
+                            id={p.id}
+                            img={p.sprites}
+                            types={p.types}
+                            TotalPokemon={TotalPokemon}
+                            key={p.id}
+                        />
+                    ))}
                 </div>
 
                 <BackToTop />
             </S.Container>
-
-            {Data.length !== 0 &&
-                Data.map((p) => {
-                    return (
-                        <PokemonModal
-                            infoPokemon={p}
-                            TotalPokemon={TotalPokemon}
-                            key={"modal" + p.id}
-                        />
-                    );
-                })}
         </div>
     );
 }

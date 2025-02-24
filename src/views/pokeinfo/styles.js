@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     max-width: 1280px;
-    widht: 100%;
+    width: 100%;
     margin: auto;
-    margin-top: 80px;
+    margin-top: 0px;
 
     .dashboard {
-        padding: 15px;
+        padding: 0px 13px;
     }
 
     .dashboard .row > div {
@@ -338,10 +338,6 @@ export const Container = styled.div`
     }
 
     @media screen and (min-width: 1200px) {
-        margin-top: 100px;
-
-        // .dashboard .row-stats-Effectiveness div .card {
-        //     height: 780px;
-        // }
+        margin-top: 0px;
     }
 `;
