@@ -8,6 +8,12 @@ import { Link } from "react-router-dom";
 const Headder = (props) => {
     const [TotalPokemon, setTotalPokemon] = useState(0);
 
+    let positionHeader = "fixed-top";
+
+    if (props.position === "no-fixed") {
+        positionHeader = "";
+    }
+
     useEffect(() => {
         //Descobrindo a quantidade atual do pokemon-species
         api.get(`/pokemon-species`).then((response) => {
@@ -17,7 +23,7 @@ const Headder = (props) => {
 
     return (
         <S.Headder>
-            <div className="div-nav fixed-top">
+            <div className={`div-nav ${positionHeader}`}>
                 <nav className="navbar bg-primary navbar-expand-lg">
                     <div className="container-fluid">
                         <Link className="navbar-brand" to="/">
