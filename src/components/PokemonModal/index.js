@@ -41,16 +41,27 @@ const PokemonModal = ({ infoPokemon, TotalPokemon }) => {
                         </div>
                         <div className="modal-footer">
                             <Link
-                                to={
-                                    "/pokeinfo?id=" +
-                                    infoPokemon.id +
-                                    "&qtPokemons=" +
-                                    TotalPokemon
-                                }
+                                to="#"
                                 className="btn btn-primary"
-                                target="_blank"
+                                onClick={(e) => {
+                                    e.preventDefault();
+
+                                    const width = 1200;
+                                    const height = 700;
+
+                                    // Calcula o centro da tela
+                                    const left =
+                                        (window.screen.width - width) / 2;
+                                    const top =
+                                        (window.screen.height - height) / 2;
+
+                                    window.open(
+                                        `/pokeinfo?id=${infoPokemon.id}&qtPokemons=${TotalPokemon}`,
+                                        "_blank",
+                                        `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no`
+                                    );
+                                }}
                             >
-                                {/* <i className="bi bi-info-circle-fill me-1"></i>{" "} */}
                                 More Details
                             </Link>
 

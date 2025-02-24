@@ -79,6 +79,7 @@ function PokeTypes(props) {
             <div className="div-types">
                 {props.types?.map((t) => (
                     <div
+                        className="p-1 pe-2 ps-2 pb-3"
                         key={
                             t.type.name +
                             props.pokeId +

@@ -18,6 +18,7 @@ export const PokeTypes = styled.div`
     .div-types {
         display: flex;
         flex-direction: row;
+        /* flex-wrap: wrap; */
         text-transform: capitalize;
     }
 
@@ -27,8 +28,6 @@ export const PokeTypes = styled.div`
         justify-content: center;
         align-content: center;
         align-items: center;
-        margin-right: 18px;
-        margin-bottom: 10px;
     }
 
     .grass {

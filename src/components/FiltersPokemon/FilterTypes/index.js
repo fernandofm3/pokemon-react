@@ -19,10 +19,13 @@ function FilterTypes({
         }
     }, [clearFilterForm]);
 
-    //Buscando a lista com os nomes do TIPOS de Pokemons
+    //Buscando e classificando em ordem alfabetica a lista com os nomes do TIPOS de Pokemons
     useEffect(() => {
         api.get(`/type`).then((response) => {
-            setListNameType(response.data.results);
+            const sortedTypes = response.data.results.sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
+            setListNameType(sortedTypes);
         });
     }, []);
 

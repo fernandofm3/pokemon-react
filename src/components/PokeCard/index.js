@@ -92,8 +92,25 @@ function PokeCard(props) {
     return (
         <S.PokeCard>
             <Link
-                data-bs-toggle="modal"
-                data-bs-target={"#pokemonDetails" + props.id}
+                // data-bs-toggle="modal"
+                // data-bs-target={"#pokemonDetails" + props.id}
+                to="#"
+                onClick={(e) => {
+                    e.preventDefault();
+
+                    const width = 1200;
+                    const height = 700;
+
+                    // Calcula o centro da tela
+                    const left = (window.screen.width - width) / 2;
+                    const top = (window.screen.height - height) / 2;
+
+                    window.open(
+                        `/pokeinfo?id=${props.id}&qtPokemons=${props.TotalPokemon}`,
+                        "_blank",
+                        `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no`
+                    );
+                }}
             >
                 <div
                     className="card animate__animated animate__fadeIn animate__slow"

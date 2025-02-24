@@ -30,7 +30,7 @@ const PokemonTable = (props) => {
                     if (column.show === false)
                         return column.accessor || column.id;
                 }),
-                pageSize: 100,
+                pageSize: 200,
             },
         },
         useFilters,

@@ -52,28 +52,6 @@ const Headder = (props) => {
                                     </Link>
                                 </li>
 
-                                <li className="nav-item">
-                                    {/* <Link
-                                        className="nav-link"
-                                        to={
-                                            "/pokeinfo?id=1&offset=0&limit=12&type=&color=&qtPokemons=" +
-                                            TotalPokemon
-                                        }
-                                    >
-                                        Pokeinfo
-                                    </Link> */}
-
-                                    <Link
-                                        className="nav-link"
-                                        to={
-                                            "/pokeinfo?id=1&qtPokemons=" +
-                                            TotalPokemon
-                                        }
-                                    >
-                                        Pokeinfo
-                                    </Link>
-                                </li>
-
                                 <li className="nav-item dropdown">
                                     <button
                                         className="nav-link dropdown-toggle btn-dropdown"
@@ -87,7 +65,9 @@ const Headder = (props) => {
 
                                     <ul className="dropdown-menu">
                                         {props.page !== "pokeInfo" &&
-                                            props.page !== "allPokemon" && (
+                                            props.page !== "allPokemon" &&
+                                            props.page !==
+                                                "poke-comparation" && (
                                                 <>
                                                     <li>
                                                         <button
@@ -116,19 +96,6 @@ const Headder = (props) => {
                                                 </>
                                             )}
 
-                                        {/* <li>
-                                                <button
-                                                    className="btn btn-outline-success btn-region"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalRegion"
-                                                >
-                                                    <span>
-                                                        <i className="bi bi-geo-fill me-2"></i>{" "}
-                                                        Region
-                                                    </span>
-                                                </button>
-                                            </li> */}
-
                                         <li>
                                             <Link
                                                 to={"/all-pokemon"}
@@ -141,6 +108,19 @@ const Headder = (props) => {
                                             </Link>
                                         </li>
                                     </ul>
+                                </li>
+
+                                <li className="nav-item">
+                                    <Link
+                                        className="nav-link"
+                                        to={
+                                            "/poke-comparation?id=1&qtPokemons=" +
+                                            TotalPokemon
+                                        }
+                                        // target="_blank"
+                                    >
+                                        Comparation
+                                    </Link>
                                 </li>
                             </ul>
 
