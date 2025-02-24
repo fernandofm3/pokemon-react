@@ -10,6 +10,10 @@ export const TypesStats = styled.div`
         margin-bottom: 0;
     }
 
+    .div-types-stats .table-responsive .table tbody > tr {
+        height: 110px;
+    }
+
     .damage {
         margin-right: -5px !important;
         margin-left: 10px;

@@ -124,11 +124,12 @@ export default function PokemonComparator() {
             <Header
                 SearchNameApi={"COMPARE POKEMON"}
                 page={"poke-comparation"}
+                position={"no-fixed"}
             />
 
             <div
                 className="container-fluid p-3 pt-0"
-                style={{ marginTop: "120px" }}
+                style={{ marginTop: "20px" }}
             >
                 <div className="position-relative mb-4">
                     <input
@@ -136,7 +137,7 @@ export default function PokemonComparator() {
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Enter the name of the pokemon"
-                        className="form-control border-2 border-primary "
+                        className="form-control border-2 border-primary"
                     />
                     {suggestions.length > 0 && (
                         <ul
@@ -172,26 +173,29 @@ export default function PokemonComparator() {
                                         onClick={() =>
                                             removePokemon(pokemon.name)
                                         }
-                                        className="btn-close position-absolute top-0 end-0 m-2"
+                                        className="btn-close position-absolute top-0 end-0 m-2 z-2"
                                         aria-label="Remover"
                                     ></button>
-                                    <img
-                                        src={pokemon.sprites.front_default}
-                                        alt={pokemon.name}
-                                        className="card-img-top mx-auto"
-                                        style={{
-                                            width: "96px",
-                                            height: "96px",
-                                        }}
-                                    />
 
-                                    <div className="card-body">
+                                    <div className="d-flex flex-column justify-content-center align-items-center w-100 sticky-top z-1 bg-white pt-2">
+                                        <img
+                                            src={pokemon.sprites.front_default}
+                                            alt={pokemon.name}
+                                            className="bg-white border border-secondary rounded rounded-circle mb-3"
+                                            style={{
+                                                width: "96px",
+                                                height: "96px",
+                                            }}
+                                        />
                                         <h4 className="card-title text-capitalize text-center mb-0">
                                             {pokemon.name}
                                         </h4>
                                         <p className="text-secondary mb-3 text-center m-0">
                                             #{zeroLeft(pokemon.id)}
                                         </p>
+                                    </div>
+
+                                    <div className="card-body">
                                         <div className="mb-4 poke-type-comparation">
                                             <PokeTypes
                                                 types={pokemon.types}
@@ -199,20 +203,20 @@ export default function PokemonComparator() {
                                             />
                                         </div>
 
-                                        <div className="d-flex justify-content-between">
-                                            <p className="mb-4 p-3 text-white bg-primary rounded">
+                                        <div className="d-flex justify-content-around flex-wrap">
+                                            <p className="mb-3 p-3 text-white bg-primary rounded">
                                                 Height <br />
                                                 <span className="fs-6">
                                                     <b>{pokemon.height} M</b>
                                                 </span>
                                             </p>
-                                            <p className="mb-4 p-3 text-white bg-primary rounded">
+                                            <p className="mb-3 p-3 text-white bg-primary rounded">
                                                 Weight <br />
                                                 <span className="fs-6">
                                                     <b>{pokemon.weight} Kg</b>
                                                 </span>
                                             </p>
-                                            <p className="mb-4 p-3 text-white bg-primary rounded">
+                                            <p className="mb-3 p-3 text-white bg-primary rounded">
                                                 Base Exp <br />
                                                 <span className="fs-6">
                                                     <b>
@@ -224,14 +228,15 @@ export default function PokemonComparator() {
                                             </p>
                                         </div>
 
-                                        <div className="d-flex justify-content-between">
-                                            <p className="mb-4 p-3 text-white bg-danger rounded w-50 me-3">
-                                                Catch Rate <br />
+                                        <div className="d-flex justify-content-around flex-wrap mb-4">
+                                            <p className="mb-3 p-3 text-white bg-info rounded w-100">
+                                                <b>Catch Rate</b>
+                                                <br />
                                                 <span className="fs-4">
                                                     {pokemon.catch_rate}
                                                 </span>
                                             </p>
-                                            <p className="mb-4 p-3 text-white bg-primary rounded w-75">
+                                            <p className="mb-3 p-3 text-white bg-primary rounded w-100">
                                                 Base Friendship <br />
                                                 <span className="fs-4 ">
                                                     {pokemon.base_friendship}
@@ -239,10 +244,10 @@ export default function PokemonComparator() {
                                             </p>
                                         </div>
 
-                                        <div className="mb-4">
+                                        <div className="mb-4 div-abilities border border-primary rounded">
                                             <ul className="list-group">
                                                 <li
-                                                    className="list-group-item active"
+                                                    className="list-group-item active z-0"
                                                     aria-current="true"
                                                 >
                                                     <b>Abilities</b>
@@ -266,7 +271,7 @@ export default function PokemonComparator() {
                                             </ul>
                                         </div>
 
-                                        <div className="mb-4">
+                                        <div className="mb-5 border border-danger rounded p-2">
                                             <PokeStats stats={pokemon.stats} />
                                         </div>
 
