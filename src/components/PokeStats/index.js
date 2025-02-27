@@ -32,15 +32,15 @@ function PokeStats(props) {
         }
 
         if (value > 89 && value < 120) {
-            barColor = "#0a58ca";
+            barColor = "#a0e515";
         }
 
         if (value > 119 && value < 150) {
-            barColor = "#8e44ad";
+            barColor = "#23cd5e";
         }
 
         if (value > 149) {
-            barColor = "#16a085";
+            barColor = "#00c2b8";
         }
 
         return barColor;

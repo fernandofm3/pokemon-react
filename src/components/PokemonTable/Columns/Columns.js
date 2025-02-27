@@ -1,6 +1,5 @@
 import { ColumnFilter } from "./ColumnFilter";
 import Types from "../../../components/PokeTypes";
-import { Link } from "react-router-dom";
 
 //Adicionando zero a esqueda no númeoro do Pokemon.
 function zeroLeft(pokeId) {
@@ -57,28 +56,32 @@ export const COLUMNS = [
             const pokeId = props.cell.row.original.id;
             const totalPokemon = props.initialRows.length;
             return (
-                <Link
+                <a
                     className="btn btn-outline-primary poke-name"
-                    to="#"
+                    href={`/pokeinfo?id=${pokeId}&qtPokemons=${totalPokemon}`} // Link real
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={(e) => {
-                        e.preventDefault();
+                        if (e.button === 0) {
+                            // Evita o comportamento padrão para o clique esquerdo
+                            e.preventDefault();
 
-                        const width = 1200;
-                        const height = 700;
+                            // Janela centralizada
+                            const width = 1200;
+                            const height = 700;
+                            const left = (window.screen.width - width) / 2;
+                            const top = (window.screen.height - height) / 2;
 
-                        // Calcula o centro da tela
-                        const left = (window.screen.width - width) / 2;
-                        const top = (window.screen.height - height) / 2;
-
-                        window.open(
-                            `/pokeinfo?id=${pokeId}&qtPokemons=${totalPokemon}`,
-                            "_blank",
-                            `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no`
-                        );
+                            window.open(
+                                `/pokeinfo?id=${pokeId}&qtPokemons=${totalPokemon}`,
+                                "_blank",
+                                `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no`
+                            );
+                        }
                     }}
                 >
                     {props.cell.row.original.name}
-                </Link>
+                </a>
             );
         },
     },

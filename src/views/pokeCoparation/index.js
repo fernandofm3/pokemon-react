@@ -10,16 +10,28 @@ export default function PokemonComparator() {
     const [search, setSearch] = useState("");
     const [pokemons, setPokemons] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
+    const [totalPokemons, setTotalPokemons] = useState(1025); // Valor padrão
+
+    useEffect(() => {
+        // Obtém o número total de Pokémons na API
+        fetch("https://pokeapi.co/api/v2/pokemon-species?limit=1")
+            .then((res) => res.json())
+            .then((data) => {
+                setTotalPokemons(data.count + 1); // Define o total de Pokémons dinamicamente
+            })
+            .catch(() => {
+                setTotalPokemons(1025); // Valor padrão caso ocorra um erro
+            });
+    }, []);
 
     useEffect(() => {
         if (search.length > 1) {
-            fetch(`https://pokeapi.co/api/v2/pokemon?limit=1000`)
+            fetch(`https://pokeapi.co/api/v2/pokemon?limit=${totalPokemons}`)
                 .then((res) => res.json())
                 .then((data) => {
                     const filtered = data.results
                         .filter((p) => p.name.includes(search.toLowerCase()))
                         .map((p) => {
-                            // Extraindo o ID do Pokémon da URL
                             const id = p.url.split("/")[6];
                             return {
                                 name: p.name,
@@ -31,7 +43,7 @@ export default function PokemonComparator() {
         } else {
             setSuggestions([]);
         }
-    }, [search]);
+    }, [search, totalPokemons]);
 
     const fetchPokemon = async (name) => {
         if (!name) return;
@@ -78,8 +90,8 @@ export default function PokemonComparator() {
                 name: dataP.name,
                 sprites: dataP.sprites,
                 types: dataP.types,
-                height: dataP.height,
-                weight: dataP.weight,
+                height: dataP.height / 10,
+                weight: dataP.weight / 10,
                 base_experience: dataP.base_experience,
                 abilities: dataP.abilities,
                 stats: dataP.stats,
@@ -164,7 +176,7 @@ export default function PokemonComparator() {
                         </ul>
                     )}
                 </div>
-                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-4 justify-content-center">
+                <div className="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-4 justify-content-center">
                     {pokemons.length > 0 ? (
                         pokemons.map((pokemon) => (
                             <div key={pokemon.id} className="col">
@@ -193,64 +205,86 @@ export default function PokemonComparator() {
                                         <p className="text-secondary mb-3 text-center m-0">
                                             #{zeroLeft(pokemon.id)}
                                         </p>
+
+                                        <PokeTypes
+                                            types={pokemon.types}
+                                            pokeId={pokemon.id}
+                                        />
                                     </div>
 
                                     <div className="card-body">
-                                        <div className="mb-4 poke-type-comparation">
+                                        {/* <div className="mb-4 poke-type-comparation">
                                             <PokeTypes
                                                 types={pokemon.types}
                                                 pokeId={pokemon.id}
                                             />
-                                        </div>
+                                        </div> */}
 
-                                        <div className="d-flex justify-content-around flex-wrap">
-                                            <p className="mb-3 p-3 text-white bg-primary rounded">
-                                                Height <br />
-                                                <span className="fs-6">
-                                                    <b>{pokemon.height} M</b>
-                                                </span>
-                                            </p>
-                                            <p className="mb-3 p-3 text-white bg-primary rounded">
-                                                Weight <br />
-                                                <span className="fs-6">
-                                                    <b>{pokemon.weight} Kg</b>
-                                                </span>
-                                            </p>
-                                            <p className="mb-3 p-3 text-white bg-primary rounded">
-                                                Base Exp <br />
-                                                <span className="fs-6">
-                                                    <b>
-                                                        {
-                                                            pokemon.base_experience
-                                                        }
-                                                    </b>
-                                                </span>
-                                            </p>
-                                        </div>
-
-                                        <div className="d-flex justify-content-around flex-wrap mb-4">
-                                            <p className="mb-3 p-3 text-white bg-info rounded w-100">
-                                                <b>Catch Rate</b>
-                                                <br />
-                                                <span className="fs-4">
-                                                    {pokemon.catch_rate}
-                                                </span>
-                                            </p>
-                                            <p className="mb-3 p-3 text-white bg-primary rounded w-100">
-                                                Base Friendship <br />
-                                                <span className="fs-4 ">
-                                                    {pokemon.base_friendship}
-                                                </span>
-                                            </p>
+                                        <div className="row">
+                                            <div className="col-6">
+                                                <p className="p-3 text-secondary border border-black border-1 rounded">
+                                                    Height <br />
+                                                    <span className="fs-6">
+                                                        <b>
+                                                            {pokemon.height} M
+                                                        </b>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div className="col-6">
+                                                <p className="p-3 text-secondary border border-black border-1 rounded">
+                                                    Weight <br />
+                                                    <span className="fs-6">
+                                                        <b>
+                                                            {pokemon.weight} Kg
+                                                        </b>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div className="col-5">
+                                                <p className="p-3 text-secondary border border-warning border-1 rounded">
+                                                    Base Exp <br />
+                                                    <span className="fs-6">
+                                                        <b>
+                                                            {
+                                                                pokemon.base_experience
+                                                            }
+                                                        </b>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div className="col-7">
+                                                <p className="p-3 text-secondary border border-success border-1 rounded w-100">
+                                                    Base Friendship <br />
+                                                    <span className="fs-6">
+                                                        <b>
+                                                            {
+                                                                pokemon.base_friendship
+                                                            }
+                                                        </b>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div className="col-12">
+                                                <p className="p-3 text-secondary border border-danger border-1 rounded w-100">
+                                                    Catch Rate
+                                                    <br />
+                                                    <span className="fs-6">
+                                                        <b>
+                                                            {pokemon.catch_rate}{" "}
+                                                        </b>
+                                                    </span>
+                                                </p>
+                                            </div>
                                         </div>
 
                                         <div className="mb-4 div-abilities border border-primary rounded">
                                             <ul className="list-group">
                                                 <li
-                                                    className="list-group-item active z-0"
+                                                    className="list-group-item z-0 border border-0"
                                                     aria-current="true"
                                                 >
-                                                    <b>Abilities</b>
+                                                    <b>ABILITIES</b>
                                                 </li>
 
                                                 {pokemon.abilities.map(
@@ -258,7 +292,7 @@ export default function PokemonComparator() {
                                                         return (
                                                             <li
                                                                 key={index}
-                                                                className="list-group-item text-capitalize"
+                                                                className="list-group-item text-capitalize border border-0"
                                                             >
                                                                 {
                                                                     item.ability

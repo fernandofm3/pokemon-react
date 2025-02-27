@@ -575,6 +575,22 @@ function PokeInfo() {
         calculateGenderRatio();
     }, [PokeData, PokeDataSpecies]);
 
+    const capitalizeFirstLetter = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    };
+
+    //Colocando o nome do pokemon na aba do navegador
+    const pokemonNameCapitalize = capitalizeFirstLetter(
+        infoPokemon.name || "Detalhes do Pokémon"
+    );
+
+    useEffect(() => {
+        document.title = pokemonNameCapitalize
+            ? pokemonNameCapitalize
+            : "Pokémon Details";
+    }, [pokemonNameCapitalize]);
+    //##################################################
+
     //#############################################################################
 
     return (
