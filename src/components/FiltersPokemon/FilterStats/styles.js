@@ -49,15 +49,15 @@ export const FilterStats = styled.div`
     }
 
     .div-stats .div-stats-main-checkbox .high {
-        border-color: #0a58ca;
+        border-color: #a0e515;
     }
 
     .div-stats .div-stats-main-checkbox .very-high {
-        border-color: #8e44ad;
+        border-color: #23cd5e;
     }
 
     .div-stats .div-stats-main-checkbox .super {
-        border-color: #198754;
+        border-color: #00c2b8;
     }
 
     .div-stats .div-stats-main-checkbox .stats-all {
@@ -95,15 +95,15 @@ export const FilterStats = styled.div`
     }
 
     .div-stats-main-checkbox .div-stats-label .label-high {
-        background-color: #0a58ca;
+        background-color: #a0e515;
     }
 
     .div-stats-main-checkbox .div-stats-label .label-very-high {
-        background-color: #8e44ad;
+        background-color: #23cd5e;
     }
 
     .div-stats-main-checkbox .div-stats-label .label-super {
-        background-color: #198754;
+        background-color: #00c2b8;
     }
 
     .div-stats-main-checkbox .div-stats-label .label-all {

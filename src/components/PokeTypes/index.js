@@ -123,7 +123,7 @@ function PokeTypes(props) {
                                 </span>
                             )}
                             {t.type.damage === 2 && (
-                                <span className="badge text-bg-primary me-0 ms-0">
+                                <span className="badge text-bg-success me-0 ms-0">
                                     {t.type.damage}
                                 </span>
                             )}

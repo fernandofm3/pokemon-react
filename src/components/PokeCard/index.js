@@ -91,25 +91,27 @@ function PokeCard(props) {
 
     return (
         <S.PokeCard>
-            <Link
-                // data-bs-toggle="modal"
-                // data-bs-target={"#pokemonDetails" + props.id}
-                to="#"
+            <a
+                href={`/pokeinfo?id=${props.id}&qtPokemons=${props.TotalPokemon}`} // Link real
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={(e) => {
-                    e.preventDefault();
+                    if (e.button === 0) {
+                        // Evita o comportamento padrão para o clique esquerdo
+                        e.preventDefault();
 
-                    const width = 1200;
-                    const height = 700;
+                        // Janela centralizada
+                        const width = 1200;
+                        const height = 700;
+                        const left = (window.screen.width - width) / 2;
+                        const top = (window.screen.height - height) / 2;
 
-                    // Calcula o centro da tela
-                    const left = (window.screen.width - width) / 2;
-                    const top = (window.screen.height - height) / 2;
-
-                    window.open(
-                        `/pokeinfo?id=${props.id}&qtPokemons=${props.TotalPokemon}`,
-                        "_blank",
-                        `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no`
-                    );
+                        window.open(
+                            `/pokeinfo?id=${props.id}&qtPokemons=${props.TotalPokemon}`,
+                            "_blank",
+                            `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no`
+                        );
+                    }
                 }}
             >
                 <div
@@ -136,7 +138,8 @@ function PokeCard(props) {
 
                     <p className="pokeName">{splitName(props.name)}</p>
                 </div>
-            </Link>
+            </a>
+
             <div className="divPokeTypes animate__animated animate__fadeIn animate__slow">
                 <PokeTypes types={props.types} pokeId={props.id} />
             </div>
