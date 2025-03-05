@@ -72,6 +72,7 @@ const Headder = (props) => {
                                     <ul className="dropdown-menu">
                                         {props.page !== "pokeInfo" &&
                                             props.page !== "allPokemon" &&
+                                            props.page !== "poke-capture" &&
                                             props.page !==
                                                 "poke-comparation" && (
                                                 <>
@@ -119,13 +120,19 @@ const Headder = (props) => {
                                 <li className="nav-item">
                                     <Link
                                         className="nav-link"
-                                        to={
-                                            "/poke-comparation?id=1&qtPokemons=" +
-                                            TotalPokemon
-                                        }
+                                        to={"/poke-comparation"}
                                         // target="_blank"
                                     >
                                         Comparation
+                                    </Link>
+                                </li>
+
+                                <li className="nav-item">
+                                    <Link
+                                        className="nav-link"
+                                        to={"/poke-capture"}
+                                    >
+                                        Capture
                                     </Link>
                                 </li>
                             </ul>

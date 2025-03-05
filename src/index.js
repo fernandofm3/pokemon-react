@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Pokedex from "./views/pokedex";
 import Pokeinfo from "./views/pokeinfo";
 import PokeComparation from "./views/pokeCoparation";
+import PokeCapture from "./views/pokeCapture";
 import AllPokemon from "./views/allPokemon";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -16,6 +17,7 @@ root.render(
                 <Route path="/" element={<Pokedex />} />
                 <Route path="/pokeinfo" element={<Pokeinfo />} />
                 <Route path="/poke-comparation" element={<PokeComparation />} />
+                <Route path="/poke-capture" element={<PokeCapture />} />
                 <Route path="/all-Pokemon" element={<AllPokemon />} />
             </Routes>
         </main>
