@@ -366,9 +366,13 @@ export default function PokemonComparator() {
                             </div>
                         ))
                     ) : (
-                        <p className="text-center text-secondary mt-5">
-                            <b>No Pokémon selected.</b>
-                        </p>
+                        <div className="container-fluid w-100 mt-4">
+                            <div className="alert alert-primary " role="alert">
+                                <i className="bi bi-info-circle me-1"></i>{" "}
+                                Select 2 or more Pokemons to compare their
+                                information.
+                            </div>
+                        </div>
                     )}
                 </div>
             </div>
