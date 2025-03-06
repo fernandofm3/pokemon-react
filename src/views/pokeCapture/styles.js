@@ -24,4 +24,22 @@ export const PokemonCapture = styled.div`
         text-transform: uppercase;
         text-align: center;
     }
+
+    .div-capture-main {
+        display: block;
+    }
+
+    .unsupported-resolution {
+        display: none;
+    }
+
+    @media (max-width: 1279px) {
+        .div-capture-main {
+            display: none;
+        }
+
+        .unsupported-resolution {
+            display: block;
+        }
+    }
 `;

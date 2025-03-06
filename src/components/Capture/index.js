@@ -125,7 +125,7 @@ const Capture = ({ captureRate, infoStats }) => {
                         >
                             {Object.keys(pokeBalls).map((ball) => (
                                 <option key={ball} value={ball}>
-                                    {ball} {"-"} {pokeBalls[ball]}x
+                                    {ball} {pokeBalls[ball]}x
                                 </option>
                             ))}
                         </select>
@@ -140,7 +140,7 @@ const Capture = ({ captureRate, infoStats }) => {
                         >
                             {Object.keys(statusMultipliers).map((status) => (
                                 <option key={status} value={status}>
-                                    {status} {"-"} {statusMultipliers[status]}x
+                                    {status} {statusMultipliers[status]}x
                                 </option>
                             ))}
                         </select>
