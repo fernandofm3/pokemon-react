@@ -140,13 +140,104 @@ const PokemonCapture = () => {
             });
     };
 
+    // const fetchLocationAreaEncounters = (locationLink) => {
+    //     fetch(locationLink)
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             if (data && data.length > 0) {
+    //                 let minChance = null; // Começamos com null para evitar falso 100%
+    //                 const groupedLocations = {};
+
+    //                 data.forEach((encounter) => {
+    //                     encounter.version_details.forEach((version) => {
+    //                         const game = version.version.name;
+    //                         const location =
+    //                             encounter.location_area.name.replace(/-/g, " ");
+
+    //                         version.encounter_details.forEach(
+    //                             (encounterDetail) => {
+    //                                 // Atualiza a menor chance
+    //                                 if (
+    //                                     minChance === null ||
+    //                                     encounterDetail.chance < minChance
+    //                                 ) {
+    //                                     minChance = encounterDetail.chance;
+    //                                 }
+
+    //                                 // Captura as informações:
+    //                                 const method =
+    //                                     encounterDetail.method.name.replace(
+    //                                         /-/g,
+    //                                         " "
+    //                                     );
+    //                                 const conditionLevel =
+    //                                     encounterDetail.min_level ?? "Unknown";
+    //                                 // Concatena os nomes dos condition_values, se houver
+    //                                 const conditionValues =
+    //                                     encounterDetail.condition_values
+    //                                         .map((cv) =>
+    //                                             cv.name.replace(/-/g, " ")
+    //                                         )
+    //                                         .join(", ") || "None";
+
+    //                                 // Agrupa as localizações por jogo
+    //                                 if (!groupedLocations[game]) {
+    //                                     groupedLocations[game] = [];
+    //                                 }
+
+    //                                 // Procura se já existe a localização no grupo
+    //                                 let existingLocation = groupedLocations[
+    //                                     game
+    //                                 ].find((loc) => loc.name === location);
+
+    //                                 if (!existingLocation) {
+    //                                     existingLocation = {
+    //                                         name: location,
+    //                                         methods: [], // Array para armazenar métodos e condições
+    //                                     };
+    //                                     groupedLocations[game].push(
+    //                                         existingLocation
+    //                                     );
+    //                                 }
+
+    //                                 // Adiciona as informações do método de encontro para essa localização
+    //                                 existingLocation.methods.push({
+    //                                     name: method,
+    //                                     level: conditionLevel,
+    //                                     conditions: conditionValues,
+    //                                 });
+    //                             }
+    //                         );
+    //                     });
+    //                 });
+
+    //                 const formattedLocations = Object.entries(
+    //                     groupedLocations
+    //                 ).map(([game, locations]) => ({
+    //                     game,
+    //                     locations,
+    //                 }));
+
+    //                 setPokemonLocations(formattedLocations);
+    //                 setPokemonMaxEncounterChance(minChance ?? 100); // Se for null, assume 100
+    //             } else {
+    //                 setPokemonLocations([]);
+    //                 setPokemonMaxEncounterChance(null);
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.error("Erro ao buscar locais de encontro:", error);
+    //             setPokemonLocations([]);
+    //             setPokemonMaxEncounterChance(null);
+    //         });
+    // };
+
     const fetchLocationAreaEncounters = (locationLink) => {
         fetch(locationLink)
             .then((res) => res.json())
             .then((data) => {
                 if (data && data.length > 0) {
                     let minChance = null; // Começamos com null para evitar falso 100%
-
                     const groupedLocations = {};
 
                     data.forEach((encounter) => {
@@ -157,22 +248,74 @@ const PokemonCapture = () => {
 
                             version.encounter_details.forEach(
                                 (encounterDetail) => {
+                                    // Atualiza a menor chance
                                     if (
                                         minChance === null ||
                                         encounterDetail.chance < minChance
                                     ) {
                                         minChance = encounterDetail.chance;
                                     }
+
+                                    // Captura as informações:
+                                    const method =
+                                        encounterDetail.method.name.replace(
+                                            /-/g,
+                                            " "
+                                        );
+                                    const conditionLevel =
+                                        encounterDetail.min_level ?? "Unknown";
+                                    // Concatena os nomes dos condition_values, se houver
+                                    const conditionValues =
+                                        encounterDetail.condition_values
+                                            .map((cv) =>
+                                                cv.name.replace(/-/g, " ")
+                                            )
+                                            .join(", ") || "None";
+
+                                    // Agrupa as localizações por jogo
+                                    if (!groupedLocations[game]) {
+                                        groupedLocations[game] = [];
+                                    }
+
+                                    // Procura se já existe a localização no grupo
+                                    let existingLocation = groupedLocations[
+                                        game
+                                    ].find((loc) => loc.name === location);
+
+                                    if (!existingLocation) {
+                                        existingLocation = {
+                                            name: location,
+                                            methods: [], // Array para armazenar métodos e condições
+                                        };
+                                        groupedLocations[game].push(
+                                            existingLocation
+                                        );
+                                    }
+
+                                    // Adiciona as informações do método de encontro para essa localização,
+                                    // mas evita inserir duplicatas
+                                    const methodEntry = {
+                                        name: method,
+                                        level: conditionLevel,
+                                        conditions: conditionValues,
+                                    };
+
+                                    const isDuplicate =
+                                        existingLocation.methods.some(
+                                            (m) =>
+                                                m.name === methodEntry.name &&
+                                                m.level === methodEntry.level &&
+                                                m.conditions ===
+                                                    methodEntry.conditions
+                                        );
+
+                                    if (!isDuplicate) {
+                                        existingLocation.methods.push(
+                                            methodEntry
+                                        );
+                                    }
                                 }
                             );
-
-                            if (!groupedLocations[game]) {
-                                groupedLocations[game] = [];
-                            }
-
-                            if (!groupedLocations[game].includes(location)) {
-                                groupedLocations[game].push(location);
-                            }
                         });
                     });
 
@@ -367,7 +510,10 @@ const PokemonCapture = () => {
                 page={"poke-capture"}
                 position={""}
             />
-            <div className="container-fluid" style={{ marginTop: "120px" }}>
+            <div
+                className="container-fluid div-capture-main"
+                style={{ marginTop: "120px" }}
+            >
                 <div className="row">
                     <div
                         className="col-md-3 pe-1 ps-3 pt-0"
@@ -427,7 +573,7 @@ const PokemonCapture = () => {
                                 }}
                             >
                                 <div className="row">
-                                    <div className="col-4 ">
+                                    <div className="col-3">
                                         <div className="d-flex flex-column justify-content-center align-items-center w-100 sticky-top">
                                             <div className="mb-0">
                                                 <h1 className="p-0 m-0">
@@ -538,7 +684,7 @@ const PokemonCapture = () => {
                                         </div>
                                     </div>
 
-                                    <div className="col-8">
+                                    <div className="col-9">
                                         <div className="mb-4">
                                             {calculateCaptureDifficulty() ? (
                                                 (() => {
@@ -623,7 +769,7 @@ const PokemonCapture = () => {
                                                             window.open(
                                                                 `/pokeinfo?id=${
                                                                     selectedPokemon.id
-                                                                }&qtPokemons=${1024}`,
+                                                                }&qtPokemons=${1024}#evoDetails`,
                                                                 "_blank",
                                                                 `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no`
                                                             );
@@ -699,11 +845,36 @@ const PokemonCapture = () => {
                                                         <table className="table table-striped table-bordered border-black">
                                                             <thead className="text-center">
                                                                 <tr>
-                                                                    <th>
+                                                                    <th
+                                                                        style={{
+                                                                            width: "160px",
+                                                                        }}
+                                                                    >
                                                                         Game
                                                                     </th>
-                                                                    <th>
+                                                                    <th
+                                                                        style={{
+                                                                            width: "200px",
+                                                                        }}
+                                                                    >
                                                                         Location
+                                                                    </th>
+                                                                    <th
+                                                                        style={{
+                                                                            width: "250px",
+                                                                        }}
+                                                                    >
+                                                                        Method
+                                                                    </th>
+                                                                    <th>
+                                                                        Min_Level
+                                                                    </th>
+                                                                    <th
+                                                                        style={{
+                                                                            width: "160px",
+                                                                        }}
+                                                                    >
+                                                                        Conditions
                                                                     </th>
                                                                 </tr>
                                                             </thead>
@@ -715,66 +886,125 @@ const PokemonCapture = () => {
                                                                             locations,
                                                                         },
                                                                         index
-                                                                    ) => (
-                                                                        <tr
-                                                                            key={
-                                                                                index
-                                                                            }
-                                                                        >
-                                                                            <td
-                                                                                className="text-white fw-bold text-uppercase text-center"
-                                                                                style={{
-                                                                                    backgroundColor:
-                                                                                        getGameColor(
-                                                                                            game
-                                                                                        ),
-                                                                                    textShadow:
-                                                                                        "1px 1px 2px black",
-                                                                                }}
-                                                                            >
-                                                                                {
-                                                                                    game
-                                                                                }
-                                                                            </td>
-                                                                            <td>
-                                                                                {locations.length >
-                                                                                0 ? (
-                                                                                    <ul
-                                                                                        className="m-0 p-0"
-                                                                                        style={{
-                                                                                            listStyleType:
-                                                                                                "none",
-                                                                                        }}
-                                                                                    >
-                                                                                        {locations.map(
-                                                                                            (
-                                                                                                location,
-                                                                                                locIndex
-                                                                                            ) => (
-                                                                                                <li
-                                                                                                    key={
-                                                                                                        locIndex
-                                                                                                    }
-                                                                                                    className="text-uppercase"
-                                                                                                >
-                                                                                                    {location.replace(
-                                                                                                        /-/g,
-                                                                                                        " "
-                                                                                                    )}
-                                                                                                </li>
-                                                                                            )
-                                                                                        )}
-                                                                                    </ul>
-                                                                                ) : (
-                                                                                    <span className="text-muted">
-                                                                                        No
-                                                                                        location
-                                                                                        available
-                                                                                    </span>
-                                                                                )}
-                                                                            </td>
-                                                                        </tr>
-                                                                    )
+                                                                    ) =>
+                                                                        // Para cada jogo, iteramos pelas localizações
+                                                                        locations.map(
+                                                                            (
+                                                                                location,
+                                                                                locIndex
+                                                                            ) => (
+                                                                                <tr
+                                                                                    key={`${index}-${locIndex}`}
+                                                                                >
+                                                                                    {/* Exibe o nome do jogo apenas na primeira linha deste grupo */}
+                                                                                    {locIndex ===
+                                                                                        0 && (
+                                                                                        <td
+                                                                                            rowSpan={
+                                                                                                locations.length
+                                                                                            }
+                                                                                            className="text-white fw-bold text-uppercase text-center"
+                                                                                            style={{
+                                                                                                backgroundColor:
+                                                                                                    getGameColor(
+                                                                                                        game
+                                                                                                    ),
+                                                                                                textShadow:
+                                                                                                    "1px 1px 2px black",
+                                                                                            }}
+                                                                                        >
+                                                                                            {
+                                                                                                game
+                                                                                            }
+                                                                                        </td>
+                                                                                    )}
+                                                                                    <td className="text-uppercase">
+                                                                                        {
+                                                                                            location.name
+                                                                                        }
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <ul
+                                                                                            className="m-0 p-0"
+                                                                                            style={{
+                                                                                                listStyleType:
+                                                                                                    "none",
+                                                                                            }}
+                                                                                        >
+                                                                                            {location.methods.map(
+                                                                                                (
+                                                                                                    method,
+                                                                                                    methodIndex
+                                                                                                ) => (
+                                                                                                    <li
+                                                                                                        className="text-uppercase"
+                                                                                                        key={
+                                                                                                            methodIndex
+                                                                                                        }
+                                                                                                    >
+                                                                                                        {
+                                                                                                            method.name
+                                                                                                        }
+                                                                                                    </li>
+                                                                                                )
+                                                                                            )}
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <ul
+                                                                                            className="m-0 p-0"
+                                                                                            style={{
+                                                                                                listStyleType:
+                                                                                                    "none",
+                                                                                            }}
+                                                                                        >
+                                                                                            {location.methods.map(
+                                                                                                (
+                                                                                                    method,
+                                                                                                    methodIndex
+                                                                                                ) => (
+                                                                                                    <li
+                                                                                                        key={
+                                                                                                            methodIndex
+                                                                                                        }
+                                                                                                    >
+                                                                                                        {
+                                                                                                            method.level
+                                                                                                        }
+                                                                                                    </li>
+                                                                                                )
+                                                                                            )}
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <ul
+                                                                                            className="m-0 p-0 text-uppercase"
+                                                                                            style={{
+                                                                                                listStyleType:
+                                                                                                    "none",
+                                                                                            }}
+                                                                                        >
+                                                                                            {location.methods.map(
+                                                                                                (
+                                                                                                    method,
+                                                                                                    methodIndex
+                                                                                                ) => (
+                                                                                                    <li
+                                                                                                        key={
+                                                                                                            methodIndex
+                                                                                                        }
+                                                                                                    >
+                                                                                                        {
+                                                                                                            method.conditions
+                                                                                                        }
+                                                                                                    </li>
+                                                                                                )
+                                                                                            )}
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            )
+                                                                        )
                                                                 )}
                                                             </tbody>
                                                         </table>
@@ -786,7 +1016,6 @@ const PokemonCapture = () => {
                                                         <i className="bi bi-geo-alt-fill me-1"></i>{" "}
                                                         Capture location
                                                     </h3>
-
                                                     <div
                                                         className="alert alert-primary"
                                                         role="alert"
@@ -807,6 +1036,20 @@ const PokemonCapture = () => {
                             </div>
                         )}
                     </div>
+                </div>
+            </div>
+
+            <div className="p-3 pt-0">
+                <div
+                    className="alert alert-warning unsupported-resolution"
+                    role="alert"
+                    style={{ marginTop: "120px" }}
+                >
+                    <i className="bi bi-exclamation-square-fill ms-1"></i>{" "}
+                    Resolution not supported!{" "}
+                    <Link to={"/"} className="ms-2">
+                        Return to Home
+                    </Link>
                 </div>
             </div>
         </S.PokemonCapture>

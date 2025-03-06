@@ -140,7 +140,7 @@ export default function PokemonComparator() {
             />
 
             <div
-                className="container-fluid p-3 pt-0"
+                className="container-fluid p-3 pt-0 div-comparation-main"
                 style={{ marginTop: "20px" }}
             >
                 <div className="position-relative mb-4">
@@ -213,13 +213,6 @@ export default function PokemonComparator() {
                                     </div>
 
                                     <div className="card-body">
-                                        {/* <div className="mb-4 poke-type-comparation">
-                                            <PokeTypes
-                                                types={pokemon.types}
-                                                pokeId={pokemon.id}
-                                            />
-                                        </div> */}
-
                                         <div className="row">
                                             <div className="col-6">
                                                 <p className="p-3 text-secondary border border-black border-1 rounded">
@@ -366,7 +359,7 @@ export default function PokemonComparator() {
                             </div>
                         ))
                     ) : (
-                        <div className="container-fluid w-100 mt-4">
+                        <div className="container-fluid w-100 mt-3">
                             <div className="alert alert-primary " role="alert">
                                 <i className="bi bi-info-circle me-1"></i>{" "}
                                 Select 2 or more Pokemons to compare their
@@ -374,6 +367,20 @@ export default function PokemonComparator() {
                             </div>
                         </div>
                     )}
+                </div>
+            </div>
+
+            <div className="p-3 pt-0">
+                <div
+                    className="alert alert-warning unsupported-resolution"
+                    role="alert"
+                    style={{ marginTop: "20px" }}
+                >
+                    <i className="bi bi-exclamation-square-fill ms-1"></i>{" "}
+                    Resolution not supported!{" "}
+                    <Link to={"/"} className="ms-2">
+                        Return to Home
+                    </Link>
                 </div>
             </div>
         </S.Container>

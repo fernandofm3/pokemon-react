@@ -591,6 +591,21 @@ function PokeInfo() {
     }, [pokemonNameCapitalize]);
     //##################################################
 
+    useEffect(() => {
+        if (RemoveLoading) {
+            const hash = window.location.hash;
+            if (hash) {
+                setTimeout(() => {
+                    // Pequeno delay para garantir que o conteúdo carregou
+                    const element = document.querySelector(hash);
+                    if (element) {
+                        element.scrollIntoView({ behavior: "smooth" });
+                    }
+                }, 500);
+            }
+        }
+    }, [RemoveLoading]);
+
     //#############################################################################
 
     return (
@@ -1903,7 +1918,10 @@ function PokeInfo() {
 
                                             {FirstEvolution.length > 0 &&
                                                 MiddleEvolution.length > 0 && (
-                                                    <div className=" p-3">
+                                                    <div
+                                                        className=" p-3"
+                                                        id="evoDetails"
+                                                    >
                                                         <div className="table-responsive">
                                                             <table className="table table-hover table-evo-details">
                                                                 <thead>
