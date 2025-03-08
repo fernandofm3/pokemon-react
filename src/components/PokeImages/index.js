@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import * as S from "./styles";
 import PokeTypes from "../../components/PokeTypes";
 import imgPokeball from "../../assets/pokeball.png";
+import {
+    getNumberGenerationOfUrl,
+    getIdVerietieOfUrl,
+    splitNameVarieties,
+    zeroLeft,
+    removeclassCss,
+} from "../../utils/utils.js";
 import { borderColorInfoPokemon } from "../../utils/utils";
 
 function PokeImages(props) {
@@ -13,12 +20,6 @@ function PokeImages(props) {
             return imgPokeball;
         }
     });
-
-    //Dividindo a URL para pegar o ID da Geração
-    function getNumberGenerationOfUrl(url) {
-        const splitedUrGeneration = url.split("/");
-        return splitedUrGeneration[6];
-    }
 
     if (props.img) {
         if (ImgPokemon !== props.img) {
@@ -39,45 +40,6 @@ function PokeImages(props) {
         idPokemonActual = splitedUrl[6];
     }
 
-    //Extrair o ID da url
-    function getIdVerietieOfUrl(urlVarietie, imgClass) {
-        const splitedUrl = urlVarietie.split("/");
-        props.setPokemonId(splitedUrl[6]);
-        removeclassCss(imgClass);
-    }
-
-    //Verrificando o tamanho do NOME do Pokemon, se preciso o nome será dividio e mostrado só o primeiro nome.
-    function splitNameVarieties(name) {
-        let newName = "";
-
-        if (name.length > 20) {
-            let splitedName = name.split("-");
-            newName = splitedName[0];
-        } else {
-            newName = name.replace(/-/g, " ");
-        }
-        return newName;
-    }
-
-    //Adicionando zero a esqueda no númeoro do Pokemon.
-    function zeroLeft(pokeId) {
-        if (pokeId < 10) {
-            return "000" + pokeId;
-        }
-
-        if (pokeId >= 10 && pokeId < 100) {
-            return "00" + pokeId;
-        }
-
-        if (pokeId >= 100 && pokeId < 1000) {
-            return "0" + pokeId;
-        }
-
-        if (pokeId >= 1000) {
-            return pokeId;
-        }
-    }
-
     //Gera o ID do próximo pokemon.
     let nextPokemon = 0;
     let previewsPokemon = 0;
@@ -90,31 +52,6 @@ function PokeImages(props) {
         previewsPokemon = Number(props.id) - 1;
         if (previewsPokemon === 0) {
             previewsPokemon = props.TotalPokemons;
-        }
-    }
-
-    //Remove a classe de animação Animate CSS
-    function removeclassCss(imgClass) {
-        let img = document.querySelector(imgClass);
-        img.classList.remove("animate__fadeIn");
-        img.classList.add("animate__fadeOut");
-        img.classList.add("animate__fester");
-
-        setTimeout(() => {
-            addClassCss(imgClass);
-        }, 300); // 3000 milissegundos = 3 segundos
-    }
-
-    // //Adiciona classe  de animação Animate CSS
-    function addClassCss(imgClass) {
-        let img = document.querySelector(imgClass);
-
-        if (img) {
-            //Verificando e comparando a url da imagem atual com a que veio da props.
-            if (img.src !== props.img) {
-                img.classList.add("animate__fadeIn");
-                img.classList.remove("animate__fadeOut");
-            }
         }
     }
 
@@ -185,7 +122,9 @@ function PokeImages(props) {
                                         onChange={(e) => {
                                             getIdVerietieOfUrl(
                                                 e.target.value,
-                                                ".imgPokeInfoMobile"
+                                                ".imgPokeInfoMobile",
+                                                props.setPokemonId,
+                                                removeclassCss
                                             );
                                         }}
                                     >
@@ -306,7 +245,9 @@ function PokeImages(props) {
                                         onChange={(e) => {
                                             getIdVerietieOfUrl(
                                                 e.target.value,
-                                                ".imgPokeInfo"
+                                                ".imgPokeInfo",
+                                                props.setPokemonId,
+                                                removeclassCss
                                             );
                                         }}
                                     >

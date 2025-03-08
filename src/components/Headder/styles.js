@@ -49,6 +49,24 @@ export const Headder = styled.div`
         color: #fff;
     }
 
+    .div-nav .btn-generation,
+    .div-nav .btn-region,
+    .div-nav .btn-types,
+    .div-nav .btn-header-pokemon {
+        display: flex;
+        padding: 5px 10px;
+        width: 100%;
+        font-weight: 600;
+    }
+
+    .div-nav .btn-header-pokemon {
+        color: #343a40;
+    }
+
+    .div-nav .btn-header-pokemon:hover {
+        color: #fff;
+    }
+
     .div-nav .btn-filtres {
         font-weight: 600;
     }

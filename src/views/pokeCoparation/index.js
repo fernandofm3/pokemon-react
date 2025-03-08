@@ -4,6 +4,7 @@ import TypesStats from "../../components/TypesStats";
 import PokeTypes from "../../components/PokeTypes";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { zeroLeft } from "../../utils/utils.js";
 import * as S from "./styles";
 
 export default function PokemonComparator() {
@@ -26,7 +27,9 @@ export default function PokemonComparator() {
 
     useEffect(() => {
         if (search.length > 1) {
-            fetch(`https://pokeapi.co/api/v2/pokemon?limit=${totalPokemons}`)
+            fetch(
+                `https://pokeapi.co/api/v2/pokemon-species?limit=${totalPokemons}`
+            )
                 .then((res) => res.json())
                 .then((data) => {
                     const filtered = data.results
@@ -34,6 +37,7 @@ export default function PokemonComparator() {
                         .map((p) => {
                             const id = p.url.split("/")[6];
                             return {
+                                id: id,
                                 name: p.name,
                                 image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
                             };
@@ -45,16 +49,16 @@ export default function PokemonComparator() {
         }
     }, [search, totalPokemons]);
 
-    const fetchPokemon = async (name) => {
-        if (!name) return;
+    const fetchPokemon = async (id) => {
+        if (!id) return;
 
         try {
             const responseP = await fetch(
-                `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`
+                `https://pokeapi.co/api/v2/pokemon/${id}`
             );
 
             const responseS = await fetch(
-                `https://pokeapi.co/api/v2/pokemon-species/${name.toLowerCase()}`
+                `https://pokeapi.co/api/v2/pokemon-species/${id}`
             );
 
             if (!responseP.ok || !responseS.ok) {
@@ -87,7 +91,7 @@ export default function PokemonComparator() {
 
             const newPokemonData = {
                 id: dataP.id,
-                name: dataP.name,
+                name: dataS.name,
                 sprites: dataP.sprites,
                 types: dataP.types,
                 height: dataP.height / 10,
@@ -107,25 +111,6 @@ export default function PokemonComparator() {
             console.error("Erro ao buscar Pokémon:", error);
         }
     };
-
-    //Adicionando zero a esqueda no númeoro do Pokemon.
-    function zeroLeft(pokeId) {
-        if (pokeId < 10) {
-            return "000" + pokeId;
-        }
-
-        if (pokeId >= 10 && pokeId < 100) {
-            return "00" + pokeId;
-        }
-
-        if (pokeId >= 100 && pokeId < 1000) {
-            return "0" + pokeId;
-        }
-
-        if (pokeId >= 1000) {
-            return pokeId;
-        }
-    }
 
     const removePokemon = (name) => {
         setPokemons((prev) => prev.filter((p) => p.name !== name));
@@ -161,7 +146,7 @@ export default function PokemonComparator() {
                                     key={pokemon.name}
                                     className="list-group-item list-group-item-action d-flex align-items-center"
                                     style={{ cursor: "pointer" }}
-                                    onClick={() => fetchPokemon(pokemon.name)}
+                                    onClick={() => fetchPokemon(pokemon.id)}
                                 >
                                     <img
                                         src={pokemon.image}

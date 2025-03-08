@@ -1,51 +1,8 @@
 import React from "react";
+import { findValueStatsInPercentage, getColorBar } from "../../utils/utils.js";
 import * as S from "./styles";
 
 function PokeStats(props) {
-    //Recuperando os valores dos Stats em porcentagem com uma base máxima de 180. Conta usada regra de 3.
-    function findValueStatsInPercentage(value) {
-        let result = 0;
-
-        if (value > 180) {
-            result = 100;
-        } else {
-            result = (value * 100) / 180;
-        }
-
-        return result;
-    }
-
-    //Verificando o valor da Stats para definir a cor da barra.
-    function getColorBar(value) {
-        let barColor = "";
-
-        if (value < 29) {
-            barColor = "#e74c3c";
-        }
-
-        if (value > 29 && value < 60) {
-            barColor = "#e67e22";
-        }
-
-        if (value > 59 && value < 90) {
-            barColor = "#f1c40f";
-        }
-
-        if (value > 89 && value < 120) {
-            barColor = "#a0e515";
-        }
-
-        if (value > 119 && value < 150) {
-            barColor = "#23cd5e";
-        }
-
-        if (value > 149) {
-            barColor = "#00c2b8";
-        }
-
-        return barColor;
-    }
-
     return (
         <S.PokeStats>
             <h6>Stats</h6>

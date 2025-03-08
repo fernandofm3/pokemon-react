@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import * as S from "./styles";
-//import imgPokeBall from "../../assets/pokeball.png";
+import { pokeBalls, statusMultipliers } from "../../utils/utils.js";
 import imgPokeBall from "../../assets/pokeball-2.png";
 
 const Capture = ({ captureRate, infoStats }) => {
@@ -29,44 +29,6 @@ const Capture = ({ captureRate, infoStats }) => {
 
         return a / 255; // Chance de captura em porcentagem
     }
-
-    const pokeBalls = {
-        BeastBall: 0.1,
-        CherishBall: 1,
-        DiveBall: 3.5,
-        DreamBall: 4,
-        DuskBall: 3,
-        FastBall: 4,
-        FriendBall: 1,
-        GreatBall: 1.5,
-        HealBall: 1,
-        HeavyBall: 1,
-        LevelBall: 1,
-        LoveBall: 8,
-        LureBall: 3,
-        LuxuryBall: 1,
-        MasterBall: 255,
-        MoonBall: 4,
-        NestBall: 1,
-        NetBall: 3,
-        PokeBall: 1,
-        PremierBall: 1,
-        QuickBall: 5,
-        RepeatBall: 3.5,
-        SafariBall: 1.5,
-        SuperBall: 1.5,
-        TimerBall: 1,
-        UltraBall: 2,
-    };
-
-    const statusMultipliers = {
-        Asleep: 2,
-        Burned: 1.5,
-        Frozen: 2,
-        Normal: 1,
-        Paralyzed: 1.5,
-        Poisoned: 1.5,
-    };
 
     // Atualiza a chance de captura sempre que alguma opção mudar
     useEffect(() => {

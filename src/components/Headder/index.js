@@ -117,23 +117,38 @@ const Headder = (props) => {
                                     </ul>
                                 </li>
 
-                                <li className="nav-item">
-                                    <Link
-                                        className="nav-link"
-                                        to={"/poke-comparation"}
-                                        // target="_blank"
+                                <li className="nav-item dropdown">
+                                    <button
+                                        className="nav-link dropdown-toggle btn-dropdown"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        data-bs-auto-close="true"
+                                        aria-expanded="false"
                                     >
-                                        Comparation
-                                    </Link>
-                                </li>
+                                        Utilities
+                                    </button>
 
-                                <li className="nav-item">
-                                    <Link
-                                        className="nav-link"
-                                        to={"/poke-capture"}
-                                    >
-                                        Capture
-                                    </Link>
+                                    <ul className="dropdown-menu">
+                                        <li className="nav-item">
+                                            <Link
+                                                className="btn btn-outline-secondary btn-header-pokemon"
+                                                to={"/poke-comparation"}
+                                            >
+                                                <i class="bi bi-lightning-fill me-1"></i>{" "}
+                                                Comparation
+                                            </Link>
+                                        </li>
+
+                                        <li className="nav-item">
+                                            <Link
+                                                className="btn btn-outline-secondary btn-header-pokemon"
+                                                to={"/poke-capture"}
+                                            >
+                                                <i class="bi bi-backpack2-fill me-2"></i>{" "}
+                                                Capture
+                                            </Link>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
 

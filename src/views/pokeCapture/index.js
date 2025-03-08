@@ -3,7 +3,14 @@ import Header from "../../components/Headder";
 import Capture from "../../components/Capture";
 import PokeTypes from "../../components/PokeTypes";
 import { Link } from "react-router-dom";
-import _get from "lodash/get";
+import {
+    gameColors,
+    starterPokemons,
+    getPokemonId,
+    zeroLeft,
+    spriteAdapterOfficial,
+    difficultyStyles,
+} from "../../utils/utils.js";
 import * as S from "./styles";
 
 const PokemonCapture = () => {
@@ -12,93 +19,10 @@ const PokemonCapture = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [bestNatures, setBestNatures] = useState([]);
     const [totalPokemons, setTotalPokemons] = useState(1025);
-    //const [difficultyCapture, setDifficultydifficulty] = useState("");
     const [pokemonSpeciesInfo, setPokemonSpeciesInfo] = useState(null); // Estado para as informações da espécie
     const [pokemonLocations, setPokemonLocations] = useState([]); // Estado para os locais de encontro
     const [pokemonMaxEncounterChance, setPokemonMaxEncounterChance] =
         useState(null); // Estado para os locais de encontro
-
-    const starterPokemons = [
-        // 1ª Geração - Kanto
-        "bulbasaur",
-        "charmander",
-        "squirtle",
-        // 2ª Geração - Johto
-        "chikorita",
-        "cyndaquil",
-        "totodile",
-        // 3ª Geração - Hoenn
-        "treecko",
-        "torchic",
-        "mudkip",
-        // 4ª Geração - Sinnoh
-        "turtwig",
-        "chimchar",
-        "piplup",
-        // 5ª Geração - Unova
-        "snivy",
-        "tepig",
-        "oshawott",
-        // 6ª Geração - Kalos
-        "chespin",
-        "fennekin",
-        "froakie",
-        // 7ª Geração - Alola
-        "rowlet",
-        "litten",
-        "popplio",
-        // 8ª Geração - Galar
-        "grookey",
-        "scorbunny",
-        "sobble",
-        // 9ª Geração - Paldea
-        "sprigatito",
-        "fuecoco",
-        "quaxly",
-    ];
-
-    // Mapeamento de classes e cores para cada dificuldade
-    const difficultyStyles = {
-        "Very Easy": { className: "", color: "#27ae60" },
-        Easy: { className: "", color: "#16a085" },
-        Normal: { className: "", color: "#95a5a6" },
-        Hard: { className: "", color: " #e74c3c" },
-        "Very Hard": { className: "", color: "#c0392b" },
-    };
-
-    const gameColors = {
-        red: "#d32f2f", // Vermelho forte
-        blue: "#1976d2", // Azul médio
-        yellow: "#fbc02d", // Amarelo vibrante
-        green: "#388e3c", // Verde médio
-        gold: "#ffcc00", // Amarelo dourado
-        silver: "#c0c0c0", // Prateado
-        crystal: "#00bcd4", // Azul cristalino
-        ruby: "#e53935", // Vermelho rubi
-        sapphire: "#1e88e5", // Azul safira
-        alphaSapphire: "#5d81d6",
-        emerald: "#2e7d32", // Verde esmeralda
-        firered: "#d84315", // Vermelho fogo
-        leafgreen: "#4caf50", // Verde folha
-        diamond: "#8471bd",
-        pearl: "#ce93d8", // Rosa perolado
-        platinum: "#9e9e9e", // Cinza platina
-        heartgold: "#b8860b", // Dourado escuro
-        soulsilver: "#8c8c8c", // Prata escuro
-        black: "#343a40", // Preto
-        black2: "#212121",
-        white: "#f5f5f5", // Branco gelo
-        white2: "#e9ecef",
-        x: "#3949ab", // Azul roxo (X)
-        y: "#d32f2f", // Vermelho escuro (Y)
-        sun: "#ff7043", // Laranja solar
-        moon: "#5c6bc0", // Azul lunar
-        ultrasun: "#ff5722", // Laranja intenso
-        ultramoon: "#303f9f", // Azul escuro
-        sword: "#0077b6", // Azul espada
-        shield: "#c2185b", // Vermelho escudo
-        omegaRuby: "#c03028",
-    };
 
     useEffect(() => {
         fetch("https://pokeapi.co/api/v2/pokemon-species?limit=1")
@@ -139,98 +63,6 @@ const PokemonCapture = () => {
                 setPokemonSpeciesInfo(null); // Caso haja erro ao buscar dados da espécie
             });
     };
-
-    // const fetchLocationAreaEncounters = (locationLink) => {
-    //     fetch(locationLink)
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             if (data && data.length > 0) {
-    //                 let minChance = null; // Começamos com null para evitar falso 100%
-    //                 const groupedLocations = {};
-
-    //                 data.forEach((encounter) => {
-    //                     encounter.version_details.forEach((version) => {
-    //                         const game = version.version.name;
-    //                         const location =
-    //                             encounter.location_area.name.replace(/-/g, " ");
-
-    //                         version.encounter_details.forEach(
-    //                             (encounterDetail) => {
-    //                                 // Atualiza a menor chance
-    //                                 if (
-    //                                     minChance === null ||
-    //                                     encounterDetail.chance < minChance
-    //                                 ) {
-    //                                     minChance = encounterDetail.chance;
-    //                                 }
-
-    //                                 // Captura as informações:
-    //                                 const method =
-    //                                     encounterDetail.method.name.replace(
-    //                                         /-/g,
-    //                                         " "
-    //                                     );
-    //                                 const conditionLevel =
-    //                                     encounterDetail.min_level ?? "Unknown";
-    //                                 // Concatena os nomes dos condition_values, se houver
-    //                                 const conditionValues =
-    //                                     encounterDetail.condition_values
-    //                                         .map((cv) =>
-    //                                             cv.name.replace(/-/g, " ")
-    //                                         )
-    //                                         .join(", ") || "None";
-
-    //                                 // Agrupa as localizações por jogo
-    //                                 if (!groupedLocations[game]) {
-    //                                     groupedLocations[game] = [];
-    //                                 }
-
-    //                                 // Procura se já existe a localização no grupo
-    //                                 let existingLocation = groupedLocations[
-    //                                     game
-    //                                 ].find((loc) => loc.name === location);
-
-    //                                 if (!existingLocation) {
-    //                                     existingLocation = {
-    //                                         name: location,
-    //                                         methods: [], // Array para armazenar métodos e condições
-    //                                     };
-    //                                     groupedLocations[game].push(
-    //                                         existingLocation
-    //                                     );
-    //                                 }
-
-    //                                 // Adiciona as informações do método de encontro para essa localização
-    //                                 existingLocation.methods.push({
-    //                                     name: method,
-    //                                     level: conditionLevel,
-    //                                     conditions: conditionValues,
-    //                                 });
-    //                             }
-    //                         );
-    //                     });
-    //                 });
-
-    //                 const formattedLocations = Object.entries(
-    //                     groupedLocations
-    //                 ).map(([game, locations]) => ({
-    //                     game,
-    //                     locations,
-    //                 }));
-
-    //                 setPokemonLocations(formattedLocations);
-    //                 setPokemonMaxEncounterChance(minChance ?? 100); // Se for null, assume 100
-    //             } else {
-    //                 setPokemonLocations([]);
-    //                 setPokemonMaxEncounterChance(null);
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.error("Erro ao buscar locais de encontro:", error);
-    //             setPokemonLocations([]);
-    //             setPokemonMaxEncounterChance(null);
-    //         });
-    // };
 
     const fetchLocationAreaEncounters = (locationLink) => {
         fetch(locationLink)
@@ -457,52 +289,6 @@ const PokemonCapture = () => {
         return "Very Easy";
     };
 
-    const getPokemonId = (url) => {
-        const parts = url.split("/");
-        return parts[parts.length - 2];
-    };
-
-    function spriteAdapterOfficial(spriteOfficial) {
-        let oficial_atwork = _get(
-            spriteOfficial,
-            "other.official-artwork.front_default",
-            ""
-        );
-        let dream_word = _get(
-            spriteOfficial,
-            "other.dream_world.front_default",
-            ""
-        );
-
-        if (dream_word) {
-            return dream_word;
-        }
-
-        if (oficial_atwork) {
-            return oficial_atwork;
-        }
-
-        return null;
-    }
-
-    function zeroLeft(pokeId) {
-        if (pokeId < 10) {
-            return "000" + pokeId;
-        }
-
-        if (pokeId >= 10 && pokeId < 100) {
-            return "00" + pokeId;
-        }
-
-        if (pokeId >= 100 && pokeId < 1000) {
-            return "0" + pokeId;
-        }
-
-        if (pokeId >= 1000) {
-            return pokeId;
-        }
-    }
-
     return (
         <S.PokemonCapture>
             <Header
@@ -516,7 +302,7 @@ const PokemonCapture = () => {
             >
                 <div className="row">
                     <div
-                        className="col-md-3 pe-1 ps-3 pt-0"
+                        className="col-xl-3 col-xxl-2 pe-1 ps-3 pt-0"
                         style={{
                             height: "calc(100vh - 140px)",
                             overflowY: "auto",
@@ -563,7 +349,8 @@ const PokemonCapture = () => {
                                 ))}
                         </ul>
                     </div>
-                    <div className="col-md-9">
+
+                    <div className="col-xl-9 col-xxl-10">
                         {selectedPokemon ? (
                             <div
                                 className="card p-5"
@@ -578,7 +365,9 @@ const PokemonCapture = () => {
                                             <div className="mb-0">
                                                 <h1 className="p-0 m-0">
                                                     <span className="text-uppercase">
-                                                        {selectedPokemon.name}
+                                                        {
+                                                            pokemonSpeciesInfo?.name
+                                                        }
                                                     </span>
                                                 </h1>
                                                 <h4 className="text-secondary text-center">

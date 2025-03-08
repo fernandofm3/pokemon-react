@@ -2,74 +2,15 @@ import React from "react";
 import * as S from "./styles";
 import PokeTypes from "../../components/PokeTypes";
 import _get from "lodash/get";
-import { Link } from "react-router-dom";
 import imgPokeball from "../../assets/pokeball.png";
-import { colorTypeGradients } from "../../utils/utils";
+import {
+    colorTypeGradients,
+    spriteAdapterOfficial,
+    zeroLeft,
+    splitName,
+} from "../../utils/utils";
 
 function PokeCard(props) {
-    //Ir ao topo da tela
-    function scrollUp() {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }
-
-    //Pegando a URL da imagem oficial do Pokemon
-    function spriteAdapterOfficial(spriteOfficial) {
-        let oficial_atwork = _get(
-            spriteOfficial,
-            "other.official-artwork.front_default",
-            ""
-        );
-        let dream_word = _get(
-            spriteOfficial,
-            "other.dream_world.front_default",
-            ""
-        );
-
-        if (dream_word) {
-            return dream_word;
-        }
-
-        if (oficial_atwork) {
-            return oficial_atwork;
-        }
-
-        return null;
-    }
-
-    //Adicionando zero a esqueda no númeoro do Pokemon.
-    function zeroLeft(pokeId) {
-        if (pokeId < 10) {
-            return "000" + pokeId;
-        }
-
-        if (pokeId >= 10 && pokeId < 100) {
-            return "00" + pokeId;
-        }
-
-        if (pokeId >= 100 && pokeId < 1000) {
-            return "0" + pokeId;
-        }
-
-        if (pokeId >= 1000) {
-            return pokeId;
-        }
-    }
-
-    //Verrificando o tamanho do NOME do Pokemon, se preciso o nome será dividio e mostrado só o primeiro nome.
-    function splitName(name) {
-        let newName = "";
-        if (name.length > 15) {
-            let splitedName = name.split("-");
-            newName = splitedName[0];
-        } else {
-            newName = name.replace(/-/g, " ");
-        }
-        return newName;
-    }
-
     const spriteOfficial = spriteAdapterOfficial(props.img);
 
     //Definindo a cor do card com base na cor do tipo
