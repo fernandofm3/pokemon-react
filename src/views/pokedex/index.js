@@ -8,37 +8,15 @@ import Headder from "../../components/Headder";
 import Loading from "../../components/Loading";
 import BackToTop from "../../components/BackTotop";
 import SelectorPokemonType from "../../components/SelectorPokemonType";
+import { scrollUp } from "../../utils/utils.js";
 import * as S from "./styles";
 
 function Pokedex() {
-    //Ir ao topo da tela
-    function scrollUp() {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }
-
-    //Gerando número aliatório
-    function randomNumber(limitNumber) {
-        // Gera um número decimal aleatório entre 0 (inclusivo) e 1 (exclusivo)
-        const decimalNumber = Math.random();
-
-        // Multiplica por 9 para obter um número entre 0 (inclusivo) e 9 (exclusivo)
-        // Adiciona 1 para ajustar o intervalo para 1 (inclusivo) a 9 (inclusive)
-        const multipliedNumber = decimalNumber * limitNumber + 1;
-
-        // Arredonda para baixo para o número inteiro mais próximo
-        const intNumber = Math.floor(multipliedNumber);
-
-        return intNumber;
-    }
-
     //const query = useQuery();
     const [Data, setData] = useState([]);
     const [OriginalData, setOriginalData] = useState([]);
     const [Types, setTypes] = useState("");
-    //const [Generation, setGeneration] = useState(randomNumber(8));
+
     const [Generation, setGeneration] = useState(1);
     const [Region, setRegion] = useState("");
     const [RemoveLoading, setRemoveLoading] = useState(false);
@@ -83,9 +61,6 @@ function Pokedex() {
                         a.id > b.id ? 1 : b.id > a.id ? -1 : 0
                     );
 
-                    setNumberFeaturedPokemon(
-                        randomNumber([newPokeList.length])
-                    );
                     setOriginalData(newPokeList);
                     setData(newPokeList);
                     setRemoveLoading(true);
@@ -123,9 +98,6 @@ function Pokedex() {
                         a.id > b.id ? 1 : b.id > a.id ? -1 : 0
                     );
 
-                    setNumberFeaturedPokemon(
-                        randomNumber([newPokeList.length])
-                    );
                     setOriginalData(newPokeList);
                     setData(newPokeList);
                     setRemoveLoading(true);
@@ -157,10 +129,6 @@ function Pokedex() {
                     //Função para order os pokemons pelo ID de forma crescente
                     newPokeList.sort((a, b) =>
                         a.id > b.id ? 1 : b.id > a.id ? -1 : 0
-                    );
-
-                    setNumberFeaturedPokemon(
-                        randomNumber([newPokeList.length])
                     );
 
                     setOriginalData(newPokeList);

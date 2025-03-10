@@ -1,24 +1,6 @@
 import { ColumnFilter } from "./ColumnFilter";
+import { zeroLeft } from "../../../utils/utils.js";
 import Types from "../../../components/PokeTypes";
-
-//Adicionando zero a esqueda no númeoro do Pokemon.
-function zeroLeft(pokeId) {
-    if (pokeId < 10) {
-        return "000" + pokeId;
-    }
-
-    if (pokeId >= 10 && pokeId < 100) {
-        return "00" + pokeId;
-    }
-
-    if (pokeId >= 100 && pokeId < 1000) {
-        return "0" + pokeId;
-    }
-
-    if (pokeId >= 1000) {
-        return pokeId;
-    }
-}
 
 export const COLUMNS = [
     {

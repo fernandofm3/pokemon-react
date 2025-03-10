@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-//import Headder from "../../components/Headder";
 import api from "../../services/api";
-import _get from "lodash/get";
 import PokeStats from "../../components/PokeStats";
 import PokeImages from "../../components/PokeImages";
 import PokeEvolutions from "../../components/PokeEvolutions";
 import TypesStats from "../../components/TypesStats";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
-import imgPokeBall from "../../assets/pokeball.png";
 import {
     borderColorInfoPokemon,
     lightColorInfoPokemon,
+    scrollUp,
+    splitName,
+    spriteAdapterOfficial,
+    getGenresNameInEn,
+    getDescriptionInEn,
+    zeroLeft,
+    getFriendshipClassification,
+    calculateGenderRatio,
 } from "../../utils/utils";
 
 //Import Styles
@@ -25,176 +30,6 @@ function PokeInfo() {
 
         return React.useMemo(() => new URLSearchParams(search), [search]);
     }
-
-    //Ir ao topo da tela
-    function scrollUp() {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }
-
-    //Pega apenas o primeiro nome do pokemon.
-    function splitName(name) {
-        let newName = "";
-        if (name.length > 15) {
-            let splitedName = name.split("-");
-            newName = splitedName[0];
-        } else {
-            newName = name;
-        }
-        return newName;
-    }
-
-    //Pegando a URL da imagem oficial do Pokemon.
-    function spriteAdapterOfficial(spriteOfficial) {
-        return _get(spriteOfficial, "other.official-artwork.front_default", "");
-    }
-
-    //Busca pelo idioma "en" e pega o nome do Genres.
-    function getGenresNameInEn(genres) {
-        let genresName = "";
-        for (let i = 0; i < genres.length; i++) {
-            if (genres[i].language.name === "en") {
-                genresName = genres[i].genus;
-            }
-        }
-        return genresName;
-    }
-
-    //Busca pelo idioma "en" e pega a descrição.
-    function getDescriptionInEn(description) {
-        let descriptionText = "";
-        for (let i = 0; i < description.length; i++) {
-            if (description[i].language.name === "en") {
-                descriptionText = description[i].flavor_text;
-            }
-        }
-        return descriptionText;
-    }
-
-    //Verifica a chance de captura do Pokemon
-    function calculateCatchRate(
-        hpTotal,
-        hpCurrent,
-        catchRate,
-        ballMultiplier,
-        status
-    ) {
-        const a =
-            ((3 * hpTotal - 2 * hpCurrent) *
-                catchRate *
-                ballMultiplier *
-                status) /
-            (3 * hpTotal);
-        if (a >= 255) return 1; // Captura garantida, como Master Ball
-
-        return a / 255; // Chance de captura em porcentagem
-    }
-
-    const handleCalculate = () => {
-        const chance =
-            infoPokemon.stats &&
-            calculateCatchRate(
-                infoPokemon.stats[0].base_stat,
-                PokemonHpCurrent,
-                infoPokemon.captureRate,
-                pokeBalls[BallType],
-                statusMultipliers[PokemonStatus]
-            );
-        setCatchChance(chance);
-    };
-
-    //Adicionando zero a esqueda no númeoro do Pokemon.
-    function zeroLeft(pokeId) {
-        if (pokeId < 10) {
-            return "000" + pokeId;
-        }
-
-        if (pokeId >= 10 && pokeId < 100) {
-            return "00" + pokeId;
-        }
-
-        if (pokeId >= 100 && pokeId < 1000) {
-            return "0" + pokeId;
-        }
-
-        if (pokeId >= 1000) {
-            return pokeId;
-        }
-    }
-
-    //Recuperando os valores dos Genders em porcentagem com uma base máxima de 8 para ser Female. Conta usada regra de 3.
-    function calculateGenderRatio() {
-        if (PokemonGender === -1) {
-            setPokemonGenderInfo({ male: "Genderless", female: "Genderless" });
-        } else if (PokemonGender === 0) {
-            setPokemonGenderInfo({ male: "100% Male", female: "0% Famale" }); // Pokémon só tem machos
-        } else if (PokemonGender === 8) {
-            setPokemonGenderInfo({ male: "0% Male", female: "100% Famale" }); // Pokémon tem igual proporção de machos e fêmeas
-        } else {
-            const malePercentage = (PokemonGender / 8) * 100;
-            const femalePercentage = 100 - malePercentage;
-            setPokemonGenderInfo({
-                male: malePercentage + "% Male",
-                female: femalePercentage + "% Famale",
-            });
-        }
-    }
-
-    // Função para determinar a classificação e a frase com base na Base Friendship
-    const getFriendshipClassification = (friendship) => {
-        if (friendship >= 0 && friendship <= 49) {
-            return (
-                <div>
-                    <h3 className="">{friendship}</h3>
-                    <h3 className="mt-5"> Poor</h3>
-                    <p className="">It seems to dislike you.</p>
-                </div>
-            );
-        } else if (friendship >= 50 && friendship <= 99) {
-            return (
-                <div>
-                    <h3 className="">{friendship}</h3>
-                    <h3 className="mt-5">Normal</h3>
-                    <p className="">It is getting used to you.</p>
-                </div>
-            );
-        } else if (friendship >= 100 && friendship <= 149) {
-            return (
-                <div>
-                    <h3 className="">{friendship}</h3>
-                    <h3 className="mt-5">Good</h3>
-                    <p className="">It likes you quite a bit!</p>
-                </div>
-            );
-        } else if (friendship >= 150 && friendship <= 199) {
-            return (
-                <div>
-                    <h3 className="">{friendship}</h3>
-                    <h3 className="mt-5">Great</h3>
-                    <p className="">It loves you!</p>
-                </div>
-            );
-        } else if (friendship >= 200 && friendship <= 255) {
-            return (
-                <div>
-                    <h3 className="">{friendship}</h3>
-                    <h3 className="mt-5">Max</h3>
-                    <p className="">
-                        It is extremely attached to you! It must love you a lot.
-                    </p>
-                </div>
-            );
-        } else {
-            return (
-                <div>
-                    <h3 className="">Unknown</h3>
-                    <p className="">Friendship value out of valid range.</p>
-                </div>
-            );
-        }
-    };
 
     const query = useQuery();
     const id = query.get("id");
@@ -210,50 +45,8 @@ function PokeInfo() {
     const [DataTypesStats, setDataTypesStats] = useState([]);
     const [RemoveLoading, setRemoveLoading] = useState(false);
 
-    const [BallType, setBallType] = useState("PokeBall");
-    const [PokemonStatus, setPokemonStatus] = useState("Normal");
-    const [PokemonHpCurrent, setPokemonHpCurrent] = useState(0);
     const [PokemonGender, setPokemonGender] = useState(0);
     const [PokemonGenderInfo, setPokemonGenderInfo] = useState({});
-    const [catchChance, setCatchChance] = useState(null);
-
-    const pokeBalls = {
-        BeastBall: 0.1, // Eficaz contra Ultra Beasts (10x captura)
-        CherishBall: 1, // Usada para distribuir Pokémon em eventos especiais
-        DiveBall: 3.5, // Eficaz contra Pokémon encontrados debaixo d'água
-        DreamBall: 4, // Usada em Pokémon adormecidos (geralmente em Dream World ou Max Raid Battles)
-        DuskBall: 3, // Eficaz em cavernas e à noite
-        FastBall: 4, // Eficaz contra Pokémon rápidos (com Speed base maior ou igual a 100)
-        FriendBall: 1, // Aumenta a amizade do Pokémon capturado
-        GreatBall: 1.5,
-        HealBall: 1, // Cura o Pokémon capturado ao máximo
-        HeavyBall: 1, // Fator de captura variável: +20, +30, ou +40 se o Pokémon for pesado; -20 se for leve
-        LevelBall: 1, // Fator de captura variável baseado no nível do seu Pokémon comparado ao nível do Pokémon selvagem
-        LoveBall: 8, // Eficaz contra Pokémon do sexo oposto ao do seu Pokémon
-        LureBall: 3, // Eficaz contra Pokémon pescados
-        LuxuryBall: 1, // Aumenta a amizade do Pokémon capturado
-        MasterBall: 255,
-        MoonBall: 4, // Eficaz contra Pokémon que evoluem com a Pedra da Lua
-        NestBall: 1, // Fator de captura variável: (40 - nível do Pokémon) / 10
-        NetBall: 3, // Eficaz contra Pokémon de água e inseto
-        PokeBall: 1,
-        PremierBall: 1,
-        QuickBall: 5, // Eficaz se usada no primeiro turno da batalha
-        RepeatBall: 3.5, // Eficaz contra Pokémon já capturados
-        SafariBall: 1.5,
-        SuperBall: 1.5, // Nome japonês da Great Ball
-        TimerBall: 1, // Fator de captura aumenta com o número de turnos: +1 a cada 10 turnos
-        UltraBall: 2, // Melhor que a Great Ball, menor que a Master Ball
-    };
-
-    const statusMultipliers = {
-        Asleep: 2,
-        Burned: 1.5,
-        Frozen: 2,
-        Normal: 1, // status normal
-        Paralyzed: 1.5,
-        Poisoned: 1.5,
-    };
 
     // Variável responsável por guardar os dados recebidos do Pokemon.
     let infoPokemon = "";
@@ -320,8 +113,6 @@ function PokeInfo() {
 
             //Enviando para objeto (infoPokemon).
             setPokeData(dataResults);
-            //Enviando o HP do Pokemon para realizar o calculo de captura pela primeira vez.
-            setPokemonHpCurrent(response.data.stats[0].base_stat);
 
             //Buscando as Types Stats.
             let arrayTypes = [];
@@ -571,8 +362,7 @@ function PokeInfo() {
     }, [PokemonId]);
 
     useEffect(() => {
-        handleCalculate();
-        calculateGenderRatio();
+        calculateGenderRatio(PokemonGender, setPokemonGenderInfo);
     }, [PokeData, PokeDataSpecies]);
 
     const capitalizeFirstLetter = (str) => {
@@ -611,7 +401,7 @@ function PokeInfo() {
     return (
         <div>
             {!RemoveLoading && <Loading />}
-            {/* <Headder SearchNameApi={"POKEINFO"} page={"pokeInfo"} /> */}
+
             {RemoveLoading && (
                 <S.Container>
                     {/*** Dashboard ***************************************/}
@@ -944,185 +734,7 @@ function PokeInfo() {
                         </div>
 
                         <div className="row row-training">
-                            <div className="col-md-8">
-                                <div
-                                    className="card"
-                                    style={{
-                                        borderBottom: `5px solid ${borderColorInfoPokemon(
-                                            infoPokemon.pokemonColor
-                                        )}`,
-                                    }}
-                                >
-                                    <div className="card-body">
-                                        <div
-                                            className="data-icon"
-                                            style={{
-                                                backgroundColor: `${lightColorInfoPokemon(
-                                                    infoPokemon.pokemonColor
-                                                )}`,
-                                            }}
-                                        >
-                                            <i
-                                                className="bi bi-check-circle-fill"
-                                                style={{
-                                                    color: `${borderColorInfoPokemon(
-                                                        infoPokemon.pokemonColor
-                                                    )}`,
-                                                }}
-                                            ></i>
-                                        </div>
-
-                                        <h5>Catch Rate</h5>
-                                        <h3 className="mb-3">
-                                            {infoPokemon.captureRate}
-                                        </h3>
-
-                                        <p className="mb-4">
-                                            {/* * This Pokémon has a Capture Rate of 45. <br /> */}
-                                            Below you can roughly simulate the
-                                            chances of catching this pokemon.{" "}
-                                            <br />
-                                            <span className="text-body-tertiary">
-                                                The calculation is made
-                                                considering the Pokeball, Status
-                                                and HP.
-                                            </span>
-                                        </p>
-
-                                        <div className="d-flex">
-                                            <div className="d-flex w-100">
-                                                <img
-                                                    className="bg-black rounded-circle border border-black me-2"
-                                                    src={imgPokeBall}
-                                                    alt="Imagem Pokéball."
-                                                />
-                                                <select
-                                                    className="form-select border border-black mb-2 "
-                                                    aria-label="Large select example"
-                                                    value={BallType}
-                                                    onChange={(e) => {
-                                                        setBallType(
-                                                            e.target.value
-                                                        );
-                                                    }}
-                                                >
-                                                    {Object.keys(pokeBalls).map(
-                                                        (ball) => (
-                                                            <option
-                                                                key={ball}
-                                                                value={ball}
-                                                            >
-                                                                {ball}
-                                                            </option>
-                                                        )
-                                                    )}
-                                                </select>
-
-                                                <select
-                                                    className="form-select border border-black mb-2 ms-2"
-                                                    aria-label="Large select example"
-                                                    value={PokemonStatus}
-                                                    onChange={(e) => {
-                                                        setPokemonStatus(
-                                                            e.target.value
-                                                        );
-                                                    }}
-                                                >
-                                                    {Object.keys(
-                                                        statusMultipliers
-                                                    ).map((status) => (
-                                                        <option
-                                                            key={status}
-                                                            value={status}
-                                                        >
-                                                            Status {status}
-                                                        </option>
-                                                    ))}
-                                                </select>
-
-                                                <select
-                                                    className="form-select border border-black mb-2 ms-2"
-                                                    aria-label="Large select example"
-                                                    value={PokemonHpCurrent}
-                                                    onChange={(e) => {
-                                                        setPokemonHpCurrent(
-                                                            e.target.value
-                                                        );
-                                                    }}
-                                                >
-                                                    <option
-                                                        value={
-                                                            infoPokemon.stats[0]
-                                                                .base_stat
-                                                        }
-                                                    >
-                                                        Full HP
-                                                    </option>
-                                                    <option
-                                                        value={
-                                                            infoPokemon.stats[0]
-                                                                .base_stat / 2
-                                                        }
-                                                    >
-                                                        Half HP
-                                                    </option>
-                                                    <option value={1}>
-                                                        1 HP
-                                                    </option>
-                                                </select>
-                                            </div>
-
-                                            <button
-                                                className="btn btn-primary mb-2 ms-2"
-                                                onClick={handleCalculate}
-                                            >
-                                                =
-                                            </button>
-                                        </div>
-
-                                        <div className="d-flex w-100">
-                                            <div className="div-icon-percent">
-                                                <i className="bi bi-percent"></i>
-                                            </div>
-
-                                            <div
-                                                className="progress w-100"
-                                                role="progressbar"
-                                                aria-label="Example 20px high"
-                                                aria-valuenow="25"
-                                                aria-valuemin="0"
-                                                aria-valuemax="100"
-                                                style={{
-                                                    height: "38px",
-                                                }}
-                                            >
-                                                <div
-                                                    className="progress-bar bg-primary-subtle"
-                                                    style={{
-                                                        width:
-                                                            (
-                                                                catchChance *
-                                                                100
-                                                            ).toFixed(1) + "%",
-                                                    }}
-                                                >
-                                                    <span className="fs-6 text-primary-emphasis">
-                                                        {(
-                                                            catchChance * 100
-                                                        ).toFixed(1)}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <p className="d-flex justify-content-end w-100">
-                                            Your chance of capture is{" "}
-                                            {(catchChance * 100).toFixed(1)}%
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-4">
+                            <div className="col-md-12">
                                 {" "}
                                 <div
                                     className="card"

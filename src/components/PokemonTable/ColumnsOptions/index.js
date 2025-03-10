@@ -1,5 +1,4 @@
 import React from "react";
-//import Checkbox from "../CheckBox";
 import * as S from "./styles";
 
 const ColumnsOptions = (props) => {
