@@ -20,13 +20,13 @@ function PokeCard(props) {
         finalColor = colorTypeGradients(
             props.types[0].type.name,
             props.types[1].type.name,
-            props.types.length
+            props.types.length,
         );
     } else {
         finalColor = colorTypeGradients(
             props.types[0].type.name,
             props.types[0].type.name,
-            props.types.length
+            props.types.length,
         );
     }
 
@@ -50,7 +50,7 @@ function PokeCard(props) {
                         window.open(
                             `/pokeinfo?id=${props.id}&qtPokemons=${props.TotalPokemon}`,
                             "_blank",
-                            `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no`
+                            `width=${width},height=${height},left=${left},top=${top},resizable=no,scrollbars=no,status=no`,
                         );
                     }
                 }}
@@ -76,7 +76,6 @@ function PokeCard(props) {
                             />
                         )}
                     </div>
-
                     <p className="pokeName">{splitName(props.name)}</p>
                 </div>
             </a>
